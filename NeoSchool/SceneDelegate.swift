@@ -1,10 +1,3 @@
-//
-//  SceneDelegate.swift
-//  NeoSchool
-//
-//  Created by Artem Berezin on 29/1/24.
-//
-
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {

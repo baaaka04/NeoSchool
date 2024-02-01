@@ -13,6 +13,31 @@
 		F76C6B6A2B67D06900EACFEB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F76C6B682B67D06900EACFEB /* Main.storyboard */; };
 		F76C6B6C2B67D06B00EACFEB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F76C6B6B2B67D06B00EACFEB /* Assets.xcassets */; };
 		F76C6B6F2B67D06B00EACFEB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F76C6B6D2B67D06B00EACFEB /* LaunchScreen.storyboard */; };
+		F76C6B792B67E24600EACFEB /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C6B782B67E24600EACFEB /* ScheduleViewController.swift */; };
+		F76C6B7B2B67E29000EACFEB /* PerformanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C6B7A2B67E29000EACFEB /* PerformanceViewController.swift */; };
+		F76C6B7D2B67E2C500EACFEB /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C6B7C2B67E2C500EACFEB /* ProfileViewController.swift */; };
+		F76C6B802B693D4900EACFEB /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = F76C6B7F2B693D4900EACFEB /* SnapKit */; };
+		F76C6B822B693D4900EACFEB /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = F76C6B812B693D4900EACFEB /* SnapKit-Dynamic */; };
+		F76C6B862B694DF900EACFEB /* EllipseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C6B852B694DF900EACFEB /* EllipseView.swift */; };
+		F76C6BC82B6A96A900EACFEB /* Jost-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BB62B6A96A900EACFEB /* Jost-BoldItalic.ttf */; };
+		F76C6BC92B6A96A900EACFEB /* Jost-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BB72B6A96A900EACFEB /* Jost-Bold.ttf */; };
+		F76C6BCA2B6A96A900EACFEB /* Jost-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BB82B6A96A900EACFEB /* Jost-ThinItalic.ttf */; };
+		F76C6BCB2B6A96A900EACFEB /* Jost-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BB92B6A96A900EACFEB /* Jost-ExtraLight.ttf */; };
+		F76C6BCC2B6A96A900EACFEB /* Jost-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BBA2B6A96A900EACFEB /* Jost-BlackItalic.ttf */; };
+		F76C6BCD2B6A96A900EACFEB /* Jost-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BBB2B6A96A900EACFEB /* Jost-ExtraBoldItalic.ttf */; };
+		F76C6BCE2B6A96A900EACFEB /* Jost-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BBC2B6A96A900EACFEB /* Jost-Thin.ttf */; };
+		F76C6BCF2B6A96A900EACFEB /* Jost-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BBD2B6A96A900EACFEB /* Jost-LightItalic.ttf */; };
+		F76C6BD02B6A96A900EACFEB /* Jost-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BBE2B6A96A900EACFEB /* Jost-Black.ttf */; };
+		F76C6BD12B6A96A900EACFEB /* Jost-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BBF2B6A96A900EACFEB /* Jost-ExtraLightItalic.ttf */; };
+		F76C6BD22B6A96A900EACFEB /* Jost-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BC02B6A96A900EACFEB /* Jost-Medium.ttf */; };
+		F76C6BD32B6A96A900EACFEB /* Jost-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BC12B6A96A900EACFEB /* Jost-Regular.ttf */; };
+		F76C6BD42B6A96A900EACFEB /* Jost-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BC22B6A96A900EACFEB /* Jost-ExtraBold.ttf */; };
+		F76C6BD52B6A96A900EACFEB /* Jost-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BC32B6A96A900EACFEB /* Jost-Light.ttf */; };
+		F76C6BD62B6A96A900EACFEB /* Jost-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BC42B6A96A900EACFEB /* Jost-Italic.ttf */; };
+		F76C6BD72B6A96A900EACFEB /* Jost-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BC52B6A96A900EACFEB /* Jost-SemiBoldItalic.ttf */; };
+		F76C6BD82B6A96A900EACFEB /* Jost-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BC62B6A96A900EACFEB /* Jost-SemiBold.ttf */; };
+		F76C6BD92B6A96A900EACFEB /* Jost-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BC72B6A96A900EACFEB /* Jost-MediumItalic.ttf */; };
+		F76C6BDC2B6BCC7500EACFEB /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C6BDB2B6BCC7500EACFEB /* NavigationBarView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +49,29 @@
 		F76C6B6B2B67D06B00EACFEB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F76C6B6E2B67D06B00EACFEB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F76C6B702B67D06B00EACFEB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F76C6B782B67E24600EACFEB /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
+		F76C6B7A2B67E29000EACFEB /* PerformanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceViewController.swift; sourceTree = "<group>"; };
+		F76C6B7C2B67E2C500EACFEB /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		F76C6B852B694DF900EACFEB /* EllipseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EllipseView.swift; sourceTree = "<group>"; };
+		F76C6BB62B6A96A900EACFEB /* Jost-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-BoldItalic.ttf"; sourceTree = "<group>"; };
+		F76C6BB72B6A96A900EACFEB /* Jost-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-Bold.ttf"; sourceTree = "<group>"; };
+		F76C6BB82B6A96A900EACFEB /* Jost-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-ThinItalic.ttf"; sourceTree = "<group>"; };
+		F76C6BB92B6A96A900EACFEB /* Jost-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-ExtraLight.ttf"; sourceTree = "<group>"; };
+		F76C6BBA2B6A96A900EACFEB /* Jost-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-BlackItalic.ttf"; sourceTree = "<group>"; };
+		F76C6BBB2B6A96A900EACFEB /* Jost-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
+		F76C6BBC2B6A96A900EACFEB /* Jost-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-Thin.ttf"; sourceTree = "<group>"; };
+		F76C6BBD2B6A96A900EACFEB /* Jost-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-LightItalic.ttf"; sourceTree = "<group>"; };
+		F76C6BBE2B6A96A900EACFEB /* Jost-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-Black.ttf"; sourceTree = "<group>"; };
+		F76C6BBF2B6A96A900EACFEB /* Jost-ExtraLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
+		F76C6BC02B6A96A900EACFEB /* Jost-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-Medium.ttf"; sourceTree = "<group>"; };
+		F76C6BC12B6A96A900EACFEB /* Jost-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-Regular.ttf"; sourceTree = "<group>"; };
+		F76C6BC22B6A96A900EACFEB /* Jost-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-ExtraBold.ttf"; sourceTree = "<group>"; };
+		F76C6BC32B6A96A900EACFEB /* Jost-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-Light.ttf"; sourceTree = "<group>"; };
+		F76C6BC42B6A96A900EACFEB /* Jost-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-Italic.ttf"; sourceTree = "<group>"; };
+		F76C6BC52B6A96A900EACFEB /* Jost-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		F76C6BC62B6A96A900EACFEB /* Jost-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-SemiBold.ttf"; sourceTree = "<group>"; };
+		F76C6BC72B6A96A900EACFEB /* Jost-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-MediumItalic.ttf"; sourceTree = "<group>"; };
+		F76C6BDB2B6BCC7500EACFEB /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +79,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F76C6B802B693D4900EACFEB /* SnapKit in Frameworks */,
+				F76C6B822B693D4900EACFEB /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,12 +109,59 @@
 				F76C6B622B67D06900EACFEB /* AppDelegate.swift */,
 				F76C6B642B67D06900EACFEB /* SceneDelegate.swift */,
 				F76C6B662B67D06900EACFEB /* MainTabBarViewController.swift */,
+				F76C6BDA2B6BCC4500EACFEB /* Views */,
+				F76C6B762B67E22200EACFEB /* Controllers */,
 				F76C6B682B67D06900EACFEB /* Main.storyboard */,
+				F76C6BB52B6A96A900EACFEB /* Fonts */,
 				F76C6B6B2B67D06B00EACFEB /* Assets.xcassets */,
 				F76C6B6D2B67D06B00EACFEB /* LaunchScreen.storyboard */,
 				F76C6B702B67D06B00EACFEB /* Info.plist */,
 			);
 			path = NeoSchool;
+			sourceTree = "<group>";
+		};
+		F76C6B762B67E22200EACFEB /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F76C6B782B67E24600EACFEB /* ScheduleViewController.swift */,
+				F76C6B7A2B67E29000EACFEB /* PerformanceViewController.swift */,
+				F76C6B7C2B67E2C500EACFEB /* ProfileViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		F76C6BB52B6A96A900EACFEB /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				F76C6BB62B6A96A900EACFEB /* Jost-BoldItalic.ttf */,
+				F76C6BB72B6A96A900EACFEB /* Jost-Bold.ttf */,
+				F76C6BB82B6A96A900EACFEB /* Jost-ThinItalic.ttf */,
+				F76C6BB92B6A96A900EACFEB /* Jost-ExtraLight.ttf */,
+				F76C6BBA2B6A96A900EACFEB /* Jost-BlackItalic.ttf */,
+				F76C6BBB2B6A96A900EACFEB /* Jost-ExtraBoldItalic.ttf */,
+				F76C6BBC2B6A96A900EACFEB /* Jost-Thin.ttf */,
+				F76C6BBD2B6A96A900EACFEB /* Jost-LightItalic.ttf */,
+				F76C6BBE2B6A96A900EACFEB /* Jost-Black.ttf */,
+				F76C6BBF2B6A96A900EACFEB /* Jost-ExtraLightItalic.ttf */,
+				F76C6BC02B6A96A900EACFEB /* Jost-Medium.ttf */,
+				F76C6BC12B6A96A900EACFEB /* Jost-Regular.ttf */,
+				F76C6BC22B6A96A900EACFEB /* Jost-ExtraBold.ttf */,
+				F76C6BC32B6A96A900EACFEB /* Jost-Light.ttf */,
+				F76C6BC42B6A96A900EACFEB /* Jost-Italic.ttf */,
+				F76C6BC52B6A96A900EACFEB /* Jost-SemiBoldItalic.ttf */,
+				F76C6BC62B6A96A900EACFEB /* Jost-SemiBold.ttf */,
+				F76C6BC72B6A96A900EACFEB /* Jost-MediumItalic.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		F76C6BDA2B6BCC4500EACFEB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F76C6B852B694DF900EACFEB /* EllipseView.swift */,
+				F76C6BDB2B6BCC7500EACFEB /* NavigationBarView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +180,10 @@
 			dependencies = (
 			);
 			name = NeoSchool;
+			packageProductDependencies = (
+				F76C6B7F2B693D4900EACFEB /* SnapKit */,
+				F76C6B812B693D4900EACFEB /* SnapKit-Dynamic */,
+			);
 			productName = NeoSchool;
 			productReference = F76C6B5F2B67D06900EACFEB /* NeoSchool.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +212,9 @@
 				Base,
 			);
 			mainGroup = F76C6B562B67D06900EACFEB;
+			packageReferences = (
+				F76C6B7E2B693D4900EACFEB /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = F76C6B602B67D06900EACFEB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -125,9 +229,27 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F76C6BD42B6A96A900EACFEB /* Jost-ExtraBold.ttf in Resources */,
+				F76C6BD82B6A96A900EACFEB /* Jost-SemiBold.ttf in Resources */,
+				F76C6BD52B6A96A900EACFEB /* Jost-Light.ttf in Resources */,
+				F76C6BD12B6A96A900EACFEB /* Jost-ExtraLightItalic.ttf in Resources */,
+				F76C6BCD2B6A96A900EACFEB /* Jost-ExtraBoldItalic.ttf in Resources */,
+				F76C6BCC2B6A96A900EACFEB /* Jost-BlackItalic.ttf in Resources */,
+				F76C6BCB2B6A96A900EACFEB /* Jost-ExtraLight.ttf in Resources */,
+				F76C6BCE2B6A96A900EACFEB /* Jost-Thin.ttf in Resources */,
+				F76C6BD72B6A96A900EACFEB /* Jost-SemiBoldItalic.ttf in Resources */,
+				F76C6BD02B6A96A900EACFEB /* Jost-Black.ttf in Resources */,
 				F76C6B6F2B67D06B00EACFEB /* LaunchScreen.storyboard in Resources */,
+				F76C6BCA2B6A96A900EACFEB /* Jost-ThinItalic.ttf in Resources */,
 				F76C6B6C2B67D06B00EACFEB /* Assets.xcassets in Resources */,
+				F76C6BD22B6A96A900EACFEB /* Jost-Medium.ttf in Resources */,
+				F76C6BD62B6A96A900EACFEB /* Jost-Italic.ttf in Resources */,
+				F76C6BC92B6A96A900EACFEB /* Jost-Bold.ttf in Resources */,
 				F76C6B6A2B67D06900EACFEB /* Main.storyboard in Resources */,
+				F76C6BC82B6A96A900EACFEB /* Jost-BoldItalic.ttf in Resources */,
+				F76C6BCF2B6A96A900EACFEB /* Jost-LightItalic.ttf in Resources */,
+				F76C6BD32B6A96A900EACFEB /* Jost-Regular.ttf in Resources */,
+				F76C6BD92B6A96A900EACFEB /* Jost-MediumItalic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,9 +260,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F76C6B7D2B67E2C500EACFEB /* ProfileViewController.swift in Sources */,
 				F76C6B672B67D06900EACFEB /* MainTabBarViewController.swift in Sources */,
+				F76C6BDC2B6BCC7500EACFEB /* NavigationBarView.swift in Sources */,
 				F76C6B632B67D06900EACFEB /* AppDelegate.swift in Sources */,
 				F76C6B652B67D06900EACFEB /* SceneDelegate.swift in Sources */,
+				F76C6B862B694DF900EACFEB /* EllipseView.swift in Sources */,
+				F76C6B792B67E24600EACFEB /* ScheduleViewController.swift in Sources */,
+				F76C6B7B2B67E29000EACFEB /* PerformanceViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,6 +490,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F76C6B7E2B693D4900EACFEB /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F76C6B7F2B693D4900EACFEB /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F76C6B7E2B693D4900EACFEB /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		F76C6B812B693D4900EACFEB /* SnapKit-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F76C6B7E2B693D4900EACFEB /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = "SnapKit-Dynamic";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F76C6B572B67D06900EACFEB /* Project object */;
 }
