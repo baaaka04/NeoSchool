@@ -14,17 +14,37 @@ class PerformanceViewController: UIViewController {
 
         view.backgroundColor = .white
         
-        let titleView = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
-        titleView.text = "Привет, Айсулуу!"
-        titleView.font = UIFont(name: "Jost-Medium", size: 20)
+        configureNavBar()
         
-        navigationItem.titleView = titleView
-        let navigationBarView = NavigationBarView(color: UIColor(named: "NeobisBlue"), navbarTitle: navbarTitle)
-        view.addSubview(navigationBarView.view)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) is not supported")
     }
+    
+    private func configureNavBar () {
+        
+        let ellipseView = EllipseView(color: UIColor(named: "NeobisBlue"))
+        ellipseView.backgroundColor = .clear
 
+        view.addSubview(ellipseView)
+                
+        let tabTitle = UILabel(frame: .zero)
+        tabTitle.text = navbarTitle
+        tabTitle.font = UIFont(name: "Jost-SemiBold", size: 32)
+        tabTitle.textColor = .white
+        
+        view.addSubview(tabTitle)
+
+        ellipseView.snp.makeConstraints { make in
+            make.width.equalTo(644)
+            make.height.equalTo(390)
+            make.centerY.equalTo(72)
+            make.centerX.equalToSuperview()
+        }
+        tabTitle.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(112)
+            make.left.equalToSuperview().inset(16)
+        }
+    }
 }

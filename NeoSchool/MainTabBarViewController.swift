@@ -24,6 +24,21 @@ class MainTabBarViewController: UITabBarController {
         let notificationButton = UIBarButtonItem(image: UIImage(systemName: "bell"), style: .plain, target: self, action: #selector(onPressNotifications))
         notificationButton.tintColor = .white
         nav.navigationBar.topItem?.rightBarButtonItem = notificationButton
+        
+        let titleView = UIView()
+        let titleLabel = UILabel()
+        titleLabel.text = "Привет, Айсулуу!"
+        titleLabel.font = UIFont(name: "Jost-Medium", size: 20)
+        titleLabel.textAlignment = .center
+        titleLabel.textColor = .white
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+        }
+        
+        let buttonTitle = UIBarButtonItem(customView: titleView)
+        nav.navigationBar.topItem?.leftBarButtonItem = buttonTitle
         nav.title = title
         nav.tabBarItem.image = image
         nav.tabBarItem.selectedImage = selectedImage

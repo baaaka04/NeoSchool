@@ -37,7 +37,9 @@
 		F76C6BD72B6A96A900EACFEB /* Jost-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BC52B6A96A900EACFEB /* Jost-SemiBoldItalic.ttf */; };
 		F76C6BD82B6A96A900EACFEB /* Jost-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BC62B6A96A900EACFEB /* Jost-SemiBold.ttf */; };
 		F76C6BD92B6A96A900EACFEB /* Jost-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BC72B6A96A900EACFEB /* Jost-MediumItalic.ttf */; };
-		F76C6BDC2B6BCC7500EACFEB /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C6BDB2B6BCC7500EACFEB /* NavigationBarView.swift */; };
+		F7CAE69D2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE69C2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift */; };
+		F7CAE69F2B73D779004916E3 /* WorkdaysPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE69E2B73D779004916E3 /* WorkdaysPageViewController.swift */; };
+		F7CAE6A12B73DD01004916E3 /* WorkdayScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE6A02B73DD01004916E3 /* WorkdayScheduleViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,7 +73,9 @@
 		F76C6BC52B6A96A900EACFEB /* Jost-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
 		F76C6BC62B6A96A900EACFEB /* Jost-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-SemiBold.ttf"; sourceTree = "<group>"; };
 		F76C6BC72B6A96A900EACFEB /* Jost-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-MediumItalic.ttf"; sourceTree = "<group>"; };
-		F76C6BDB2B6BCC7500EACFEB /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
+		F7CAE69C2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdayCollectionViewCell.swift; sourceTree = "<group>"; };
+		F7CAE69E2B73D779004916E3 /* WorkdaysPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkdaysPageViewController.swift; sourceTree = "<group>"; };
+		F7CAE6A02B73DD01004916E3 /* WorkdayScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkdayScheduleViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +113,7 @@
 				F76C6B622B67D06900EACFEB /* AppDelegate.swift */,
 				F76C6B642B67D06900EACFEB /* SceneDelegate.swift */,
 				F76C6B662B67D06900EACFEB /* MainTabBarViewController.swift */,
+				F7CAE69C2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift */,
 				F76C6BDA2B6BCC4500EACFEB /* Views */,
 				F76C6B762B67E22200EACFEB /* Controllers */,
 				F76C6B682B67D06900EACFEB /* Main.storyboard */,
@@ -123,7 +128,7 @@
 		F76C6B762B67E22200EACFEB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				F76C6B782B67E24600EACFEB /* ScheduleViewController.swift */,
+				F7CAE6A22B74F4D6004916E3 /* Schedule */,
 				F76C6B7A2B67E29000EACFEB /* PerformanceViewController.swift */,
 				F76C6B7C2B67E2C500EACFEB /* ProfileViewController.swift */,
 			);
@@ -159,9 +164,26 @@
 			isa = PBXGroup;
 			children = (
 				F76C6B852B694DF900EACFEB /* EllipseView.swift */,
-				F76C6BDB2B6BCC7500EACFEB /* NavigationBarView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		F7CAE6A22B74F4D6004916E3 /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				F76C6B782B67E24600EACFEB /* ScheduleViewController.swift */,
+				F7CAE6A32B74F528004916E3 /* Subcontrollers */,
+			);
+			path = Schedule;
+			sourceTree = "<group>";
+		};
+		F7CAE6A32B74F528004916E3 /* Subcontrollers */ = {
+			isa = PBXGroup;
+			children = (
+				F7CAE69E2B73D779004916E3 /* WorkdaysPageViewController.swift */,
+				F7CAE6A02B73DD01004916E3 /* WorkdayScheduleViewController.swift */,
+			);
+			path = Subcontrollers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -260,13 +282,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7CAE69F2B73D779004916E3 /* WorkdaysPageViewController.swift in Sources */,
+				F7CAE6A12B73DD01004916E3 /* WorkdayScheduleViewController.swift in Sources */,
 				F76C6B7D2B67E2C500EACFEB /* ProfileViewController.swift in Sources */,
 				F76C6B672B67D06900EACFEB /* MainTabBarViewController.swift in Sources */,
-				F76C6BDC2B6BCC7500EACFEB /* NavigationBarView.swift in Sources */,
 				F76C6B632B67D06900EACFEB /* AppDelegate.swift in Sources */,
 				F76C6B652B67D06900EACFEB /* SceneDelegate.swift in Sources */,
 				F76C6B862B694DF900EACFEB /* EllipseView.swift in Sources */,
 				F76C6B792B67E24600EACFEB /* ScheduleViewController.swift in Sources */,
+				F7CAE69D2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift in Sources */,
 				F76C6B7B2B67E29000EACFEB /* PerformanceViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
