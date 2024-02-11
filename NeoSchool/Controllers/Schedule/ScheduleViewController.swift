@@ -1,54 +1,25 @@
 import UIKit
 import SnapKit
 
-class ScheduleViewController: UIViewController {
+
+final class ScheduleViewController: SchoolNavViewController {
     
-    let navbarTitle: String
-    
-    init(navbarTitle: String) {
-        self.navbarTitle = navbarTitle
-        super.init(nibName: nil, bundle: nil)
+    override init(navbarTitle: String, navbarColor: UIColor?) {
+        super.init(navbarTitle: navbarTitle, navbarColor: navbarColor)
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) is not supported")
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
-        configureNavBar()
-        configureDaySchedule()
-    }
-    
-    private func configureNavBar () {
-        
-        let ellipseView = EllipseView(color: UIColor(named: "ButtonColor"))
-        ellipseView.backgroundColor = .clear
-
-        view.addSubview(ellipseView)
                 
-        let tabTitle = UILabel(frame: .zero)
-        tabTitle.text = navbarTitle
-        tabTitle.font = UIFont(name: "Jost-SemiBold", size: 32)
-        tabTitle.textColor = .white
-        
-        view.addSubview(tabTitle)
-
-        ellipseView.snp.makeConstraints { make in
-            make.width.equalTo(644)
-            make.height.equalTo(390)
-            make.centerY.equalTo(72)
-            make.centerX.equalToSuperview()
-        }
-        tabTitle.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(112)
-            make.left.equalToSuperview().inset(16)
-        }
+        configureDayScheduleBar()
     }
     
-    private func configureDaySchedule () {
+    private func configureDayScheduleBar () {
         let child = WorkdayScheduleViewController()
         addChild(child)
         child.view.frame = view.frame
@@ -56,9 +27,10 @@ class ScheduleViewController: UIViewController {
         view.addSubview(child.view)
         child.view.snp.makeConstraints { make in
             make.width.equalTo(view.frame.size.width-32)
+            make.height.equalTo(48)
+            make.centerX.equalToSuperview()
             make.left.right.equalToSuperview().inset(16)
-            make.top.equalToSuperview().inset(232)
-            make.height.equalTo(400)
+            make.top.equalToSuperview().inset(168)
         }
         child.didMove(toParent: self)
     }

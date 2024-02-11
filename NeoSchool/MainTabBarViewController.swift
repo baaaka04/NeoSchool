@@ -5,9 +5,9 @@ class MainTabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let vc1 = self.createNav(with: "Расписание", image: UIImage(named: "ScheduleIcon"), selectedImage: UIImage(named: "ScheduleIconSelected"), vc: ScheduleViewController(navbarTitle: "Расписание"))
-        let vc2 = self.createNav(with: "Успеваемость", image: UIImage(named: "LineChartIcon"), selectedImage: UIImage(named: "LineChartIconSelected"), vc: PerformanceViewController(navbarTitle: "Успеваемость"))
-        let vc3 = self.createNav(with: "Профиль", image: UIImage(named: "ProfileIcon"), selectedImage: UIImage(named: "ProfileIconSelected"), vc: ProfileViewController(navbarTitle: "Профиль"))
+        let vc1 = self.createNav(with: "Расписание", image: UIImage(named: "ScheduleIcon"), selectedImage: UIImage(named: "ScheduleIconSelected"), vc: ScheduleViewController(navbarTitle: "Расписание", navbarColor: .neobisPurple))
+        let vc2 = self.createNav(with: "Успеваемость", image: UIImage(named: "LineChartIcon"), selectedImage: UIImage(named: "LineChartIconSelected"), vc: PerformanceViewController(navbarTitle: "Успеваемость", navbarColor: .neobisBlue))
+        let vc3 = self.createNav(with: "Профиль", image: UIImage(named: "ProfileIcon"), selectedImage: UIImage(named: "ProfileIconSelected"), vc: ProfileViewController(navbarTitle: "Профиль", navbarColor: .neobisGreen))
         
         self.tabBar.tintColor = UIColor(named: "IconsColor")
         
@@ -29,12 +29,12 @@ class MainTabBarViewController: UITabBarController {
         let titleLabel = UILabel()
         titleLabel.text = "Привет, Айсулуу!"
         titleLabel.font = UIFont(name: "Jost-Medium", size: 20)
-        titleLabel.textAlignment = .center
         titleLabel.textColor = .white
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
+            make.left.equalToSuperview()
         }
         
         let buttonTitle = UIBarButtonItem(customView: titleView)

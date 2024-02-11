@@ -1,44 +1,60 @@
 import UIKit
+import SnapKit
 
-class WorkdayScheduleViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+struct StudentDay {
+    let id: Int
+    let name: String
+    let lessonsCount: String
+}
+
+class WorkdayScheduleViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     lazy var weekCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
+        layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.backgroundColor = .systemPink
+        collectionView.backgroundColor = .clear
         collectionView.register(WeekdayCollectionViewCell.self, forCellWithReuseIdentifier: WeekdayCollectionViewCell.identifier)
         return collectionView
     }()
+    
+    let studentWeek: [StudentDay] = [
+        .init(id: 0, name: "ПН", lessonsCount: "5 уроков"),
+        .init(id: 1, name: "ВТ", lessonsCount: "6 уроков"),
+        .init(id: 2, name: "СР", lessonsCount: "6 уроков"),
+        .init(id: 3, name: "ЧТ", lessonsCount: "4 урока"),
+        .init(id: 4, name: "ПТ", lessonsCount: "5 уроков"),
+        .init(id: 5, name: "СБ", lessonsCount: "3 урока"),
+    ]
+    let indexOfSelectedDay: Int = 0
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .red
         view.addSubview(weekCollectionView)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+        
         weekCollectionView.snp.makeConstraints { make in
-            make.centerY.equalTo(view.frame.size.height / 2)
-            make.centerX.equalTo(view.frame.size.width / 2)
-            make.height.equalTo(48)
-            make.width.equalTo(view.frame.size.width - 16.0 * 2)
+            make.centerX.centerY.width.height.equalToSuperview()
         }
     }
-    
+        
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        5
+        studentWeek.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = weekCollectionView.dequeueReusableCell(withReuseIdentifier: WeekdayCollectionViewCell.identifier, for: indexPath)
-        cell.backgroundColor = .blue
+        guard let cell = weekCollectionView.dequeueReusableCell(withReuseIdentifier: WeekdayCollectionViewCell.identifier, for: indexPath) as? WeekdayCollectionViewCell else {
+            return WeekdayCollectionViewCell(frame: .zero)
+        }
+        cell.id = studentWeek[indexPath.item].id
+        cell.title = studentWeek[indexPath.item].name
+        cell.subtitle = studentWeek[indexPath.item].lessonsCount
+        cell.selectCell(cellID: indexOfSelectedDay)
         return cell
     }
     
