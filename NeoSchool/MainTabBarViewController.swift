@@ -10,6 +10,7 @@ class MainTabBarViewController: UITabBarController {
         let vc3 = self.createNav(with: "Профиль", image: UIImage(named: "ProfileIcon"), selectedImage: UIImage(named: "ProfileIconSelected"), vc: ProfileViewController(navbarTitle: "Профиль", navbarColor: .neobisGreen))
         
         self.tabBar.tintColor = UIColor(named: "IconsColor")
+        self.tabBar.barTintColor = .white
         
         self.setViewControllers([vc1, vc2, vc3], animated: true)
     }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F744FD542B7CD3F80054CBC1 /* StudentsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F744FD532B7CD3F80054CBC1 /* StudentsModel.swift */; };
 		F76C6B632B67D06900EACFEB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C6B622B67D06900EACFEB /* AppDelegate.swift */; };
 		F76C6B652B67D06900EACFEB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C6B642B67D06900EACFEB /* SceneDelegate.swift */; };
 		F76C6B672B67D06900EACFEB /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C6B662B67D06900EACFEB /* MainTabBarViewController.swift */; };
@@ -40,9 +41,13 @@
 		F7CAE69D2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE69C2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift */; };
 		F7CAE6A12B73DD01004916E3 /* WorkdayScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE6A02B73DD01004916E3 /* WorkdayScheduleViewController.swift */; };
 		F7CAE6A52B762C81004916E3 /* SchoolNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE6A42B762C81004916E3 /* SchoolNavViewController.swift */; };
+		F7CAE6AB2B78F13F004916E3 /* DaySubjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE6AA2B78F13F004916E3 /* DaySubjectsViewController.swift */; };
+		F7CAE6AE2B78F4F4004916E3 /* SubjectCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE6AD2B78F4F4004916E3 /* SubjectCollectionViewCell.swift */; };
+		F7CAE6B02B791D50004916E3 /* GradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE6AF2B791D50004916E3 /* GradeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F744FD532B7CD3F80054CBC1 /* StudentsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentsModel.swift; sourceTree = "<group>"; };
 		F76C6B5F2B67D06900EACFEB /* NeoSchool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NeoSchool.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F76C6B622B67D06900EACFEB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F76C6B642B67D06900EACFEB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -76,6 +81,9 @@
 		F7CAE69C2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdayCollectionViewCell.swift; sourceTree = "<group>"; };
 		F7CAE6A02B73DD01004916E3 /* WorkdayScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkdayScheduleViewController.swift; sourceTree = "<group>"; };
 		F7CAE6A42B762C81004916E3 /* SchoolNavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolNavViewController.swift; sourceTree = "<group>"; };
+		F7CAE6AA2B78F13F004916E3 /* DaySubjectsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaySubjectsViewController.swift; sourceTree = "<group>"; };
+		F7CAE6AD2B78F4F4004916E3 /* SubjectCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectCollectionViewCell.swift; sourceTree = "<group>"; };
+		F7CAE6AF2B791D50004916E3 /* GradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +121,7 @@
 				F76C6B622B67D06900EACFEB /* AppDelegate.swift */,
 				F76C6B642B67D06900EACFEB /* SceneDelegate.swift */,
 				F76C6B662B67D06900EACFEB /* MainTabBarViewController.swift */,
+				F744FD532B7CD3F80054CBC1 /* StudentsModel.swift */,
 				F7CAE6A62B7634ED004916E3 /* Extensions */,
 				F76C6BDA2B6BCC4500EACFEB /* Views */,
 				F76C6B762B67E22200EACFEB /* Controllers */,
@@ -165,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				F76C6B852B694DF900EACFEB /* EllipseView.swift */,
+				F7CAE6AF2B791D50004916E3 /* GradeView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -181,8 +191,8 @@
 		F7CAE6A32B74F528004916E3 /* Subcontrollers */ = {
 			isa = PBXGroup;
 			children = (
-				F7CAE6A02B73DD01004916E3 /* WorkdayScheduleViewController.swift */,
-				F7CAE69C2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift */,
+				F7CAE6A92B78EFBC004916E3 /* HorizontalBar */,
+				F7CAE6AC2B78F37A004916E3 /* VerticalBar */,
 			);
 			path = Subcontrollers;
 			sourceTree = "<group>";
@@ -192,6 +202,24 @@
 			children = (
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F7CAE6A92B78EFBC004916E3 /* HorizontalBar */ = {
+			isa = PBXGroup;
+			children = (
+				F7CAE6A02B73DD01004916E3 /* WorkdayScheduleViewController.swift */,
+				F7CAE69C2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift */,
+			);
+			path = HorizontalBar;
+			sourceTree = "<group>";
+		};
+		F7CAE6AC2B78F37A004916E3 /* VerticalBar */ = {
+			isa = PBXGroup;
+			children = (
+				F7CAE6AA2B78F13F004916E3 /* DaySubjectsViewController.swift */,
+				F7CAE6AD2B78F4F4004916E3 /* SubjectCollectionViewCell.swift */,
+			);
+			path = VerticalBar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -291,15 +319,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				F7CAE6A12B73DD01004916E3 /* WorkdayScheduleViewController.swift in Sources */,
+				F7CAE6AB2B78F13F004916E3 /* DaySubjectsViewController.swift in Sources */,
 				F76C6B7D2B67E2C500EACFEB /* ProfileViewController.swift in Sources */,
+				F7CAE6B02B791D50004916E3 /* GradeView.swift in Sources */,
 				F7CAE6A52B762C81004916E3 /* SchoolNavViewController.swift in Sources */,
 				F76C6B672B67D06900EACFEB /* MainTabBarViewController.swift in Sources */,
 				F76C6B632B67D06900EACFEB /* AppDelegate.swift in Sources */,
 				F76C6B652B67D06900EACFEB /* SceneDelegate.swift in Sources */,
 				F76C6B862B694DF900EACFEB /* EllipseView.swift in Sources */,
 				F76C6B792B67E24600EACFEB /* ScheduleViewController.swift in Sources */,
+				F7CAE6AE2B78F4F4004916E3 /* SubjectCollectionViewCell.swift in Sources */,
 				F7CAE69D2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift in Sources */,
 				F76C6B7B2B67E29000EACFEB /* PerformanceViewController.swift in Sources */,
+				F744FD542B7CD3F80054CBC1 /* StudentsModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

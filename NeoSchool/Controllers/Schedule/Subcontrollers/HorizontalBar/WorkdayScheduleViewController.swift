@@ -4,7 +4,7 @@ import SnapKit
 struct StudentDay {
     let id: Int
     let name: String
-    let lessonsCount: String
+    let lessonsCount: Int
 }
 
 class WorkdayScheduleViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -22,14 +22,6 @@ class WorkdayScheduleViewController: UIViewController, UICollectionViewDelegate,
         return collectionView
     }()
     
-    let studentWeek: [StudentDay] = [
-        .init(id: 0, name: "ПН", lessonsCount: "5 уроков"),
-        .init(id: 1, name: "ВТ", lessonsCount: "6 уроков"),
-        .init(id: 2, name: "СР", lessonsCount: "6 уроков"),
-        .init(id: 3, name: "ЧТ", lessonsCount: "4 урока"),
-        .init(id: 4, name: "ПТ", lessonsCount: "5 уроков"),
-        .init(id: 5, name: "СБ", lessonsCount: "3 урока"),
-    ]
     let indexOfSelectedDay: Int = 0
     
 
@@ -53,12 +45,35 @@ class WorkdayScheduleViewController: UIViewController, UICollectionViewDelegate,
         }
         cell.id = studentWeek[indexPath.item].id
         cell.title = studentWeek[indexPath.item].name
-        cell.subtitle = studentWeek[indexPath.item].lessonsCount
+        
+        let lessonsCount = studentWeek[indexPath.item].lessonsCount
+        let lessonsCountEnding = changeEnding(byCount: lessonsCount, threeCases: ["урок", "урока", "уроков"])
+        let lessonsCountSubtitle = "\(lessonsCount) \(lessonsCountEnding)"
+        cell.subtitle = lessonsCountSubtitle
+        
         cell.selectCell(cellID: indexOfSelectedDay)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: weekCollectionView.frame.size.width/6, height: weekCollectionView.frame.size.height)
+    }
+    
+    private func changeEnding(byCount: Int, threeCases: [String]) -> String {
+        guard !(threeCases.count < 3) else { return "" }
+        var result = ""
+        let lastChar = String(byCount).suffix(1)
+        let interger = Int(lastChar) ?? 1
+        switch interger {
+        case 1:
+            result = threeCases[0]
+        case 2...4:
+            result = threeCases[1]
+        case 4...:
+            result = threeCases[2]
+        default:
+            fatalError()
+        }
+        return result
     }
 }
