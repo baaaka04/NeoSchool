@@ -6,8 +6,14 @@ class WeekdayCollectionViewCell: UICollectionViewCell {
     
     var id: Int? = nil
     
-    func selectCell(cellID: Int) {
-        if self.id == cellID { contentView.backgroundColor = .neobisGreen }
+    override var isSelected: Bool {
+        didSet {
+            if self.isSelected {
+                contentView.backgroundColor = .neobisGreen
+            } else {
+                contentView.backgroundColor = .clear
+            }
+        }
     }
     
     var title : String? {
@@ -55,5 +61,4 @@ class WeekdayCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-           
 }

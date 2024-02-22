@@ -10,6 +10,7 @@ struct StrudentLesson {
     let homework : Homework?
     let startTime : String
     let endTime : String
+    let mark : String?
 }
 struct Day {
     let id : Int
@@ -91,17 +92,21 @@ struct StudentSubmission {
     let mark : String
 }
 
-
+struct StudentDay {
+    let id: Int
+    let name: String
+    let lessonsCount: Int
+}
 
 
 // MARK: Mock data
 let dayLessonsMockData : [StrudentLesson] = [
-    .init(id: 137, day: Day(id: 1, name: "Пн"), room: Room(id: 1, name: "111"), subject: SubjectName(id: 1, name: "Биология"), homework: nil, startTime: "08:00", endTime: "08:45"),
-    .init(id: 138, day: Day(id: 1, name: "Пн"), room: Room(id: 2, name: "112"), subject: SubjectName(id: 2, name: "Математика"), homework: nil, startTime: "08:50", endTime: "09:35"),
-    .init(id: 139, day: Day(id: 1, name: "Пн"), room: Room(id: 3, name: "113"), subject: SubjectName(id: 3, name: "Физика"), homework: nil, startTime: "09:40", endTime: "10:25"),
-    .init(id: 140, day: Day(id: 1, name: "Пн"), room: Room(id: 4, name: "114"), subject: SubjectName(id: 4, name: "Химия"), homework: nil, startTime: "10:30", endTime: "11:15"),
-    .init(id: 141, day: Day(id: 1, name: "Пн"), room: Room(id: 5, name: "115"), subject: SubjectName(id: 5, name: "Геометрия"), homework: nil, startTime: "11:20", endTime: "12:05"),
-    .init(id: 142, day: Day(id: 1, name: "Пн"), room: Room(id: 6, name: "211"), subject: SubjectName(id: 6, name: "География"), homework: nil, startTime: "12:10", endTime: "12:55")
+    .init(id: 137, day: Day(id: 1, name: "Пн"), room: Room(id: 1, name: "111"), subject: SubjectName(id: 1, name: "Биология"), homework: nil, startTime: "08:00", endTime: "08:45", mark: "5"),
+    .init(id: 138, day: Day(id: 1, name: "Пн"), room: Room(id: 2, name: "112"), subject: SubjectName(id: 2, name: "Математика"), homework: nil, startTime: "08:50", endTime: "09:35", mark: "4"),
+    .init(id: 139, day: Day(id: 1, name: "Пн"), room: Room(id: 3, name: "113"), subject: SubjectName(id: 3, name: "Физика"), homework: nil, startTime: "09:40", endTime: "10:25", mark: "3"),
+    .init(id: 140, day: Day(id: 1, name: "Пн"), room: Room(id: 4, name: "114"), subject: SubjectName(id: 4, name: "Химия"), homework: nil, startTime: "10:30", endTime: "11:15", mark: "2"),
+    .init(id: 141, day: Day(id: 1, name: "Пн"), room: Room(id: 5, name: "115"), subject: SubjectName(id: 5, name: "Геометрия"), homework: nil, startTime: "11:20", endTime: "12:05", mark: "H"),
+    .init(id: 142, day: Day(id: 1, name: "Пн"), room: Room(id: 6, name: "211"), subject: SubjectName(id: 6, name: "География"), homework: nil, startTime: "12:10", endTime: "12:55", mark: nil)
 ]
 let studentWeek: [StudentDay] = [
     .init(id: 0, name: "ПН", lessonsCount: 1),

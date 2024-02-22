@@ -44,7 +44,7 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
         cell.title = lessonsDay.subject.name
         cell.subtitle = "\(lessonsDay.startTime) - \(lessonsDay.endTime) · Кабинет: \(lessonsDay.room.name)"
         cell.descr = "Задано: \(lessonsDay.homework?.text ?? "-")"
-        cell.setGrade(to: .four)
+        cell.setGrade(to: Grade(rawValue: lessonsDay.mark ?? "-") ?? .noGrade)
         return cell
     }
     

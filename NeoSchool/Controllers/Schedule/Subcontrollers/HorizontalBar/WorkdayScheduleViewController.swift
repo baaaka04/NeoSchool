@@ -1,11 +1,6 @@
 import UIKit
 import SnapKit
 
-struct StudentDay {
-    let id: Int
-    let name: String
-    let lessonsCount: Int
-}
 
 class WorkdayScheduleViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -51,14 +46,18 @@ class WorkdayScheduleViewController: UIViewController, UICollectionViewDelegate,
         let lessonsCountSubtitle = "\(lessonsCount) \(lessonsCountEnding)"
         cell.subtitle = lessonsCountSubtitle
         
-        cell.selectCell(cellID: indexOfSelectedDay)
+        if indexPath.item == 0 && !cell.isSelected {
+            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredHorizontally)
+            cell.isSelected = true
+        }
+        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: weekCollectionView.frame.size.width/6, height: weekCollectionView.frame.size.height)
     }
-    
+        
     private func changeEnding(byCount: Int, threeCases: [String]) -> String {
         guard !(threeCases.count < 3) else { return "" }
         var result = ""
