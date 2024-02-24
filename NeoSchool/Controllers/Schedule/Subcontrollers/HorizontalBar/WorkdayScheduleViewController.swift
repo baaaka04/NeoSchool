@@ -4,6 +4,16 @@ import SnapKit
 
 class WorkdayScheduleViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    let studentWeekAPI = StudentWeekAPI()
+    var studentWeek : [StudentDay]?
+    
+    private func getStudentWeek() {
+        Task {
+            self.studentWeek = try await studentWeekAPI.getStudentWeek()
+            weekCollectionView.reloadData()
+        }
+    }
+    
     lazy var weekCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 0
@@ -17,8 +27,8 @@ class WorkdayScheduleViewController: UIViewController, UICollectionViewDelegate,
         return collectionView
     }()
     
-    let indexOfSelectedDay: Int = 0
-    
+    // Объявляем о возможности слушать события действия в данном классе
+    weak var delegate: WorkdayScheduleViewDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,14 +38,17 @@ class WorkdayScheduleViewController: UIViewController, UICollectionViewDelegate,
         weekCollectionView.snp.makeConstraints { make in
             make.centerX.centerY.width.height.equalToSuperview()
         }
+        getStudentWeek()
     }
         
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        studentWeek.count
+        studentWeek?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = weekCollectionView.dequeueReusableCell(withReuseIdentifier: WeekdayCollectionViewCell.identifier, for: indexPath) as? WeekdayCollectionViewCell else {
+        guard let cell = weekCollectionView.dequeueReusableCell(withReuseIdentifier: WeekdayCollectionViewCell.identifier, for: indexPath) as? WeekdayCollectionViewCell,
+              let studentWeek
+        else {
             return WeekdayCollectionViewCell(frame: .zero)
         }
         cell.id = studentWeek[indexPath.item].id
@@ -57,6 +70,10 @@ class WorkdayScheduleViewController: UIViewController, UICollectionViewDelegate,
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: weekCollectionView.frame.size.width/6, height: weekCollectionView.frame.size.height)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.dayDidSelected(day: indexPath.item + 1)
+    }
         
     private func changeEnding(byCount: Int, threeCases: [String]) -> String {
         guard !(threeCases.count < 3) else { return "" }
@@ -75,4 +92,8 @@ class WorkdayScheduleViewController: UIViewController, UICollectionViewDelegate,
         }
         return result
     }
+}
+
+protocol WorkdayScheduleViewDelegate: AnyObject {
+    func dayDidSelected(day: Int)
 }

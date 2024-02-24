@@ -1,7 +1,17 @@
 import UIKit
 import SnapKit
 
-class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, WorkdayScheduleViewDelegate {
+        
+    let dayScheduleAPI = DayScheduleAPI()
+    var dayLessonsData : [StudentLesson]?
+    
+    private func getLessonData(forDay day: Int) {
+        Task {
+            dayLessonsData = try await dayScheduleAPI.getLessons(forDayId: day)
+            subjectCollectionView.reloadData()
+        }
+    }
     
     lazy var subjectCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -27,20 +37,21 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
         subjectCollectionView.snp.makeConstraints { make in
             make.centerX.centerY.height.width.equalToSuperview()
         }
+        
+        getLessonData(forDay: 1)
     }
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        dayLessonsMockData.count
+        dayLessonsData?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = subjectCollectionView.dequeueReusableCell(withReuseIdentifier: SubjectCollectionViewCell.identifier, for: indexPath) as? SubjectCollectionViewCell else {
+        guard let cell = subjectCollectionView.dequeueReusableCell(withReuseIdentifier: SubjectCollectionViewCell.identifier, for: indexPath) as? SubjectCollectionViewCell,
+              let lessonsDay = dayLessonsData?[indexPath.item] else {
             return SubjectCollectionViewCell(frame: .zero)
         }
-        let ind = indexPath.item
-        let lessonsDay = dayLessonsMockData[ind]
-        cell.id = ind + 1
+        cell.id = indexPath.item + 1
         cell.title = lessonsDay.subject.name
         cell.subtitle = "\(lessonsDay.startTime) - \(lessonsDay.endTime) · Кабинет: \(lessonsDay.room.name)"
         cell.descr = "Задано: \(lessonsDay.homework?.text ?? "-")"
@@ -52,5 +63,8 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
         return CGSize(width: view.frame.size.width-32, height: 75)
     }
         
-    
+    func dayDidSelected(day: Int) {
+        getLessonData(forDay: day)
+    }
+
 }

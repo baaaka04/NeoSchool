@@ -17,7 +17,7 @@ class WeekdayCollectionViewCell: UICollectionViewCell {
     }
     
     var title : String? {
-        didSet {titleLabel.text = title}
+        didSet {titleLabel.text = title?.uppercased()}
     }
     
     private let titleLabel: UILabel = {

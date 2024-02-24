@@ -54,6 +54,8 @@ final class ScheduleViewController: SchoolNavViewController {
         dayScheduleList.view.layer.shadowOffset = .zero
         dayScheduleList.view.layer.shadowRadius = 10
         
+        // Подписываем класс dayScheduleList на события в классе weekBar
+        weekBar.delegate = dayScheduleList
     }
 
 

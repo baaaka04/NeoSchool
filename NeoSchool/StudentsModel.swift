@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 // MARK: Student's lesson in the list of subjects
-struct StrudentLesson {
+struct StudentLesson: Codable {
     let id : Int
     let day : Day
     let room : Room
@@ -12,19 +12,19 @@ struct StrudentLesson {
     let endTime : String
     let mark : String?
 }
-struct Day {
+struct Day: Codable {
     let id : Int
     let name : String
 }
-struct Room {
+struct Room: Codable {
     let id : Int
     let name : String
 }
-struct SubjectName {
+struct SubjectName: Codable {
     let id : Int
     let name : String
 }
-struct Homework {
+struct Homework: Codable {
     let id : Int
     let text : String
 }
@@ -92,7 +92,7 @@ struct StudentSubmission {
     let mark : String
 }
 
-struct StudentDay {
+struct StudentDay: Codable {
     let id: Int
     let name: String
     let lessonsCount: Int
@@ -100,7 +100,7 @@ struct StudentDay {
 
 
 // MARK: Mock data
-let dayLessonsMockData : [StrudentLesson] = [
+let dayLessonsMockData : [StudentLesson] = [
     .init(id: 137, day: Day(id: 1, name: "Пн"), room: Room(id: 1, name: "111"), subject: SubjectName(id: 1, name: "Биология"), homework: nil, startTime: "08:00", endTime: "08:45", mark: "5"),
     .init(id: 138, day: Day(id: 1, name: "Пн"), room: Room(id: 2, name: "112"), subject: SubjectName(id: 2, name: "Математика"), homework: nil, startTime: "08:50", endTime: "09:35", mark: "4"),
     .init(id: 139, day: Day(id: 1, name: "Пн"), room: Room(id: 3, name: "113"), subject: SubjectName(id: 3, name: "Физика"), homework: nil, startTime: "09:40", endTime: "10:25", mark: "3"),
