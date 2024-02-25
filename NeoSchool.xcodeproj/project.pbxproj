@@ -12,6 +12,8 @@
 		F76081432B88DFC300B6D792 /* StudentWeekAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76081422B88DFC300B6D792 /* StudentWeekAPI.swift */; };
 		F76081462B88E46000B6D792 /* NetworkAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76081452B88E46000B6D792 /* NetworkAPI.swift */; };
 		F76081482B8A170F00B6D792 /* KEYS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76081472B8A170F00B6D792 /* KEYS.swift */; };
+		F760814A2B8B73DA00B6D792 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76081492B8B73DA00B6D792 /* StringExtension.swift */; };
+		F760814C2B8B75CA00B6D792 /* SubjectDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F760814B2B8B75CA00B6D792 /* SubjectDetailsViewController.swift */; };
 		F76C6B632B67D06900EACFEB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C6B622B67D06900EACFEB /* AppDelegate.swift */; };
 		F76C6B652B67D06900EACFEB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C6B642B67D06900EACFEB /* SceneDelegate.swift */; };
 		F76C6B672B67D06900EACFEB /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C6B662B67D06900EACFEB /* MainTabBarViewController.swift */; };
@@ -56,6 +58,8 @@
 		F76081422B88DFC300B6D792 /* StudentWeekAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentWeekAPI.swift; sourceTree = "<group>"; };
 		F76081452B88E46000B6D792 /* NetworkAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAPI.swift; sourceTree = "<group>"; };
 		F76081472B8A170F00B6D792 /* KEYS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KEYS.swift; sourceTree = "<group>"; };
+		F76081492B8B73DA00B6D792 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		F760814B2B8B75CA00B6D792 /* SubjectDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectDetailsViewController.swift; sourceTree = "<group>"; };
 		F76C6B5F2B67D06900EACFEB /* NeoSchool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NeoSchool.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F76C6B622B67D06900EACFEB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F76C6B642B67D06900EACFEB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -211,6 +215,7 @@
 		F7CAE6A32B74F528004916E3 /* Subcontrollers */ = {
 			isa = PBXGroup;
 			children = (
+				F760814B2B8B75CA00B6D792 /* SubjectDetailsViewController.swift */,
 				F7CAE6A92B78EFBC004916E3 /* HorizontalBar */,
 				F7CAE6AC2B78F37A004916E3 /* VerticalBar */,
 			);
@@ -220,6 +225,7 @@
 		F7CAE6A62B7634ED004916E3 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				F76081492B8B73DA00B6D792 /* StringExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -354,7 +360,9 @@
 				F7CAE69D2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift in Sources */,
 				F76081432B88DFC300B6D792 /* StudentWeekAPI.swift in Sources */,
 				F76C6B7B2B67E29000EACFEB /* PerformanceViewController.swift in Sources */,
+				F760814A2B8B73DA00B6D792 /* StringExtension.swift in Sources */,
 				F76081412B877D3A00B6D792 /* DayScheduleAPI.swift in Sources */,
+				F760814C2B8B75CA00B6D792 /* SubjectDetailsViewController.swift in Sources */,
 				F744FD542B7CD3F80054CBC1 /* StudentsModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

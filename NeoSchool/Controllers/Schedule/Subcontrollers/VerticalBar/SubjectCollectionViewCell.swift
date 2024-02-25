@@ -11,10 +11,12 @@ class SubjectCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    private let titleLabel: UILabel = {
+    let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Jost-Medium", size: 20)
         label.textColor = .black
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.numberOfLines = 0
         return label
     }()
     
@@ -62,35 +64,50 @@ class SubjectCollectionViewCell: UICollectionViewCell {
     private func setupUI () {
         contentView.backgroundColor = .clear
         contentView.snp.makeConstraints { make in
-            make.width.height.equalToSuperview()
+            make.width.height.top.equalToSuperview()
             make.centerX.equalToSuperview()
+        }
+        
+        addSubview(gradeView)
+        let gradeViewWidth = CGFloat(48)
+        let gradeViewLeftMargin = CGFloat(16)
+        gradeView.snp.makeConstraints { make in
+            make.right.equalToSuperview()
+            make.centerY.equalToSuperview()
+            make.height.equalTo(72)
+            make.width.equalTo(gradeViewWidth)
         }
         
         addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview()
+            make.left.top.equalToSuperview()
+            make.width.equalToSuperview().inset( (gradeViewWidth + gradeViewLeftMargin) / 2 )
         }
         
         addSubview(subtitleLabel)
         subtitleLabel.snp.makeConstraints { make in
             make.left.equalToSuperview()
-            make.top.equalTo(titleLabel.snp.bottom)
+            make.top.equalTo(titleLabel.snp.bottom).offset(4)
+            make.height.equalTo(23)
         }
         
         addSubview(descrLabel)
         descrLabel.snp.makeConstraints { make in
             make.left.equalToSuperview()
-            make.top.equalTo(subtitleLabel.snp.bottom)
+            make.top.equalTo(subtitleLabel.snp.bottom).offset(4)
+            make.height.equalTo(20)
         }
         
-        addSubview(gradeView)
-        gradeView.snp.makeConstraints { make in
-            make.right.equalToSuperview()
-            make.centerY.equalToSuperview()
-            make.height.equalTo(72)
-            make.width.equalTo(48)
-        }
     }
        
     
+}
+
+extension SubjectCollectionViewCell {
+    class func getProductHeightForWidth(title: String, font: UIFont, minHeight: CGFloat, width: CGFloat) -> CGFloat {
+      var resultingHeight: CGFloat = minHeight
+      let titleHeight = title.getHeight(font: font, width: width)
+      resultingHeight += titleHeight
+      return resultingHeight
+  }
 }

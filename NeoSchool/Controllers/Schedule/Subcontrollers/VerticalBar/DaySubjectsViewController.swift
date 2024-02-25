@@ -18,6 +18,7 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 24
         layout.scrollDirection = .vertical
+        layout.sectionInset = UIEdgeInsets(top: 24, left: 16, bottom: 0, right: 16)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -59,12 +60,28 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.size.width-32, height: 75)
+    struct Constants {
+        static let subjectCellHorizontalMargin: CGFloat = 16
+        static let gradeLeftMargin : CGFloat = 16
+        static let gradeViewWidth : CGFloat = 48
+        static let subjectCellMinHeight : CGFloat = 51
     }
-        
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        guard let lessonsDay = dayLessonsData?[indexPath.item] else { return .zero }
+        let cellWidth = view.frame.size.width - Constants.subjectCellHorizontalMargin * 2
+        let newHeight = SubjectCollectionViewCell.getProductHeightForWidth(
+            title: lessonsDay.subject.name,
+            font: UIFont(name: "Jost-Medium", size: 20) ?? .systemFont(ofSize: 20),
+            minHeight: Constants.subjectCellMinHeight,
+            width: cellWidth - Constants.gradeViewWidth - Constants.gradeLeftMargin
+        )
+        return CGSize(width: cellWidth, height: newHeight)
+    }
+            
     func dayDidSelected(day: Int) {
         getLessonData(forDay: day)
     }
-
 }
+
+
