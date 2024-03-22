@@ -33,10 +33,31 @@ class NetworkAPI {
         request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
         let (data, _) = try await URLSession.shared.data(for: request)
-        
+                
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         let decodedData : [StudentLesson] = try decoder.decode([StudentLesson].self, from: data)
+        
+        return decodedData
+    }
+    
+    // GET-REQUEST
+    // ENDPOINT /schedule/teacher/lessons/{lessonID}/
+    func loadLesssonDetail(forLesson lesson: Int) async throws -> StudentLessonDetail {
+        let URLstirng = "https://neobook.online/neoschool/schedule/student/lessons/\(lesson)/"
+        
+        guard let url = URL(string: URLstirng) else {
+            throw URLError(.badURL)
+        }
+        var request = URLRequest(url: url)
+        request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+                
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let decodedData : StudentLessonDetail = try decoder.decode(StudentLessonDetail.self, from: data)
         
         return decodedData
     }

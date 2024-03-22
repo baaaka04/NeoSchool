@@ -6,13 +6,18 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
     let dayScheduleAPI = DayScheduleAPI()
     var dayLessonsData : [StudentLesson]?
     
-    private func getLessonData(forDay day: Int) {
+        
+    private func getLessonData(forDayID day: Int) {
         Task {
-            dayLessonsData = try await dayScheduleAPI.getLessons(forDayId: day)
+            do {
+                dayLessonsData = try await dayScheduleAPI.getLessons(forDayId: day)
+            } catch {
+                print(error)
+            }
             subjectCollectionView.reloadData()
         }
     }
-    
+        
     lazy var subjectCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 0
@@ -39,7 +44,7 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
             make.centerX.centerY.height.width.equalToSuperview()
         }
         
-        getLessonData(forDay: 1)
+        getLessonData(forDayID: 1)
     }
     
     
@@ -78,10 +83,30 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
         )
         return CGSize(width: cellWidth, height: newHeight)
     }
+    
+    // TAP ON A LESSON IN THE SCHEDULE LIST
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let subject = dayLessonsData?[indexPath.item] else { return }
+        
+        let viewModel = SubjectDetailsViewModel(lessonId: subject.id, lessonAPI: dayScheduleAPI)
+        let subjectDetailsVC = SubjectDetailsViewController(viewModel: viewModel)
+
+        //Setting up a custom image for the back button
+        let image = UIImage(named: "regularchevron-left")
+        let backButton = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(didTapBackButton))
+        backButton.tintColor = UIColor.neobisDarkGray
+        subjectDetailsVC.navigationItem.leftBarButtonItem = backButton
+        
+        
+        self.navigationController?.pushViewController(subjectDetailsVC, animated: true)
+    }
             
     func dayDidSelected(day: Int) {
-        getLessonData(forDay: day)
+        getLessonData(forDayID: day)
+    }
+    
+    @objc private func didTapBackButton () {
+        self.navigationController?.popViewController(animated: true)
+        self.tabBarController?.tabBar.isHidden = false
     }
 }
-
-
