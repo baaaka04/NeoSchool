@@ -44,12 +44,15 @@
 		F76C6BD72B6A96A900EACFEB /* Jost-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BC52B6A96A900EACFEB /* Jost-SemiBoldItalic.ttf */; };
 		F76C6BD82B6A96A900EACFEB /* Jost-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BC62B6A96A900EACFEB /* Jost-SemiBold.ttf */; };
 		F76C6BD92B6A96A900EACFEB /* Jost-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BC72B6A96A900EACFEB /* Jost-MediumItalic.ttf */; };
+		F79083072B9F2C8300B9386E /* NeobisUILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79083062B9F2C8300B9386E /* NeobisUILabel.swift */; };
+		F79083092B9F31B400B9386E /* HomeworkPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79083082B9F31B400B9386E /* HomeworkPanelViewController.swift */; };
 		F7CAE69D2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE69C2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift */; };
 		F7CAE6A12B73DD01004916E3 /* WorkdayScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE6A02B73DD01004916E3 /* WorkdayScheduleViewController.swift */; };
 		F7CAE6A52B762C81004916E3 /* SchoolNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE6A42B762C81004916E3 /* SchoolNavViewController.swift */; };
 		F7CAE6AB2B78F13F004916E3 /* DaySubjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE6AA2B78F13F004916E3 /* DaySubjectsViewController.swift */; };
 		F7CAE6AE2B78F4F4004916E3 /* SubjectCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE6AD2B78F4F4004916E3 /* SubjectCollectionViewCell.swift */; };
 		F7CAE6B02B791D50004916E3 /* GradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE6AF2B791D50004916E3 /* GradeView.swift */; };
+		F7D00B272B9B58370072FAB2 /* SubjectDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D00B262B9B58370072FAB2 /* SubjectDetailsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,12 +93,15 @@
 		F76C6BC52B6A96A900EACFEB /* Jost-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
 		F76C6BC62B6A96A900EACFEB /* Jost-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-SemiBold.ttf"; sourceTree = "<group>"; };
 		F76C6BC72B6A96A900EACFEB /* Jost-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-MediumItalic.ttf"; sourceTree = "<group>"; };
+		F79083062B9F2C8300B9386E /* NeobisUILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeobisUILabel.swift; sourceTree = "<group>"; };
+		F79083082B9F31B400B9386E /* HomeworkPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeworkPanelViewController.swift; sourceTree = "<group>"; };
 		F7CAE69C2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdayCollectionViewCell.swift; sourceTree = "<group>"; };
 		F7CAE6A02B73DD01004916E3 /* WorkdayScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkdayScheduleViewController.swift; sourceTree = "<group>"; };
 		F7CAE6A42B762C81004916E3 /* SchoolNavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolNavViewController.swift; sourceTree = "<group>"; };
 		F7CAE6AA2B78F13F004916E3 /* DaySubjectsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaySubjectsViewController.swift; sourceTree = "<group>"; };
 		F7CAE6AD2B78F4F4004916E3 /* SubjectCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectCollectionViewCell.swift; sourceTree = "<group>"; };
 		F7CAE6AF2B791D50004916E3 /* GradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeView.swift; sourceTree = "<group>"; };
+		F7D00B262B9B58370072FAB2 /* SubjectDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectDetailsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +150,7 @@
 				F76C6B642B67D06900EACFEB /* SceneDelegate.swift */,
 				F76C6B662B67D06900EACFEB /* MainTabBarViewController.swift */,
 				F744FD532B7CD3F80054CBC1 /* StudentsModel.swift */,
+				F79083062B9F2C8300B9386E /* NeobisUILabel.swift */,
 				F76081472B8A170F00B6D792 /* KEYS.swift */,
 				F76081442B88E08100B6D792 /* API */,
 				F7CAE6A62B7634ED004916E3 /* Extensions */,
@@ -215,7 +222,9 @@
 		F7CAE6A32B74F528004916E3 /* Subcontrollers */ = {
 			isa = PBXGroup;
 			children = (
+				F7D00B262B9B58370072FAB2 /* SubjectDetailsViewModel.swift */,
 				F760814B2B8B75CA00B6D792 /* SubjectDetailsViewController.swift */,
+				F79083082B9F31B400B9386E /* HomeworkPanelViewController.swift */,
 				F7CAE6A92B78EFBC004916E3 /* HorizontalBar */,
 				F7CAE6AC2B78F37A004916E3 /* VerticalBar */,
 			);
@@ -346,6 +355,8 @@
 			files = (
 				F7CAE6A12B73DD01004916E3 /* WorkdayScheduleViewController.swift in Sources */,
 				F76081482B8A170F00B6D792 /* KEYS.swift in Sources */,
+				F79083072B9F2C8300B9386E /* NeobisUILabel.swift in Sources */,
+				F79083092B9F31B400B9386E /* HomeworkPanelViewController.swift in Sources */,
 				F7CAE6AB2B78F13F004916E3 /* DaySubjectsViewController.swift in Sources */,
 				F76C6B7D2B67E2C500EACFEB /* ProfileViewController.swift in Sources */,
 				F7CAE6B02B791D50004916E3 /* GradeView.swift in Sources */,
@@ -356,6 +367,7 @@
 				F76C6B652B67D06900EACFEB /* SceneDelegate.swift in Sources */,
 				F76C6B862B694DF900EACFEB /* EllipseView.swift in Sources */,
 				F76C6B792B67E24600EACFEB /* ScheduleViewController.swift in Sources */,
+				F7D00B272B9B58370072FAB2 /* SubjectDetailsViewModel.swift in Sources */,
 				F7CAE6AE2B78F4F4004916E3 /* SubjectCollectionViewCell.swift in Sources */,
 				F7CAE69D2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift in Sources */,
 				F76081432B88DFC300B6D792 /* StudentWeekAPI.swift in Sources */,
@@ -520,7 +532,6 @@
 				INFOPLIST_FILE = NeoSchool/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -548,7 +559,6 @@
 				INFOPLIST_FILE = NeoSchool/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
