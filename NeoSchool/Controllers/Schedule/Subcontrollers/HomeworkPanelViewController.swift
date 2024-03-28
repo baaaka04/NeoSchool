@@ -19,8 +19,10 @@ class HomeworkPanelViewController: UIViewController {
     
     lazy var homeworkbodyLabel: GrayUILabel = {
         let homeworkbodyLabel = GrayUILabel()
-        homeworkbodyLabel.text = "Не задано"
         homeworkbodyLabel.font = UIFont(name: "Jost-Regular", size: 18)
+        homeworkbodyLabel.numberOfLines = 2
+        homeworkbodyLabel.lineBreakMode = .byWordWrapping
+        homeworkbodyLabel.textAlignment = .left
         return homeworkbodyLabel
     }()
     
@@ -47,9 +49,9 @@ class HomeworkPanelViewController: UIViewController {
         
         view.addSubview(homeworkbodyLabel)
         homeworkbodyLabel.snp.makeConstraints { make in
-            make.height.equalTo(22)
-            make.left.equalToSuperview().offset(16)
             make.top.equalTo(titleLabel.snp.bottom).offset(8)
+            make.width.equalToSuperview().offset(-32)
+            make.centerX.equalToSuperview()
         }
 //MARK: Label and button appears only for a teacher
 //        view.addSubview(editHomeworkLabel)

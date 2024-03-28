@@ -82,6 +82,7 @@ class SubjectDetailsViewController: UIViewController {
         uploadFilesButton.setTitle("Отправить задание", for: .normal)
         uploadFilesButton.backgroundColor = .neobisLightPurple
         uploadFilesButton.layer.cornerRadius = 16
+        uploadFilesButton.titleLabel?.font = UIFont(name: "Jost-Regular", size: 20)
         
         view.addSubview(uploadFilesButton)
         
@@ -95,13 +96,14 @@ class SubjectDetailsViewController: UIViewController {
         let addFilesButton = UIButton()
         addFilesButton.backgroundColor = .white
         addFilesButton.layer.cornerRadius = 16
-        addFilesButton.layer.borderWidth = 2.0
+        addFilesButton.layer.borderWidth = 1.0
         addFilesButton.layer.borderColor = UIColor.neobisPurple.cgColor
         
         let plusIcon = UIImage(systemName: "plus.circle")?.withTintColor(.neobisPurple, renderingMode: .alwaysOriginal)
         addFilesButton.setImage(plusIcon, for: .normal)
         addFilesButton.setTitle(" Прикрепить файлы", for: .normal)
         addFilesButton.setTitleColor(.neobisPurple, for: .normal)
+        addFilesButton.titleLabel?.font = UIFont(name: "Jost-Regular", size: 20)
 
         view.addSubview(addFilesButton)
         
@@ -115,12 +117,12 @@ class SubjectDetailsViewController: UIViewController {
     
     private func fillLabelsWithData() {
         titleLabel.text = viewModel.subjectName
-        firstSubTitleLabel.text = viewModel.teacherName
-        secondSubTitleLabel.text = viewModel.homeworkTopic
+        firstSubTitleLabel.attributedText = viewModel.teacherName
+        secondSubTitleLabel.attributedText = viewModel.homeworkTopic
         deadlineLabel.text = viewModel.homeworkDeadline
-        markLabel.text = viewModel.homeworkMark
+        markLabel.attributedText = viewModel.homeworkMark
         
-        homeworkPanel.homeworkText = viewModel.homeworkText
+        homeworkPanel.homeworkText = viewModel.homeworkText ?? "Не задано"
     }
         
     private func setupConstraints() {
