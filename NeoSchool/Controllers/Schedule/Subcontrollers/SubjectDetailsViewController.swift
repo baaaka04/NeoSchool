@@ -78,15 +78,15 @@ class SubjectDetailsViewController: UIViewController {
         }
     }
     private func setupButtonsUI () {
-        let uploadFilesButton = UIButton()
-        uploadFilesButton.setTitle("Отправить задание", for: .normal)
-        uploadFilesButton.backgroundColor = .neobisLightPurple
-        uploadFilesButton.layer.cornerRadius = 16
-        uploadFilesButton.titleLabel?.font = UIFont(name: "Jost-Regular", size: 20)
+        let uploadButton = UIButton()
+        uploadButton.setTitle("Отправить задание", for: .normal)
+        uploadButton.backgroundColor = .neobisLightPurple
+        uploadButton.layer.cornerRadius = 16
+        uploadButton.titleLabel?.font = UIFont(name: "Jost-Regular", size: 20)
         
-        view.addSubview(uploadFilesButton)
+        view.addSubview(uploadButton)
         
-        uploadFilesButton.snp.makeConstraints { make in
+        uploadButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().offset(-32)
             make.height.equalTo(52)
@@ -104,6 +104,14 @@ class SubjectDetailsViewController: UIViewController {
         addFilesButton.setTitle(" Прикрепить файлы", for: .normal)
         addFilesButton.setTitleColor(.neobisPurple, for: .normal)
         addFilesButton.titleLabel?.font = UIFont(name: "Jost-Regular", size: 20)
+        
+        let openMediaAction = UIAction(title: "Медиатека") { _ in print("Медиатека was tapped") }
+        let takePhotoAction = UIAction(title: "Снять фото или видео") { _ in print("Снять фото или видео was tapped") }
+        let selectFilesAction = UIAction(title: "Выбор файлов") { _ in print("Выбор файлов was tapped") }
+        
+        let menu = UIMenu(options: .displayInline, children: [openMediaAction , takePhotoAction , selectFilesAction])
+        addFilesButton.menu = menu
+        addFilesButton.showsMenuAsPrimaryAction = true
 
         view.addSubview(addFilesButton)
         
@@ -111,7 +119,7 @@ class SubjectDetailsViewController: UIViewController {
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().offset(-32)
             make.height.equalTo(52)
-            make.bottom.equalTo(uploadFilesButton.snp.top).offset(-12)
+            make.bottom.equalTo(uploadButton.snp.top).offset(-12)
         }
     }
     
