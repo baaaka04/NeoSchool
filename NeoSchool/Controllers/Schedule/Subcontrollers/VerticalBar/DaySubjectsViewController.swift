@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, WorkdayScheduleViewDelegate {
+class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         
     let dayScheduleAPI = DayScheduleAPI()
     var dayLessonsData : [StudentLesson]?
@@ -88,7 +88,7 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let subject = dayLessonsData?[indexPath.item] else { return }
         
-        let viewModel = SubjectDetailsViewModel(lessonId: subject.id, lessonAPI: dayScheduleAPI)
+        let viewModel = SubjectDetailsViewModel(lessonId: subject.id, lessonAPI: self.dayScheduleAPI)
         let subjectDetailsVC = SubjectDetailsViewController(viewModel: viewModel)
 
         //Setting up a custom image for the back button
@@ -101,12 +101,16 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
         self.navigationController?.pushViewController(subjectDetailsVC, animated: true)
     }
             
-    func dayDidSelected(day: Int) {
-        getLessonData(forDayID: day)
-    }
-    
     @objc private func didTapBackButton () {
         self.navigationController?.popViewController(animated: true)
         self.tabBarController?.tabBar.isHidden = false
     }
+}
+
+extension DaySubjectsViewController: WorkdayScheduleViewDelegate {
+    
+    func dayDidSelected(day: Int) {
+        getLessonData(forDayID: day)
+    }
+
 }

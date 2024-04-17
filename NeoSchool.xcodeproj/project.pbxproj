@@ -24,7 +24,6 @@
 		F76C6B7B2B67E29000EACFEB /* PerformanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C6B7A2B67E29000EACFEB /* PerformanceViewController.swift */; };
 		F76C6B7D2B67E2C500EACFEB /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C6B7C2B67E2C500EACFEB /* ProfileViewController.swift */; };
 		F76C6B802B693D4900EACFEB /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = F76C6B7F2B693D4900EACFEB /* SnapKit */; };
-		F76C6B822B693D4900EACFEB /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = F76C6B812B693D4900EACFEB /* SnapKit-Dynamic */; };
 		F76C6B862B694DF900EACFEB /* EllipseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C6B852B694DF900EACFEB /* EllipseView.swift */; };
 		F76C6BC82B6A96A900EACFEB /* Jost-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BB62B6A96A900EACFEB /* Jost-BoldItalic.ttf */; };
 		F76C6BC92B6A96A900EACFEB /* Jost-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BB72B6A96A900EACFEB /* Jost-Bold.ttf */; };
@@ -53,6 +52,9 @@
 		F7CAE6AE2B78F4F4004916E3 /* SubjectCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE6AD2B78F4F4004916E3 /* SubjectCollectionViewCell.swift */; };
 		F7CAE6B02B791D50004916E3 /* GradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE6AF2B791D50004916E3 /* GradeView.swift */; };
 		F7D00B272B9B58370072FAB2 /* SubjectDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D00B262B9B58370072FAB2 /* SubjectDetailsViewModel.swift */; };
+		F7D6CE302BC97E64000CBB1F /* AttachedFilesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D6CE2F2BC97E64000CBB1F /* AttachedFilesModel.swift */; };
+		F7F581632BB84D6B00FFC6C9 /* AttachedFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F581622BB84D6B00FFC6C9 /* AttachedFilesViewController.swift */; };
+		F7F581662BBC49D000FFC6C9 /* AttachedFilesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F581652BBC49D000FFC6C9 /* AttachedFilesCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -102,6 +104,9 @@
 		F7CAE6AD2B78F4F4004916E3 /* SubjectCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectCollectionViewCell.swift; sourceTree = "<group>"; };
 		F7CAE6AF2B791D50004916E3 /* GradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeView.swift; sourceTree = "<group>"; };
 		F7D00B262B9B58370072FAB2 /* SubjectDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectDetailsViewModel.swift; sourceTree = "<group>"; };
+		F7D6CE2F2BC97E64000CBB1F /* AttachedFilesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachedFilesModel.swift; sourceTree = "<group>"; };
+		F7F581622BB84D6B00FFC6C9 /* AttachedFilesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachedFilesViewController.swift; sourceTree = "<group>"; };
+		F7F581652BBC49D000FFC6C9 /* AttachedFilesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachedFilesCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,7 +115,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F76C6B802B693D4900EACFEB /* SnapKit in Frameworks */,
-				F76C6B822B693D4900EACFEB /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,9 +153,9 @@
 				F76C6B622B67D06900EACFEB /* AppDelegate.swift */,
 				F76C6B642B67D06900EACFEB /* SceneDelegate.swift */,
 				F76C6B662B67D06900EACFEB /* MainTabBarViewController.swift */,
-				F744FD532B7CD3F80054CBC1 /* StudentsModel.swift */,
 				F79083062B9F2C8300B9386E /* NeobisUILabel.swift */,
 				F76081472B8A170F00B6D792 /* KEYS.swift */,
+				F7E562592BD029B20029B822 /* Models */,
 				F76081442B88E08100B6D792 /* API */,
 				F7CAE6A62B7634ED004916E3 /* Extensions */,
 				F76C6BDA2B6BCC4500EACFEB /* Views */,
@@ -222,9 +226,6 @@
 		F7CAE6A32B74F528004916E3 /* Subcontrollers */ = {
 			isa = PBXGroup;
 			children = (
-				F7D00B262B9B58370072FAB2 /* SubjectDetailsViewModel.swift */,
-				F760814B2B8B75CA00B6D792 /* SubjectDetailsViewController.swift */,
-				F79083082B9F31B400B9386E /* HomeworkPanelViewController.swift */,
 				F7CAE6A92B78EFBC004916E3 /* HorizontalBar */,
 				F7CAE6AC2B78F37A004916E3 /* VerticalBar */,
 			);
@@ -253,8 +254,38 @@
 			children = (
 				F7CAE6AA2B78F13F004916E3 /* DaySubjectsViewController.swift */,
 				F7CAE6AD2B78F4F4004916E3 /* SubjectCollectionViewCell.swift */,
+				F7F581612BB8474600FFC6C9 /* SubjectDetails */,
 			);
 			path = VerticalBar;
+			sourceTree = "<group>";
+		};
+		F7E562592BD029B20029B822 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F7D6CE2F2BC97E64000CBB1F /* AttachedFilesModel.swift */,
+				F744FD532B7CD3F80054CBC1 /* StudentsModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F7F581612BB8474600FFC6C9 /* SubjectDetails */ = {
+			isa = PBXGroup;
+			children = (
+				F7D00B262B9B58370072FAB2 /* SubjectDetailsViewModel.swift */,
+				F760814B2B8B75CA00B6D792 /* SubjectDetailsViewController.swift */,
+				F79083082B9F31B400B9386E /* HomeworkPanelViewController.swift */,
+				F7F581642BBC494D00FFC6C9 /* AttachedFiles */,
+			);
+			path = SubjectDetails;
+			sourceTree = "<group>";
+		};
+		F7F581642BBC494D00FFC6C9 /* AttachedFiles */ = {
+			isa = PBXGroup;
+			children = (
+				F7F581622BB84D6B00FFC6C9 /* AttachedFilesViewController.swift */,
+				F7F581652BBC49D000FFC6C9 /* AttachedFilesCollectionViewCell.swift */,
+			);
+			path = AttachedFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,7 +306,6 @@
 			name = NeoSchool;
 			packageProductDependencies = (
 				F76C6B7F2B693D4900EACFEB /* SnapKit */,
-				F76C6B812B693D4900EACFEB /* SnapKit-Dynamic */,
 			);
 			productName = NeoSchool;
 			productReference = F76C6B5F2B67D06900EACFEB /* NeoSchool.app */;
@@ -357,6 +387,8 @@
 				F76081482B8A170F00B6D792 /* KEYS.swift in Sources */,
 				F79083072B9F2C8300B9386E /* NeobisUILabel.swift in Sources */,
 				F79083092B9F31B400B9386E /* HomeworkPanelViewController.swift in Sources */,
+				F7F581662BBC49D000FFC6C9 /* AttachedFilesCollectionViewCell.swift in Sources */,
+				F7F581632BB84D6B00FFC6C9 /* AttachedFilesViewController.swift in Sources */,
 				F7CAE6AB2B78F13F004916E3 /* DaySubjectsViewController.swift in Sources */,
 				F76C6B7D2B67E2C500EACFEB /* ProfileViewController.swift in Sources */,
 				F7CAE6B02B791D50004916E3 /* GradeView.swift in Sources */,
@@ -366,6 +398,7 @@
 				F76C6B632B67D06900EACFEB /* AppDelegate.swift in Sources */,
 				F76C6B652B67D06900EACFEB /* SceneDelegate.swift in Sources */,
 				F76C6B862B694DF900EACFEB /* EllipseView.swift in Sources */,
+				F7D6CE302BC97E64000CBB1F /* AttachedFilesModel.swift in Sources */,
 				F76C6B792B67E24600EACFEB /* ScheduleViewController.swift in Sources */,
 				F7D00B272B9B58370072FAB2 /* SubjectDetailsViewModel.swift in Sources */,
 				F7CAE6AE2B78F4F4004916E3 /* SubjectCollectionViewCell.swift in Sources */,
@@ -534,6 +567,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -561,6 +595,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -613,11 +648,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F76C6B7E2B693D4900EACFEB /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
-		};
-		F76C6B812B693D4900EACFEB /* SnapKit-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F76C6B7E2B693D4900EACFEB /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = "SnapKit-Dynamic";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
