@@ -7,6 +7,7 @@ class SubjectDetailsViewModel: SubjectDetailsViewModelRepresentable {
     weak var lessonAPI: DayScheduleAPI?
     
     var attachedFiles : [AttachedFile] = []
+    var studentComment : String? = "test ios comment"
     
     var subjectName: String {
         lessonDetails?.subject.name ?? ""
@@ -77,6 +78,12 @@ class SubjectDetailsViewModel: SubjectDetailsViewModelRepresentable {
         
         view?.reloadCollectionView()
     }
+    
+    func sendFiles() async throws {
+        guard attachedFiles.count > 0,
+            let homeworkId : Int = lessonDetails?.homework?.id else { throw URLError(.fileDoesNotExist) }
+        try await lessonAPI?.uploadFiles(homeworkId: homeworkId, files: attachedFiles, studentComment: studentComment)
+    }
 
 
 }
@@ -96,6 +103,7 @@ protocol SubjectDetailsViewModelRepresentable: AnyObject {
     
     func add(image: UIImage)
     func remove(file: AttachedFile)
+    func sendFiles() async throws
 }
 
 protocol SubjectDetailsViewModelActionable: AnyObject {

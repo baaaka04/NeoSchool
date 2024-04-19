@@ -159,7 +159,11 @@ class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDel
     }
     
     @objc private func uploadFiles() {
-        print("upload files pressed")
+        Task {
+            do {
+                try await viewModel.sendFiles()
+            } catch { print(error) }
+        }
     }
     
     private func fillLabelsWithData() {
