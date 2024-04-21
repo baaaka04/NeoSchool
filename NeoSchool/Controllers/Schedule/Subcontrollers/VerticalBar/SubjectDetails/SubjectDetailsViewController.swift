@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import PhotosUI
 
 class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
@@ -143,15 +144,28 @@ class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDel
         addFilesButton.setTitleColor(.neobisPurple, for: .normal)
         addFilesButton.titleLabel?.font = UIFont(name: "Jost-Regular", size: 20)
         
-        let openMediaAction = UIAction(title: "Медиатека") { _ in print("Медиатека was tapped") }
+        let openMediaAction = UIAction(title: "Медиатека") { [weak self] _ in
+            var configuration = PHPickerConfiguration()
+            configuration.selectionLimit = 10
+            configuration.selection = .ordered
+            configuration.filter = .images
+            
+            let picker = PHPickerViewController(configuration: configuration)
+            picker.delegate = self
+            self?.present(picker, animated: true)
+        }
         let takePhotoAction = UIAction(title: "Снять фото или видео") { [weak self] _ in
             let picker = UIImagePickerController()
             picker.sourceType = .camera
             picker.delegate = self
             self?.present(picker, animated: true)
         }
-        
-        let selectFilesAction = UIAction(title: "Выбор файлов") { _ in print("Выбор файлов was tapped") }
+        let selectFilesAction = UIAction(title: "Выбор файлов") { [weak self] _ in
+            let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.image])
+            documentPicker.delegate = self
+            documentPicker.allowsMultipleSelection = true
+            self?.present(documentPicker, animated: true, completion: nil)
+        }
         
         let menu = UIMenu(options: .displayInline, children: [selectFilesAction, takePhotoAction, openMediaAction])
         addFilesButton.menu = menu
@@ -245,5 +259,40 @@ extension SubjectDetailsViewController: SubjectDetailsViewModelActionable {
         }
         updateFilesColletionHeight(count: viewModel.attachedFiles.count)
         attachedFilesVC.reloadColletionView()
+    }
+}
+
+extension SubjectDetailsViewController : PHPickerViewControllerDelegate {
+    
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true)
+        
+        for result in results {
+            let itemProvider = result.itemProvider
+            if itemProvider.canLoadObject(ofClass: UIImage.self) {
+                itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
+                    guard let image = image as? UIImage else { return }
+                    DispatchQueue.main.async {
+                        self?.viewModel.add(image: image)
+                    }
+                }
+            }
+        }
+    }
+}
+
+extension SubjectDetailsViewController: UIDocumentPickerDelegate {
+    
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        
+        for url in urls {
+            if let fileData = try? Data(contentsOf: url) {
+                
+                if let image = UIImage(data: fileData) {
+                    viewModel.add(image: image)
+                } else { print("Failed to create UIImage from file data: \(url)") }
+                
+            } else { print("Failed to load file data: \(url)") }
+        }
     }
 }
