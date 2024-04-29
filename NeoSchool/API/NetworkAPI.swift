@@ -58,7 +58,10 @@ class NetworkAPI {
         let request = try generateRequest(boundary: boundary, httpBody: body, urlString: urlString)
         
         let (_, resp) = try await URLSession.shared.data(for: request)
-        print(resp)
+        
+        guard let httpresponse = resp as? HTTPURLResponse, httpresponse.statusCode == 200 else {
+            throw MyError.badNetwork
+        }
     }
 }
 

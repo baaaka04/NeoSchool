@@ -199,24 +199,64 @@ class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDel
         }
     }
     
-    @objc private func hideCommentView() {
+    @objc private func hideCommentView(completion: (() -> Void)? = nil) {
         UIView.animate(withDuration: 0.3) {
             self.commentView.commentInput.resignFirstResponder()
             self.dimmingView.isHidden = true
             self.commentView.snp.updateConstraints( { $0.top.equalTo(self.view.snp.bottom) } )
             self.view.layoutIfNeeded()
+        } completion: { done in
+            if done { completion?() }
         }
     }
     
     @objc private func uploadFiles() {
+        uploadButton.isEnabled = false
         viewModel.studentComment = commentView.commentInput.text
         Task {
             do {
                 try await viewModel.sendFiles()
-            } catch { print(error) }
+                //Success notification
+                showSnackbar(text: "Задание успешно отправлено", isSucceed: true)
+            } catch {
+                print(error)
+                //Error notification
+                showSnackbar(text: "Произошла ошибка", isSucceed: false)
+            }
+            uploadButton.isEnabled = true
         }
     }
     
+    private func showSnackbar(text: String, isSucceed: Bool) {
+        hideCommentView { [weak self] in
+            guard let self else { return }
+            let snackbar = SnackBarView(text: text, isSucceed: isSucceed)
+            self.view.addSubview(snackbar)
+            snackbar.snp.makeConstraints { make in
+                make.top.equalTo(self.view.snp.top).offset(-50)
+                make.left.equalToSuperview().offset(16)
+                make.right.equalToSuperview().offset(-16)
+            }
+            self.view.layoutIfNeeded()
+            UIView.animate(withDuration: 0.4) {
+                snackbar.snp.updateConstraints { make in
+                    make.top.equalToSuperview().offset(50)
+                }
+                self.view.layoutIfNeeded()
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now()+3, execute: {
+                UIView.animate(withDuration: 0.4) {
+                    snackbar.snp.updateConstraints { make in
+                        make.top.equalTo(self.view.snp.top).offset(-80)
+                    }
+                    self.view.layoutIfNeeded()
+                } completion: { done in
+                    if done { snackbar.removeFromSuperview() }
+                }
+            })
+        }
+    }
+        
     private func fillLabelsWithData() {
         titleLabel.text = viewModel.subjectName
         firstSubTitleLabel.attributedText = viewModel.teacherName
@@ -290,6 +330,7 @@ class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDel
     
 }
 
+//MARK: Image Pickers
 extension SubjectDetailsViewController: SubjectDetailsViewModelActionable {
     func reloadCollectionView() {
         if viewModel.attachedFiles.count > 0 {
@@ -339,6 +380,7 @@ extension SubjectDetailsViewController: UIDocumentPickerDelegate {
     }
 }
 
+//MARK: Keyboard handlers
 extension SubjectDetailsViewController: UITextViewDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
