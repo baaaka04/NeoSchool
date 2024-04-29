@@ -7,7 +7,7 @@ class SubjectDetailsViewModel: SubjectDetailsViewModelRepresentable {
     weak var lessonAPI: DayScheduleAPI?
     
     var attachedFiles : [AttachedFile] = []
-    var studentComment : String? = "test ios comment"
+    var studentComment : String?
     
     var subjectName: String {
         lessonDetails?.subject.name ?? ""
@@ -96,6 +96,7 @@ protocol SubjectDetailsViewModelRepresentable: AnyObject {
     var homeworkMark: NSAttributedString { get }
     var homeworkText: String? { get }
     var attachedFiles: [AttachedFile] { get }
+    var studentComment: String? { get set }
     
     var view: SubjectDetailsViewModelActionable? { get set }
     

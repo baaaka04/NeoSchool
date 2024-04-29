@@ -50,7 +50,7 @@ class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDel
         uploadButton.layer.cornerRadius = 16
         uploadButton.titleLabel?.font = UIFont(name: "Jost-Regular", size: 20)
         uploadButton.isEnabled = false
-        uploadButton.addTarget(self, action: #selector(uploadFiles), for: .touchUpInside)
+        uploadButton.addTarget(self, action: #selector(openCommentView), for: .touchUpInside)
         return uploadButton
     }()
     
@@ -61,6 +61,22 @@ class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDel
         addFilesButton.layer.borderWidth = 1.0
         addFilesButton.layer.borderColor = UIColor.neobisPurple.cgColor
         return addFilesButton
+    }()
+    
+    lazy var commentView: CommentView = {
+        let view = CommentView()
+        view.uploadFiles = uploadFiles
+        return view
+    }()
+    
+    lazy var dimmingView: UIView = {
+        let dimming = UIView()
+        dimming.frame = view.bounds
+        dimming.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
+        dimming.isHidden = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideCommentView))
+        dimming.addGestureRecognizer(tapGesture)
+        return dimming
     }()
     
     
@@ -101,6 +117,9 @@ class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDel
         
         view.addSubview(uploadButton)
         view.addSubview(addFilesButton)
+        
+        view.addSubview(dimmingView)
+        view.addSubview(commentView)
         
         setupConstraints()
         
@@ -172,7 +191,25 @@ class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDel
         addFilesButton.showsMenuAsPrimaryAction = true
     }
     
+    @objc private func openCommentView() {
+        UIView.animate(withDuration: 0.3) {
+            self.dimmingView.isHidden = false
+            self.commentView.snp.updateConstraints( { $0.top.equalTo(self.view.snp.bottom).offset(-324) } )
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    @objc private func hideCommentView() {
+        UIView.animate(withDuration: 0.3) {
+            self.commentView.commentInput.resignFirstResponder()
+            self.dimmingView.isHidden = true
+            self.commentView.snp.updateConstraints( { $0.top.equalTo(self.view.snp.bottom) } )
+            self.view.layoutIfNeeded()
+        }
+    }
+    
     @objc private func uploadFiles() {
+        viewModel.studentComment = commentView.commentInput.text
         Task {
             do {
                 try await viewModel.sendFiles()
@@ -244,6 +281,11 @@ class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDel
             make.height.equalTo(52)
             make.bottom.equalTo(uploadButton.snp.top).offset(-12)
         }
+        commentView.snp.makeConstraints { make in
+            make.width.centerX.equalToSuperview()
+            make.top.equalTo(view.snp.bottom)
+            make.height.equalTo(324)
+        }
     }
     
 }
@@ -294,5 +336,37 @@ extension SubjectDetailsViewController: UIDocumentPickerDelegate {
                 
             } else { print("Failed to load file data: \(url)") }
         }
+    }
+}
+
+extension SubjectDetailsViewController: UITextViewDelegate {
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        registerForKeyboardNotifications()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            
+            commentView.snp.updateConstraints {
+                //TODO: add height to hide rounded bottom corners
+                $0.top.equalTo(self.view.snp.bottom).offset( -(324+keyboardSize.height) )
+            }
+        }
+    }
+
+    @objc func keyboardWillHide(_ notification: Notification) {
+        commentView.snp.updateConstraints { $0.top.equalTo(self.view.snp.bottom).offset(-324) }
     }
 }
