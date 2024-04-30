@@ -65,6 +65,9 @@ class PlaceholderTextView: UITextView {
             self.counterLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ]
         NSLayoutConstraint.activate(constraints)
+        
+        let padding = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        self.textContainerInset = padding
     }
 
     override func layoutSubviews() {

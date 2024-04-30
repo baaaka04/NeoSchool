@@ -59,42 +59,42 @@ class CommentView: UIView {
     struct Constants {
         static let gap: CGFloat = 24
         static let horizontalPadding: CGFloat = 32
-        static let inputHeight: CGFloat = 108
+        static let inputHeight: CGFloat = 158
     }
     
     private func setupUI () {
         
-        addSubview(submitButton)
-        addSubview(commentInput)
-        addSubview(titleLable)
         addSubview(grabber)
+        addSubview(titleLable)
+        addSubview(commentInput)
+        addSubview(submitButton)
                 
         layer.cornerRadius = 32
         backgroundColor = .white
         
-        submitButton.snp.makeConstraints { make in
+        grabber.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(-Constants.horizontalPadding)
-            make.height.equalTo(52)
-            make.bottom.equalToSuperview().offset(-52)
-        }
-        commentInput.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(-Constants.horizontalPadding)
-            make.height.equalTo(Constants.inputHeight)
-            make.bottom.equalTo(submitButton.snp.top).offset(-Constants.gap)
+            make.width.equalTo(40)
+            make.height.equalTo(6)
+            make.top.equalToSuperview().offset(8)
         }
         titleLable.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.height.equalTo(26)
             make.width.equalToSuperview().offset(-Constants.horizontalPadding)
-            make.bottom.equalTo(commentInput.snp.top).offset(-Constants.gap)
+            make.top.equalTo(grabber.snp.bottom).offset(Constants.gap)
         }
-        grabber.snp.makeConstraints { make in
+        commentInput.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.width.equalTo(40)
-            make.height.equalTo(6)
-            make.bottom.equalTo(titleLable.snp.top).offset(-Constants.gap)
+            make.width.equalToSuperview().offset(-Constants.horizontalPadding)
+            make.height.equalTo(Constants.inputHeight)
+            make.top.equalTo(titleLable.snp.bottom).offset(Constants.gap)
+        }
+        submitButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().offset(-Constants.horizontalPadding)
+            make.height.equalTo(52)
+            make.top.equalTo(commentInput.snp.bottom).offset(Constants.gap)
         }
     }
     

@@ -194,7 +194,7 @@ class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDel
     @objc private func openCommentView() {
         UIView.animate(withDuration: 0.3) {
             self.dimmingView.isHidden = false
-            self.commentView.snp.updateConstraints( { $0.top.equalTo(self.view.snp.bottom).offset(-324) } )
+            self.commentView.snp.updateConstraints( { $0.top.equalTo(self.view.snp.bottom).offset(-Constants.commentHeight) } )
             self.view.layoutIfNeeded()
         }
     }
@@ -216,6 +216,7 @@ class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDel
     
     @objc private func uploadFiles() {
         uploadButton.isEnabled = false
+        dimmingView.isUserInteractionEnabled = false
         viewModel.studentComment = commentView.commentInput.text
         Task {
             do {
@@ -232,6 +233,7 @@ class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDel
                 }
             }
             uploadButton.isEnabled = true
+            dimmingView.isUserInteractionEnabled = true
         }
     }
     
@@ -251,59 +253,65 @@ class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDel
         }
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(-32)
+            make.width.equalToSuperview().offset(-Constants.horizontalMargin)
             make.top.equalToSuperview()
         }
         firstSubTitleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(-32)
+            make.width.equalToSuperview().offset(-Constants.horizontalMargin)
             make.top.equalTo(titleLabel.snp.bottom)
         }
         secondSubTitleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(-32)
+            make.width.equalToSuperview().offset(-Constants.horizontalMargin)
             make.top.equalTo(firstSubTitleLabel.snp.bottom)
         }
         homeworkPanel.view.snp.makeConstraints { make in
-            make.width.equalToSuperview().offset(-32)
+            make.width.equalToSuperview().offset(-Constants.horizontalMargin)
             make.height.equalTo(112)
             make.centerX.equalToSuperview()
-            make.top.equalTo(secondSubTitleLabel.snp.bottom).offset(16)
+            make.top.equalTo(secondSubTitleLabel.snp.bottom).offset(Constants.gap)
         }
         deadlineLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(-32)
-            make.top.equalTo(homeworkPanel.view.snp.bottom).offset(16)
+            make.width.equalToSuperview().offset(-Constants.horizontalMargin)
+            make.top.equalTo(homeworkPanel.view.snp.bottom).offset(Constants.gap)
         }
         markLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(-32)
-            make.top.equalTo(deadlineLabel.snp.bottom).offset(16)
+            make.width.equalToSuperview().offset(-Constants.horizontalMargin)
+            make.top.equalTo(deadlineLabel.snp.bottom).offset(Constants.gap)
         }
         attachedFilesVC.view.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(-32)
+            make.width.equalToSuperview().offset(-Constants.horizontalMargin)
             make.height.equalTo(64)
-            make.top.equalTo(markLabel.snp.bottom).offset(16)
+            make.top.equalTo(markLabel.snp.bottom).offset(Constants.gap)
             make.bottom.equalToSuperview()
         }
         uploadButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(-32)
+            make.width.equalToSuperview().offset(-Constants.horizontalMargin)
             make.height.equalTo(52)
             make.bottom.equalToSuperview().offset(-52)
         }
         addFilesButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(-32)
+            make.width.equalToSuperview().offset(-Constants.horizontalMargin)
             make.height.equalTo(52)
             make.bottom.equalTo(uploadButton.snp.top).offset(-12)
         }
         commentView.snp.makeConstraints { make in
             make.width.centerX.equalToSuperview()
             make.top.equalTo(view.snp.bottom)
-            make.height.equalTo(324)
+            make.height.equalTo(Constants.commentHeight)
         }
+    }
+    
+    struct Constants {
+        static let commentHeight: CGFloat = 374
+        static let horizontalMargin: CGFloat = 32
+        static let gap: CGFloat = 16
     }
     
 }
@@ -380,13 +388,12 @@ extension SubjectDetailsViewController: UITextViewDelegate {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             
             commentView.snp.updateConstraints {
-                //TODO: add height to hide rounded bottom corners
-                $0.top.equalTo(self.view.snp.bottom).offset( -(324+keyboardSize.height) )
+                $0.top.equalTo(self.view.snp.bottom).offset( -(Constants.commentHeight+keyboardSize.height-32) )
             }
         }
     }
 
     @objc func keyboardWillHide(_ notification: Notification) {
-        commentView.snp.updateConstraints { $0.top.equalTo(self.view.snp.bottom).offset(-324) }
+        commentView.snp.updateConstraints { $0.top.equalTo(self.view.snp.bottom).offset(-Constants.commentHeight) }
     }
 }
