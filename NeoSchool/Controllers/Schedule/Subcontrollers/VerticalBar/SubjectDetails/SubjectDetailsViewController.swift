@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 import PhotosUI
 
-class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, Notifiable {
     
     private let viewModel: SubjectDetailsViewModelRepresentable
     private let attachedFilesVC: AttachedFilesViewController
@@ -199,7 +199,7 @@ class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDel
         }
     }
     
-    @objc private func hideCommentView(completion: (() -> Void)? = nil) {
+    private func hideCommentView(completion: (() -> Void)? = nil) {
         UIView.animate(withDuration: 0.3) {
             self.commentView.commentInput.resignFirstResponder()
             self.dimmingView.isHidden = true
@@ -210,6 +210,10 @@ class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDel
         }
     }
     
+    @objc private func hideCommentView() {
+        self.hideCommentView(completion: nil)
+    }
+    
     @objc private func uploadFiles() {
         uploadButton.isEnabled = false
         viewModel.studentComment = commentView.commentInput.text
@@ -217,46 +221,20 @@ class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDel
             do {
                 try await viewModel.sendFiles()
                 //Success notification
-                showSnackbar(text: "Задание успешно отправлено", isSucceed: true)
+                hideCommentView {
+                    self.showNotification(message: "Задание успешно отправлено", isSucceed: true)
+                }
             } catch {
                 print(error)
                 //Error notification
-                showSnackbar(text: "Произошла ошибка", isSucceed: false)
+                hideCommentView {
+                    self.showNotification(message: "Произошла ошибка", isSucceed: false)
+                }
             }
             uploadButton.isEnabled = true
         }
     }
     
-    private func showSnackbar(text: String, isSucceed: Bool) {
-        hideCommentView { [weak self] in
-            guard let self else { return }
-            let snackbar = SnackBarView(text: text, isSucceed: isSucceed)
-            self.view.addSubview(snackbar)
-            snackbar.snp.makeConstraints { make in
-                make.top.equalTo(self.view.snp.top).offset(-50)
-                make.left.equalToSuperview().offset(16)
-                make.right.equalToSuperview().offset(-16)
-            }
-            self.view.layoutIfNeeded()
-            UIView.animate(withDuration: 0.4) {
-                snackbar.snp.updateConstraints { make in
-                    make.top.equalToSuperview().offset(50)
-                }
-                self.view.layoutIfNeeded()
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now()+3, execute: {
-                UIView.animate(withDuration: 0.4) {
-                    snackbar.snp.updateConstraints { make in
-                        make.top.equalTo(self.view.snp.top).offset(-80)
-                    }
-                    self.view.layoutIfNeeded()
-                } completion: { done in
-                    if done { snackbar.removeFromSuperview() }
-                }
-            })
-        }
-    }
-        
     private func fillLabelsWithData() {
         titleLabel.text = viewModel.subjectName
         firstSubTitleLabel.attributedText = viewModel.teacherName

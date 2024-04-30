@@ -48,18 +48,15 @@ class SnackBarView: UIView {
             backgroundColor = .neobisSnackbarRed
             iconView.image = UIImage(systemName: "exclamationmark.circle.fill")
         }
-        self.snp.makeConstraints { make in
-            make.height.equalTo(58)
-        }
         iconView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.left.equalToSuperview().offset(16)
+            make.centerY.equalTo(self.snp.centerY)
+            make.left.equalTo(self.snp.left).offset(16)
             make.width.height.equalTo(24)
         }
         titleLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
+            make.centerY.equalTo(self.snp.centerY)
             make.left.equalTo(iconView.snp.right).offset(12)
-            make.right.equalToSuperview().offset(-16)
+            make.right.equalTo(self.snp.right).offset(-16)
         }
     }
 
