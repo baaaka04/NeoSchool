@@ -17,7 +17,7 @@ class SubjectDetailsViewModel: SubjectDetailsViewModelRepresentable {
         let tail = lessonDetails?.subject.teacher.fullName ?? ""
         let markString = head + tail
         let attributedString = NSMutableAttributedString(string: markString)
-        attributedString.addAttribute(.font, value: UIFont(name: "Jost-Medium", size: 16), range: NSRange(location: head.count, length: tail.count))
+        attributedString.addAttribute(.font, value: AppFont.font(type: .Medium, size: 16), range: NSRange(location: head.count, length: tail.count))
         return  attributedString
     }
     var homeworkTopic: NSAttributedString {
@@ -25,7 +25,7 @@ class SubjectDetailsViewModel: SubjectDetailsViewModelRepresentable {
         let tail = lessonDetails?.homework?.topic ?? ""
         let markString = head + tail
         let attributedString = NSMutableAttributedString(string: markString)
-        attributedString.addAttribute(.font, value: UIFont(name: "Jost-Medium", size: 16), range: NSRange(location: head.count, length: tail.count))
+        attributedString.addAttribute(.font, value: AppFont.font(type: .Medium, size: 16), range: NSRange(location: head.count, length: tail.count))
         return  attributedString
     }
     var homeworkDeadline: String {
@@ -40,7 +40,7 @@ class SubjectDetailsViewModel: SubjectDetailsViewModelRepresentable {
         let tail = lessonDetails?.submission?.mark ?? "не получена"
         let markString = head + tail
         let attributedString = NSMutableAttributedString(string: markString)
-        attributedString.addAttribute(.font, value: UIFont(name: "Jost-Medium", size: 20), range: NSRange(location: head.count, length: tail.count))
+        attributedString.addAttribute(.font, value: AppFont.font(type: .Medium, size: 20), range: NSRange(location: head.count, length: tail.count))
         return  attributedString
     }
     var homeworkText: String? {

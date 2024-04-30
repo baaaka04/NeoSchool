@@ -15,7 +15,7 @@ class GradeView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.textColor = .black
-        label.font = UIFont(name: "Jost-Regular", size: 14)
+        label.font = AppFont.font(type: .Regular, size: 14)
         label.text = "Оценка"
         return label
     }()
@@ -56,12 +56,12 @@ class GradeView: UIView {
         switch isRounded {
         case true:
             gradeLabel.backgroundColor = grade.color
-            gradeLabel.font = UIFont(name: "Jost-SemiBold", size: 20)
+            gradeLabel.font = AppFont.font(type: .SemiBold, size: 20)
             gradeLabel.textColor = .white
             gradeLabel.layer.cornerRadius = 24
         case false:
             gradeLabel.backgroundColor = .neobisGray
-            gradeLabel.font = UIFont(name: "Jost-Bold", size: 32)
+            gradeLabel.font = AppFont.font(type: .Bold, size: 32)
             gradeLabel.textColor = grade.color
             gradeLabel.layer.cornerRadius = 8
         }

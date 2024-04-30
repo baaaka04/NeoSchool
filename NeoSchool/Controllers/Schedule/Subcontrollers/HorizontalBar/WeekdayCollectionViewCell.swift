@@ -22,7 +22,7 @@ class WeekdayCollectionViewCell: UICollectionViewCell {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Jost-Bold", size: 16) ?? UIFont.systemFont(ofSize: 16)
+        label.font = AppFont.font(type: .Bold, size: 16)
         return label
     }()
     
@@ -32,7 +32,7 @@ class WeekdayCollectionViewCell: UICollectionViewCell {
     
     private let subtitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Jost-SemiBold", size: 12) ?? UIFont.systemFont(ofSize: 12)
+        label.font = AppFont.font(type: .SemiBold, size: 12)
         return label
     }()
  

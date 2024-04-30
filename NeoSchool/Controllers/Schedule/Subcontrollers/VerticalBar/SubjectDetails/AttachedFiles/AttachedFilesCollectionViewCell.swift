@@ -27,14 +27,14 @@ class AttachedFilesCollectionViewCell : UICollectionViewCell {
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Jost-Medium", size: 20)
+        label.font = AppFont.font(type: .Medium, size: 20)
         label.textColor = .neobisDarkGray
         return label
     }()
     
     let typeLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Jost-Regular", size: 16)
+        label.font = AppFont.font(type: .Regular, size: 16)
         label.textColor = .neobisDarkGray
         label.text = "Изображение"
         return label

@@ -18,7 +18,7 @@ struct AppFont {
         ///weight: 400
         case Regular = "Jost-Regular"
         ///weight: 400
-        case RegularItalic = "Jost-RegularItalic"
+        case Italic = "Jost-Italic"
         ///weight: 500
         case Medium = "Jost-Medium"
         ///weight: 500

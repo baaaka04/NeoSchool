@@ -12,14 +12,14 @@ class HomeworkPanelViewController: UIViewController {
     lazy var titleLabel: UILabel = {
         let title = UILabel()
         title.text = "Домашнее задание:"
-        title.font = UIFont(name: "Jost-Medium", size: 20)
+        title.font = AppFont.font(type: .Medium, size: 20)
         title.textColor = UIColor.neobisBlue
         return title
     }()
     
     lazy var homeworkbodyLabel: GrayUILabel = {
         let homeworkbodyLabel = GrayUILabel()
-        homeworkbodyLabel.font = UIFont(name: "Jost-Regular", size: 18)
+        homeworkbodyLabel.font = AppFont.font(type: .Regular, size: 18)
         homeworkbodyLabel.numberOfLines = 2
         homeworkbodyLabel.lineBreakMode = .byWordWrapping
         homeworkbodyLabel.textAlignment = .left
@@ -29,7 +29,7 @@ class HomeworkPanelViewController: UIViewController {
     lazy var editHomeworkLabel: UILabel = {
         let label = UILabel()
         label.text = "Нажмите на блок, чтобы изменить задание"
-        label.font = UIFont(name: "Jost-Italic", size: 14)
+        label.font = AppFont.font(type: .Italic, size: 14)
         label.textColor = UIColor.neobisLightGray
         return label
     }()

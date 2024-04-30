@@ -13,7 +13,7 @@ class SubjectCollectionViewCell: UICollectionViewCell {
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Jost-Medium", size: 20)
+        label.font = AppFont.font(type: .Medium, size: 20)
         label.textColor = .black
         label.lineBreakMode = NSLineBreakMode.byWordWrapping
         label.numberOfLines = 0
@@ -28,7 +28,7 @@ class SubjectCollectionViewCell: UICollectionViewCell {
     
     private let subtitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Jost-Regular", size: 16)
+        label.font = AppFont.font(type: .Regular, size: 16)
         label.textColor = .black
         return label
     }()
@@ -41,7 +41,7 @@ class SubjectCollectionViewCell: UICollectionViewCell {
     
     private let descrLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Jost-MediumItalic", size: 16)
+        label.font = AppFont.font(type: .MediumItalic, size: 16)
         label.textColor = .neobisBlue
         return label
     }()

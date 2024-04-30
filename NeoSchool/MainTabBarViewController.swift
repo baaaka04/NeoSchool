@@ -29,7 +29,7 @@ class MainTabBarViewController: UITabBarController {
         let titleView = UIView()
         let titleLabel = UILabel()
         titleLabel.text = "Привет, Айсулуу!"
-        titleLabel.font = UIFont(name: "Jost-Medium", size: 20)
+        titleLabel.font = AppFont.font(type: .Medium, size: 20)
         titleLabel.textColor = .white
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleView.addSubview(titleLabel)

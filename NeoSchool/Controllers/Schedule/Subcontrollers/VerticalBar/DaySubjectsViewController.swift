@@ -77,7 +77,7 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
         let cellWidth = view.frame.size.width - Constants.subjectCellHorizontalMargin * 2
         let newHeight = SubjectCollectionViewCell.getProductHeightForWidth(
             title: lessonsDay.subject.name,
-            font: UIFont(name: "Jost-Medium", size: 20) ?? .systemFont(ofSize: 20),
+            font: AppFont.font(type: .Medium, size: 20),
             minHeight: Constants.subjectCellMinHeight,
             width: cellWidth - Constants.gradeViewWidth - Constants.gradeLeftMargin
         )

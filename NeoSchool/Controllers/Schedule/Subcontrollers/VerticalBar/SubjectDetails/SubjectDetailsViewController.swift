@@ -13,19 +13,19 @@ class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDel
     
     lazy var titleLabel: GrayUILabel = {
         let titleLabel = GrayUILabel()
-        titleLabel.font = UIFont(name: "Jost-SemiBold", size: 28)
+        titleLabel.font = AppFont.font(type: .SemiBold, size: 28)
         return titleLabel
     }()
     
     lazy var firstSubTitleLabel: GrayUILabel = {
         let firstSubTitleLabel = GrayUILabel()
-        firstSubTitleLabel.font = UIFont(name: "Jost-Regular", size: 16)
+        firstSubTitleLabel.font = AppFont.font(type: .Regular, size: 16)
         return firstSubTitleLabel
     }()
     
     lazy var secondSubTitleLabel: GrayUILabel = {
         let secondSubTitleLabel = GrayUILabel()
-        secondSubTitleLabel.font = UIFont(name: "Jost-Regular", size: 16)
+        secondSubTitleLabel.font = AppFont.font(type: .Regular, size: 16)
         return secondSubTitleLabel
     }()
     
@@ -33,13 +33,13 @@ class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDel
         let deadlineLabel = UILabel(frame: .infinite)
         deadlineLabel.textAlignment = .right
         deadlineLabel.textColor = UIColor.neobisPurple
-        deadlineLabel.font = UIFont(name: "Jost-Medium", size: 18)
+        deadlineLabel.font = AppFont.font(type: .Medium, size: 18)
         return deadlineLabel
     }()
     
     lazy var markLabel: GrayUILabel = {
         let markLabel = GrayUILabel()
-        markLabel.font = UIFont(name: "Jost-Regular", size: 20)
+        markLabel.font = AppFont.font(type: .Regular, size: 20)
         return markLabel
     }()
     
@@ -48,7 +48,7 @@ class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDel
         uploadButton.setTitle("Отправить задание", for: .normal)
         uploadButton.backgroundColor = .neobisLightPurple
         uploadButton.layer.cornerRadius = 16
-        uploadButton.titleLabel?.font = UIFont(name: "Jost-Regular", size: 20)
+        uploadButton.titleLabel?.font = AppFont.font(type: .Regular, size: 20)
         uploadButton.isEnabled = false
         uploadButton.addTarget(self, action: #selector(openCommentView), for: .touchUpInside)
         return uploadButton
@@ -161,7 +161,7 @@ class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDel
         addFilesButton.setImage(plusIcon, for: .normal)
         addFilesButton.setTitle(" Прикрепить файлы", for: .normal)
         addFilesButton.setTitleColor(.neobisPurple, for: .normal)
-        addFilesButton.titleLabel?.font = UIFont(name: "Jost-Regular", size: 20)
+        addFilesButton.titleLabel?.font = AppFont.font(type: .Regular, size: 20)
         
         let openMediaAction = UIAction(title: "Медиатека") { [weak self] _ in
             var configuration = PHPickerConfiguration()

@@ -35,7 +35,7 @@ class SchoolNavViewController: UIViewController {
                 
         let tabTitle = UILabel(frame: .zero)
         tabTitle.text = navbarTitle
-        tabTitle.font = UIFont(name: "Jost-SemiBold", size: 32)
+        tabTitle.font = AppFont.font(type: .SemiBold, size: 32)
         tabTitle.textColor = .white
         
         view.addSubview(tabTitle)
