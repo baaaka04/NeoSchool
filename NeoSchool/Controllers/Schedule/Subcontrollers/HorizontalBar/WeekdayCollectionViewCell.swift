@@ -23,6 +23,7 @@ class WeekdayCollectionViewCell: UICollectionViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = AppFont.font(type: .Bold, size: 16)
+        label.textColor = .neobisGray
         return label
     }()
     
@@ -33,6 +34,7 @@ class WeekdayCollectionViewCell: UICollectionViewCell {
     private let subtitleLabel: UILabel = {
         let label = UILabel()
         label.font = AppFont.font(type: .SemiBold, size: 12)
+        label.textColor = .neobisGray
         return label
     }()
  
