@@ -65,7 +65,9 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
     
     lazy var commentView: CommentView = {
         let view = CommentView()
-        view.uploadFiles = uploadFiles
+        view.uploadFiles = { [weak self] in
+            self?.uploadFiles()
+        }
         return view
     }()
     
@@ -233,26 +235,26 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
         self.tabBarController?.tabBar.isHidden = false
     }
     
-    @objc private func uploadFiles() {
-        uploadButton.isEnabled = false
-        dimmingView.isUserInteractionEnabled = false
-        viewModel.studentComment = commentView.commentInput.text
+    @objc private func uploadFiles () {
+        self.uploadButton.isEnabled = false
+        self.dimmingView.isUserInteractionEnabled = false
+        self.viewModel.studentComment = self.commentView.commentInput.text
         Task {
             do {
-                try await viewModel.sendFiles()
+                try await self.viewModel.sendFiles()
                 //Success notification
-                hideCommentView {
-                    self.showNotification(message: "Задание успешно отправлено", isSucceed: true)
+                self.hideCommentView { [weak self] in
+                    self?.showNotification(message: "Задание успешно отправлено", isSucceed: true)
                 }
             } catch {
                 print(error)
                 //Error notification
-                hideCommentView {
-                    self.showNotification(message: "Произошла ошибка", isSucceed: false)
+                self.hideCommentView { [weak self] in
+                    self?.showNotification(message: "Произошла ошибка", isSucceed: false)
                 }
             }
-            uploadButton.isEnabled = true
-            dimmingView.isUserInteractionEnabled = true
+            self.uploadButton.isEnabled = true
+            self.dimmingView.isUserInteractionEnabled = true
         }
     }
     
