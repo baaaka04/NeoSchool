@@ -5,6 +5,7 @@ class SubjectDetailsViewModel: SubjectDetailsViewModelRepresentable {
     
     weak var view: SubjectDetailsViewModelActionable?
     weak var lessonAPI: DayScheduleAPI?
+    private var lessonDetails: StudentLessonDetail?
     
     var attachedFiles : [AttachedFile] = []
     var studentComment : String?
@@ -48,8 +49,6 @@ class SubjectDetailsViewModel: SubjectDetailsViewModelRepresentable {
     }
     
     let lessonId: Int
-    
-    private var lessonDetails: StudentLessonDetail?
     
     init(lessonId: Int, lessonAPI: DayScheduleAPI?) {
         self.lessonId = lessonId

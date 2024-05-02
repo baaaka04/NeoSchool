@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 import PhotosUI
 
-class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, Notifiable {
+class SubjectDetailsViewController: DetailViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, Notifiable {
     
     private let viewModel: SubjectDetailsViewModelRepresentable
     private let attachedFilesVC: AttachedFilesViewController
@@ -105,9 +105,6 @@ class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDel
         scrollView.addSubview(titleLabel)
         scrollView.addSubview(firstSubTitleLabel)
         scrollView.addSubview(secondSubTitleLabel)
-        self.addChild(homeworkPanel)
-        scrollView.addSubview(homeworkPanel.view)
-        homeworkPanel.didMove(toParent: self)
         scrollView.addSubview(deadlineLabel)
         scrollView.addSubview(markLabel)
         
@@ -121,12 +118,13 @@ class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDel
         view.addSubview(dimmingView)
         view.addSubview(commentView)
         
-        setupConstraints()
+        setupHomeworkUI()
         
         fillLabelsWithData()
         getLessonDetails()
         
         setupButtonsUI()
+        setupConstraints()
     }
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -153,6 +151,15 @@ class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDel
             let newHeight = 64+(8+64)*(count-1)+200
             make.height.equalTo(newHeight)
         }
+    }
+    
+    private func setupHomeworkUI () {
+        self.addChild(homeworkPanel)
+        scrollView.addSubview(homeworkPanel.view)
+        homeworkPanel.didMove(toParent: self)
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapHomework))
+        homeworkPanel.view.addGestureRecognizer(tapGesture)
     }
     
     private func setupButtonsUI () {
@@ -213,6 +220,18 @@ class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDel
     @objc private func hideCommentView() {
         self.hideCommentView(completion: nil)
     }
+        
+    @objc private func onTapHomework() {
+        let attachedListVC = AttachedFilesDetailViewController(viewModel: self.viewModel)
+        attachedListVC.title = "Прикрепленные материалы"
+        
+        self.navigationController?.pushViewController(attachedListVC, animated: true)
+    }
+    
+    @objc private func didTapBackButton () {
+        self.navigationController?.popViewController(animated: true)
+        self.tabBarController?.tabBar.isHidden = false
+    }
     
     @objc private func uploadFiles() {
         uploadButton.isEnabled = false
@@ -245,6 +264,7 @@ class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDel
         markLabel.attributedText = viewModel.homeworkMark
         
         homeworkPanel.homeworkText = viewModel.homeworkText ?? "Не задано"
+        homeworkPanel.attachedFilesNumber = 4
     }
     
     private func setupConstraints() {
@@ -268,7 +288,7 @@ class SubjectDetailsViewController: UIViewController, UIImagePickerControllerDel
         }
         homeworkPanel.view.snp.makeConstraints { make in
             make.width.equalToSuperview().offset(-Constants.horizontalMargin)
-            make.height.equalTo(112)
+            make.height.equalTo(142)
             make.centerX.equalToSuperview()
             make.top.equalTo(secondSubTitleLabel.snp.bottom).offset(Constants.gap)
         }

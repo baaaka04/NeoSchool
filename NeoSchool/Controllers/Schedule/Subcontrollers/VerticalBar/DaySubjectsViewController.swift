@@ -91,13 +91,6 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
         let viewModel = SubjectDetailsViewModel(lessonId: subject.id, lessonAPI: self.dayScheduleAPI)
         let subjectDetailsVC = SubjectDetailsViewController(viewModel: viewModel)
 
-        //Setting up a custom image for the back button
-        let image = UIImage(named: "regularchevron-left")
-        let backButton = UIBarButtonItem(image: image, style: .done, target: self, action: #selector(didTapBackButton))
-        backButton.tintColor = UIColor.neobisDarkGray
-        subjectDetailsVC.navigationItem.leftBarButtonItem = backButton
-        
-        
         self.navigationController?.pushViewController(subjectDetailsVC, animated: true)
     }
             

@@ -66,7 +66,7 @@ class NetworkAPI {
 }
 
 
-
+//MARK: Generate request with files
 extension NetworkAPI {
     
     private func generateAuthorizedRequest(urlString: String) throws -> URLRequest {
