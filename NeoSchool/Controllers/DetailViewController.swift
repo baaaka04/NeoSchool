@@ -1,12 +1,23 @@
 import UIKit
+import SnapKit
 
 class DetailViewController: UIViewController {
+    
+    lazy var navBarTitle : UILabel = {
+        let label = UILabel()
+        label.text = self.title
+        label.font = AppFont.font(type: .Medium, size: 20)
+        label.textColor = .neobisDarkGray
+        return label
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
 
         setupCustomBackButton()
+        
+        self.navigationItem.titleView = navBarTitle
     }
     
     func setupCustomBackButton() {
