@@ -53,6 +53,7 @@
 		F79533FD2BE10098004A76C6 /* SnackbarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79533FC2BE10098004A76C6 /* SnackbarExtension.swift */; };
 		F79533FF2BE38890004A76C6 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79533FE2BE38890004A76C6 /* DetailViewController.swift */; };
 		F79534012BE3C076004A76C6 /* AttachedFilesDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79534002BE3C076004A76C6 /* AttachedFilesDetailViewController.swift */; };
+		F79534032BEA5DD7004A76C6 /* ImagesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79534022BEA5DD7004A76C6 /* ImagesAPI.swift */; };
 		F7CAE69D2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE69C2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift */; };
 		F7CAE6A12B73DD01004916E3 /* WorkdayScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE6A02B73DD01004916E3 /* WorkdayScheduleViewController.swift */; };
 		F7CAE6A52B762C81004916E3 /* SchoolNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE6A42B762C81004916E3 /* SchoolNavViewController.swift */; };
@@ -62,8 +63,8 @@
 		F7D00B272B9B58370072FAB2 /* SubjectDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D00B262B9B58370072FAB2 /* SubjectDetailsViewModel.swift */; };
 		F7D6CE302BC97E64000CBB1F /* AttachedFilesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D6CE2F2BC97E64000CBB1F /* AttachedFilesModel.swift */; };
 		F7E5625B2BD173600029B822 /* DataStringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E5625A2BD173600029B822 /* DataStringExtension.swift */; };
-		F7F581632BB84D6B00FFC6C9 /* AttachedFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F581622BB84D6B00FFC6C9 /* AttachedFilesViewController.swift */; };
-		F7F581662BBC49D000FFC6C9 /* AttachedFilesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F581652BBC49D000FFC6C9 /* AttachedFilesCollectionViewCell.swift */; };
+		F7F581632BB84D6B00FFC6C9 /* FilesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F581622BB84D6B00FFC6C9 /* FilesCollectionViewController.swift */; };
+		F7F581662BBC49D000FFC6C9 /* FilesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F581652BBC49D000FFC6C9 /* FilesCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -114,6 +115,7 @@
 		F79533FC2BE10098004A76C6 /* SnackbarExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SnackbarExtension.swift; path = NeoSchool/Extensions/SnackbarExtension.swift; sourceTree = SOURCE_ROOT; };
 		F79533FE2BE38890004A76C6 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		F79534002BE3C076004A76C6 /* AttachedFilesDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachedFilesDetailViewController.swift; sourceTree = "<group>"; };
+		F79534022BEA5DD7004A76C6 /* ImagesAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesAPI.swift; sourceTree = "<group>"; };
 		F7CAE69C2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdayCollectionViewCell.swift; sourceTree = "<group>"; };
 		F7CAE6A02B73DD01004916E3 /* WorkdayScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkdayScheduleViewController.swift; sourceTree = "<group>"; };
 		F7CAE6A42B762C81004916E3 /* SchoolNavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolNavViewController.swift; sourceTree = "<group>"; };
@@ -123,8 +125,8 @@
 		F7D00B262B9B58370072FAB2 /* SubjectDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectDetailsViewModel.swift; sourceTree = "<group>"; };
 		F7D6CE2F2BC97E64000CBB1F /* AttachedFilesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachedFilesModel.swift; sourceTree = "<group>"; };
 		F7E5625A2BD173600029B822 /* DataStringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStringExtension.swift; sourceTree = "<group>"; };
-		F7F581622BB84D6B00FFC6C9 /* AttachedFilesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachedFilesViewController.swift; sourceTree = "<group>"; };
-		F7F581652BBC49D000FFC6C9 /* AttachedFilesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachedFilesCollectionViewCell.swift; sourceTree = "<group>"; };
+		F7F581622BB84D6B00FFC6C9 /* FilesCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesCollectionViewController.swift; sourceTree = "<group>"; };
+		F7F581652BBC49D000FFC6C9 /* FilesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +155,7 @@
 				F76081402B877D3A00B6D792 /* DayScheduleAPI.swift */,
 				F76081422B88DFC300B6D792 /* StudentWeekAPI.swift */,
 				F76081452B88E46000B6D792 /* NetworkAPI.swift */,
+				F79534022BEA5DD7004A76C6 /* ImagesAPI.swift */,
 				F79533FA2BDFF9D8004A76C6 /* Errors.swift */,
 			);
 			path = API;
@@ -317,8 +320,8 @@
 		F7F581642BBC494D00FFC6C9 /* AttachedFiles */ = {
 			isa = PBXGroup;
 			children = (
-				F7F581622BB84D6B00FFC6C9 /* AttachedFilesViewController.swift */,
-				F7F581652BBC49D000FFC6C9 /* AttachedFilesCollectionViewCell.swift */,
+				F7F581622BB84D6B00FFC6C9 /* FilesCollectionViewController.swift */,
+				F7F581652BBC49D000FFC6C9 /* FilesCollectionViewCell.swift */,
 			);
 			path = AttachedFiles;
 			sourceTree = "<group>";
@@ -425,8 +428,8 @@
 				F79083072B9F2C8300B9386E /* NeobisUILabel.swift in Sources */,
 				F79533FB2BDFF9D8004A76C6 /* Errors.swift in Sources */,
 				F79083092B9F31B400B9386E /* HomeworkPanelViewController.swift in Sources */,
-				F7F581662BBC49D000FFC6C9 /* AttachedFilesCollectionViewCell.swift in Sources */,
-				F7F581632BB84D6B00FFC6C9 /* AttachedFilesViewController.swift in Sources */,
+				F7F581662BBC49D000FFC6C9 /* FilesCollectionViewCell.swift in Sources */,
+				F7F581632BB84D6B00FFC6C9 /* FilesCollectionViewController.swift in Sources */,
 				F7CAE6AB2B78F13F004916E3 /* DaySubjectsViewController.swift in Sources */,
 				F76C6B7D2B67E2C500EACFEB /* ProfileViewController.swift in Sources */,
 				F71ACC0D2BD78F1C00EDE3A6 /* PlaceholderTextView.swift in Sources */,
@@ -452,6 +455,7 @@
 				F76081412B877D3A00B6D792 /* DayScheduleAPI.swift in Sources */,
 				F760814C2B8B75CA00B6D792 /* SubjectDetailsViewController.swift in Sources */,
 				F744FD542B7CD3F80054CBC1 /* StudentsModel.swift in Sources */,
+				F79534032BEA5DD7004A76C6 /* ImagesAPI.swift in Sources */,
 				F79533FD2BE10098004A76C6 /* SnackbarExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

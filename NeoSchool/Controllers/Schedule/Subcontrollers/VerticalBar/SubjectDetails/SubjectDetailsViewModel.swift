@@ -1,11 +1,12 @@
-import Foundation
 import UIKit
 
 class SubjectDetailsViewModel: SubjectDetailsViewModelRepresentable {
     
     weak var view: SubjectDetailsViewModelActionable?
     weak var lessonAPI: DayScheduleAPI?
+    
     private var lessonDetails: StudentLessonDetail?
+    private let lessonId: Int
     
     var attachedFiles : [AttachedFile] = []
     var studentComment : String?
@@ -48,7 +49,9 @@ class SubjectDetailsViewModel: SubjectDetailsViewModelRepresentable {
         lessonDetails?.homework?.text
     }
     
-    let lessonId: Int
+    var homeworkFileURLs : [String]? {
+        return self.lessonDetails?.homework?.files.compactMap { $0.file }
+    }
     
     init(lessonId: Int, lessonAPI: DayScheduleAPI?) {
         self.lessonId = lessonId
@@ -64,18 +67,16 @@ class SubjectDetailsViewModel: SubjectDetailsViewModelRepresentable {
     }
     
     func add(image: UIImage) {
-        var newFile = AttachedFile(name: "", image: image)
-        newFile.name = "image_\(newFile.id.suffix(5).lowercased()).jpg"
-        self.attachedFiles.append(newFile)
+        self.attachedFiles.append(AttachedFile(image: image))
         
-        view?.reloadCollectionView()
+        view?.updateCollectionView()
     }
     
     func remove(file: AttachedFile) {
         guard let ind = self.attachedFiles.firstIndex(where: { $0.id == file.id }) else { return }
         self.attachedFiles.remove(at: ind)
         
-        view?.reloadCollectionView()
+        view?.updateCollectionView()
     }
     
     func sendFiles() async throws {
@@ -95,6 +96,7 @@ protocol SubjectDetailsViewModelRepresentable: AnyObject {
     var homeworkMark: NSAttributedString { get }
     var homeworkText: String? { get }
     var attachedFiles: [AttachedFile] { get }
+    var homeworkFileURLs: [String]? { get }
     var studentComment: String? { get set }
     
     var view: SubjectDetailsViewModelActionable? { get set }
@@ -107,6 +109,6 @@ protocol SubjectDetailsViewModelRepresentable: AnyObject {
 }
 
 protocol SubjectDetailsViewModelActionable: AnyObject {
-    func reloadCollectionView()
+    func updateCollectionView()
 }
 

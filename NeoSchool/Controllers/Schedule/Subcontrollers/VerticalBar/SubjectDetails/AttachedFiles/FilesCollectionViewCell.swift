@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 
 
-class AttachedFilesCollectionViewCell : UICollectionViewCell {
+class FilesCollectionViewCell : UICollectionViewCell {
     static let identifier = "AttachedFilesCollectionViewCell"
     
     var attachedFile: AttachedFile? {
@@ -12,11 +12,17 @@ class AttachedFilesCollectionViewCell : UICollectionViewCell {
         }
     }
     
-    weak var delegate: AttachedFilesViewDelegate?
-    
+    var onPressRemove: ((_ file: AttachedFile) -> Void)? {
+        didSet {
+            if self.onPressRemove != nil {
+                self.removeButton.isHidden = false
+            }
+        }
+    }
+        
     @objc func removeFile() {
-        guard let attachedFile else { return }
-        delegate?.didTapRemoveFile(file: attachedFile)
+        guard let attachedFile, let onPressRemove else { return }
+        onPressRemove(attachedFile)
     }
     
     let imageView: UIImageView = {
@@ -40,11 +46,12 @@ class AttachedFilesCollectionViewCell : UICollectionViewCell {
         return label
     }()
     
-    let removeButton: UIButton = {
+    lazy var removeButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "xmark"), for: .normal)
         button.tintColor = UIColor.neobisLightGray
-        
+        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.addTarget(self, action: #selector(removeFile), for: .touchUpInside)
+        button.isHidden = true
         return button
     }()
         
@@ -61,7 +68,6 @@ class AttachedFilesCollectionViewCell : UICollectionViewCell {
         contentView.addSubview(typeLabel)
         contentView.addSubview(removeButton)
         
-        removeButton.addTarget(self, action: #selector(removeFile), for: .touchUpInside)
         setupConstraints()
     }
     
@@ -93,8 +99,4 @@ class AttachedFilesCollectionViewCell : UICollectionViewCell {
             make.right.equalToSuperview().offset(-12)
         }
     }
-}
-
-protocol AttachedFilesViewDelegate: AnyObject {
-    func didTapRemoveFile(file: AttachedFile)
 }

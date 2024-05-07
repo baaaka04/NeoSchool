@@ -4,7 +4,7 @@ import SnapKit
 class AttachedFilesDetailViewController: DetailViewController {
     
     private let viewModel : SubjectDetailsViewModelRepresentable?
-    private let attachedFilesVC : AttachedFilesViewController
+    private let attachedFilesVC : FilesCollectionViewController
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -14,7 +14,8 @@ class AttachedFilesDetailViewController: DetailViewController {
     
     init(viewModel: SubjectDetailsViewModelRepresentable?) {
         self.viewModel = viewModel
-        self.attachedFilesVC = AttachedFilesViewController(viewModel: viewModel)
+        self.attachedFilesVC = FilesCollectionViewController(urls: viewModel?.homeworkFileURLs)
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -27,7 +28,7 @@ class AttachedFilesDetailViewController: DetailViewController {
         addChild(attachedFilesVC)
         view.addSubview(attachedFilesVC.view)
         attachedFilesVC.didMove(toParent: self)
-        
+                
         attachedFilesVC.view.snp.makeConstraints { make in
             make.top.height.centerX.equalToSuperview()
             make.width.equalToSuperview().offset(-32)

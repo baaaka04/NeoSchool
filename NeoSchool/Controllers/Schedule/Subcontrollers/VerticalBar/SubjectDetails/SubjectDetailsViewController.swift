@@ -5,7 +5,7 @@ import PhotosUI
 class SubjectDetailsViewController: DetailViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, Notifiable {
     
     private let viewModel: SubjectDetailsViewModelRepresentable
-    private let attachedFilesVC: AttachedFilesViewController
+    private let attachedFilesVC: FilesCollectionViewController
     
     private let homeworkPanel = HomeworkPanelViewController()
     
@@ -84,7 +84,7 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
     
     init(viewModel: SubjectDetailsViewModelRepresentable) {
         self.viewModel = viewModel
-        self.attachedFilesVC = AttachedFilesViewController(viewModel: self.viewModel)
+        self.attachedFilesVC = FilesCollectionViewController(attachedFiles: viewModel.attachedFiles)
 
         super.init(nibName: nil, bundle: nil)
 
@@ -110,16 +110,13 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
         scrollView.addSubview(deadlineLabel)
         scrollView.addSubview(markLabel)
         
-        self.addChild(attachedFilesVC)
-        scrollView.addSubview(attachedFilesVC.view)
-        attachedFilesVC.didMove(toParent: self)
-        
         view.addSubview(uploadButton)
         view.addSubview(addFilesButton)
         
         view.addSubview(dimmingView)
         view.addSubview(commentView)
         
+        setupStudentFilesUI()
         setupHomeworkUI()
         
         fillLabelsWithData()
@@ -127,6 +124,16 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
         
         setupButtonsUI()
         setupConstraints()
+    }
+    
+    func setupStudentFilesUI() {
+        self.addChild(attachedFilesVC)
+        scrollView.addSubview(attachedFilesVC.view)
+        attachedFilesVC.didMove(toParent: self)
+        
+        attachedFilesVC.onPressRemove = { [weak self] (_ file: AttachedFile) in
+            self?.viewModel.remove(file: file)
+        }
     }
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -266,7 +273,7 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
         markLabel.attributedText = viewModel.homeworkMark
         
         homeworkPanel.homeworkText = viewModel.homeworkText ?? "Не задано"
-        homeworkPanel.attachedFilesNumber = 4
+        homeworkPanel.attachedFilesNumber = viewModel.homeworkFileURLs?.count
     }
     
     private func setupConstraints() {
@@ -337,10 +344,9 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
     }
     
 }
-
-//MARK: Image Pickers
+//MARK: Update amount of files, colletionView height and uploadButton state after changing files array
 extension SubjectDetailsViewController: SubjectDetailsViewModelActionable {
-    func reloadCollectionView() {
+    func updateCollectionView() {
         if viewModel.attachedFiles.count > 0 {
             self.uploadButton.isEnabled = true
             self.uploadButton.backgroundColor = .neobisPurple
@@ -349,10 +355,11 @@ extension SubjectDetailsViewController: SubjectDetailsViewModelActionable {
             self.uploadButton.backgroundColor = .neobisLightPurple
         }
         updateFilesColletionHeight(count: viewModel.attachedFiles.count)
-        attachedFilesVC.reloadColletionView()
+        attachedFilesVC.update(attachedFiles: viewModel.attachedFiles)
     }
 }
 
+//MARK: Image Pickers
 extension SubjectDetailsViewController : PHPickerViewControllerDelegate {
     
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
