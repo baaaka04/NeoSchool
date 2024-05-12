@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F71ACC092BD553D100EDE3A6 /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71ACC082BD553D100EDE3A6 /* CommentView.swift */; };
+		F71ACC092BD553D100EDE3A6 /* CommentSubmitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71ACC082BD553D100EDE3A6 /* CommentSubmitView.swift */; };
 		F71ACC0B2BD6A7CC00EDE3A6 /* AppFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71ACC0A2BD6A7CC00EDE3A6 /* AppFont.swift */; };
 		F71ACC0D2BD78F1C00EDE3A6 /* PlaceholderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71ACC0C2BD78F1C00EDE3A6 /* PlaceholderTextView.swift */; };
 		F744FD542B7CD3F80054CBC1 /* StudentsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F744FD532B7CD3F80054CBC1 /* StudentsModel.swift */; };
@@ -54,6 +54,8 @@
 		F79533FF2BE38890004A76C6 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79533FE2BE38890004A76C6 /* DetailViewController.swift */; };
 		F79534012BE3C076004A76C6 /* AttachedFilesDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79534002BE3C076004A76C6 /* AttachedFilesDetailViewController.swift */; };
 		F79534032BEA5DD7004A76C6 /* ImagesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79534022BEA5DD7004A76C6 /* ImagesAPI.swift */; };
+		F79534052BEBB443004A76C6 /* HomeworkSubmissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79534042BEBB442004A76C6 /* HomeworkSubmissionViewController.swift */; };
+		F79534072BEBBF1E004A76C6 /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79534062BEBBF1E004A76C6 /* CommentView.swift */; };
 		F7CAE69D2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE69C2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift */; };
 		F7CAE6A12B73DD01004916E3 /* WorkdayScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE6A02B73DD01004916E3 /* WorkdayScheduleViewController.swift */; };
 		F7CAE6A52B762C81004916E3 /* SchoolNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE6A42B762C81004916E3 /* SchoolNavViewController.swift */; };
@@ -68,7 +70,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		F71ACC082BD553D100EDE3A6 /* CommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentView.swift; sourceTree = "<group>"; };
+		F71ACC082BD553D100EDE3A6 /* CommentSubmitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentSubmitView.swift; sourceTree = "<group>"; };
 		F71ACC0A2BD6A7CC00EDE3A6 /* AppFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFont.swift; sourceTree = "<group>"; };
 		F71ACC0C2BD78F1C00EDE3A6 /* PlaceholderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderTextView.swift; sourceTree = "<group>"; };
 		F744FD532B7CD3F80054CBC1 /* StudentsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentsModel.swift; sourceTree = "<group>"; };
@@ -116,6 +118,8 @@
 		F79533FE2BE38890004A76C6 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		F79534002BE3C076004A76C6 /* AttachedFilesDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachedFilesDetailViewController.swift; sourceTree = "<group>"; };
 		F79534022BEA5DD7004A76C6 /* ImagesAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesAPI.swift; sourceTree = "<group>"; };
+		F79534042BEBB442004A76C6 /* HomeworkSubmissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeworkSubmissionViewController.swift; sourceTree = "<group>"; };
+		F79534062BEBBF1E004A76C6 /* CommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CommentView.swift; path = NeoSchool/Views/CommentView.swift; sourceTree = SOURCE_ROOT; };
 		F7CAE69C2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdayCollectionViewCell.swift; sourceTree = "<group>"; };
 		F7CAE6A02B73DD01004916E3 /* WorkdayScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkdayScheduleViewController.swift; sourceTree = "<group>"; };
 		F7CAE6A42B762C81004916E3 /* SchoolNavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolNavViewController.swift; sourceTree = "<group>"; };
@@ -244,7 +248,8 @@
 				F79533F82BDFD461004A76C6 /* SnackBarView.swift */,
 				F76C6B852B694DF900EACFEB /* EllipseView.swift */,
 				F7CAE6AF2B791D50004916E3 /* GradeView.swift */,
-				F71ACC082BD553D100EDE3A6 /* CommentView.swift */,
+				F79534062BEBBF1E004A76C6 /* CommentView.swift */,
+				F71ACC082BD553D100EDE3A6 /* CommentSubmitView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -310,6 +315,7 @@
 			children = (
 				F7D00B262B9B58370072FAB2 /* SubjectDetailsViewModel.swift */,
 				F760814B2B8B75CA00B6D792 /* SubjectDetailsViewController.swift */,
+				F79534042BEBB442004A76C6 /* HomeworkSubmissionViewController.swift */,
 				F79534002BE3C076004A76C6 /* AttachedFilesDetailViewController.swift */,
 				F79083082B9F31B400B9386E /* HomeworkPanelViewController.swift */,
 				F7F581642BBC494D00FFC6C9 /* AttachedFiles */,
@@ -421,7 +427,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F71ACC092BD553D100EDE3A6 /* CommentView.swift in Sources */,
+				F71ACC092BD553D100EDE3A6 /* CommentSubmitView.swift in Sources */,
 				F79533FF2BE38890004A76C6 /* DetailViewController.swift in Sources */,
 				F7CAE6A12B73DD01004916E3 /* WorkdayScheduleViewController.swift in Sources */,
 				F76081482B8A170F00B6D792 /* KEYS.swift in Sources */,
@@ -441,6 +447,8 @@
 				F76C6B632B67D06900EACFEB /* AppDelegate.swift in Sources */,
 				F76C6B652B67D06900EACFEB /* SceneDelegate.swift in Sources */,
 				F76C6B862B694DF900EACFEB /* EllipseView.swift in Sources */,
+				F79534072BEBBF1E004A76C6 /* CommentView.swift in Sources */,
+				F79534052BEBB443004A76C6 /* HomeworkSubmissionViewController.swift in Sources */,
 				F7D6CE302BC97E64000CBB1F /* AttachedFilesModel.swift in Sources */,
 				F76C6B792B67E24600EACFEB /* ScheduleViewController.swift in Sources */,
 				F71ACC0B2BD6A7CC00EDE3A6 /* AppFont.swift in Sources */,

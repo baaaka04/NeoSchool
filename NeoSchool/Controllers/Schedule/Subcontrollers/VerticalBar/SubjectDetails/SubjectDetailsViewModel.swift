@@ -106,9 +106,45 @@ protocol SubjectDetailsViewModelRepresentable: AnyObject {
     func add(image: UIImage)
     func remove(file: AttachedFile)
     func sendFiles() async throws
+    
+    var files: [String]? { get }
+    var studentCommentSubmitted: String? { get }
+    var teacherComment: String? { get }
+    var mark: String? { get }
+    var isSubmitted: Bool { get }
 }
 
 protocol SubjectDetailsViewModelActionable: AnyObject {
     func updateCollectionView()
 }
 
+protocol HomeworkSubmissionRepresentable: AnyObject {
+    var files: [String]? { get }
+    var studentCommentSubmitted: String? { get }
+    var teacherComment: String? { get }
+    var mark: String? { get }
+    var isSubmitted: Bool { get }
+}
+
+extension SubjectDetailsViewModel: HomeworkSubmissionRepresentable {
+    var isSubmitted: Bool {
+        lessonDetails?.submission != nil
+    }
+    
+    var files: [String]? {
+        lessonDetails?.submission?.files.compactMap { $0.file }
+    }
+    
+    var studentCommentSubmitted: String? {
+        lessonDetails?.submission?.studentComment
+    }
+    
+    var teacherComment: String? {
+        lessonDetails?.submission?.teacherComment
+    }
+    
+    var mark: String? {
+        lessonDetails?.submission?.mark
+    }
+
+}

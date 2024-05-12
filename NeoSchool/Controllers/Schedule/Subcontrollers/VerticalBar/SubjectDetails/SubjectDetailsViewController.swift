@@ -4,6 +4,8 @@ import PhotosUI
 
 class SubjectDetailsViewController: DetailViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, Notifiable {
     
+    //MARK: - Properties
+    
     private let viewModel: SubjectDetailsViewModelRepresentable
     private let attachedFilesVC: FilesCollectionViewController
     
@@ -63,8 +65,20 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
         return addFilesButton
     }()
     
-    lazy var commentView: CommentView = {
-        let view = CommentView()
+    lazy var cancelButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Отменить отправку", for: .normal)
+        button.setTitleColor(UIColor.neobisDarkPurple, for: .normal)
+        button.titleLabel?.font = AppFont.font(type: .Regular, size: 20)
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 16
+        button.layer.borderWidth = 1.0
+        button.layer.borderColor = UIColor.neobisPurple.cgColor
+        return button
+    }()
+    
+    lazy var commentView: CommentSubmitView = {
+        let view = CommentSubmitView()
         view.uploadFiles = { [weak self] in
             self?.uploadFiles()
         }
@@ -81,6 +95,9 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
         return dimming
     }()
     
+    lazy var homeworkSubmissionVC = HomeworkSubmissionViewController(viewModel: self.viewModel as? HomeworkSubmissionRepresentable)
+    
+    //MARK: - Initializers
     
     init(viewModel: SubjectDetailsViewModelRepresentable) {
         self.viewModel = viewModel
@@ -95,6 +112,8 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - UI setup
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -107,26 +126,52 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
         scrollView.addSubview(titleLabel)
         scrollView.addSubview(firstSubTitleLabel)
         scrollView.addSubview(secondSubTitleLabel)
+        setupHomeworkUI()
         scrollView.addSubview(deadlineLabel)
         scrollView.addSubview(markLabel)
         
-        view.addSubview(uploadButton)
-        view.addSubview(addFilesButton)
+        setupCancelButton()
+        setupButtonsUI()
         
         view.addSubview(dimmingView)
         view.addSubview(commentView)
-        
-        setupStudentFilesUI()
-        setupHomeworkUI()
+
+        setupConstraints()
         
         fillLabelsWithData()
         getLessonDetails()
-        
-        setupButtonsUI()
-        setupConstraints()
     }
     
-    func setupStudentFilesUI() {
+    private func getLessonDetails() {
+        Task {
+            try await viewModel.getLessonDetailData()
+            fillLabelsWithData()
+            if viewModel.isSubmitted {
+                setupHomeworkSubmissionUI()
+                cancelButton.isHidden = false
+                uploadButton.isHidden = true
+                addFilesButton.isHidden = true
+            } else {
+                setupStudentFilesUI()
+                cancelButton.isHidden = true
+                uploadButton.isHidden = false
+                addFilesButton.isHidden = false
+            }
+        }
+    }
+    
+    private func fillLabelsWithData() {
+        titleLabel.text = viewModel.subjectName
+        firstSubTitleLabel.attributedText = viewModel.teacherName
+        secondSubTitleLabel.attributedText = viewModel.homeworkTopic
+        deadlineLabel.text = viewModel.homeworkDeadline
+        markLabel.attributedText = viewModel.homeworkMark
+        
+        homeworkPanel.homeworkText = viewModel.homeworkText
+        homeworkPanel.attachedFilesNumber = viewModel.homeworkFileURLs?.count
+    }
+    
+    private func setupStudentFilesUI() {
         self.addChild(attachedFilesVC)
         scrollView.addSubview(attachedFilesVC.view)
         attachedFilesVC.didMove(toParent: self)
@@ -134,34 +179,32 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
         attachedFilesVC.onPressRemove = { [weak self] (_ file: AttachedFile) in
             self?.viewModel.remove(file: file)
         }
+        attachedFilesVC.view.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().offset(-Constants.horizontalMargin)
+            make.height.equalTo(64)
+            make.top.equalTo(markLabel.snp.bottom).offset(Constants.gap)
+            make.bottom.equalToSuperview()
+        }
+    }
+    
+    private func setupHomeworkSubmissionUI() {
+        self.addChild(homeworkSubmissionVC)
+        scrollView.addSubview(homeworkSubmissionVC.view)
+        homeworkSubmissionVC.didMove(toParent: self)
+                
+        homeworkSubmissionVC.view.snp.makeConstraints { make in
+            make.top.equalTo(markLabel.snp.bottom).offset(Constants.gap)
+            make.width.equalToSuperview().offset(-Constants.horizontalMargin)
+            make.centerX.bottom.equalToSuperview()
+            if let num = viewModel.files?.count {
+                // 64 - cell height; 8 - cells gap; 150 - commentView; 100 - additional height to activate scroll after the 2d file has been added
+                let height = 150+64+(8+64)*(num-1)+100
+                make.height.equalTo(height)
+            } else { make.height.equalTo(150)}
+        }
     }
 
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[.originalImage] as? UIImage {
-            viewModel.add(image: image)
-        }
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
-    private func getLessonDetails() {
-        Task {
-            try await viewModel.getLessonDetailData()
-            fillLabelsWithData()
-        }
-    }
-    
-    private func updateFilesColletionHeight(count: Int) {
-        attachedFilesVC.view.snp.updateConstraints { make in
-// 64 - cell height; 8 - cells gap; 200 - additional height to activate scroll after the 2d file has been added
-            let newHeight = 64+(8+64)*(count-1)+200
-            make.height.equalTo(newHeight)
-        }
-    }
-    
     private func setupHomeworkUI () {
         self.addChild(homeworkPanel)
         scrollView.addSubview(homeworkPanel.view)
@@ -172,11 +215,26 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
     }
     
     private func setupButtonsUI () {
+        view.addSubview(uploadButton)
+        view.addSubview(addFilesButton)
+        
+        uploadButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().offset(-Constants.horizontalMargin)
+            make.height.equalTo(52)
+            make.bottom.equalToSuperview().offset(-52)
+        }
+        addFilesButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().offset(-Constants.horizontalMargin)
+            make.height.equalTo(52)
+            make.bottom.equalTo(uploadButton.snp.top).offset(-12)
+        }
                 
-        let plusIcon = UIImage(systemName: "plus.circle")?.withTintColor(.neobisPurple, renderingMode: .alwaysOriginal)
+        let plusIcon = UIImage(systemName: "plus.circle")?.withTintColor(.neobisDarkPurple, renderingMode: .alwaysOriginal)
         addFilesButton.setImage(plusIcon, for: .normal)
         addFilesButton.setTitle(" Прикрепить файлы", for: .normal)
-        addFilesButton.setTitleColor(.neobisPurple, for: .normal)
+        addFilesButton.setTitleColor(.neobisDarkPurple, for: .normal)
         addFilesButton.titleLabel?.font = AppFont.font(type: .Regular, size: 20)
         
         let openMediaAction = UIAction(title: "Медиатека") { [weak self] _ in
@@ -206,6 +264,29 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
         addFilesButton.menu = menu
         addFilesButton.showsMenuAsPrimaryAction = true
     }
+    private func setupCancelButton () {
+        view.addSubview(cancelButton)
+        
+        cancelButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().offset(-Constants.horizontalMargin)
+            make.height.equalTo(52)
+            make.bottom.equalToSuperview().offset(-52)
+        }
+    }
+        
+    //MARK: - Action Methods
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[.originalImage] as? UIImage {
+            viewModel.add(image: image)
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
     
     @objc private func openCommentView() {
         UIView.animate(withDuration: 0.3) {
@@ -213,6 +294,10 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
             self.commentView.snp.updateConstraints( { $0.top.equalTo(self.view.snp.bottom).offset(-Constants.commentHeight) } )
             self.view.layoutIfNeeded()
         }
+    }
+    
+    @objc private func hideCommentView() {
+        self.hideCommentView(completion: nil)
     }
     
     private func hideCommentView(completion: (() -> Void)? = nil) {
@@ -224,10 +309,6 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
         } completion: { done in
             if done { completion?() }
         }
-    }
-    
-    @objc private func hideCommentView() {
-        self.hideCommentView(completion: nil)
     }
         
     @objc private func onTapHomework() {
@@ -265,16 +346,7 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
         }
     }
     
-    private func fillLabelsWithData() {
-        titleLabel.text = viewModel.subjectName
-        firstSubTitleLabel.attributedText = viewModel.teacherName
-        secondSubTitleLabel.attributedText = viewModel.homeworkTopic
-        deadlineLabel.text = viewModel.homeworkDeadline
-        markLabel.attributedText = viewModel.homeworkMark
-        
-        homeworkPanel.homeworkText = viewModel.homeworkText ?? "Не задано"
-        homeworkPanel.attachedFilesNumber = viewModel.homeworkFileURLs?.count
-    }
+    //MARK: - Constraints
     
     private func setupConstraints() {
         scrollView.snp.makeConstraints { make in
@@ -311,25 +383,6 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
             make.width.equalToSuperview().offset(-Constants.horizontalMargin)
             make.top.equalTo(deadlineLabel.snp.bottom).offset(Constants.gap)
         }
-        attachedFilesVC.view.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(-Constants.horizontalMargin)
-            make.height.equalTo(64)
-            make.top.equalTo(markLabel.snp.bottom).offset(Constants.gap)
-            make.bottom.equalToSuperview()
-        }
-        uploadButton.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(-Constants.horizontalMargin)
-            make.height.equalTo(52)
-            make.bottom.equalToSuperview().offset(-52)
-        }
-        addFilesButton.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(-Constants.horizontalMargin)
-            make.height.equalTo(52)
-            make.bottom.equalTo(uploadButton.snp.top).offset(-12)
-        }
         commentView.snp.makeConstraints { make in
             make.width.centerX.equalToSuperview()
             make.top.equalTo(view.snp.bottom)
@@ -354,12 +407,20 @@ extension SubjectDetailsViewController: SubjectDetailsViewModelActionable {
             self.uploadButton.isEnabled = false
             self.uploadButton.backgroundColor = .neobisLightPurple
         }
-        updateFilesColletionHeight(count: viewModel.attachedFiles.count)
+        updateFilesColletionHeight(numberOfElements: viewModel.attachedFiles.count)
         attachedFilesVC.update(attachedFiles: viewModel.attachedFiles)
+    }
+    
+    private func updateFilesColletionHeight(numberOfElements count: Int) {
+        attachedFilesVC.view.snp.updateConstraints { make in
+// 64 - cell height; 8 - cells gap; 200 - additional height to activate scroll after the 2d file has been added
+            let newHeight = 64+(8+64)*(count-1)+200
+            make.height.equalTo(newHeight)
+        }
     }
 }
 
-//MARK: Image Pickers
+//MARK: - Image Pickers
 extension SubjectDetailsViewController : PHPickerViewControllerDelegate {
     
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
@@ -395,7 +456,7 @@ extension SubjectDetailsViewController: UIDocumentPickerDelegate {
     }
 }
 
-//MARK: Keyboard handlers
+//MARK: - Keyboard handlers
 extension SubjectDetailsViewController: UITextViewDelegate {
 
     override func viewWillAppear(_ animated: Bool) {

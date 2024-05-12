@@ -61,11 +61,15 @@ class FilesCollectionViewController: UIViewController, UICollectionViewDelegate,
         
         for url in urls {
             Task {
-                let image = try await imagesAPI?.loadImage(url: url)
-                let newFile = AttachedFile(image: image)
-                DispatchQueue.main.async {
-                    self.attachedFiles?.append(newFile)
-                    self.collectionView.reloadData()
+                do {
+                    let image = try await imagesAPI?.loadImage(url: url)
+                    let newFile = AttachedFile(image: image)
+                    DispatchQueue.main.async {
+                        self.attachedFiles?.append(newFile)
+                        self.collectionView.reloadData()
+                    }
+                } catch {
+                    print(error)
                 }
             }
         }

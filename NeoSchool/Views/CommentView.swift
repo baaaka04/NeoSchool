@@ -3,102 +3,87 @@ import SnapKit
 
 class CommentView: UIView {
     
-    var uploadFiles: (() -> Void)?
+    // MARK: - Properties
     
-    lazy var titleLable: UILabel = {
+    private let titleLabel: GrayUILabel = {
         let label = GrayUILabel()
-        label.text = "Сдать задание"
-        label.font = AppFont.font(type: .Medium, size: 22)
-        label.textAlignment = .center
+        label.font = AppFont.font(type: .Medium, size: 18)
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let commentInput: PlaceholderTextView = {
-        let input = PlaceholderTextView()
-        input.placeholder = "Комментарий (необязательно)"
-        input.placeholderInsets = UIEdgeInsets(top: 12, left: 16, bottom: Constants.inputHeight-34, right: 16)
-        input.placeholderLabel.font = AppFont.font(type: .Regular, size: 20)
-        input.counterInsets = UIEdgeInsets(top: Constants.inputHeight-34, left: 16, bottom: 12, right: 16)
-        input.counterLabel.font = AppFont.font(type: .Regular, size: 12)
-        input.counterLabel.textAlignment = .right
-        input.limit = 100
-        input.layer.cornerRadius = 16
-        input.font = AppFont.font(type: .Regular, size: 18)
-        input.backgroundColor = UIColor.neobisExtralightGray
-        return input
+    private let contentLabel: GrayUILabel = {
+        let label = GrayUILabel()
+        label.font = AppFont.font(type: .Regular, size: 16)
+        label.text = "-"
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
-    lazy var submitButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Сдать", for: .normal)
-        button.backgroundColor = .neobisPurple
-        button.layer.cornerRadius = 16
-        button.titleLabel?.font = AppFont.font(type: .Regular, size: 20)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(uploadFilesButtonTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    let grabber: UIImageView = {
-        let imageView = UIImageView()
-        imageView.layer.cornerRadius = 4
-        imageView.backgroundColor = .neobisExtralightGray
-        return imageView
-    }()
+    // MARK: - Initializers
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupUI()
+        setupSubviews()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setupUI()
+        setupSubviews()
     }
+    
+    // MARK: - Setup
+    
+    private func setupSubviews() {
+        addSubview(titleLabel)
+        addSubview(contentLabel)
+                    
+        layer.borderColor = UIColor.neobisGray.cgColor
+        layer.cornerRadius = 16.0
+        layer.borderWidth = 1.0
+        
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(16)
+            make.left.equalToSuperview().offset(16)
+            make.right.equalToSuperview().offset(-16)
+        }
+        contentLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(8)
+            make.left.equalToSuperview().offset(16)
+            make.right.equalToSuperview().offset(-16)
+            make.bottom.equalToSuperview().offset(-16)
+        }
+        
+    }
+    
+    // MARK: - Public Methods
+    
+    func configure(author: CommentAuthor, content: String?) {
+        titleLabel.text = author.getText()
+        contentLabel.text = content ?? "-"
+        
+        layoutIfNeeded()
+    }
+    
+}
 
-    struct Constants {
-        static let gap: CGFloat = 24
-        static let horizontalPadding: CGFloat = 32
-        static let inputHeight: CGFloat = 158
-    }
-    
-    private func setupUI () {
-        
-        addSubview(grabber)
-        addSubview(titleLable)
-        addSubview(commentInput)
-        addSubview(submitButton)
-                
-        layer.cornerRadius = 32
-        backgroundColor = .white
-        
-        grabber.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.width.equalTo(40)
-            make.height.equalTo(6)
-            make.top.equalToSuperview().offset(8)
+enum CommentAuthor {
+    case mineAsStudent, mineAsTeacher, student, teacher
+
+    func getText() -> String {
+        switch self {
+            
+        case .mineAsStudent:
+            return "Мой комментарий:"
+        case .mineAsTeacher:
+            return "Ваш комментарий:"
+        case .student:
+            return "Комментарий ученика:"
+        case .teacher:
+            return "Комментарий учителя:"
         }
-        titleLable.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.height.equalTo(26)
-            make.width.equalToSuperview().offset(-Constants.horizontalPadding)
-            make.top.equalTo(grabber.snp.bottom).offset(Constants.gap)
-        }
-        commentInput.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(-Constants.horizontalPadding)
-            make.height.equalTo(Constants.inputHeight)
-            make.top.equalTo(titleLable.snp.bottom).offset(Constants.gap)
-        }
-        submitButton.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(-Constants.horizontalPadding)
-            make.height.equalTo(52)
-            make.top.equalTo(commentInput.snp.bottom).offset(Constants.gap)
-        }
-    }
-    
-    @objc func uploadFilesButtonTapped() {
-        uploadFiles?()
     }
 }

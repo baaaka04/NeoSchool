@@ -5,7 +5,7 @@ class HomeworkPanelViewController: UIViewController {
     
     var homeworkText: String? {
         didSet {
-            homeworkbodyLabel.text = homeworkText
+            homeworkbodyLabel.text = homeworkText ?? "Не задано"
         }
     }
     

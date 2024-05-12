@@ -9,7 +9,7 @@ class MainTabBarViewController: UITabBarController {
         let vc2 = self.createNav(with: "Успеваемость", image: UIImage(named: "LineChartIcon"), selectedImage: UIImage(named: "LineChartIconSelected"), vc: PerformanceViewController(navbarTitle: "Успеваемость", navbarColor: .neobisBlue))
         let vc3 = self.createNav(with: "Профиль", image: UIImage(named: "ProfileIcon"), selectedImage: UIImage(named: "ProfileIconSelected"), vc: ProfileViewController(navbarTitle: "Профиль", navbarColor: .neobisGreen))
         
-        self.tabBar.tintColor = UIColor(named: "IconsColor")
+        self.tabBar.tintColor = UIColor.neobisDarkPurple
         self.tabBar.barTintColor = .white
         
         self.setViewControllers([vc1, vc2, vc3], animated: true)
