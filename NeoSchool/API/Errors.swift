@@ -1,7 +1,7 @@
 import Foundation
 
 enum MyError: Error {
-    case badNetwork, failDecoding
+    case badNetwork, failDecoding, nothingToCancel
     
     var description: String {
         switch self {
@@ -9,6 +9,8 @@ enum MyError: Error {
             "Bad Network"
         case .failDecoding:
             "Could not decode data"
+        case .nothingToCancel:
+            "No submitted homework to cancel"
         }
     }
 }

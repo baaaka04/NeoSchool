@@ -15,5 +15,9 @@ class DayScheduleAPI {
     func uploadFiles(homeworkId: Int, files: [AttachedFile], studentComment: String?) async throws {
         return try await networkAPI.uploadFiles(homeworkId: homeworkId, files: files, studentComment: studentComment)
     }
+    
+    func cancelSubmission(submissionId: Int) async throws {
+        try await networkAPI.cancelSubmission(submissionId: submissionId)
+    }
 }
 

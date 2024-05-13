@@ -53,6 +53,7 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
         uploadButton.titleLabel?.font = AppFont.font(type: .Regular, size: 20)
         uploadButton.isEnabled = false
         uploadButton.addTarget(self, action: #selector(openCommentView), for: .touchUpInside)
+        uploadButton.isHidden = true
         return uploadButton
     }()
     
@@ -62,6 +63,7 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
         addFilesButton.layer.cornerRadius = 16
         addFilesButton.layer.borderWidth = 1.0
         addFilesButton.layer.borderColor = UIColor.neobisPurple.cgColor
+        addFilesButton.isHidden = true
         return addFilesButton
     }()
     
@@ -74,6 +76,8 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
         button.layer.cornerRadius = 16
         button.layer.borderWidth = 1.0
         button.layer.borderColor = UIColor.neobisPurple.cgColor
+        button.addTarget(self, action: #selector(cancelSubmission), for: .touchUpInside)
+        button.isHidden = true
         return button
     }()
     
@@ -148,7 +152,7 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
             fillLabelsWithData()
             if viewModel.isSubmitted {
                 setupHomeworkSubmissionUI()
-                cancelButton.isHidden = false
+                cancelButton.isHidden = !(viewModel.isCancelable ?? false)
                 uploadButton.isHidden = true
                 addFilesButton.isHidden = true
             } else {
@@ -343,6 +347,18 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
             }
             self.uploadButton.isEnabled = true
             self.dimmingView.isUserInteractionEnabled = true
+        }
+    }
+    
+    @objc private func cancelSubmission() {
+        Task {
+            do {
+                try await viewModel.cancelSubmission()
+                self.showNotification(message: "Отправка отменена", isSucceed: true)
+            } catch {
+                print(error)
+                self.showNotification(message: "Произошла ошибка", isSucceed: false)
+            }
         }
     }
     

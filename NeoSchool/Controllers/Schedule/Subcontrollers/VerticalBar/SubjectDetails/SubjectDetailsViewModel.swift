@@ -49,8 +49,12 @@ class SubjectDetailsViewModel: SubjectDetailsViewModelRepresentable {
         lessonDetails?.homework?.text
     }
     
-    var homeworkFileURLs : [String]? {
+    var homeworkFileURLs: [String]? {
         return self.lessonDetails?.homework?.files.compactMap { $0.file }
+    }
+    
+    var isCancelable: Bool? {
+        lessonDetails?.homework?.canCancel
     }
     
     init(lessonId: Int, lessonAPI: DayScheduleAPI?) {
@@ -84,7 +88,11 @@ class SubjectDetailsViewModel: SubjectDetailsViewModelRepresentable {
             let homeworkId : Int = lessonDetails?.homework?.id else { throw URLError(.fileDoesNotExist) }
         try await lessonAPI?.uploadFiles(homeworkId: homeworkId, files: attachedFiles, studentComment: studentComment)
     }
-
+    
+    func cancelSubmission() async throws {
+        guard let submissionId else { throw MyError.nothingToCancel }
+        try await lessonAPI?.cancelSubmission(submissionId: submissionId)
+    }
 
 }
 
@@ -112,6 +120,8 @@ protocol SubjectDetailsViewModelRepresentable: AnyObject {
     var teacherComment: String? { get }
     var mark: String? { get }
     var isSubmitted: Bool { get }
+    var isCancelable: Bool? { get }
+    func cancelSubmission() async throws
 }
 
 protocol SubjectDetailsViewModelActionable: AnyObject {
@@ -127,6 +137,10 @@ protocol HomeworkSubmissionRepresentable: AnyObject {
 }
 
 extension SubjectDetailsViewModel: HomeworkSubmissionRepresentable {
+    var submissionId: Int? {
+        lessonDetails?.submission?.id
+    }
+    
     var isSubmitted: Bool {
         lessonDetails?.submission != nil
     }

@@ -63,6 +63,19 @@ class NetworkAPI {
             throw MyError.badNetwork
         }
     }
+    
+    //DELETE-REQUEST
+    //ENDPOINT /schedule/student/homeworks/submissions/{submission_id}/cancel/
+    func cancelSubmission(submissionId: Int) async throws -> Void {
+        let urlString = "https://neobook.online/neoschool/schedule/student/homeworks/submissions/\(submissionId)/cancel/"
+        var request = try generateAuthorizedRequest(urlString: urlString)
+        request.httpMethod = "DELETE"
+        let (_, resp) = try await URLSession.shared.data(for: request)
+        
+        guard let httpresponse = resp as? HTTPURLResponse, httpresponse.statusCode == 204 else {
+            throw MyError.badNetwork
+        }
+    }
 }
 
 
