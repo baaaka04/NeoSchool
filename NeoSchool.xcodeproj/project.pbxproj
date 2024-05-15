@@ -56,6 +56,8 @@
 		F79534032BEA5DD7004A76C6 /* ImagesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79534022BEA5DD7004A76C6 /* ImagesAPI.swift */; };
 		F79534052BEBB443004A76C6 /* HomeworkSubmissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79534042BEBB442004A76C6 /* HomeworkSubmissionViewController.swift */; };
 		F79534072BEBBF1E004A76C6 /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79534062BEBBF1E004A76C6 /* CommentView.swift */; };
+		F795340B2BF35C50004A76C6 /* ConfirmUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F795340A2BF35C50004A76C6 /* ConfirmUIView.swift */; };
+		F795340D2BF51438004A76C6 /* ConfirmableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F795340C2BF51438004A76C6 /* ConfirmableExtension.swift */; };
 		F7CAE69D2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE69C2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift */; };
 		F7CAE6A12B73DD01004916E3 /* WorkdayScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE6A02B73DD01004916E3 /* WorkdayScheduleViewController.swift */; };
 		F7CAE6A52B762C81004916E3 /* SchoolNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE6A42B762C81004916E3 /* SchoolNavViewController.swift */; };
@@ -120,6 +122,8 @@
 		F79534022BEA5DD7004A76C6 /* ImagesAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesAPI.swift; sourceTree = "<group>"; };
 		F79534042BEBB442004A76C6 /* HomeworkSubmissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeworkSubmissionViewController.swift; sourceTree = "<group>"; };
 		F79534062BEBBF1E004A76C6 /* CommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CommentView.swift; path = NeoSchool/Views/CommentView.swift; sourceTree = SOURCE_ROOT; };
+		F795340A2BF35C50004A76C6 /* ConfirmUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmUIView.swift; sourceTree = "<group>"; };
+		F795340C2BF51438004A76C6 /* ConfirmableExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmableExtension.swift; sourceTree = "<group>"; };
 		F7CAE69C2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdayCollectionViewCell.swift; sourceTree = "<group>"; };
 		F7CAE6A02B73DD01004916E3 /* WorkdayScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkdayScheduleViewController.swift; sourceTree = "<group>"; };
 		F7CAE6A42B762C81004916E3 /* SchoolNavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolNavViewController.swift; sourceTree = "<group>"; };
@@ -249,6 +253,7 @@
 				F76C6B852B694DF900EACFEB /* EllipseView.swift */,
 				F7CAE6AF2B791D50004916E3 /* GradeView.swift */,
 				F79534062BEBBF1E004A76C6 /* CommentView.swift */,
+				F795340A2BF35C50004A76C6 /* ConfirmUIView.swift */,
 				F71ACC082BD553D100EDE3A6 /* CommentSubmitView.swift */,
 			);
 			path = Views;
@@ -278,6 +283,7 @@
 				F76081492B8B73DA00B6D792 /* StringExtension.swift */,
 				F7E5625A2BD173600029B822 /* DataStringExtension.swift */,
 				F79533FC2BE10098004A76C6 /* SnackbarExtension.swift */,
+				F795340C2BF51438004A76C6 /* ConfirmableExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -427,9 +433,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F795340B2BF35C50004A76C6 /* ConfirmUIView.swift in Sources */,
 				F71ACC092BD553D100EDE3A6 /* CommentSubmitView.swift in Sources */,
 				F79533FF2BE38890004A76C6 /* DetailViewController.swift in Sources */,
 				F7CAE6A12B73DD01004916E3 /* WorkdayScheduleViewController.swift in Sources */,
+				F795340D2BF51438004A76C6 /* ConfirmableExtension.swift in Sources */,
 				F76081482B8A170F00B6D792 /* KEYS.swift in Sources */,
 				F79083072B9F2C8300B9386E /* NeobisUILabel.swift in Sources */,
 				F79533FB2BDFF9D8004A76C6 /* Errors.swift in Sources */,

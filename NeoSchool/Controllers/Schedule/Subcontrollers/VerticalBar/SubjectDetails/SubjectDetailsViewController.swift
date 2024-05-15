@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 import PhotosUI
 
-class SubjectDetailsViewController: DetailViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, Notifiable {
+class SubjectDetailsViewController: DetailViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, Notifiable, Confirmable {
     
     //MARK: - Properties
     
@@ -330,7 +330,7 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
     @objc private func uploadFiles () {
         self.uploadButton.isEnabled = false
         self.dimmingView.isUserInteractionEnabled = false
-        self.viewModel.studentComment = self.commentView.commentInput.text
+        self.viewModel.studentComment = self.commentView.commentInput.text == "" ? nil : self.commentView.commentInput.text
         Task {
             do {
                 try await self.viewModel.sendFiles()
@@ -351,15 +351,17 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
     }
     
     @objc private func cancelSubmission() {
-        Task {
-            do {
-                try await viewModel.cancelSubmission()
-                self.showNotification(message: "Отправка отменена", isSucceed: true)
-            } catch {
-                print(error)
-                self.showNotification(message: "Произошла ошибка", isSucceed: false)
+        self.showConfirmView(title: "Отменить отправку?", text: "Отмените отправку, если хотите прикрепить другие файлы. После этого не забудьте повторно сдать задание", confirmButtonText: "Отменить отправку", declineButtonText: "Не отменять", confirmedAction: {[weak self] in
+            Task {
+                do {
+                    try await self?.viewModel.cancelSubmission()
+                    self?.showNotification(message: "Отправка отменена", isSucceed: true)
+                } catch {
+                    print(error)
+                    self?.showNotification(message: "Произошла ошибка", isSucceed: false)
+                }
             }
-        }
+        })
     }
     
     //MARK: - Constraints

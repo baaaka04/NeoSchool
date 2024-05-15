@@ -86,7 +86,7 @@ struct StudentSubmission: Codable {
     let homework: Int
     let files : [File]
     let submittedDate : String
-    let studentComment : String
+    let studentComment : String?
     let teacherComment : String?
     let isRevision : Bool
     let mark : String?
