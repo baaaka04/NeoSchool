@@ -6,7 +6,7 @@ class HomeworkSubmissionViewController: UIViewController {
     weak var viewModel : HomeworkSubmissionRepresentable?
     let studentFilesVC : FilesCollectionViewController
     
-    private let commentView = CommentView()
+    private lazy var commentView = CommentView(author: .mineAsStudent, text: self.viewModel?.studentCommentSubmitted)
     
     init(viewModel: HomeworkSubmissionRepresentable?) {
         self.viewModel = viewModel
@@ -27,7 +27,6 @@ class HomeworkSubmissionViewController: UIViewController {
         view.addSubview(studentFilesVC.view)
         studentFilesVC.didMove(toParent: self)
         
-        commentView.configure(author:.mineAsStudent, content: viewModel?.studentCommentSubmitted)
         commentView.translatesAutoresizingMaskIntoConstraints = false
         
         commentView.snp.makeConstraints { make in

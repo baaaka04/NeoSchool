@@ -12,6 +12,13 @@ class ConfirmUIView: UIView {
     
     private let questionImage = UIImageView(image: UIImage(named: "GreenQuestionMark"))
     
+    let modalView : UIView = {
+        let view = UIView(frame: .zero)
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 32
+        return view
+    }()
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = self.title
@@ -60,14 +67,7 @@ class ConfirmUIView: UIView {
         super.init(frame: .zero)
         setupUI()
     }
-    
-    let modalView : UIView = {
-        let view = UIView(frame: .zero)
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 32
-        return view
-    }()
-    
+        
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

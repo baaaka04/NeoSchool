@@ -16,7 +16,6 @@ class CommentView: UIView {
     private let contentLabel: GrayUILabel = {
         let label = GrayUILabel()
         label.font = AppFont.font(type: .Regular, size: 16)
-        label.text = "-"
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -25,14 +24,15 @@ class CommentView: UIView {
     
     // MARK: - Initializers
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(author: CommentAuthor, text: String?) {
+        self.titleLabel.text = author.getText()
+        self.contentLabel.text = text ?? "-"
+        super.init(frame: .zero)
         setupSubviews()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setupSubviews()
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Setup
@@ -57,15 +57,6 @@ class CommentView: UIView {
             make.bottom.equalToSuperview().offset(-16)
         }
         
-    }
-    
-    // MARK: - Public Methods
-    
-    func configure(author: CommentAuthor, content: String?) {
-        titleLabel.text = author.getText()
-        contentLabel.text = content ?? "-"
-        
-        layoutIfNeeded()
     }
     
 }
