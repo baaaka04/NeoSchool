@@ -39,11 +39,7 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
         return deadlineLabel
     }()
     
-    lazy var markLabel: GrayUILabel = {
-        let markLabel = GrayUILabel()
-        markLabel.font = AppFont.font(type: .Regular, size: 20)
-        return markLabel
-    }()
+    private let markLabel = MarkUIView()
     
     lazy var uploadButton: UIButton = {
         let uploadButton = UIButton()
@@ -169,7 +165,7 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
         firstSubTitleLabel.attributedText = viewModel.teacherName
         secondSubTitleLabel.attributedText = viewModel.homeworkTopic
         deadlineLabel.text = viewModel.homeworkDeadline
-        markLabel.attributedText = viewModel.homeworkMark
+        markLabel.mark = viewModel.homeworkMark
         
         homeworkPanel.homeworkText = viewModel.homeworkText
         homeworkPanel.attachedFilesNumber = viewModel.homeworkFileURLs?.count

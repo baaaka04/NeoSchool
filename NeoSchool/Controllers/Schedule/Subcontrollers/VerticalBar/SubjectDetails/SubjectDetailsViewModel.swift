@@ -37,13 +37,9 @@ class SubjectDetailsViewModel: SubjectDetailsViewModelRepresentable {
         formatter.dateStyle = .short
         return deadlineString + formatter.string(from: deadline)
     }
-    var homeworkMark: NSAttributedString {
-        let head = "Оценка за задание: "
-        let tail = lessonDetails?.submission?.mark ?? "не получена"
-        let markString = head + tail
-        let attributedString = NSMutableAttributedString(string: markString)
-        attributedString.addAttribute(.font, value: AppFont.font(type: .Medium, size: 20), range: NSRange(location: head.count, length: tail.count))
-        return  attributedString
+    var homeworkMark: Grade? {
+        guard let markString = lessonDetails?.submission?.mark else { return nil }
+        return Grade(rawValue: markString )
     }
     var homeworkText: String? {
         lessonDetails?.homework?.text
@@ -101,7 +97,7 @@ protocol SubjectDetailsViewModelRepresentable: AnyObject {
     var teacherName: NSAttributedString{ get }
     var homeworkTopic: NSAttributedString { get }
     var homeworkDeadline: String { get }
-    var homeworkMark: NSAttributedString { get }
+    var homeworkMark: Grade? { get }
     var homeworkText: String? { get }
     var attachedFiles: [AttachedFile] { get }
     var homeworkFileURLs: [String]? { get }

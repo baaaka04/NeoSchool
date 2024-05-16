@@ -46,6 +46,16 @@ enum Grade: String {
         case .absent: return UIColor.neobisGradeN
         }
     }
+    var word: String {
+        switch self {
+        case .two: return "(неуд)"
+        case .three: return "(удв)"
+        case .four: return "(хор)"
+        case .five: return "(отл)"
+        case .noGrade: return ""
+        case .absent: return ""
+        }
+    }
 }
 
 // MARK: Student's lesson details
