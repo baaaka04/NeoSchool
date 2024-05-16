@@ -87,6 +87,12 @@ class FilesCollectionViewController: UIViewController, UICollectionViewDelegate,
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let image = attachedFiles?[indexPath.item].image else { return }
+        let zoomImageView = ZoomPictureViewController(image: image)
+        self.navigationController?.pushViewController(zoomImageView, animated: true)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.size.width, height: 64)
     }

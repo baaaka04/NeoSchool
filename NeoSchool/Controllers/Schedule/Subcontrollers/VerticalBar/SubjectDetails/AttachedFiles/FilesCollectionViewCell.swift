@@ -20,25 +20,20 @@ class FilesCollectionViewCell : UICollectionViewCell {
         }
     }
         
-    @objc func removeFile() {
-        guard let attachedFile, let onPressRemove else { return }
-        onPressRemove(attachedFile)
-    }
-    
-    let imageView: UIImageView = {
+    private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         return imageView
     }()
     
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = AppFont.font(type: .Medium, size: 20)
         label.textColor = .neobisDarkGray
         return label
     }()
     
-    let typeLabel: UILabel = {
+    private let typeLabel: UILabel = {
         let label = UILabel()
         label.font = AppFont.font(type: .Regular, size: 16)
         label.textColor = .neobisDarkGray
@@ -46,7 +41,7 @@ class FilesCollectionViewCell : UICollectionViewCell {
         return label
     }()
     
-    lazy var removeButton: UIButton = {
+    private lazy var removeButton: UIButton = {
         let button = UIButton()
         button.tintColor = UIColor.neobisLightGray
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
@@ -99,4 +94,9 @@ class FilesCollectionViewCell : UICollectionViewCell {
             make.right.equalToSuperview().offset(-12)
         }
     }
+    
+    @objc func removeFile() {
+        guard let attachedFile, let onPressRemove else { return }
+        onPressRemove(attachedFile)
+    }    
 }
