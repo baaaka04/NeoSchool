@@ -4,6 +4,7 @@ import SnapKit
 class CommentView: UIView {
     
     // MARK: - Properties
+    private var author: CommentAuthor
     
     private let titleLabel: GrayUILabel = {
         let label = GrayUILabel()
@@ -27,6 +28,7 @@ class CommentView: UIView {
     init(author: CommentAuthor, text: String?) {
         self.titleLabel.text = author.getText()
         self.contentLabel.text = text ?? "-"
+        self.author = author
         super.init(frame: .zero)
         setupSubviews()
     }
@@ -41,7 +43,7 @@ class CommentView: UIView {
         addSubview(titleLabel)
         addSubview(contentLabel)
                     
-        layer.borderColor = UIColor.neobisGray.cgColor
+        layer.borderColor = author.getBorderColor()
         layer.cornerRadius = 16.0
         layer.borderWidth = 1.0
         
@@ -70,11 +72,20 @@ enum CommentAuthor {
         case .mineAsStudent:
             return "Мой комментарий:"
         case .mineAsTeacher:
-            return "Ваш комментарий:"
+            return "📌 Ваш комментарий:"
         case .student:
             return "Комментарий ученика:"
         case .teacher:
-            return "Комментарий учителя:"
+            return "📌 Комментарий учителя:"
+        }
+    }
+    
+    func getBorderColor() -> CGColor {
+        switch self {
+        case .mineAsStudent, .student:
+            return UIColor.neobisGray.cgColor
+        case .mineAsTeacher, .teacher:
+            return UIColor.neobisPurple.cgColor
         }
     }
 }
