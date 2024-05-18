@@ -83,6 +83,7 @@ class SubjectDetailsViewModel: SubjectDetailsViewModelRepresentable {
         guard attachedFiles.count > 0,
             let homeworkId : Int = lessonDetails?.homework?.id else { throw URLError(.fileDoesNotExist) }
         try await lessonAPI?.uploadFiles(homeworkId: homeworkId, files: attachedFiles, studentComment: studentComment)
+        self.attachedFiles = []
     }
     
     func cancelSubmission() async throws {

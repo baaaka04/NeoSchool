@@ -7,7 +7,8 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
     //MARK: - Properties
     
     private let viewModel: SubjectDetailsViewModelRepresentable
-    private let attachedFilesVC: FilesCollectionViewController
+    private let attachedFilesVC: FilesCollectionViewController // Keep alive till parent lives.
+    private var homeworkSubmissionVC: HomeworkSubmissionViewController? // Call only to display backend files and kill it when user confirms to cancel submission.
     
     private let homeworkPanel = HomeworkPanelViewController()
     
@@ -94,9 +95,7 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
         dimming.addGestureRecognizer(tapGesture)
         return dimming
     }()
-    
-    lazy var homeworkSubmissionVC = HomeworkSubmissionViewController(viewModel: self.viewModel as? HomeworkSubmissionRepresentable)
-    
+        
     //MARK: - Initializers
     
     init(viewModel: SubjectDetailsViewModelRepresentable) {
@@ -135,28 +134,42 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
         
         view.addSubview(dimmingView)
         view.addSubview(commentView)
-
+        
+        setupStudentFilesUI()
         setupConstraints()
         
-        fillLabelsWithData()
-        getLessonDetails()
+
+        getLessonDetails() { [weak self] in
+            self?.updateUI()
+        }
     }
-    
-    private func getLessonDetails() {
+        
+    private func getLessonDetails(complition: (() -> Void)? = nil) {
         Task {
             try await viewModel.getLessonDetailData()
-            fillLabelsWithData()
-            if viewModel.isSubmitted {
-                setupHomeworkSubmissionUI()
-                cancelButton.isHidden = !(viewModel.isCancelable ?? false)
-                uploadButton.isHidden = true
-                addFilesButton.isHidden = true
-            } else {
-                setupStudentFilesUI()
-                cancelButton.isHidden = true
-                uploadButton.isHidden = false
-                addFilesButton.isHidden = false
-            }
+            guard let complition else { return }
+            complition()
+        }
+    }
+    
+    private func updateUI() {
+        fillLabelsWithData()
+        if viewModel.isSubmitted {
+            attachedFilesVC.view.snp.removeConstraints()
+            setupHomeworkSubmissionUI()
+            if let homeworkSubmissionVC { homeworkSubmissionVC.view.isHidden = false }
+            attachedFilesVC.view.isHidden = true
+            cancelButton.isHidden = !(viewModel.isCancelable ?? false)
+            uploadButton.isHidden = true
+            addFilesButton.isHidden = true
+        } else {
+            updateAttachedFilesConstraints()
+            updateCollectionView()
+            if let homeworkSubmissionVC { homeworkSubmissionVC.view.isHidden = true }
+            attachedFilesVC.view.isHidden = false
+            cancelButton.isHidden = true
+            uploadButton.isHidden = false
+            addFilesButton.isHidden = false
         }
     }
     
@@ -179,7 +192,11 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
         attachedFilesVC.onPressRemove = { [weak self] (_ file: AttachedFile) in
             self?.viewModel.remove(file: file)
         }
-        attachedFilesVC.view.snp.makeConstraints { make in
+        updateAttachedFilesConstraints()
+    }
+    
+    private func updateAttachedFilesConstraints() {
+        attachedFilesVC.view.snp.updateConstraints { make in
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().offset(-Constants.horizontalMargin)
             make.height.equalTo(64)
@@ -189,6 +206,10 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
     }
     
     private func setupHomeworkSubmissionUI() {
+        guard homeworkSubmissionVC == nil else { return } // Setup only if VC doesn't exist.
+        self.homeworkSubmissionVC = HomeworkSubmissionViewController(viewModel: self.viewModel as? HomeworkSubmissionRepresentable)
+        
+        guard let homeworkSubmissionVC else { return } // Continue only if VC was successfully created.
         self.addChild(homeworkSubmissionVC)
         scrollView.addSubview(homeworkSubmissionVC.view)
         homeworkSubmissionVC.didMove(toParent: self)
@@ -203,6 +224,12 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
                 make.height.equalTo(height)
             } else { make.height.equalTo(150)}
         }
+    }
+    
+    private func removeHomeworkSubmissionUI() {
+        homeworkSubmissionVC?.view.removeFromSuperview()
+        homeworkSubmissionVC?.removeFromParent()
+        homeworkSubmissionVC = nil
     }
 
     private func setupHomeworkUI () {
@@ -334,6 +361,7 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
                 self.hideCommentView { [weak self] in
                     self?.showNotification(message: "Задание успешно отправлено", isSucceed: true)
                 }
+                getLessonDetails() { [weak self] in self?.updateUI() }
             } catch {
                 print(error)
                 //Error notification
@@ -352,6 +380,8 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
                 do {
                     try await self?.viewModel.cancelSubmission()
                     self?.showNotification(message: "Отправка отменена", isSucceed: true)
+                    self?.removeHomeworkSubmissionUI()
+                    self?.getLessonDetails()  { [weak self] in self?.updateUI() }
                 } catch {
                     print(error)
                     self?.showNotification(message: "Произошла ошибка", isSucceed: false)
@@ -417,11 +447,11 @@ extension SubjectDetailsViewController: SubjectDetailsViewModelActionable {
         if viewModel.attachedFiles.count > 0 {
             self.uploadButton.isEnabled = true
             self.uploadButton.backgroundColor = .neobisPurple
+            updateFilesColletionHeight(numberOfElements: viewModel.attachedFiles.count)
         } else {
             self.uploadButton.isEnabled = false
             self.uploadButton.backgroundColor = .neobisLightPurple
         }
-        updateFilesColletionHeight(numberOfElements: viewModel.attachedFiles.count)
         attachedFilesVC.update(attachedFiles: viewModel.attachedFiles)
     }
     
