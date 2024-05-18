@@ -144,11 +144,11 @@ class SubjectDetailsViewController: DetailViewController, UIImagePickerControlle
         }
     }
         
-    private func getLessonDetails(complition: (() -> Void)? = nil) {
+    private func getLessonDetails(completion: (() -> Void)? = nil) {
         Task {
             try await viewModel.getLessonDetailData()
-            guard let complition else { return }
-            complition()
+            guard let completion else { return }
+            completion()
         }
     }
     
