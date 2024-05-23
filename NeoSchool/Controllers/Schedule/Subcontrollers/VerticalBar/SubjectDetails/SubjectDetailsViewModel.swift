@@ -1,6 +1,6 @@
 import UIKit
 
-class SubjectDetailsViewModel: SubjectDetailsViewModelRepresentable {
+class SubjectDetailsViewModel: SubjectDetailsViewModelRepresentable, CommentRepresentable {
     
     weak var view: SubjectDetailsViewModelActionable?
     weak var lessonAPI: DayScheduleAPI?

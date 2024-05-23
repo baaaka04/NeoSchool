@@ -89,7 +89,7 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
         guard let subject = dayLessonsData?[indexPath.item] else { return }
         
         let viewModel = SubjectDetailsViewModel(lessonId: subject.id, lessonAPI: self.dayScheduleAPI)
-        let subjectDetailsVC = SubjectDetailsViewController(viewModel: viewModel)
+        let subjectDetailsVC = SubjectDetailsStatefulViewController(viewModel: viewModel)
 
         self.navigationController?.pushViewController(subjectDetailsVC, animated: true)
     }
