@@ -1,48 +1,84 @@
 import UIKit
+import SnapKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowsScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowsScene.coordinateSpace.bounds)
         window?.windowScene = windowsScene
-        
-        window?.rootViewController = MainTabBarViewController()
         window?.makeKeyAndVisible()
+        
+        self.checkAuthentication()
     }
-
-    func sceneDidDisconnect(_ scene: UIScene) {
-        // Called as the scene is being released by the system.
-        // This occurs shortly after the scene enters the background, or when its session is discarded.
-        // Release any resources associated with this scene that can be re-created the next time the scene connects.
-        // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
+    
+    public func checkAuthentication() {
+        
+//        KeychainHelper.delete(key: .accessToken)
+//        KeychainHelper.delete(key: .refreshToken)
+        
+        let authService = AuthService()
+        
+        Task {
+            try await authService.refreshAccessToken { [weak self] done in
+                DispatchQueue.main.sync {
+                    if done {
+                        self?.goToController(with: MainTabBarViewController(), isAuthorized: true)
+                    } else {
+                        self?.goToController(with: WelcomeViewController(), isAuthorized: false)
+                    }
+                }
+            }
+        }
     }
-
-    func sceneDidBecomeActive(_ scene: UIScene) {
-        // Called when the scene has moved from an inactive state to an active state.
-        // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+    
+    @objc private func onPressNotifications() {}
+    
+    private func goToController(with viewController: UIViewController, isAuthorized: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            UIView.animate(withDuration: 0.25) {
+                self?.window?.layer.opacity = 0
+                
+            } completion: { [weak self] _ in
+                guard let strongSelf = self else { return }
+                var nav = UINavigationController(rootViewController: viewController)
+                
+                if isAuthorized {
+                    nav = strongSelf.addNavbar(to: nav)
+                }
+                
+                nav.modalPresentationStyle = .fullScreen
+                strongSelf.window?.rootViewController = nav
+                
+                UIView.animate(withDuration: 0.25) { [weak self] in
+                    self?.window?.layer.opacity = 1
+                }
+            }
+        }
     }
-
-    func sceneWillResignActive(_ scene: UIScene) {
-        // Called when the scene will move from an active state to an inactive state.
-        // This may occur due to temporary interruptions (ex. an incoming phone call).
-    }
-
-    func sceneWillEnterForeground(_ scene: UIScene) {
-        // Called as the scene transitions from the background to the foreground.
-        // Use this method to undo the changes made on entering the background.
-    }
-
-    func sceneDidEnterBackground(_ scene: UIScene) {
-        // Called as the scene transitions from the foreground to the background.
-        // Use this method to save data, release shared resources, and store enough scene-specific state information
-        // to restore the scene back to its current state.
+    
+    private func addNavbar(to navController: UINavigationController) -> UINavigationController {
+        let notificationButton = UIBarButtonItem(image: UIImage(systemName: "bell"), style: .plain, target: self, action: #selector(self.onPressNotifications))
+        notificationButton.tintColor = .white
+        navController.navigationBar.topItem?.rightBarButtonItem = notificationButton
+        
+        let titleView = UIView()
+        let titleLabel = UILabel()
+        titleLabel.text = "Привет, Айсулуу!"
+        titleLabel.font = AppFont.font(type: .Medium, size: 20)
+        titleLabel.textColor = .white
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.left.equalToSuperview()
+        }
+        
+        let buttonTitle = UIBarButtonItem(customView: titleView)
+        navController.navigationBar.topItem?.leftBarButtonItem = buttonTitle
+        return navController
     }
 
 

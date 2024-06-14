@@ -76,6 +76,142 @@ class NetworkAPI {
             throw MyError.badNetwork
         }
     }
+    
+    //POST-REUEST
+    //ENDPOINT /users/login/refresh/
+    func refreshAccessToken(refreshToken token: String) async throws -> Data {
+        let urlString = "https://neobook.online/neoschool/users/login/refresh/"
+        guard let url = URL(string: urlString) else { throw URLError(.badURL) }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let tokenJSON : [String: String] = ["refresh": token]
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: tokenJSON, options: [])
+            request.httpBody = jsonData
+        } catch {
+            throw MyError.cannotEncodeData
+        }
+        let (data, resp) = try await URLSession.shared.data(for: request)
+        guard let httpresponse = resp as? HTTPURLResponse, httpresponse.statusCode == 200 else {
+            throw MyError.badNetwork
+        }
+                
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        let decodedData : [String: String] = try decoder.decode([String: String].self, from: data)
+        guard let accessToken = decodedData["access"] else { throw URLError(.cannotDecodeContentData) }
+        return Data(accessToken.utf8)
+    }
+    
+    //POST-REUEST
+    //ENDPOINT /users/login/
+    func login(username: String, password: String, isTeacher: Bool) async throws -> (Data, Data) {
+        let urlString = "https://neobook.online/neoschool/users/login/"
+        guard let url = URL(string: urlString) else { throw URLError(.badURL) }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let tokenJSON : [String: Any] = [
+            "username": username,
+            "password": password,
+            "is_teacher": isTeacher,
+        ]
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: tokenJSON, options: [])
+            request.httpBody = jsonData
+        } catch {
+            throw MyError.cannotEncodeData
+        }
+        let (data, resp) = try await URLSession.shared.data(for: request)
+        guard let httpresponse = resp as? HTTPURLResponse, httpresponse.statusCode == 200 else {
+            throw MyError.badNetwork
+        }
+                
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let decodedData : [String: String] = try decoder.decode([String: String].self, from: data)
+        guard let refreshToken = decodedData["refresh"] else { throw URLError(.cannotDecodeContentData) }
+        guard let accessToken = decodedData["access"] else { throw URLError(.cannotDecodeContentData) }
+        return (Data(refreshToken.utf8), Data(accessToken.utf8))
+    }
+    
+    //POST-REQUEST
+    //ENDPOINT /users/password/reset/
+    func sendResetPasswordCode(for email: String) async throws -> Int {
+        let urlString = "https://neobook.online/neoschool/users/password/reset/"
+        guard let url = URL(string: urlString) else { throw URLError(.badURL) }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let tokenJSON : [String: Any] = [ "email": email ]
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: tokenJSON, options: [])
+            request.httpBody = jsonData
+        } catch {
+            throw MyError.cannotEncodeData
+        }
+        let (data, resp) = try await URLSession.shared.data(for: request)
+        guard let httpresponse = resp as? HTTPURLResponse, httpresponse.statusCode == 200 else {
+            throw MyError.badNetwork
+        }
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let decodedData = try decoder.decode(ResetPasswordResponse.self, from: data)
+        return decodedData.userId
+    }
+    
+    //POST-REQUEST
+    //ENDPOINT /users/{id}/password/verify/
+    func checkResetPasswordCode(userId: Int, code: Int) async throws -> Bool {
+        let urlString = "https://neobook.online/neoschool/users/\(userId)/password/verify/"
+        guard let url = URL(string: urlString) else { throw URLError(.badURL) }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let tokenJSON : [String: Any] = [ "code": code ]
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: tokenJSON, options: [])
+            request.httpBody = jsonData
+        } catch {
+            throw MyError.cannotEncodeData
+        }
+        let (data, resp) = try await URLSession.shared.data(for: request)
+        guard let httpresponse = resp as? HTTPURLResponse, httpresponse.statusCode == 200 else { return false }
+        do {
+            let decodedData = try JSONDecoder().decode(VerifyPasswordResponse.self, from: data)
+            KeychainHelper.save(key: .accessToken, data: Data(decodedData.access.utf8))
+            KeychainHelper.save(key: .refreshToken, data: Data(decodedData.refresh.utf8))
+            return true
+        } catch {
+            return false
+        }
+    }
+    
+    //PUT-REQUEST
+    //ENDPOINT /users/password/forgot/
+    func updatePassword(with password: String) async throws -> Void {
+        let urlString = "https://neobook.online/neoschool/users/password/forgot/"
+        var request = try generateAuthorizedRequest(urlString: urlString)
+        request.httpMethod = "PUT"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let tokenJSON : [String: Any] = [ 
+            "password": password,
+            "confirm_password": password
+        ]
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: tokenJSON, options: [])
+            request.httpBody = jsonData
+        } catch {
+            throw MyError.cannotEncodeData
+        }
+        let (_, resp) = try await URLSession.shared.data(for: request)
+        guard let httpresponse = resp as? HTTPURLResponse, httpresponse.statusCode == 200 else {
+            throw MyError.badNetwork
+        }
+    }
+    
 }
 
 
@@ -85,6 +221,8 @@ extension NetworkAPI {
     private func generateAuthorizedRequest(urlString: String) throws -> URLRequest {
         guard let url = URL(string: urlString) else { throw URLError(.badURL) }
         var request = URLRequest(url: url)
+        guard let tokenData = KeychainHelper.load(key: .accessToken) else { throw MyError.noAccessToken}
+        guard let token = String(data: tokenData, encoding: .utf8) else {throw MyError.failDecoding} 
         request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         return request
     }

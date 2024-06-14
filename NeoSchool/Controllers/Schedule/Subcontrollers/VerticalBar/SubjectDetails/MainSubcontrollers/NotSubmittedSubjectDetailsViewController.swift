@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 import PhotosUI
 
-class NotSubmittedSubjectDetailsViewController: SubjectDetailsViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, UITextViewDelegate {
+class NotSubmittedSubjectDetailsViewController: SubjectDetailsViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
     //MARK: - Properties
     
