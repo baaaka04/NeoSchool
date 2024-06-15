@@ -28,12 +28,9 @@ class CommentSubmitView: UIView {
         return input
     }()
     
-    lazy var submitButton: UIButton = {
-        let button = UIButton()
+    lazy var submitButton: NeobisUIButton = {
+        let button = NeobisUIButton(type: .purple)
         button.setTitle("Сдать", for: .normal)
-        button.backgroundColor = .neobisPurple
-        button.layer.cornerRadius = 16
-        button.titleLabel?.font = AppFont.font(type: .Regular, size: 20)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(uploadFilesButtonTapped), for: .touchUpInside)
         return button

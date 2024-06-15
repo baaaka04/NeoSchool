@@ -11,26 +11,16 @@ class WelcomeViewController: UIViewController {
     
     private let globeImage = UIImageView(image: UIImage(named: "Globe") )
     
-    lazy var studentButton: UIButton = {
-        let button = UIButton()
+    lazy var studentButton: NeobisUIButton = {
+        let button = NeobisUIButton(type: .purple)
         button.setTitle("Я ученик", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = AppFont.font(type: .Regular, size: 20)
-        button.backgroundColor = .neobisPurple
-        button.layer.cornerRadius = 16
         button.addTarget(self, action: #selector(onTapStudentButton), for: .touchUpInside)
         return button
     }()
     
-    lazy var teacherButton: UIButton = {
-        let button = UIButton()
+    lazy var teacherButton: NeobisUIButton = {
+        let button = NeobisUIButton(type: .white)
         button.setTitle("Я учитель", for: .normal)
-        button.setTitleColor(.neobisDarkPurple, for: .normal)
-        button.titleLabel?.font = AppFont.font(type: .Regular, size: 20)
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 16
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.neobisPurple.cgColor
         button.addTarget(self, action: #selector(onTapTeacherButton), for: .touchUpInside)
         return button
     }()

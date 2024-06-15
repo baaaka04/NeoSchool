@@ -8,25 +8,15 @@ class NotSubmittedSubjectDetailsViewController: SubjectDetailsViewController, UI
     
     private let attachedFilesVC: FilesCollectionViewController
     
-    lazy var uploadButton: UIButton = {
-        let uploadButton = UIButton()
+    lazy var uploadButton: NeobisUIButton = {
+        let uploadButton = NeobisUIButton(type: .purple)
         uploadButton.setTitle("Отправить задание", for: .normal)
-        uploadButton.backgroundColor = .neobisLightPurple
-        uploadButton.layer.cornerRadius = 16
-        uploadButton.titleLabel?.font = AppFont.font(type: .Regular, size: 20)
         uploadButton.isEnabled = false
         uploadButton.addTarget(self, action: #selector(openCommentView), for: .touchUpInside)
         return uploadButton
     }()
     
-    lazy var addFilesButton: UIButton = {
-        let addFilesButton = UIButton()
-        addFilesButton.backgroundColor = .white
-        addFilesButton.layer.cornerRadius = 16
-        addFilesButton.layer.borderWidth = 1.0
-        addFilesButton.layer.borderColor = UIColor.neobisPurple.cgColor
-        return addFilesButton
-    }()
+    private let addFilesButton = NeobisUIButton(type: .white)
         
     //MARK: - Initializers
     
@@ -104,7 +94,6 @@ class NotSubmittedSubjectDetailsViewController: SubjectDetailsViewController, UI
         addFilesButton.setImage(plusIcon, for: .normal)
         addFilesButton.setTitle(" Прикрепить файлы", for: .normal)
         addFilesButton.setTitleColor(.neobisDarkPurple, for: .normal)
-        addFilesButton.titleLabel?.font = AppFont.font(type: .Regular, size: 20)
         
         let openMediaAction = UIAction(title: "Медиатека") { [weak self] _ in
             var configuration = PHPickerConfiguration()
@@ -165,11 +154,9 @@ extension NotSubmittedSubjectDetailsViewController: SubjectDetailsViewModelActio
     func updateCollectionView() {
         if viewModel.attachedFiles.count > 0 {
             self.uploadButton.isEnabled = true
-            self.uploadButton.backgroundColor = .neobisPurple
             updateFilesColletionHeight(numberOfElements: viewModel.attachedFiles.count)
         } else {
             self.uploadButton.isEnabled = false
-            self.uploadButton.backgroundColor = .neobisLightPurple
         }
         attachedFilesVC.update(attachedFiles: viewModel.attachedFiles)
     }

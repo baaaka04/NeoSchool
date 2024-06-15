@@ -10,13 +10,10 @@ class LoginViewController: DetailViewController, Notifiable, UITextFieldDelegate
     private let usernameField = CustomTextField(fieldType: .username)
     private let passwordField = CustomTextField(fieldType: .password)
     
-    lazy var loginButton: UIButton = {
-        let button = UIButton()
+    lazy var loginButton: NeobisUIButton = {
+        let button = NeobisUIButton(type: .purple)
         button.setTitle("Войти", for: .normal)
-        button.backgroundColor = .neobisLightPurple
-        button.titleLabel?.font = AppFont.font(type: .Regular, size: 20)
         button.addTarget(self, action: #selector(didTapLogin), for: .touchUpInside)
-        button.layer.cornerRadius = 16
         button.isEnabled = false
         return button
     }()
@@ -96,17 +93,13 @@ class LoginViewController: DetailViewController, Notifiable, UITextFieldDelegate
         if let text1 = usernameField.text, !text1.isEmpty,
            let text2 = passwordField.text, !text2.isEmpty {
             self.loginButton.isEnabled = true
-            self.loginButton.backgroundColor = .neobisPurple
         } else {
             self.loginButton.isEnabled = false
-            self.loginButton.backgroundColor = .neobisLightPurple
         }
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         //Hide both of the TextFields red border every time the user change it
-        usernameField.layer.borderWidth = 0
-        passwordField.layer.borderWidth = 0
         
         let currentText = textField.text ?? ""
         let updatedText = (currentText as NSString).replacingCharacters(in: range, with: string)

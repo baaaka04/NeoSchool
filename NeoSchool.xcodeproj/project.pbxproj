@@ -7,10 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F7084A762C03679200A6DF4B /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7084A752C03679200A6DF4B /* WelcomeViewController.swift */; };
+		F7084A782C0381A000A6DF4B /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7084A772C0381A000A6DF4B /* CustomTextField.swift */; };
+		F70FCF452C0095E40088AACD /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70FCF442C0095E40088AACD /* Validator.swift */; };
+		F70FCF482C00C6EA0088AACD /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70FCF472C00C6EA0088AACD /* AuthService.swift */; };
+		F70FCF4A2C00CFC50088AACD /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70FCF492C00CFC50088AACD /* LoginViewController.swift */; };
+		F70FCF4C2C00D61F0088AACD /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70FCF4B2C00D61F0088AACD /* KeychainHelper.swift */; };
 		F71ACC092BD553D100EDE3A6 /* CommentSubmitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71ACC082BD553D100EDE3A6 /* CommentSubmitView.swift */; };
 		F71ACC0B2BD6A7CC00EDE3A6 /* AppFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71ACC0A2BD6A7CC00EDE3A6 /* AppFont.swift */; };
 		F71ACC0D2BD78F1C00EDE3A6 /* PlaceholderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71ACC0C2BD78F1C00EDE3A6 /* PlaceholderTextView.swift */; };
 		F744FD542B7CD3F80054CBC1 /* StudentsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F744FD532B7CD3F80054CBC1 /* StudentsModel.swift */; };
+		F74713FF2C1889BE00B4C0EC /* PasswordHasChangedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74713FE2C1889BE00B4C0EC /* PasswordHasChangedView.swift */; };
+		F74714022C19E74900B4C0EC /* AuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74714012C19E74900B4C0EC /* AuthModel.swift */; };
 		F76081412B877D3A00B6D792 /* DayScheduleAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76081402B877D3A00B6D792 /* DayScheduleAPI.swift */; };
 		F76081432B88DFC300B6D792 /* StudentWeekAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76081422B88DFC300B6D792 /* StudentWeekAPI.swift */; };
 		F76081462B88E46000B6D792 /* NetworkAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76081452B88E46000B6D792 /* NetworkAPI.swift */; };
@@ -20,7 +28,6 @@
 		F76C6B632B67D06900EACFEB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C6B622B67D06900EACFEB /* AppDelegate.swift */; };
 		F76C6B652B67D06900EACFEB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C6B642B67D06900EACFEB /* SceneDelegate.swift */; };
 		F76C6B672B67D06900EACFEB /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C6B662B67D06900EACFEB /* MainTabBarViewController.swift */; };
-		F76C6B6A2B67D06900EACFEB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F76C6B682B67D06900EACFEB /* Main.storyboard */; };
 		F76C6B6C2B67D06B00EACFEB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F76C6B6B2B67D06B00EACFEB /* Assets.xcassets */; };
 		F76C6B6F2B67D06B00EACFEB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F76C6B6D2B67D06B00EACFEB /* LaunchScreen.storyboard */; };
 		F76C6B792B67E24600EACFEB /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C6B782B67E24600EACFEB /* ScheduleViewController.swift */; };
@@ -63,6 +70,9 @@
 		F79534152BFA329F004A76C6 /* SubjectDetailsStatefulViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79534142BFA329F004A76C6 /* SubjectDetailsStatefulViewController.swift */; };
 		F79534172BFA32DD004A76C6 /* SubmittedSubjectDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79534162BFA32DD004A76C6 /* SubmittedSubjectDetailsViewController.swift */; };
 		F79534192BFA9CF5004A76C6 /* SubjectDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79534182BFA9CF5004A76C6 /* SubjectDetailsViewController.swift */; };
+		F7962AF92C08CF630045ADA0 /* OneTimeCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7962AF82C08CF630045ADA0 /* OneTimeCodeViewController.swift */; };
+		F7962AFB2C0A209A0045ADA0 /* PasswordCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7962AFA2C0A209A0045ADA0 /* PasswordCreationViewController.swift */; };
+		F79EE1F12C087822009584D9 /* ConfirmCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79EE1F02C087822009584D9 /* ConfirmCodeViewController.swift */; };
 		F7CAE69D2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE69C2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift */; };
 		F7CAE6A12B73DD01004916E3 /* WorkdayScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE6A02B73DD01004916E3 /* WorkdayScheduleViewController.swift */; };
 		F7CAE6A52B762C81004916E3 /* SchoolNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE6A42B762C81004916E3 /* SchoolNavViewController.swift */; };
@@ -71,17 +81,27 @@
 		F7CAE6B02B791D50004916E3 /* GradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE6AF2B791D50004916E3 /* GradeView.swift */; };
 		F7CB51532BFCEDD900E1580C /* CommentModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CB51522BFCEDD900E1580C /* CommentModalViewController.swift */; };
 		F7D00B272B9B58370072FAB2 /* SubjectDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D00B262B9B58370072FAB2 /* SubjectDetailsViewModel.swift */; };
+		F7D04D672C077B5F00D2B285 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D04D662C077B5F00D2B285 /* ResetPasswordViewController.swift */; };
 		F7D6CE302BC97E64000CBB1F /* AttachedFilesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D6CE2F2BC97E64000CBB1F /* AttachedFilesModel.swift */; };
+		F7E39CA62C1DAC9D0070428A /* NeobisUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E39CA52C1DAC9D0070428A /* NeobisUIButton.swift */; };
 		F7E5625B2BD173600029B822 /* DataStringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E5625A2BD173600029B822 /* DataStringExtension.swift */; };
 		F7F581632BB84D6B00FFC6C9 /* FilesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F581622BB84D6B00FFC6C9 /* FilesCollectionViewController.swift */; };
 		F7F581662BBC49D000FFC6C9 /* FilesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F581652BBC49D000FFC6C9 /* FilesCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F7084A752C03679200A6DF4B /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		F7084A772C0381A000A6DF4B /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		F70FCF442C0095E40088AACD /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
+		F70FCF472C00C6EA0088AACD /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		F70FCF492C00CFC50088AACD /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		F70FCF4B2C00D61F0088AACD /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		F71ACC082BD553D100EDE3A6 /* CommentSubmitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentSubmitView.swift; sourceTree = "<group>"; };
 		F71ACC0A2BD6A7CC00EDE3A6 /* AppFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFont.swift; sourceTree = "<group>"; };
 		F71ACC0C2BD78F1C00EDE3A6 /* PlaceholderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderTextView.swift; sourceTree = "<group>"; };
 		F744FD532B7CD3F80054CBC1 /* StudentsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentsModel.swift; sourceTree = "<group>"; };
+		F74713FE2C1889BE00B4C0EC /* PasswordHasChangedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordHasChangedView.swift; sourceTree = "<group>"; };
+		F74714012C19E74900B4C0EC /* AuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModel.swift; sourceTree = "<group>"; };
 		F76081402B877D3A00B6D792 /* DayScheduleAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayScheduleAPI.swift; sourceTree = "<group>"; };
 		F76081422B88DFC300B6D792 /* StudentWeekAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentWeekAPI.swift; sourceTree = "<group>"; };
 		F76081452B88E46000B6D792 /* NetworkAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAPI.swift; sourceTree = "<group>"; };
@@ -92,7 +112,6 @@
 		F76C6B622B67D06900EACFEB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F76C6B642B67D06900EACFEB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		F76C6B662B67D06900EACFEB /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
-		F76C6B692B67D06900EACFEB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F76C6B6B2B67D06B00EACFEB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F76C6B6E2B67D06B00EACFEB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F76C6B702B67D06B00EACFEB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -135,15 +154,20 @@
 		F79534142BFA329F004A76C6 /* SubjectDetailsStatefulViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectDetailsStatefulViewController.swift; sourceTree = "<group>"; };
 		F79534162BFA32DD004A76C6 /* SubmittedSubjectDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmittedSubjectDetailsViewController.swift; sourceTree = "<group>"; };
 		F79534182BFA9CF5004A76C6 /* SubjectDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectDetailsViewController.swift; sourceTree = "<group>"; };
+		F7962AF82C08CF630045ADA0 /* OneTimeCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTimeCodeViewController.swift; sourceTree = "<group>"; };
+		F7962AFA2C0A209A0045ADA0 /* PasswordCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordCreationViewController.swift; sourceTree = "<group>"; };
+		F79EE1F02C087822009584D9 /* ConfirmCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmCodeViewController.swift; sourceTree = "<group>"; };
 		F7CAE69C2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdayCollectionViewCell.swift; sourceTree = "<group>"; };
 		F7CAE6A02B73DD01004916E3 /* WorkdayScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkdayScheduleViewController.swift; sourceTree = "<group>"; };
 		F7CAE6A42B762C81004916E3 /* SchoolNavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolNavViewController.swift; sourceTree = "<group>"; };
 		F7CAE6AA2B78F13F004916E3 /* DaySubjectsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaySubjectsViewController.swift; sourceTree = "<group>"; };
 		F7CAE6AD2B78F4F4004916E3 /* SubjectCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectCollectionViewCell.swift; sourceTree = "<group>"; };
 		F7CAE6AF2B791D50004916E3 /* GradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeView.swift; sourceTree = "<group>"; };
-		F7CB51522BFCEDD900E1580C /* CommentModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CommentModalViewController.swift; path = NeoSchool/Controllers/CommentModalViewController.swift; sourceTree = "<group>"; };
+		F7CB51522BFCEDD900E1580C /* CommentModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentModalViewController.swift; sourceTree = "<group>"; };
 		F7D00B262B9B58370072FAB2 /* SubjectDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectDetailsViewModel.swift; sourceTree = "<group>"; };
+		F7D04D662C077B5F00D2B285 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		F7D6CE2F2BC97E64000CBB1F /* AttachedFilesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachedFilesModel.swift; sourceTree = "<group>"; };
+		F7E39CA52C1DAC9D0070428A /* NeobisUIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeobisUIButton.swift; sourceTree = "<group>"; };
 		F7E5625A2BD173600029B822 /* DataStringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStringExtension.swift; sourceTree = "<group>"; };
 		F7F581622BB84D6B00FFC6C9 /* FilesCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesCollectionViewController.swift; sourceTree = "<group>"; };
 		F7F581652BBC49D000FFC6C9 /* FilesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -161,6 +185,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F7084A742C025D9A00A6DF4B /* Authentification */ = {
+			isa = PBXGroup;
+			children = (
+				F74714002C19D68C00B4C0EC /* Support */,
+				F70FCF492C00CFC50088AACD /* LoginViewController.swift */,
+				F7084A752C03679200A6DF4B /* WelcomeViewController.swift */,
+				F70FCF442C0095E40088AACD /* Validator.swift */,
+				F7D04D662C077B5F00D2B285 /* ResetPasswordViewController.swift */,
+				F79EE1F02C087822009584D9 /* ConfirmCodeViewController.swift */,
+				F7962AFA2C0A209A0045ADA0 /* PasswordCreationViewController.swift */,
+			);
+			path = Authentification;
+			sourceTree = "<group>";
+		};
 		F70FCF412BFF8C760088AACD /* MainSubcontrollers */ = {
 			isa = PBXGroup;
 			children = (
@@ -181,12 +219,32 @@
 			path = SecondarySubcontrollers;
 			sourceTree = "<group>";
 		};
+		F70FCF432BFF91590088AACD /* SupportViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				F7CB51522BFCEDD900E1580C /* CommentModalViewController.swift */,
+				F79533FE2BE38890004A76C6 /* DetailViewController.swift */,
+				F79534102BF657AA004A76C6 /* ZoomPictureViewController.swift */,
+			);
+			path = SupportViewControllers;
+			sourceTree = "<group>";
+		};
 		F71ACC0E2BD78F6600EDE3A6 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				F7084A772C0381A000A6DF4B /* CustomTextField.swift */,
 				F79083062B9F2C8300B9386E /* NeobisUILabel.swift */,
-				F79534102BF657AA004A76C6 /* ZoomPictureViewController.swift */,
 				F71ACC0C2BD78F1C00EDE3A6 /* PlaceholderTextView.swift */,
+				F7E39CA52C1DAC9D0070428A /* NeobisUIButton.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		F74714002C19D68C00B4C0EC /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				F70FCF4B2C00D61F0088AACD /* KeychainHelper.swift */,
+				F7962AF82C08CF630045ADA0 /* OneTimeCodeViewController.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -199,6 +257,7 @@
 				F76081452B88E46000B6D792 /* NetworkAPI.swift */,
 				F79534022BEA5DD7004A76C6 /* ImagesAPI.swift */,
 				F79533FA2BDFF9D8004A76C6 /* Errors.swift */,
+				F70FCF472C00C6EA0088AACD /* AuthService.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -206,7 +265,6 @@
 		F76C6B562B67D06900EACFEB = {
 			isa = PBXGroup;
 			children = (
-				F7CB51522BFCEDD900E1580C /* CommentModalViewController.swift */,
 				F76C6B612B67D06900EACFEB /* NeoSchool */,
 				F76C6B602B67D06900EACFEB /* Products */,
 			);
@@ -227,6 +285,7 @@
 				F76C6B642B67D06900EACFEB /* SceneDelegate.swift */,
 				F76C6B662B67D06900EACFEB /* MainTabBarViewController.swift */,
 				F76081472B8A170F00B6D792 /* KEYS.swift */,
+				F7084A742C025D9A00A6DF4B /* Authentification */,
 				F7E562592BD029B20029B822 /* Models */,
 				F76081442B88E08100B6D792 /* API */,
 				F7CAE6A62B7634ED004916E3 /* Extensions */,
@@ -235,7 +294,6 @@
 				F71ACC0E2BD78F6600EDE3A6 /* Support */,
 				F76C6BB52B6A96A900EACFEB /* Fonts */,
 				F76C6B6B2B67D06B00EACFEB /* Assets.xcassets */,
-				F76C6B682B67D06900EACFEB /* Main.storyboard */,
 				F76C6B6D2B67D06B00EACFEB /* LaunchScreen.storyboard */,
 				F76C6B702B67D06B00EACFEB /* Info.plist */,
 			);
@@ -246,10 +304,10 @@
 			isa = PBXGroup;
 			children = (
 				F7CAE6A42B762C81004916E3 /* SchoolNavViewController.swift */,
-				F79533FE2BE38890004A76C6 /* DetailViewController.swift */,
 				F7CAE6A22B74F4D6004916E3 /* Schedule */,
 				F76C6B7A2B67E29000EACFEB /* PerformanceViewController.swift */,
 				F76C6B7C2B67E2C500EACFEB /* ProfileViewController.swift */,
+				F70FCF432BFF91590088AACD /* SupportViewControllers */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -286,6 +344,7 @@
 				F76C6B852B694DF900EACFEB /* EllipseView.swift */,
 				F79534062BEBBF1E004A76C6 /* CommentView.swift */,
 				F795340A2BF35C50004A76C6 /* ConfirmUIView.swift */,
+				F74713FE2C1889BE00B4C0EC /* PasswordHasChangedView.swift */,
 				F71ACC082BD553D100EDE3A6 /* CommentSubmitView.swift */,
 				F7CAE6AF2B791D50004916E3 /* GradeView.swift */,
 				F795340E2BF5FF29004A76C6 /* MarkUIView.swift */,
@@ -347,6 +406,7 @@
 			children = (
 				F7D6CE2F2BC97E64000CBB1F /* AttachedFilesModel.swift */,
 				F744FD532B7CD3F80054CBC1 /* StudentsModel.swift */,
+				F74714012C19E74900B4C0EC /* AuthModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -452,7 +512,6 @@
 				F76C6BD22B6A96A900EACFEB /* Jost-Medium.ttf in Resources */,
 				F76C6BD62B6A96A900EACFEB /* Jost-Italic.ttf in Resources */,
 				F76C6BC92B6A96A900EACFEB /* Jost-Bold.ttf in Resources */,
-				F76C6B6A2B67D06900EACFEB /* Main.storyboard in Resources */,
 				F76C6BC82B6A96A900EACFEB /* Jost-BoldItalic.ttf in Resources */,
 				F76C6BCF2B6A96A900EACFEB /* Jost-LightItalic.ttf in Resources */,
 				F76C6BD32B6A96A900EACFEB /* Jost-Regular.ttf in Resources */,
@@ -467,20 +526,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7084A782C0381A000A6DF4B /* CustomTextField.swift in Sources */,
 				F795340B2BF35C50004A76C6 /* ConfirmUIView.swift in Sources */,
 				F71ACC092BD553D100EDE3A6 /* CommentSubmitView.swift in Sources */,
+				F74714022C19E74900B4C0EC /* AuthModel.swift in Sources */,
 				F79533FF2BE38890004A76C6 /* DetailViewController.swift in Sources */,
+				F70FCF4C2C00D61F0088AACD /* KeychainHelper.swift in Sources */,
 				F7CAE6A12B73DD01004916E3 /* WorkdayScheduleViewController.swift in Sources */,
+				F74713FF2C1889BE00B4C0EC /* PasswordHasChangedView.swift in Sources */,
 				F795340D2BF51438004A76C6 /* ConfirmableExtension.swift in Sources */,
 				F76081482B8A170F00B6D792 /* KEYS.swift in Sources */,
 				F79083072B9F2C8300B9386E /* NeobisUILabel.swift in Sources */,
 				F79533FB2BDFF9D8004A76C6 /* Errors.swift in Sources */,
 				F79083092B9F31B400B9386E /* HomeworkPanelViewController.swift in Sources */,
+				F7E39CA62C1DAC9D0070428A /* NeobisUIButton.swift in Sources */,
 				F7F581662BBC49D000FFC6C9 /* FilesCollectionViewCell.swift in Sources */,
 				F7F581632BB84D6B00FFC6C9 /* FilesCollectionViewController.swift in Sources */,
+				F79EE1F12C087822009584D9 /* ConfirmCodeViewController.swift in Sources */,
 				F7CAE6AB2B78F13F004916E3 /* DaySubjectsViewController.swift in Sources */,
+				F7084A762C03679200A6DF4B /* WelcomeViewController.swift in Sources */,
 				F76C6B7D2B67E2C500EACFEB /* ProfileViewController.swift in Sources */,
 				F71ACC0D2BD78F1C00EDE3A6 /* PlaceholderTextView.swift in Sources */,
+				F70FCF4A2C00CFC50088AACD /* LoginViewController.swift in Sources */,
+				F70FCF452C0095E40088AACD /* Validator.swift in Sources */,
+				F70FCF482C00C6EA0088AACD /* AuthService.swift in Sources */,
 				F79534112BF657AA004A76C6 /* ZoomPictureViewController.swift in Sources */,
 				F79533F92BDFD461004A76C6 /* SnackBarView.swift in Sources */,
 				F7CAE6B02B791D50004916E3 /* GradeView.swift in Sources */,
@@ -508,10 +577,13 @@
 				F760814A2B8B73DA00B6D792 /* StringExtension.swift in Sources */,
 				F79534012BE3C076004A76C6 /* AttachedFilesDetailViewController.swift in Sources */,
 				F76081412B877D3A00B6D792 /* DayScheduleAPI.swift in Sources */,
+				F7D04D672C077B5F00D2B285 /* ResetPasswordViewController.swift in Sources */,
 				F760814C2B8B75CA00B6D792 /* NotSubmittedSubjectDetailsViewController.swift in Sources */,
 				F744FD542B7CD3F80054CBC1 /* StudentsModel.swift in Sources */,
+				F7962AF92C08CF630045ADA0 /* OneTimeCodeViewController.swift in Sources */,
 				F79534032BEA5DD7004A76C6 /* ImagesAPI.swift in Sources */,
 				F79534192BFA9CF5004A76C6 /* SubjectDetailsViewController.swift in Sources */,
+				F7962AFB2C0A209A0045ADA0 /* PasswordCreationViewController.swift in Sources */,
 				F79533FD2BE10098004A76C6 /* SnackbarExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -519,14 +591,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		F76C6B682B67D06900EACFEB /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F76C6B692B67D06900EACFEB /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		F76C6B6D2B67D06B00EACFEB /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -667,6 +731,7 @@
 				DEVELOPMENT_TEAM = P4JWM35345;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NeoSchool/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "$(PRODUCT_NAME) camera use";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -695,6 +760,7 @@
 				DEVELOPMENT_TEAM = P4JWM35345;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NeoSchool/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "$(PRODUCT_NAME) camera use";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

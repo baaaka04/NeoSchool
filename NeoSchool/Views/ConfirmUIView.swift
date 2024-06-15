@@ -38,12 +38,9 @@ class ConfirmUIView: UIView {
         return label
     }()
     
-    private lazy var confirmButton : UIButton = {
-        let button = UIButton()
+    private lazy var confirmButton : NeobisUIButton = {
+        let button = NeobisUIButton(type: .red)
         button.setTitle(self.confirmButtonText, for: .normal)
-        button.titleLabel?.font = AppFont.font(type: .Regular, size: 20)
-        button.backgroundColor = .neobisRed
-        button.layer.cornerRadius = 16
         button.addTarget(self, action: #selector(onPressConfirm), for: .touchUpInside)
         return button
     }()

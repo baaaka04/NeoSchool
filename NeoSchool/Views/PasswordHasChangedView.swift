@@ -22,12 +22,9 @@ class PasswordHasChangedView: UIView {
         return label
     }()
         
-    private lazy var confirmButton : UIButton = {
-        let button = UIButton()
+    private lazy var confirmButton : NeobisUIButton = {
+        let button = NeobisUIButton(type: .purple)
         button.setTitle("Хорошо", for: .normal)
-        button.titleLabel?.font = AppFont.font(type: .Regular, size: 20)
-        button.backgroundColor = .neobisPurple
-        button.layer.cornerRadius = 16
         button.addTarget(self, action: #selector(onPressConfirm), for: .touchUpInside)
         return button
     }()

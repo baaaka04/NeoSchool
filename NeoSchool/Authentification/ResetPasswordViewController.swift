@@ -33,13 +33,10 @@ class ResetPasswordViewController: DetailViewController, UITextFieldDelegate {
         return label
     }()
     
-    lazy var proceedButton: UIButton = {
-        let button = UIButton()
+    lazy var proceedButton: NeobisUIButton = {
+        let button = NeobisUIButton(type: .purple)
         button.setTitle("Далее", for: .normal)
-        button.backgroundColor = .neobisLightPurple
-        button.titleLabel?.font = AppFont.font(type: .Regular, size: 20)
         button.addTarget(self, action: #selector(didTapProceed), for: .touchUpInside)
-        button.layer.cornerRadius = 16
         button.isEnabled = false
         return button
     }()
@@ -101,10 +98,8 @@ class ResetPasswordViewController: DetailViewController, UITextFieldDelegate {
         }
         if Validator.isValidEmail(for: fullEmail) {
             proceedButton.isEnabled = true
-            proceedButton.backgroundColor = .neobisPurple
         } else {
             proceedButton.isEnabled = false
-            proceedButton.backgroundColor = .neobisLightPurple
         }
         return true
     }

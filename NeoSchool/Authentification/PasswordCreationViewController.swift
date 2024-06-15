@@ -46,12 +46,9 @@ class PasswordCreationViewController: DetailViewController, Confirmable, UITextF
         return label
     }()
 
-    private lazy var confirmButton: UIButton = {
-        let button = UIButton()
+    private lazy var confirmButton: NeobisUIButton = {
+        let button = NeobisUIButton(type: .purple)
         button.setTitle("Сохранить", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .neobisLightPurple
-        button.layer.cornerRadius = 16
         button.isEnabled = false
         button.addTarget(self, action: #selector(onPressConfirm), for: .touchUpInside)
         return button
@@ -145,10 +142,8 @@ class PasswordCreationViewController: DetailViewController, Confirmable, UITextF
            let text2 = confirmNewPasswordInput.text, !text2.isEmpty,
            text1.count == text2.count {
             self.confirmButton.isEnabled = true
-            self.confirmButton.backgroundColor = .neobisPurple
         } else {
             self.confirmButton.isEnabled = false
-            self.confirmButton.backgroundColor = .neobisLightPurple
         }
     }
     

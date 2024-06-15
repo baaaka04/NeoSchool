@@ -7,15 +7,9 @@ class SubmittedSubjectDetailsViewController: SubjectDetailsViewController, Notif
     
     private var homeworkSubmissionVC: HomeworkSubmissionViewController?
         
-    lazy var cancelButton: UIButton = {
-        let button = UIButton()
+    lazy var cancelButton: NeobisUIButton = {
+        let button = NeobisUIButton(type: .white)
         button.setTitle("Отменить отправку", for: .normal)
-        button.setTitleColor(UIColor.neobisDarkPurple, for: .normal)
-        button.titleLabel?.font = AppFont.font(type: .Regular, size: 20)
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 16
-        button.layer.borderWidth = 1.0
-        button.layer.borderColor = UIColor.neobisPurple.cgColor
         button.addTarget(self, action: #selector(cancelSubmission), for: .touchUpInside)
         button.isHidden = true
         return button

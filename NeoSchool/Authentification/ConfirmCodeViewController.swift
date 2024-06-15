@@ -52,13 +52,10 @@ class ConfirmCodeViewController: DetailViewController, UITextFieldDelegate {
         return button
     }()
     
-    private lazy var proceedButton: UIButton = {
-        let button = UIButton()
+    private lazy var proceedButton: NeobisUIButton = {
+        let button = NeobisUIButton(type: .purple)
         button.setTitle("Далее", for: .normal)
-        button.backgroundColor = .neobisLightPurple
-        button.titleLabel?.font = AppFont.font(type: .Regular, size: 20)
         button.addTarget(self, action: #selector(didTapProceed), for: .touchUpInside)
-        button.layer.cornerRadius = 16
         button.isEnabled = false
         return button
     }()
@@ -169,13 +166,11 @@ class ConfirmCodeViewController: DetailViewController, UITextFieldDelegate {
 extension ConfirmCodeViewController: OneTimeCodeDelegate {
     func codeCleared() {
         proceedButton.isEnabled = false
-        proceedButton.backgroundColor = .neobisLightPurple
         otcVC.changeBorderColor(isAlert: false)
         wrongCodeLabel.isHidden = true
     }
     
     func codeFilled() {
         proceedButton.isEnabled = true
-        proceedButton.backgroundColor = .neobisPurple
     }
 }
