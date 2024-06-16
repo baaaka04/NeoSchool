@@ -19,6 +19,7 @@
 		F744FD542B7CD3F80054CBC1 /* StudentsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F744FD532B7CD3F80054CBC1 /* StudentsModel.swift */; };
 		F74713FF2C1889BE00B4C0EC /* PasswordHasChangedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74713FE2C1889BE00B4C0EC /* PasswordHasChangedView.swift */; };
 		F74714022C19E74900B4C0EC /* AuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74714012C19E74900B4C0EC /* AuthModel.swift */; };
+		F75B04D12C1F3E9800626265 /* KeyboardMovableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75B04D02C1F3E9800626265 /* KeyboardMovableViewController.swift */; };
 		F76081412B877D3A00B6D792 /* DayScheduleAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76081402B877D3A00B6D792 /* DayScheduleAPI.swift */; };
 		F76081432B88DFC300B6D792 /* StudentWeekAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76081422B88DFC300B6D792 /* StudentWeekAPI.swift */; };
 		F76081462B88E46000B6D792 /* NetworkAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76081452B88E46000B6D792 /* NetworkAPI.swift */; };
@@ -102,6 +103,7 @@
 		F744FD532B7CD3F80054CBC1 /* StudentsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentsModel.swift; sourceTree = "<group>"; };
 		F74713FE2C1889BE00B4C0EC /* PasswordHasChangedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordHasChangedView.swift; sourceTree = "<group>"; };
 		F74714012C19E74900B4C0EC /* AuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModel.swift; sourceTree = "<group>"; };
+		F75B04D02C1F3E9800626265 /* KeyboardMovableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardMovableViewController.swift; sourceTree = "<group>"; };
 		F76081402B877D3A00B6D792 /* DayScheduleAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayScheduleAPI.swift; sourceTree = "<group>"; };
 		F76081422B88DFC300B6D792 /* StudentWeekAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentWeekAPI.swift; sourceTree = "<group>"; };
 		F76081452B88E46000B6D792 /* NetworkAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAPI.swift; sourceTree = "<group>"; };
@@ -191,7 +193,6 @@
 				F74714002C19D68C00B4C0EC /* Support */,
 				F70FCF492C00CFC50088AACD /* LoginViewController.swift */,
 				F7084A752C03679200A6DF4B /* WelcomeViewController.swift */,
-				F70FCF442C0095E40088AACD /* Validator.swift */,
 				F7D04D662C077B5F00D2B285 /* ResetPasswordViewController.swift */,
 				F79EE1F02C087822009584D9 /* ConfirmCodeViewController.swift */,
 				F7962AFA2C0A209A0045ADA0 /* PasswordCreationViewController.swift */,
@@ -243,6 +244,8 @@
 		F74714002C19D68C00B4C0EC /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				F75B04D02C1F3E9800626265 /* KeyboardMovableViewController.swift */,
+				F70FCF442C0095E40088AACD /* Validator.swift */,
 				F70FCF4B2C00D61F0088AACD /* KeychainHelper.swift */,
 				F7962AF82C08CF630045ADA0 /* OneTimeCodeViewController.swift */,
 			);
@@ -530,6 +533,7 @@
 				F795340B2BF35C50004A76C6 /* ConfirmUIView.swift in Sources */,
 				F71ACC092BD553D100EDE3A6 /* CommentSubmitView.swift in Sources */,
 				F74714022C19E74900B4C0EC /* AuthModel.swift in Sources */,
+				F75B04D12C1F3E9800626265 /* KeyboardMovableViewController.swift in Sources */,
 				F79533FF2BE38890004A76C6 /* DetailViewController.swift in Sources */,
 				F70FCF4C2C00D61F0088AACD /* KeychainHelper.swift in Sources */,
 				F7CAE6A12B73DD01004916E3 /* WorkdayScheduleViewController.swift in Sources */,

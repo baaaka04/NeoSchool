@@ -1,19 +1,12 @@
 import UIKit
 import SnapKit
 
-class ConfirmCodeViewController: DetailViewController, UITextFieldDelegate {
+class ConfirmCodeViewController: KeyboardMovableViewController, UITextFieldDelegate {
     
     private let authAPI: AuthService
     private let email: String
     private let otcVC = OneTimeCodeViewController()
-    
-    private let titleLabel: BigSemiBoldUILabel = {
-       let label = BigSemiBoldUILabel()
-        label.text = "Восстановление пароля"
-        label.numberOfLines = 0
-        return label
-    }()
-    
+        
     lazy var subtitleLabel: UILabel = {
         let label = UILabel()
         label.font = AppFont.font(type: .Regular, size: 18)
@@ -78,25 +71,20 @@ class ConfirmCodeViewController: DetailViewController, UITextFieldDelegate {
         view.addSubview(otcVC.view)
         otcVC.didMove(toParent: self)
         otcVC.delegate = self
+        titleText = "Восстановление пароля"
         
         setupUI()
         didTapSendAgain()
     }
     
     private func setupUI() {
-        view.addSubview(titleLabel)
         view.addSubview(subtitleLabel)
         view.addSubview(wrongCodeLabel)
         view.addSubview(sendCodeAgainButton)
         view.addSubview(proceedButton)
         
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(160)
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(-116)
-        }
         subtitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(24)
+            make.top.equalTo(titleLabel.snp.bottom).offset(24) //titleLabel is in the parent
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().offset(-76)
         }

@@ -46,17 +46,20 @@ class CustomTextField: UITextField {
         
         switch fieldType {
         case .email:
-            self.placeholder = "Электронная почта"
+            self.attributedPlaceholder =
+            NSAttributedString(string: "Электронная почта", attributes: [NSAttributedString.Key.foregroundColor: UIColor.neobisLightGray])
             self.keyboardType = .emailAddress
             self.textContentType = .emailAddress
         case .password:
-            self.placeholder = "Пароль"
+            self.attributedPlaceholder =
+            NSAttributedString(string: "Пароль", attributes: [NSAttributedString.Key.foregroundColor: UIColor.neobisLightGray])
             self.textContentType = .oneTimeCode
             self.isSecureTextEntry = true
             self.rightView = eyeImageViewContainer
             self.rightViewMode = .always
         case .username:
-            self.placeholder = "Логин"
+            self.attributedPlaceholder =
+            NSAttributedString(string: "Логин", attributes: [NSAttributedString.Key.foregroundColor: UIColor.neobisLightGray])
         }
     }
     

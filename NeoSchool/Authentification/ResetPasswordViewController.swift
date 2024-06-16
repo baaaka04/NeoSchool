@@ -1,15 +1,8 @@
 import UIKit
 import SnapKit
 
-class ResetPasswordViewController: DetailViewController, UITextFieldDelegate {
-    
-    private let titleLabel: BigSemiBoldUILabel = {
-       let label = BigSemiBoldUILabel()
-        label.text = "Восстановление пароля"
-        label.numberOfLines = 0
-        return label
-    }()
-    
+class ResetPasswordViewController: KeyboardMovableViewController, UITextFieldDelegate {
+        
     private let subtitleLabel: UILabel = {
         let label = UILabel()
         label.text = "Введите электронную почту, которую вы указывали в профиле"
@@ -45,24 +38,19 @@ class ResetPasswordViewController: DetailViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         emailField.delegate = self
+        titleText = "Восстановление пароля"
         
         setupUI()
     }
     
     private func setupUI() {
-        view.addSubview(titleLabel)
         view.addSubview(subtitleLabel)
         view.addSubview(emailField)
         view.addSubview(wrongEmailLabel)
         view.addSubview(proceedButton)
         
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(160)
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(-116)
-        }
         subtitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(24)
+            make.top.equalTo(titleLabel.snp.bottom).offset(24) //titleLabel is in the parent
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().offset(-76)
         }

@@ -1,12 +1,10 @@
 import UIKit
 import SnapKit
 
-class LoginViewController: DetailViewController, Notifiable, UITextFieldDelegate {
+class LoginViewController: KeyboardMovableViewController, Notifiable, UITextFieldDelegate {
 
     private let isTeacher: Bool
-    
-    private let enteringLabel = BigSemiBoldUILabel()
-    
+        
     private let usernameField = CustomTextField(fieldType: .username)
     private let passwordField = CustomTextField(fieldType: .password)
     
@@ -48,45 +46,37 @@ class LoginViewController: DetailViewController, Notifiable, UITextFieldDelegate
     
     private func setupUI() {
         view.backgroundColor = .white
-        enteringLabel.text = "Вход"
-        
-        view.addSubview(enteringLabel)
+        titleText = "Вход"
+
         view.addSubview(usernameField)
         view.addSubview(passwordField)
         view.addSubview(forgetButton)
         view.addSubview(loginButton)
-        
-        loginButton.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().offset(-350)
+                
+        usernameField.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(37) //titleLabel is in the parent
+            make.height.equalTo(52)
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().offset(-32)
+        }
+        passwordField.snp.makeConstraints { make in
+            make.top.equalTo(usernameField.snp.bottom).offset(12)
             make.height.equalTo(52)
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().offset(-32)
         }
         forgetButton.snp.makeConstraints { make in
-            make.bottom.equalTo(loginButton.snp.top).offset(-20)
+            make.top.equalTo(passwordField.snp.bottom).offset(20)
             make.height.equalTo(18)
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().offset(-32)
         }
-        passwordField.snp.makeConstraints { make in
-            make.bottom.equalTo(forgetButton.snp.top).offset(-20)
+        loginButton.snp.makeConstraints { make in
+            make.top.equalTo(forgetButton.snp.bottom).offset(20)
             make.height.equalTo(52)
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().offset(-32)
         }
-        usernameField.snp.makeConstraints { make in
-            make.bottom.equalTo(passwordField.snp.top).offset(-12)
-            make.height.equalTo(52)
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(-32)
-        }
-        enteringLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(usernameField.snp.top).offset(-37)
-            make.height.equalTo(40)
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(-32)
-        }
-        
     }
     
     private func updateButtonUI() {

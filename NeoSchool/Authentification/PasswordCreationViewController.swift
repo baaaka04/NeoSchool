@@ -1,17 +1,10 @@
 import UIKit
 import SnapKit
 
-class PasswordCreationViewController: DetailViewController, Confirmable, UITextFieldDelegate {
+class PasswordCreationViewController: KeyboardMovableViewController, Confirmable, UITextFieldDelegate {
     
     private let authAPI: AuthService
-    
-    private let titleLabel: BigSemiBoldUILabel = {
-        let label = BigSemiBoldUILabel()
-        label.text = "Создание пароля"
-        label.numberOfLines = 0
-        return label
-    }()
-    
+        
     private lazy var newPasswordInput: CustomTextField = {
         let textField = CustomTextField(fieldType: .password)
         textField.placeholder = "Новый пароль"
@@ -65,24 +58,19 @@ class PasswordCreationViewController: DetailViewController, Confirmable, UITextF
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        titleText = "Создание пароля"
         setupUI()
     }
     
     private func setupUI() {
-        view.addSubview(titleLabel)
         view.addSubview(newPasswordInput)
         view.addSubview(tipLabel)
         view.addSubview(confirmNewPasswordInput)
         view.addSubview(errorLabel)
         view.addSubview(confirmButton)
                 
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(160)
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().offset(-32)
-        }
         newPasswordInput.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(48)
+            make.top.equalTo(titleLabel.snp.bottom).offset(48) //titleLabel is in the parent
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().offset(-32)
             make.height.equalTo(52)
