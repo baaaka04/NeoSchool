@@ -66,7 +66,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let titleView = UIView()
         let titleLabel = UILabel()
-        titleLabel.text = "Привет, Айсулуу!"
+        
+        let authService = AuthService()
+        Task {
+            let profileData = try await authService.getProfileData()
+            DispatchQueue.main.async {
+                switch profileData.role {
+                case .teacher: titleLabel.text = "Здравствуйте, \(profileData.userFirstName)!"
+                case .student: titleLabel.text = "Привет, \(profileData.userFirstName)!"
+                }
+            }
+        }
         titleLabel.font = AppFont.font(type: .Medium, size: 20)
         titleLabel.textColor = .white
         titleLabel.translatesAutoresizingMaskIntoConstraints = false

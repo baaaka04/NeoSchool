@@ -22,7 +22,6 @@ final class ScheduleViewController: SchoolNavViewController {
     private func configureWeekBar () {
         let weekBar = WorkdayScheduleViewController()
         addChild(weekBar)
-        weekBar.view.frame = view.frame
         
         view.addSubview(weekBar.view)
         weekBar.view.snp.makeConstraints { make in
@@ -37,7 +36,6 @@ final class ScheduleViewController: SchoolNavViewController {
 
         let dayScheduleList = DaySubjectsViewController()
         addChild(dayScheduleList)
-        dayScheduleList.view.frame = view.frame
         
         view.addSubview(dayScheduleList.view)
         dayScheduleList.view.snp.makeConstraints { make in

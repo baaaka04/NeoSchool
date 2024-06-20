@@ -212,6 +212,21 @@ class NetworkAPI {
         }
     }
     
+    // GET-REQUEST
+    // ENDPOINT /users/profile/
+    func getProfileData() async throws -> UserProfile {
+        let urlString = "https://neobook.online/neoschool/users/profile/"
+        let request = try generateAuthorizedRequest(urlString: urlString)
+        let (data, _) = try await URLSession.shared.data(for: request)
+                
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let decodedData : UserProfile = try decoder.decode(UserProfile.self, from: data)
+
+        return decodedData
+    }
+    
 }
 
 

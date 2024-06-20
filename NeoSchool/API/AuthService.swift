@@ -44,4 +44,9 @@ class AuthService {
         try await networkAPI.updatePassword(with: password)
         completion()
     }
+    
+    func getProfileData() async throws -> ProfileInfo {
+        let userProfile = try await networkAPI.getProfileData()
+        return ProfileInfo(userProfile: userProfile)
+    }
 }
