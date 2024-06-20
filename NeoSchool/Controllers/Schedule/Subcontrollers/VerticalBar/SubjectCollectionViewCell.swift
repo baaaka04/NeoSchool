@@ -64,11 +64,11 @@ class SubjectCollectionViewCell: UICollectionViewCell {
     private func setupUI () {
         contentView.backgroundColor = .clear
         contentView.snp.makeConstraints { make in
-            make.width.height.top.equalToSuperview()
-            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().inset(16)
+            make.centerX.height.equalToSuperview()
         }
         
-        addSubview(gradeView)
+        contentView.addSubview(gradeView)
         let gradeViewWidth = CGFloat(48)
         let gradeViewLeftMargin = CGFloat(16)
         gradeView.snp.makeConstraints { make in
@@ -78,20 +78,20 @@ class SubjectCollectionViewCell: UICollectionViewCell {
             make.width.equalTo(gradeViewWidth)
         }
         
-        addSubview(titleLabel)
+        contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.left.top.equalToSuperview()
             make.width.equalToSuperview().inset( (gradeViewWidth + gradeViewLeftMargin) / 2 )
         }
         
-        addSubview(subtitleLabel)
+        contentView.addSubview(subtitleLabel)
         subtitleLabel.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.top.equalTo(titleLabel.snp.bottom).offset(4)
             make.height.equalTo(23)
         }
         
-        addSubview(descrLabel)
+        contentView.addSubview(descrLabel)
         descrLabel.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.top.equalTo(subtitleLabel.snp.bottom).offset(4)

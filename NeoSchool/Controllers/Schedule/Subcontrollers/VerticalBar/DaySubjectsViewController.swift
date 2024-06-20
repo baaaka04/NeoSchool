@@ -3,47 +3,40 @@ import SnapKit
 
 class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         
-    let dayScheduleAPI = DayScheduleAPI()
-    var dayLessonsData : [StudentLesson]?
+    private let dayScheduleAPI = DayScheduleAPI()
+    private var dayLessonsData : [StudentLesson]?
+    private var collectionHeight: CGFloat = 24
     
-        
-    private func getLessonData(forDayID day: Int) {
-        Task {
-            do {
-                dayLessonsData = try await dayScheduleAPI.getLessons(forDayId: day)
-            } catch {
-                print(error)
-            }
-            subjectCollectionView.reloadData()
-        }
-    }
+    private let scrollview = UIScrollView()
         
     lazy var subjectCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 24
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 24, left: 16, bottom: 0, right: 16)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.isScrollEnabled = false
         collectionView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         collectionView.backgroundColor = .white
         collectionView.layer.cornerRadius = 16
+        collectionView.layer.shadowColor = UIColor.neobisShadow.cgColor
+        collectionView.layer.shadowOpacity = 0.1
+        collectionView.layer.shadowOffset = .zero
+        collectionView.layer.shadowRadius = 10
+        collectionView.layer.masksToBounds = false
         collectionView.register(SubjectCollectionViewCell.self, forCellWithReuseIdentifier: SubjectCollectionViewCell.identifier)
         return collectionView
     }()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(subjectCollectionView)
+        view.addSubview(scrollview)
+        scrollview.addSubview(subjectCollectionView)
 
-        subjectCollectionView.snp.makeConstraints { make in
-            make.centerX.centerY.height.width.equalToSuperview()
-        }
-        
+        setupUI()
         getLessonData(forDayID: 1)
     }
     
@@ -75,13 +68,15 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let lessonsDay = dayLessonsData?[indexPath.item] else { return .zero }
         let cellWidth = view.frame.size.width - Constants.subjectCellHorizontalMargin * 2
-        let newHeight = SubjectCollectionViewCell.getProductHeightForWidth(
+        let cellHeight = SubjectCollectionViewCell.getProductHeightForWidth(
             title: lessonsDay.subject.name,
             font: AppFont.font(type: .Medium, size: 20),
             minHeight: Constants.subjectCellMinHeight,
             width: cellWidth - Constants.gradeViewWidth - Constants.gradeLeftMargin
         )
-        return CGSize(width: cellWidth, height: newHeight)
+        self.collectionHeight += (cellHeight + 24)
+        subjectCollectionView.snp.updateConstraints { $0.height.equalTo(self.collectionHeight) }
+        return CGSize(width: cellWidth, height: cellHeight)
     }
     
     // TAP ON A LESSON IN THE SCHEDULE LIST
@@ -93,6 +88,29 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
 
         self.navigationController?.pushViewController(subjectDetailsVC, animated: true)
     }
+    
+    private func getLessonData(forDayID day: Int) {
+        Task {
+            do {
+                dayLessonsData = try await dayScheduleAPI.getLessons(forDayId: day)
+            } catch {
+                print(error)
+            }
+            subjectCollectionView.reloadData()
+        }
+    }
+    
+    private func setupUI() {
+                
+        scrollview.snp.makeConstraints { $0.top.left.bottom.width.height.equalToSuperview() }
+
+        subjectCollectionView.snp.makeConstraints { make in
+            make.top.bottom.width.equalToSuperview().inset(16)
+            make.centerX.equalToSuperview()
+            make.height.equalTo(24)
+        }
+    }
+
             
     @objc private func didTapBackButton () {
         self.navigationController?.popViewController(animated: true)
@@ -103,6 +121,7 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
 extension DaySubjectsViewController: WorkdayScheduleViewDelegate {
     
     func dayDidSelected(day: Int) {
+        self.collectionHeight = 24
         getLessonData(forDayID: day)
     }
 

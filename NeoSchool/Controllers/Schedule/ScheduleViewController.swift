@@ -39,18 +39,11 @@ final class ScheduleViewController: SchoolNavViewController {
         
         view.addSubview(dayScheduleList.view)
         dayScheduleList.view.snp.makeConstraints { make in
-            make.width.equalTo(view.frame.size.width-32)
-            let lessonsAmount = dayLessonsMockData.count
-            make.height.equalTo(32 + lessonsAmount * (75+24) - 24)
-            make.centerX.equalToSuperview()
-            make.left.right.equalToSuperview().inset(16)
-            make.top.equalTo(weekBar.view.snp.bottom).offset(16)
+            make.top.equalTo(weekBar.view.snp.bottom)
+            make.left.right.equalToSuperview()
+            make.bottom.equalToSuperview().inset(self.tabBarController?.tabBar.frame.size.height ?? 0)
         }
         dayScheduleList.didMove(toParent: self)
-        dayScheduleList.view.layer.shadowColor = UIColor.neobisShadow.cgColor
-        dayScheduleList.view.layer.shadowOpacity = 0.1
-        dayScheduleList.view.layer.shadowOffset = .zero
-        dayScheduleList.view.layer.shadowRadius = 10
         
         // Подписываем класс dayScheduleList на события в классе weekBar
         weekBar.delegate = dayScheduleList
