@@ -22,17 +22,28 @@ class MainTabBarViewController: UITabBarController {
         } else {
             tabBar.barTintColor = .white
         }
+
+        //Adding one more button for the ProfileViewController
+        let optionsButton = UIBarButtonItem(image: UIImage(named: "verticaldots"), style: .plain, target: self, action: #selector(onTapProfileOptions))
+        optionsButton.tintColor = .white
+        vc3.topViewController?.navigationItem.rightBarButtonItems?.insert(optionsButton, at: 0)
         
         self.setViewControllers([vc1, vc2, vc3], animated: true)
     }
         
-    private func createVC(with title: String, image: UIImage?, selectedImage: UIImage?, vc: UIViewController) -> UIViewController {
+    private func createVC(with title: String, image: UIImage?, selectedImage: UIImage?, vc: UIViewController) -> NeobisUINavigationController {
         
-        vc.title = title
+        vc.tabBarItem.title = title
         vc.tabBarItem.image = image
         vc.tabBarItem.selectedImage = selectedImage
-        return vc
+        
+        return NeobisUINavigationController(rootViewController: vc)
     }
+    
+    @objc private func onTapProfileOptions () {
+        
+    }
+
 
 }
 

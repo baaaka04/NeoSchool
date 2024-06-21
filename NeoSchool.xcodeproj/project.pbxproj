@@ -21,6 +21,7 @@
 		F74714022C19E74900B4C0EC /* AuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74714012C19E74900B4C0EC /* AuthModel.swift */; };
 		F75B04D12C1F3E9800626265 /* KeyboardMovableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75B04D02C1F3E9800626265 /* KeyboardMovableViewController.swift */; };
 		F75B04D42C20305700626265 /* ProfileInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75B04D32C20305700626265 /* ProfileInfoView.swift */; };
+		F75B04D62C25C1DC00626265 /* NeobisUINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75B04D52C25C1DC00626265 /* NeobisUINavigationController.swift */; };
 		F76081412B877D3A00B6D792 /* DayScheduleAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76081402B877D3A00B6D792 /* DayScheduleAPI.swift */; };
 		F76081432B88DFC300B6D792 /* StudentWeekAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76081422B88DFC300B6D792 /* StudentWeekAPI.swift */; };
 		F76081462B88E46000B6D792 /* NetworkAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76081452B88E46000B6D792 /* NetworkAPI.swift */; };
@@ -106,6 +107,7 @@
 		F74714012C19E74900B4C0EC /* AuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModel.swift; sourceTree = "<group>"; };
 		F75B04D02C1F3E9800626265 /* KeyboardMovableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardMovableViewController.swift; sourceTree = "<group>"; };
 		F75B04D32C20305700626265 /* ProfileInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoView.swift; sourceTree = "<group>"; };
+		F75B04D52C25C1DC00626265 /* NeobisUINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeobisUINavigationController.swift; sourceTree = "<group>"; };
 		F76081402B877D3A00B6D792 /* DayScheduleAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayScheduleAPI.swift; sourceTree = "<group>"; };
 		F76081422B88DFC300B6D792 /* StudentWeekAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentWeekAPI.swift; sourceTree = "<group>"; };
 		F76081452B88E46000B6D792 /* NetworkAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAPI.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 		F71ACC0E2BD78F6600EDE3A6 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				F75B04D52C25C1DC00626265 /* NeobisUINavigationController.swift */,
 				F7084A772C0381A000A6DF4B /* CustomTextField.swift */,
 				F79083062B9F2C8300B9386E /* NeobisUILabel.swift */,
 				F71ACC0C2BD78F1C00EDE3A6 /* PlaceholderTextView.swift */,
@@ -593,6 +596,7 @@
 				F760814A2B8B73DA00B6D792 /* StringExtension.swift in Sources */,
 				F79534012BE3C076004A76C6 /* AttachedFilesDetailViewController.swift in Sources */,
 				F76081412B877D3A00B6D792 /* DayScheduleAPI.swift in Sources */,
+				F75B04D62C25C1DC00626265 /* NeobisUINavigationController.swift in Sources */,
 				F7D04D672C077B5F00D2B285 /* ResetPasswordViewController.swift in Sources */,
 				F760814C2B8B75CA00B6D792 /* NotSubmittedSubjectDetailsViewController.swift in Sources */,
 				F744FD542B7CD3F80054CBC1 /* StudentsModel.swift in Sources */,

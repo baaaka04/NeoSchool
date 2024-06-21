@@ -25,70 +25,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             try await authService.refreshAccessToken { [weak self] done in
                 DispatchQueue.main.sync {
                     if done {
-                        self?.goToController(with: MainTabBarViewController(), isAuthorized: true)
+                        self?.goToController(with: MainTabBarViewController())
                     } else {
-                        self?.goToController(with: WelcomeViewController(), isAuthorized: false)
+                        self?.goToController(with: WelcomeViewController())
                     }
                 }
             }
         }
     }
     
-    @objc private func onPressNotifications() {}
-    
-    private func goToController(with viewController: UIViewController, isAuthorized: Bool) {
+    private func goToController(with viewController: UIViewController) {
         DispatchQueue.main.async { [weak self] in
             UIView.animate(withDuration: 0.25) {
                 self?.window?.layer.opacity = 0
                 
             } completion: { [weak self] _ in
                 guard let strongSelf = self else { return }
-                var nav = UINavigationController(rootViewController: viewController)
-                
-                if isAuthorized {
-                    nav = strongSelf.addNavbar(to: nav)
-                }
-                
-                nav.modalPresentationStyle = .fullScreen
-                strongSelf.window?.rootViewController = nav
+                viewController.modalPresentationStyle = .fullScreen
+                strongSelf.window?.rootViewController = viewController
                 
                 UIView.animate(withDuration: 0.25) { [weak self] in
                     self?.window?.layer.opacity = 1
                 }
             }
         }
-    }
-    
-    private func addNavbar(to navController: UINavigationController) -> UINavigationController {
-        let notificationButton = UIBarButtonItem(image: UIImage(systemName: "bell"), style: .plain, target: self, action: #selector(self.onPressNotifications))
-        notificationButton.tintColor = .white
-        navController.navigationBar.topItem?.rightBarButtonItem = notificationButton
-        
-        let titleView = UIView()
-        let titleLabel = UILabel()
-        
-        let authService = AuthService()
-        Task {
-            let profileData = try await authService.getProfileData()
-            DispatchQueue.main.async {
-                switch profileData.role {
-                case .teacher: titleLabel.text = "Здравствуйте, \(profileData.userFirstName)!"
-                case .student: titleLabel.text = "Привет, \(profileData.userFirstName)!"
-                }
-            }
-        }
-        titleLabel.font = AppFont.font(type: .Medium, size: 20)
-        titleLabel.textColor = .white
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleView.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.left.equalToSuperview()
-        }
-        
-        let buttonTitle = UIBarButtonItem(customView: titleView)
-        navController.navigationBar.topItem?.leftBarButtonItem = buttonTitle
-        return navController
     }
 
 
