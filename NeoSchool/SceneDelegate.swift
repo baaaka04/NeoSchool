@@ -15,42 +15,34 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     public func checkAuthentication() {
-        
-//        KeychainHelper.delete(key: .accessToken)
-//        KeychainHelper.delete(key: .refreshToken)
-        
+                
         let authService = AuthService()
         
         Task {
             try await authService.refreshAccessToken { [weak self] done in
-                DispatchQueue.main.sync {
-                    if done {
-                        self?.goToController(with: MainTabBarViewController())
-                    } else {
-                        self?.goToController(with: WelcomeViewController())
+                
+                DispatchQueue.main.async { [weak self] in
+                    
+                    UIView.animate(withDuration: 0.25) {
+                        self?.window?.layer.opacity = 0
+                    } completion: { [weak self] _ in
+                        
+                        let welcomeNavVC = UINavigationController(rootViewController: WelcomeViewController())
+                        
+                        //If it's authorized user then MainTabBarVC, if not - WelcomeVC
+                        let rootViewController = done ? MainTabBarViewController() : welcomeNavVC
+                        rootViewController.modalPresentationStyle = .fullScreen
+                        self?.window?.rootViewController = rootViewController
+                        
+                        UIView.animate(withDuration: 0.25) { [weak self] in
+                            self?.window?.layer.opacity = 1
+                        }
                     }
                 }
+                
             }
         }
     }
-    
-    private func goToController(with viewController: UIViewController) {
-        DispatchQueue.main.async { [weak self] in
-            UIView.animate(withDuration: 0.25) {
-                self?.window?.layer.opacity = 0
-                
-            } completion: { [weak self] _ in
-                guard let strongSelf = self else { return }
-                viewController.modalPresentationStyle = .fullScreen
-                strongSelf.window?.rootViewController = viewController
-                
-                UIView.animate(withDuration: 0.25) { [weak self] in
-                    self?.window?.layer.opacity = 1
-                }
-            }
-        }
-    }
-
 
 }
 

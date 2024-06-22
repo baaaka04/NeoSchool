@@ -41,7 +41,10 @@ class MainTabBarViewController: UITabBarController {
     }
     
     @objc private func onTapProfileOptions () {
-        
+        let submitVC = ProfileModalViewController()
+        let navVC = UINavigationController(rootViewController: submitVC)
+        navVC.modalPresentationStyle = .overFullScreen
+        self.present(navVC, animated: false)
     }
 
 
