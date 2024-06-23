@@ -25,6 +25,7 @@
 		F75B04D82C26E99E00626265 /* ProfileModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75B04D72C26E99E00626265 /* ProfileModalViewController.swift */; };
 		F75B04DB2C26EC1500626265 /* ProfileSubmitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75B04DA2C26EC1500626265 /* ProfileSubmitView.swift */; };
 		F75B04DD2C26F97700626265 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75B04DC2C26F97700626265 /* ChangePasswordViewController.swift */; };
+		F75B04DF2C28496100626265 /* AlertInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75B04DE2C28496100626265 /* AlertInputView.swift */; };
 		F76081412B877D3A00B6D792 /* DayScheduleAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76081402B877D3A00B6D792 /* DayScheduleAPI.swift */; };
 		F76081432B88DFC300B6D792 /* StudentWeekAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76081422B88DFC300B6D792 /* StudentWeekAPI.swift */; };
 		F76081462B88E46000B6D792 /* NetworkAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76081452B88E46000B6D792 /* NetworkAPI.swift */; };
@@ -114,6 +115,7 @@
 		F75B04D72C26E99E00626265 /* ProfileModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModalViewController.swift; sourceTree = "<group>"; };
 		F75B04DA2C26EC1500626265 /* ProfileSubmitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSubmitView.swift; sourceTree = "<group>"; };
 		F75B04DC2C26F97700626265 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
+		F75B04DE2C28496100626265 /* AlertInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertInputView.swift; sourceTree = "<group>"; };
 		F76081402B877D3A00B6D792 /* DayScheduleAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayScheduleAPI.swift; sourceTree = "<group>"; };
 		F76081422B88DFC300B6D792 /* StudentWeekAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentWeekAPI.swift; sourceTree = "<group>"; };
 		F76081452B88E46000B6D792 /* NetworkAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAPI.swift; sourceTree = "<group>"; };
@@ -383,6 +385,7 @@
 				F795340E2BF5FF29004A76C6 /* MarkUIView.swift */,
 				F79533F82BDFD461004A76C6 /* SnackBarView.swift */,
 				F75B04DA2C26EC1500626265 /* ProfileSubmitView.swift */,
+				F75B04DE2C28496100626265 /* AlertInputView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -578,6 +581,7 @@
 				F7F581662BBC49D000FFC6C9 /* FilesCollectionViewCell.swift in Sources */,
 				F7F581632BB84D6B00FFC6C9 /* FilesCollectionViewController.swift in Sources */,
 				F79EE1F12C087822009584D9 /* ConfirmCodeViewController.swift in Sources */,
+				F75B04DF2C28496100626265 /* AlertInputView.swift in Sources */,
 				F75B04DB2C26EC1500626265 /* ProfileSubmitView.swift in Sources */,
 				F7CAE6AB2B78F13F004916E3 /* DaySubjectsViewController.swift in Sources */,
 				F7084A762C03679200A6DF4B /* WelcomeViewController.swift in Sources */,

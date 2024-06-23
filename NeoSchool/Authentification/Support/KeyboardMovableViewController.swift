@@ -21,11 +21,9 @@ class KeyboardMovableViewController: DetailViewController {
         self.view.addSubview(titleLabel)
         
         titleLabel.snp.makeConstraints { make in
-            titleLabel.snp.makeConstraints { make in
-                make.top.equalTo(self.view.snp.top).offset(self.view.frame.height / 5)
-                make.centerX.equalToSuperview()
-                make.width.equalToSuperview().offset(-116)
-            }
+            make.top.equalTo(self.view.snp.top).offset(self.view.frame.height / 5)
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().offset(-116)
         }
     }
 

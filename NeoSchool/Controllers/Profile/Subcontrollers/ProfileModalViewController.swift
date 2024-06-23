@@ -26,7 +26,6 @@ class ProfileModalViewController: UIViewController, Confirmable {
                     sceneDelegate.checkAuthentication()
                     self?.navigationController?.popToRootViewController(animated: true)
                 }
-//                self?.hideSubmitView()
             }
         }
         submitView.snp.makeConstraints { make in

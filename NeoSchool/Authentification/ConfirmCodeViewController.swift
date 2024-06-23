@@ -122,7 +122,7 @@ class ConfirmCodeViewController: KeyboardMovableViewController, UITextFieldDeleg
         Task {
             guard let code = Int(otcVC.getCode()) else { return }
             if try await authAPI.checkResetPasswordCode(withCode: code) {
-                DispatchQueue.main.async { //[weak self] in
+                DispatchQueue.main.async {
                     self.navigationController?.pushViewController(PasswordCreationViewController(authAPI: self.authAPI), animated: true)
                 }
             } else {
