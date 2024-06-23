@@ -15,7 +15,7 @@ class ProfileModalViewController: UIViewController, Confirmable {
 
         view.addSubview(submitView)
         submitView.changePassword = { [weak self] in
-            let changePasswordVC = ChangePasswordViewController()
+            let changePasswordVC = ChangePasswordViewController(authAPI: AuthService())
             self?.navigationController?.pushViewController(changePasswordVC, animated: true)
         }
         submitView.logout = { [weak self] in

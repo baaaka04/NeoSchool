@@ -82,21 +82,23 @@ class PasswordCreationViewController: KeyboardMovableViewController, Confirmable
         return true
     }
     
+    private func isNewPasswordValid() -> Bool {
+        guard let text = newPasswordInputView.inputTextField.text, !text.isEmpty else { return true }
+        return Validator.isPasswordValid(for: text)
+    }
+    
     private func updateTipLabelUI() {
-        guard let text = newPasswordInputView.inputTextField.text else { return }
-        Validator.isPasswordValid(for: text) ?
-            newPasswordInputView.hideAlertView() :
-            newPasswordInputView.showAlertView()
+        isNewPasswordValid() ? newPasswordInputView.hideAlertView() : newPasswordInputView.showAlertView()
+    }
+    
+    private func areAllInputsValid() -> Bool {
+        if let text1 = newPasswordInputView.inputTextField.text, !text1.isEmpty,
+           let text2 = confirmNewPasswordInputView.inputTextField.text, !text2.isEmpty,
+           text1.count == text2.count { return true } else { return false }
     }
     
     private func updateButtonUI() {
-        if let text1 = newPasswordInputView.inputTextField.text, !text1.isEmpty,
-           let text2 = confirmNewPasswordInputView.inputTextField.text, !text2.isEmpty,
-           text1.count == text2.count {
-            self.confirmButton.isEnabled = true
-        } else {
-            self.confirmButton.isEnabled = false
-        }
+        self.confirmButton.isEnabled = isNewPasswordValid() ? areAllInputsValid() : false
     }
     
     private func arePasswordsValid() -> Bool {

@@ -212,6 +212,30 @@ class NetworkAPI {
         }
     }
     
+    //PUT-REQUEST
+    //ENDPOINT /users/password/change/
+    func changePassword(from currentPassword: String, to newPassword: String) async throws -> Void {
+        let urlString = "https://neobook.online/neoschool/users/password/change/"
+        var request = try generateAuthorizedRequest(urlString: urlString)
+        request.httpMethod = "PUT"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let tokenJSON : [String: Any] = [
+            "current_password": currentPassword,
+            "password": newPassword,
+            "confirm_password": newPassword,
+        ]
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: tokenJSON, options: [])
+            request.httpBody = jsonData
+        } catch {
+            throw MyError.cannotEncodeData
+        }
+        let (_, resp) = try await URLSession.shared.data(for: request)
+        guard let httpresponse = resp as? HTTPURLResponse, httpresponse.statusCode == 200 else {
+            throw MyError.badNetwork
+        }
+    }
+    
     // GET-REQUEST
     // ENDPOINT /users/profile/
     func getProfileData() async throws -> UserProfile {

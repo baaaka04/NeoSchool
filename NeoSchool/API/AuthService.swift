@@ -45,6 +45,15 @@ class AuthService {
         completion()
     }
     
+    func changePassword(from currentPassword: String, to newPassword: String, completion: @escaping(_ done: Bool) -> Void) async throws -> Void {
+        do {
+            try await networkAPI.changePassword(from: currentPassword, to: newPassword)
+            DispatchQueue.main.sync { completion(true) }
+        } catch {
+            DispatchQueue.main.sync { completion(false) }
+        }
+    }
+    
     func getProfileData() async throws -> ProfileInfo {
         let userProfile = try await networkAPI.getProfileData()
         return ProfileInfo(userProfile: userProfile)

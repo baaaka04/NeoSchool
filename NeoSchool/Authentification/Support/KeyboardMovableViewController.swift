@@ -49,7 +49,7 @@ extension KeyboardMovableViewController {
 
     @objc func keyboardWillShow(_ notification: Notification) {
         if UIScreen.main.bounds.width <= 375 {
-            titleLabel.snp.updateConstraints { $0.top.equalTo(self.view.snp.top).offset(40) }
+            titleLabel.snp.updateConstraints { $0.top.equalTo(self.view.snp.top).offset(15) }
         }
     }
 
