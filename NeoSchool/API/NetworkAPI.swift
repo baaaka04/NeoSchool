@@ -251,6 +251,23 @@ class NetworkAPI {
         return decodedData
     }
     
+    // GET-REQUEST
+    // ENDPOINT /notifications/
+    func getNotifications(page: Int, limit: Int) async throws -> DTONotifications {
+        let urlString = "https://neobook.online/neoschool/notifications/?page=\(page)&limit=\(limit)"
+        let request = try generateAuthorizedRequest(urlString: urlString)
+        let (data, _) = try await URLSession.shared.data(for: request)
+
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
+        decoder.dateDecodingStrategy = .formatted(formatter)
+        let decodedData = try decoder.decode(DTONotifications.self, from: data)
+
+        return decodedData
+    }
+    
 }
 
 
