@@ -31,14 +31,39 @@ class NotificationsOverviewViewController: DetailViewController, UICollectionVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        setupUI()
+        
         if !viewModel.isLoading {
             viewModel.getNotifications()
         }
     }
     
-    func setupUI() {
+    private func showEmptyScreen() {
+        let imageView = UIImageView(image: UIImage(named: "Notepad"))
+        view.addSubview(imageView)
+        imageView.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
+            make.width.equalTo(120)
+            make.height.equalTo(134)
+        }
+        let titleLabel = GrayUILabel(font: AppFont.font(type: .Medium, size: 22))
+        titleLabel.text = "Уведомлений еще нет"
+        titleLabel.textAlignment = .center
+        view.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(imageView.snp.bottom).offset(40)
+            make.width.equalToSuperview()
+        }
+        let subtitleLabel = GrayUILabel(font: AppFont.font(type: .Regular, size: 18))
+        subtitleLabel.text = "Здесь будут показаны уведомления"
+        subtitleLabel.textAlignment = .center
+        view.addSubview(subtitleLabel)
+        subtitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(20)
+            make.width.equalToSuperview()
+        }
+    }
+    
+    private func setupUI() {
                         
         view.addSubview(notificationsCollectionView)
         
@@ -47,6 +72,14 @@ class NotificationsOverviewViewController: DetailViewController, UICollectionVie
             make.centerX.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(16)
             make.bottom.equalToSuperview()
+        }
+    }
+    
+    func checkNotifications() {
+        if let notifications = viewModel.notifications, !notifications.isEmpty {
+            setupUI()
+        } else {
+            showEmptyScreen()
         }
     }
         

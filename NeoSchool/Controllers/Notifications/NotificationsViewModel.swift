@@ -2,6 +2,7 @@ import Foundation
 
 protocol NotificationsRefreshable: AnyObject {
     func updateNotifications()
+    func checkNotifications()
 }
 
 class NotificationsViewModel {
@@ -24,6 +25,7 @@ class NotificationsViewModel {
                 self.notifications = convertNotifications(notifications: data.list)
                 DispatchQueue.main.sync {
                     self.view?.updateNotifications()
+                    self.view?.checkNotifications()
                 }
                 self.isLoading = false
                 self.page = 2

@@ -76,7 +76,7 @@ class WorkdayScheduleViewController: UIViewController, UICollectionViewDelegate,
     }
         
     private func changeEnding(byCount: Int, threeCases: [String]) -> String {
-        guard !(threeCases.count < 3) else { return "" }
+        guard !(threeCases.count < 3), byCount > 0 else { return "" }
         var result = ""
         let lastChar = String(byCount).suffix(1)
         let interger = Int(lastChar) ?? 1
