@@ -2,15 +2,41 @@ import Foundation
 
 struct NeobisNotificationToPresent {
     let id: Int
+    let type: NotificationType
     let text: String
     let isRead: Bool
-    let date: Date
+    let date: String
+    let teacherComment: String?
+    let subjectId: Int?
+    let lessonId: Int?
+    let quater: String?
+    
+    init(notification: NeobisNotification, teacherComment: String? = nil, subjectId: Int? = nil, lessonId: Int? = nil, quater: String? = nil) {
+        self.id = notification.id
+        self.type = notification.type
+        self.text = notification.title
+        self.isRead = notification.isRead
+        self.subjectId = subjectId
+        self.lessonId = lessonId
+        self.quater = quater
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yyyy"
+        let formattedDate = dateFormatter.string(from: notification.updatedAt)
+        dateFormatter.dateFormat = "HH:mm"
+        let formattedTime = dateFormatter.string(from: notification.updatedAt)
+        
+        let dataString = formattedDate + " в " + formattedTime
+        self.date = dataString
+        self.teacherComment = teacherComment
+    }
 }
 
 enum ExtraData: Decodable {
     case classworkRate(mark: String, subject: String, subjectId: Int)
     case submissionRate(mark: String, subject: String, submissionId: Int, teacherComment: String)
     case homeworkRevise(lesson: Int, student: String)
+    case quaterRate(mark: String, subject: String, subjectId: Int, quater: String)
 }
 
 struct NeobisNotification: Decodable {
@@ -36,7 +62,7 @@ struct NeobisNotification: Decodable {
 }
 
 enum NotificationType: String, Decodable {
-    case system, rate_homework, rate_classwork, revise_homework, rate_quarter
+    case rate_homework, rate_classwork, revise_homework, rate_quarter
 }
 
 extension NeobisNotification {
@@ -57,7 +83,7 @@ extension NeobisNotification {
     }
     
     private enum ExtraDataCodingKeys: String, CodingKey {
-        case mark, subject, lesson, student, subjectId = "subject_id"
+        case mark, subject, lesson, student, quater, subjectId = "subject_id"
         case submissionId = "submission_id"
         case teacherComment = "teacher_comment"
     }
@@ -68,8 +94,6 @@ extension NeobisNotification {
         let subject = try container.decode(String.self, forKey: .subject)
         
         switch type {
-        case .system:
-            throw DecodingError.dataCorruptedError(forKey: .mark, in: container, debugDescription: "Unknown extra_data structure")
         case .rate_homework:
             let submissionId = try container.decode(Int.self, forKey: .submissionId)
             let teacherComment = try container.decode(String.self, forKey: .teacherComment)
@@ -82,7 +106,9 @@ extension NeobisNotification {
             let studentName = try container.decode(String.self, forKey: .student)
             return .homeworkRevise(lesson: lessonId, student: studentName)
         case .rate_quarter:
-            throw DecodingError.dataCorruptedError(forKey: .mark, in: container, debugDescription: "Unknown extra_data structure")
+            let subjectId = try container.decode(Int.self, forKey: .subjectId)
+            let quater = try container.decode(String.self, forKey: .quater)
+            return .quaterRate(mark: mark, subject: subject, subjectId: subjectId, quater: quater)
         }
         // Add more cases if needed
     }

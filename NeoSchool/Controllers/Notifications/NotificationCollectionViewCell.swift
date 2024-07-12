@@ -20,12 +20,11 @@ class NotificationCollectionViewCell: UICollectionViewCell {
         didSet { textLabel.text = text }
     }
     
-    private let textLabel: UILabel = {
-        let label = UILabel()
+    private let textLabel: GrayUILabel = {
+        let label = GrayUILabel()
         label.font = AppFont.font(type: .Medium, size: 16)
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
-        label.textColor = .neobisDarkGray
         return label
     }()
     

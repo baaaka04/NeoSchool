@@ -84,6 +84,7 @@
 		F7962AFB2C0A209A0045ADA0 /* PasswordCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7962AFA2C0A209A0045ADA0 /* PasswordCreationViewController.swift */; };
 		F79EE1F12C087822009584D9 /* ConfirmCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79EE1F02C087822009584D9 /* ConfirmCodeViewController.swift */; };
 		F7C0D10B2C3A9C13003CEC19 /* NotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0D10A2C3A9C13003CEC19 /* NotificationsViewModel.swift */; };
+		F7C0D10D2C3D65B3003CEC19 /* NotificationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0D10C2C3D65B3003CEC19 /* NotificationDetailViewController.swift */; };
 		F7CAE69D2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE69C2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift */; };
 		F7CAE6A12B73DD01004916E3 /* WorkdayScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE6A02B73DD01004916E3 /* WorkdayScheduleViewController.swift */; };
 		F7CAE6A52B762C81004916E3 /* SchoolNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE6A42B762C81004916E3 /* SchoolNavViewController.swift */; };
@@ -179,6 +180,7 @@
 		F7962AFA2C0A209A0045ADA0 /* PasswordCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordCreationViewController.swift; sourceTree = "<group>"; };
 		F79EE1F02C087822009584D9 /* ConfirmCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmCodeViewController.swift; sourceTree = "<group>"; };
 		F7C0D10A2C3A9C13003CEC19 /* NotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewModel.swift; sourceTree = "<group>"; };
+		F7C0D10C2C3D65B3003CEC19 /* NotificationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDetailViewController.swift; sourceTree = "<group>"; };
 		F7CAE69C2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdayCollectionViewCell.swift; sourceTree = "<group>"; };
 		F7CAE6A02B73DD01004916E3 /* WorkdayScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkdayScheduleViewController.swift; sourceTree = "<group>"; };
 		F7CAE6A42B762C81004916E3 /* SchoolNavViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolNavViewController.swift; sourceTree = "<group>"; };
@@ -298,6 +300,7 @@
 				F75B04E12C29676E00626265 /* NotificationsOverviewViewController.swift */,
 				F702171E2C36E3AD00B0D962 /* NotificationCollectionViewCell.swift */,
 				F7C0D10A2C3A9C13003CEC19 /* NotificationsViewModel.swift */,
+				F7C0D10C2C3D65B3003CEC19 /* NotificationDetailViewController.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -630,6 +633,7 @@
 				F79534052BEBB443004A76C6 /* HomeworkSubmissionViewController.swift in Sources */,
 				F75B04E22C29676E00626265 /* NotificationsOverviewViewController.swift in Sources */,
 				F7D6CE302BC97E64000CBB1F /* AttachedFilesModel.swift in Sources */,
+				F7C0D10D2C3D65B3003CEC19 /* NotificationDetailViewController.swift in Sources */,
 				F795340F2BF5FF29004A76C6 /* MarkUIView.swift in Sources */,
 				F76C6B792B67E24600EACFEB /* ScheduleViewController.swift in Sources */,
 				F71ACC0B2BD6A7CC00EDE3A6 /* AppFont.swift in Sources */,

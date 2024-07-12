@@ -55,30 +55,28 @@ class NotificationsOverviewViewController: DetailViewController, UICollectionVie
     }
         
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.notifications.count
+        return viewModel.notifications?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = notificationsCollectionView.dequeueReusableCell(withReuseIdentifier: NotificationCollectionViewCell.identifier, for: indexPath) as? NotificationCollectionViewCell
+        guard let cell = notificationsCollectionView.dequeueReusableCell(withReuseIdentifier: NotificationCollectionViewCell.identifier, for: indexPath) as? NotificationCollectionViewCell,
+              let notification = viewModel.notifications?[indexPath.item]
         else { return NotificationCollectionViewCell(frame: .zero) }
-        let notification = viewModel.notifications[indexPath.item]
         cell.id = notification.id
         cell.isRead = notification.isRead
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy"
-        let formattedDate = dateFormatter.string(from: notification.date)
-        dateFormatter.dateFormat = "HH:mm"
-        let formattedTime = dateFormatter.string(from: notification.date)
-        
-        cell.date = formattedDate + " в " + formattedTime
-        
+        cell.date = notification.date
         cell.text = notification.text
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 100, height: 100) //The size defines automatically, but we need an initial size bigger than all cell's elements to avoid yellow SnapKit errors at the console.
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let notification = viewModel.notifications?[indexPath.item] else { return }
+        let notificationVC = NotificationDetailViewController(notification: notification)
+        self.navigationController?.pushViewController(notificationVC, animated: true)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
