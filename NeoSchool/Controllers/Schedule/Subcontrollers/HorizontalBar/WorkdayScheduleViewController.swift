@@ -4,13 +4,16 @@ import SnapKit
 
 class WorkdayScheduleViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    let studentWeekAPI = StudentWeekAPI()
-    var studentWeek : [StudentDay]?
+    private let userRole: UserRole
+    private let schoolWeekAPI = SchoolWeekAPI()
+    private var schoolWeek : [SchoolDay]?
     
-    private func getStudentWeek() {
+    private func getSchoolWeek() {
         Task {
-            self.studentWeek = try await studentWeekAPI.getStudentWeek()
-            weekCollectionView.reloadData()
+            do {
+                self.schoolWeek = try await schoolWeekAPI.getSchoolWeek(userRole: self.userRole)
+                weekCollectionView.reloadData()
+            } catch { print(error) }
         }
     }
     
@@ -29,7 +32,16 @@ class WorkdayScheduleViewController: UIViewController, UICollectionViewDelegate,
     
     // Объявляем о возможности слушать события действия в данном классе
     weak var delegate: WorkdayScheduleViewDelegate?
-
+    
+    init(userRole: UserRole) {
+        self.userRole = userRole
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,23 +50,23 @@ class WorkdayScheduleViewController: UIViewController, UICollectionViewDelegate,
         weekCollectionView.snp.makeConstraints { make in
             make.centerX.centerY.width.height.equalToSuperview()
         }
-        getStudentWeek()
+        getSchoolWeek()
     }
         
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        studentWeek?.count ?? 0
+        schoolWeek?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = weekCollectionView.dequeueReusableCell(withReuseIdentifier: WeekdayCollectionViewCell.identifier, for: indexPath) as? WeekdayCollectionViewCell,
-              let studentWeek
+              let schoolWeek
         else {
             return WeekdayCollectionViewCell(frame: .zero)
         }
-        cell.id = studentWeek[indexPath.item].id
-        cell.title = studentWeek[indexPath.item].name
+        cell.id = schoolWeek[indexPath.item].id
+        cell.title = schoolWeek[indexPath.item].name
         
-        let lessonsCount = studentWeek[indexPath.item].lessonsCount
+        let lessonsCount = schoolWeek[indexPath.item].lessonsCount
         let lessonsCountEnding = changeEnding(byCount: lessonsCount, threeCases: ["урок", "урока", "уроков"])
         let lessonsCountSubtitle = "\(lessonsCount) \(lessonsCountEnding)"
         cell.subtitle = lessonsCountSubtitle

@@ -4,8 +4,8 @@ class DayScheduleAPI {
     
     let networkAPI = NetworkAPI()
     
-    func getLessons(forDayId dayId: Int) async throws -> [StudentLesson] {
-        return try await networkAPI.loadLessons(forDay: dayId)
+    func getLessons(forDayId dayId: Int, userRole: UserRole) async throws -> [SchoolLesson] {
+        return try await networkAPI.loadLessons(forDay: dayId, userRole: userRole)
     }
     
     func getLessonDetail(forLessonId lessonId: Int) async throws -> StudentLessonDetail {

@@ -65,11 +65,13 @@ class WelcomeViewController: UIViewController {
     }
     
     @objc private func onTapStudentButton() {
+        UserDefaults.standard.set("student", forKey: "userRole")
         let loginVC = LoginViewController(isTeacher: false)
         self.navigationController?.pushViewController(loginVC, animated: true)
     }
     
     @objc private func onTapTeacherButton() {
+        UserDefaults.standard.set("teacher", forKey: "userRole")
         let loginVC = LoginViewController(isTeacher: true)
         self.navigationController?.pushViewController(loginVC, animated: true)
     }

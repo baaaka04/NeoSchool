@@ -3,13 +3,14 @@ import SnapKit
 
 class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         
+    private let userRole: UserRole
     private let dayScheduleAPI = DayScheduleAPI()
-    private var dayLessonsData : [StudentLesson]?
+    private var dayLessonsData : [SchoolLesson]?
     private var collectionHeight: CGFloat = 24
     
     private let scrollview = UIScrollView()
         
-    lazy var subjectCollectionView: UICollectionView = {
+    private lazy var subjectCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 24
@@ -26,9 +27,22 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
         collectionView.layer.shadowOffset = .zero
         collectionView.layer.shadowRadius = 10
         collectionView.layer.masksToBounds = false
-        collectionView.register(SubjectCollectionViewCell.self, forCellWithReuseIdentifier: SubjectCollectionViewCell.identifier)
+        switch userRole {
+        case .teacher: collectionView.register(TeacherLessonCollectionViewCell.self, forCellWithReuseIdentifier: TeacherLessonCollectionViewCell.identifier)
+        case .student: collectionView.register(StudentLessonCollectionViewCell.self, forCellWithReuseIdentifier: StudentLessonCollectionViewCell.identifier)
+        }
         return collectionView
     }()
+    
+    init(userRole: UserRole) {
+        self.userRole = userRole
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,18 +60,40 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = subjectCollectionView.dequeueReusableCell(withReuseIdentifier: SubjectCollectionViewCell.identifier, for: indexPath) as? SubjectCollectionViewCell,
-              let lessonsDay = dayLessonsData?[indexPath.item] else {
-            return SubjectCollectionViewCell(frame: .zero)
+        let cellIdentifier: String
+        switch userRole {
+        case .teacher: cellIdentifier = TeacherLessonCollectionViewCell.identifier
+        case .student: cellIdentifier = StudentLessonCollectionViewCell.identifier
         }
-        cell.id = indexPath.item + 1
-        cell.title = lessonsDay.subject.name
-        cell.subtitle = "\(lessonsDay.startTime) - \(lessonsDay.endTime) · Кабинет: \(lessonsDay.room.name)"
-        cell.descr = "Задано: \(lessonsDay.homework?.text ?? "-")"
-        cell.setGrade(to: Grade(rawValue: lessonsDay.mark ?? "-") ?? .noGrade)
+
+        guard let lessonsDay = dayLessonsData?[indexPath.item] else { return UICollectionViewCell(frame: .zero) }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as UICollectionViewCell
+        configureCell(cell, with: lessonsDay, for: userRole, at: indexPath)
         return cell
     }
-    
+
+    func configureCell(_ cell: UICollectionViewCell, with lessonsDay: SchoolLesson, for role: UserRole, at indexPath: IndexPath) {
+        let subtitle = "\(lessonsDay.startTime) – \(lessonsDay.endTime) · Кабинет: \(lessonsDay.room.name)"
+        
+        switch role {
+        case .teacher:
+            if let cell = cell as? TeacherLessonCollectionViewCell {
+                cell.title = "\(indexPath.item + 1). \(lessonsDay.grade?.name ?? "") класс"
+                cell.subtitle = subtitle
+                cell.subjectName = lessonsDay.subject.name
+                cell.homeworkCount = lessonsDay.homeworkCount
+            }
+            
+        case .student:
+            if let cell = cell as? StudentLessonCollectionViewCell {
+                cell.title = "\(indexPath.item + 1). \(lessonsDay.subject.name)"
+                cell.subtitle = subtitle
+                cell.descr = "Задано: \(lessonsDay.homework?.text ?? "-")"
+                cell.setGrade(to: Grade(rawValue: lessonsDay.mark ?? "-") ?? .noGrade)
+            }
+        }
+    }
+        
     struct Constants {
         static let subjectCellHorizontalMargin: CGFloat = 16
         static let gradeLeftMargin : CGFloat = 16
@@ -68,7 +104,7 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let lessonsDay = dayLessonsData?[indexPath.item] else { return .zero }
         let cellWidth = view.frame.size.width - Constants.subjectCellHorizontalMargin * 2
-        let cellHeight = SubjectCollectionViewCell.getProductHeightForWidth(
+        let cellHeight = LessonCollectionViewCell.getCellHeightForWidth(
             title: lessonsDay.subject.name,
             font: AppFont.font(type: .Medium, size: 20),
             minHeight: Constants.subjectCellMinHeight,
@@ -92,7 +128,7 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
     private func getLessonData(forDayID day: Int) {
         Task {
             do {
-                dayLessonsData = try await dayScheduleAPI.getLessons(forDayId: day)
+                dayLessonsData = try await dayScheduleAPI.getLessons(forDayId: day, userRole: self.userRole)
             } catch {
                 print(error)
             }
@@ -102,7 +138,7 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
     
     private func setupUI() {
                 
-        scrollview.snp.makeConstraints { $0.top.left.bottom.width.height.equalToSuperview() }
+        scrollview.snp.makeConstraints { $0.top.left.bottom.width.equalToSuperview() }
 
         subjectCollectionView.snp.makeConstraints { make in
             make.top.bottom.width.equalToSuperview().inset(16)

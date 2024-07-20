@@ -4,7 +4,10 @@ import SnapKit
 
 final class ScheduleViewController: SchoolNavViewController {
     
-    override init(navbarTitle: String, navbarColor: UIColor?) {
+    private let userRole: UserRole
+    
+    init(navbarTitle: String, navbarColor: UIColor?, userRole: UserRole) {
+        self.userRole = userRole
         super.init(navbarTitle: navbarTitle, navbarColor: navbarColor)
     }
     
@@ -20,7 +23,7 @@ final class ScheduleViewController: SchoolNavViewController {
     }
     
     private func configureWeekBar () {
-        let weekBar = WorkdayScheduleViewController()
+        let weekBar = WorkdayScheduleViewController(userRole: self.userRole)
         addChild(weekBar)
         
         view.addSubview(weekBar.view)
@@ -34,7 +37,7 @@ final class ScheduleViewController: SchoolNavViewController {
         weekBar.didMove(toParent: self)
 
 
-        let dayScheduleList = DaySubjectsViewController()
+        let dayScheduleList = DaySubjectsViewController(userRole: self.userRole)
         addChild(dayScheduleList)
         
         view.addSubview(dayScheduleList.view)

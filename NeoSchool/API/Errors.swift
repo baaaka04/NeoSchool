@@ -1,7 +1,7 @@
 import Foundation
 
 enum MyError: Error {
-    case badNetwork, failDecoding, nothingToCancel, cannotEncodeData, noRefreshToken, noAccessToken, failSavingToken
+    case badNetwork, failDecoding, nothingToCancel, cannotEncodeData, noRefreshToken, noAccessToken, failSavingToken, noUserRole
     
     var description: String {
         switch self {
@@ -19,6 +19,8 @@ enum MyError: Error {
             "No access token"
         case .failSavingToken:
             "Fail saving a refresh or access token"
+        case .noUserRole:
+            "Fail getting user's type"
         }
     }
 }

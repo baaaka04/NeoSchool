@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 // MARK: Student's lesson in the list of subjects
-struct StudentLesson: Codable {
+struct SchoolLesson: Codable {
     let id : Int
     let day : Day
     let room : Room
@@ -11,6 +11,12 @@ struct StudentLesson: Codable {
     let startTime : String
     let endTime : String
     let mark : String?
+    let homeworkCount: Int?
+    let grade: GradeName?
+}
+struct GradeName: Codable {
+    let id: Int
+    let name: String
 }
 struct Day: Codable {
     let id : Int
@@ -61,11 +67,11 @@ enum Grade: String {
 // MARK: Student's lesson details
 struct StudentLessonDetail: Codable {
     let id : Int
-    let subject : Subject
+    let subject : StudentSubject
     let homework : StudentHomework?
     let submission : StudentSubmission?
 }
-struct Subject: Codable {
+struct StudentSubject: Codable {
     let id : Int
     let name : String
     let teacher : FullNameUser
@@ -102,7 +108,7 @@ struct StudentSubmission: Codable {
     let mark : String?
 }
 
-struct StudentDay: Codable {
+struct SchoolDay: Codable {
     let id: Int
     let name: String
     let lessonsCount: Int

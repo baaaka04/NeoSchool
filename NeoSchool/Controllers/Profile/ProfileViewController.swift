@@ -5,19 +5,9 @@ final class ProfileViewController: SchoolNavViewController {
     
     private let authAPI = AuthService()
     private let scrollview = UIScrollView()
-    private let isTeacher: Bool
     
     private var infoView: ProfileInfoView?
-    
-    init(navbarTitle: String, navbarColor: UIColor?, isTeacher: Bool) {
-        self.isTeacher = isTeacher
-        super.init(navbarTitle: navbarTitle, navbarColor: navbarColor)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         

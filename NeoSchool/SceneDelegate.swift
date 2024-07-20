@@ -17,6 +17,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     public func checkAuthentication() {
                 
         let authService = AuthService()
+        guard let userRoleString = UserDefaults.standard.string(forKey: "userRole"),
+              let userRole = UserRole(rawValue: userRoleString) else {
+            goToWelcomeScreen()
+            return
+        }
         
         Task {
             try await authService.refreshAccessToken { [weak self] done in
@@ -26,13 +31,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     UIView.animate(withDuration: 0.25) {
                         self?.window?.layer.opacity = 0
                     } completion: { [weak self] _ in
-                        
-                        let welcomeNavVC = UINavigationController(rootViewController: WelcomeViewController())
-                        
+                                                                        
                         //If it's authorized user then MainTabBarVC, if not - WelcomeVC
-                        let rootViewController = done ? MainTabBarViewController() : welcomeNavVC
-                        rootViewController.modalPresentationStyle = .fullScreen
-                        self?.window?.rootViewController = rootViewController
+                        if done {
+                            let rootViewController = MainTabBarViewController(userRole: userRole)
+                            rootViewController.modalPresentationStyle = .fullScreen
+                            self?.window?.rootViewController = rootViewController
+                        } else {
+                            self?.goToWelcomeScreen()
+                        }
                         
                         UIView.animate(withDuration: 0.25) { [weak self] in
                             self?.window?.layer.opacity = 1
@@ -42,6 +49,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 
             }
         }
+    }
+    
+    private func goToWelcomeScreen() {
+        let welcomeNavVC = UINavigationController(rootViewController: WelcomeViewController())
+        welcomeNavVC.modalPresentationStyle = .fullScreen
+        self.window?.rootViewController = welcomeNavVC
     }
 
 }

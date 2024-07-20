@@ -1,6 +1,6 @@
 import Foundation
 
-enum UserRole {
+enum UserRole: String {
     case teacher, student
 }
 

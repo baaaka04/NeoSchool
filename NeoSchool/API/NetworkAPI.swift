@@ -5,28 +5,28 @@ class NetworkAPI {
     
     // GET-REQUEST
     // ENDPOINT /schedule/student/days/
-    func loadStudentWeek() async throws -> [StudentDay] {
-        let urlString = "https://neobook.online/neoschool/schedule/student/days/"
+    func loadSchoolWeek(userRole: UserRole) async throws -> [SchoolDay] {
+        let urlString = "https://neobook.online/neoschool/schedule/\(userRole.rawValue)/days/"
         let request = try generateAuthorizedRequest(urlString: urlString)
         let (data, _) = try await URLSession.shared.data(for: request)
         
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let decodedData : [StudentDay] = try decoder.decode([StudentDay].self, from: data)
+        let decodedData : [SchoolDay] = try decoder.decode([SchoolDay].self, from: data)
         
         return decodedData
     }
     
     // GET-REQUEST
     // ENDPOINT /schedule/student/days/{dayId}/lessons/
-    func loadLessons(forDay day: Int) async throws -> [StudentLesson] {
-        let urlString = "https://neobook.online/neoschool/schedule/student/days/\(day)/lessons/"
+    func loadLessons(forDay day: Int, userRole: UserRole) async throws -> [SchoolLesson] {
+        let urlString = "https://neobook.online/neoschool/schedule/\(userRole.rawValue)/days/\(day)/lessons/"
         let request = try generateAuthorizedRequest(urlString: urlString)
         let (data, _) = try await URLSession.shared.data(for: request)
                 
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let decodedData : [StudentLesson] = try decoder.decode([StudentLesson].self, from: data)
+        let decodedData : [SchoolLesson] = try decoder.decode([SchoolLesson].self, from: data)
         
         return decodedData
     }
