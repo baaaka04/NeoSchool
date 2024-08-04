@@ -6,31 +6,31 @@ class SubjectDetailsViewController: DetailViewController {
     //MARK: - Properties
     
     let viewModel: SubjectDetailsViewModelRepresentable
-    let homeworkPanel = HomeworkPanelViewController()
+    let homeworkPanel = StudentHomeworkPanelViewController()
     var getLessonDetails: ( () -> Void)?
     
     lazy var scrollView = UIScrollView()
     let markLabel = MarkUIView()
     
-    lazy var titleLabel: GrayUILabel = {
+    let titleLabel: GrayUILabel = {
         let titleLabel = GrayUILabel()
         titleLabel.font = AppFont.font(type: .SemiBold, size: 28)
         return titleLabel
     }()
     
-    lazy var firstSubTitleLabel: GrayUILabel = {
+    let firstSubTitleLabel: GrayUILabel = {
         let firstSubTitleLabel = GrayUILabel()
         firstSubTitleLabel.font = AppFont.font(type: .Regular, size: 16)
         return firstSubTitleLabel
     }()
     
-    lazy var secondSubTitleLabel: GrayUILabel = {
+    let secondSubTitleLabel: GrayUILabel = {
         let secondSubTitleLabel = GrayUILabel()
         secondSubTitleLabel.font = AppFont.font(type: .Regular, size: 16)
         return secondSubTitleLabel
     }()
     
-    lazy var deadlineLabel: UILabel = {
+    let deadlineLabel: UILabel = {
         let deadlineLabel = UILabel(frame: .infinite)
         deadlineLabel.textAlignment = .right
         deadlineLabel.textColor = UIColor.neobisPurple

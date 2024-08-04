@@ -1,20 +1,19 @@
 import Foundation
 
-protocol NotificationsRefreshable: AnyObject {
-    func updateNotifications()
-    func checkNotifications()
-}
-
-class NotificationsViewModel {
+class NotificationsViewModel: NotificationsViewModelProtocol {
     
     weak var view: NotificationsRefreshable?
-    private let networkAPI = NetworkAPI()
-    
+    var networkAPI: NotificationsNetworkAPIProtocol
+
     var notifications : [NeobisNotificationToPresent]?
     var isLoading = false
     var pagesTotal: Int = 1
     var page: Int = 1
-    
+
+    init(networkAPI: NotificationsNetworkAPIProtocol = NetworkAPI()) {
+        self.networkAPI = networkAPI
+    }
+
     func getNotifications() {
         guard page <= pagesTotal, self.notifications == nil else { return }
         self.isLoading = true
@@ -51,7 +50,7 @@ class NotificationsViewModel {
         }
     }
     
-    private func convertNotifications(notifications: [NeobisNotification]) -> [NeobisNotificationToPresent] {
+    internal func convertNotifications(notifications: [NeobisNotification]) -> [NeobisNotificationToPresent] {
         return notifications.compactMap { notif -> NeobisNotificationToPresent? in
             if case let .submissionRate(_, _, _, teacherComment) = notif.extraData {
                 return NeobisNotificationToPresent(notification: notif, teacherComment: teacherComment)
@@ -69,6 +68,24 @@ class NotificationsViewModel {
         }
     }
 
-    
-    
 }
+
+protocol NotificationsRefreshable: AnyObject {
+    func updateNotifications()
+    func checkNotifications()
+}
+
+protocol NotificationsViewModelProtocol : AnyObject {
+    var view: NotificationsRefreshable? { get set }
+    var networkAPI : NotificationsNetworkAPIProtocol { get set }
+
+    var notifications : [NeobisNotificationToPresent]? { get set }
+    var isLoading : Bool { get set }
+    var pagesTotal: Int { get set }
+    var page: Int { get set }
+
+    func getNotifications()
+    func loadMoreNotifications()
+    func convertNotifications(notifications: [NeobisNotification]) -> [NeobisNotificationToPresent]
+}
+

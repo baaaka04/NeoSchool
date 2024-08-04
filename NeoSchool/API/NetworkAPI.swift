@@ -1,10 +1,10 @@
 import Foundation
 import UIKit
 
-class NetworkAPI {
+class NetworkAPI: NotificationsNetworkAPIProtocol {
     
     // GET-REQUEST
-    // ENDPOINT /schedule/student/days/
+    // ENDPOINT /schedule/{userRole}/days/
     func loadSchoolWeek(userRole: UserRole) async throws -> [SchoolDay] {
         let urlString = "https://neobook.online/neoschool/schedule/\(userRole.rawValue)/days/"
         let request = try generateAuthorizedRequest(urlString: urlString)
@@ -18,7 +18,7 @@ class NetworkAPI {
     }
     
     // GET-REQUEST
-    // ENDPOINT /schedule/student/days/{dayId}/lessons/
+    // ENDPOINT /schedule/{userRole}/days/{dayId}/lessons/
     func loadLessons(forDay day: Int, userRole: UserRole) async throws -> [SchoolLesson] {
         let urlString = "https://neobook.online/neoschool/schedule/\(userRole.rawValue)/days/\(day)/lessons/"
         let request = try generateAuthorizedRequest(urlString: urlString)
@@ -32,16 +32,16 @@ class NetworkAPI {
     }
     
     // GET-REQUEST
-    // ENDPOINT /schedule/teacher/lessons/{lessonID}/
-    func loadLesssonDetail(forLesson lesson: Int) async throws -> StudentLessonDetail {
-        let urlString = "https://neobook.online/neoschool/schedule/student/lessons/\(lesson)/"
+    // ENDPOINT /schedule/{userRole}/lessons/{lessonID}/
+    func loadLesssonDetail<T: Decodable>(forLesson lesson: Int, userRole: UserRole) async throws -> T {
+        let urlString = "https://neobook.online/neoschool/schedule/\(userRole.rawValue)/lessons/\(lesson)/"
         let request = try generateAuthorizedRequest(urlString: urlString)
         let (data, _) = try await URLSession.shared.data(for: request)
                 
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let decodedData : StudentLessonDetail = try decoder.decode(StudentLessonDetail.self, from: data)
+        let decodedData : T = try decoder.decode(T.self, from: data)
         
         return decodedData
     }
@@ -268,6 +268,22 @@ class NetworkAPI {
         return decodedData
     }
     
+    // GET-REQUEST
+    // ENDPOINT /schedule/teacher/grades/{grade_id}/students/
+    func getStudentList(subjectId: Int, gradeId: Int, page: Int, limit: Int) async throws -> [StudentSubmissionCount] {
+        let urlString = "https://neobook.online/neoschool/schedule/teacher/grades/\(gradeId)/students/?page=\(page)&limit=\(limit)"
+        let request = try generateAuthorizedRequest(urlString: urlString)
+        let (data, _) = try await URLSession.shared.data(for: request)
+
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
+        decoder.dateDecodingStrategy = .formatted(formatter)
+        let decodedData = try decoder.decode([StudentSubmissionCount].self, from: data)
+
+        return decodedData
+    }
 }
 
 
@@ -320,4 +336,8 @@ extension NetworkAPI {
         
         return body
     }
+}
+
+protocol NotificationsNetworkAPIProtocol: AnyObject {
+    func getNotifications(page: Int, limit: Int) async throws -> DTONotifications
 }

@@ -60,7 +60,7 @@ class SubjectDetailsViewModel: SubjectDetailsViewModelRepresentable, CommentRepr
     
     func getLessonDetailData() async throws {
         do {
-            lessonDetails = try await lessonAPI?.getLessonDetail(forLessonId: lessonId)
+            lessonDetails = try await lessonAPI?.getStudentLessonDetail(forLessonId: lessonId)
         } catch {
             print(error)
         }

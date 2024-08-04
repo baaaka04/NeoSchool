@@ -119,10 +119,17 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let subject = dayLessonsData?[indexPath.item] else { return }
         
-        let viewModel = SubjectDetailsViewModel(lessonId: subject.id, lessonAPI: self.dayScheduleAPI)
-        let subjectDetailsVC = SubjectDetailsStatefulViewController(viewModel: viewModel)
+        switch userRole {
+        case .teacher:
+            let teacherLessonDetailsVC = TeacherLessonDetailVC(lessonId: subject.id, lessonAPI: self.dayScheduleAPI)
+            self.navigationController?.pushViewController(teacherLessonDetailsVC, animated: true)
+        case .student:
+            let viewModel = SubjectDetailsViewModel(lessonId: subject.id, lessonAPI: self.dayScheduleAPI)
+            let studentLessonDetailsVC = SubjectDetailsStatefulViewController(viewModel: viewModel)
+            self.navigationController?.pushViewController(studentLessonDetailsVC, animated: true)
+        }
+        
 
-        self.navigationController?.pushViewController(subjectDetailsVC, animated: true)
     }
     
     private func getLessonData(forDayID day: Int) {

@@ -3,7 +3,7 @@ import SnapKit
 
 class NotificationsOverviewViewController: DetailViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, NotificationsRefreshable {
 
-    private let viewModel : NotificationsViewModel
+    private let viewModel : NotificationsViewModelProtocol
         
     private lazy var notificationsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -20,7 +20,7 @@ class NotificationsOverviewViewController: DetailViewController, UICollectionVie
         return collectionView
     }()
     
-    init(viewModel: NotificationsViewModel) {
+    init(viewModel: NotificationsViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
