@@ -1,6 +1,6 @@
 import Foundation
 
-class NotificationsViewModel: NotificationsViewModelProtocol {
+class NotificationsViewModel {
     
     weak var view: NotificationsRefreshable?
     var networkAPI: NotificationsNetworkAPIProtocol
@@ -74,18 +74,3 @@ protocol NotificationsRefreshable: AnyObject {
     func updateNotifications()
     func checkNotifications()
 }
-
-protocol NotificationsViewModelProtocol : AnyObject {
-    var view: NotificationsRefreshable? { get set }
-    var networkAPI : NotificationsNetworkAPIProtocol { get set }
-
-    var notifications : [NeobisNotificationToPresent]? { get set }
-    var isLoading : Bool { get set }
-    var pagesTotal: Int { get set }
-    var page: Int { get set }
-
-    func getNotifications()
-    func loadMoreNotifications()
-    func convertNotifications(notifications: [NeobisNotification]) -> [NeobisNotificationToPresent]
-}
-

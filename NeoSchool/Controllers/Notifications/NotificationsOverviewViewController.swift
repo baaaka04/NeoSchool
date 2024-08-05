@@ -3,8 +3,8 @@ import SnapKit
 
 class NotificationsOverviewViewController: DetailViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, NotificationsRefreshable {
 
-    private let viewModel : NotificationsViewModelProtocol
-        
+    private let viewModel : NotificationsViewModel
+
     private lazy var notificationsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -20,7 +20,7 @@ class NotificationsOverviewViewController: DetailViewController, UICollectionVie
         return collectionView
     }()
     
-    init(viewModel: NotificationsViewModelProtocol) {
+    init(viewModel: NotificationsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
