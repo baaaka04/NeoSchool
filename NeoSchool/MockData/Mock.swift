@@ -55,10 +55,10 @@ class MockTeacherDayScheduleAPI: TeacherLessonDayProtocol {
     }
     
     func getTeacherLessonDetail(forLessonId lessonId: Int) async throws -> TeacherLessonDetail {
-        return TeacherLessonDetail(id: 1, subject: StudentSubject(id: 1, name: "Биология", teacher: FullNameUser(id: 1, fullName: "Петрова Ольга Викторовна", firstName: "Ольга", lastName: "Петрова", patronymic: "Петрова О.В.")), homework: TeacherHomework(id: 1, text: "Прочитать главу 3", deadline: "2012-01-26T08:40:00.000+06:00", filesCount: 1), submissions: nil, grade: GradeName(id: 1, name: "5"), room: Room(id: 1, name: "301"), startTime: "2012-01-26T08:00:00.000+06:00", endTime: "2012-01-26T08:40:00.000+06:00", studentCount: 15)
+        return TeacherLessonDetail(id: 1, subject: StudentSubject(id: 1, name: "Биология", teacher: FullNameUser(id: 1, fullName: "Петрова Ольга Викторовна", firstName: "Ольга", lastName: "Петрова", patronymic: "Петрова О.В.")), homework: TeacherHomework(id: 1, text: "Прочитать главу 3", deadline: "2012-01-26T08:40:00.000+06:00", filesCount: 1), submissions: nil, grade: GradeName(id: 1, name: "5 A"), room: Room(id: 1, name: "301"), startTime: "2012-01-26T08:00:00.000+06:00", endTime: "2012-01-26T08:40:00.000+06:00", studentCount: 15)
     }
     
-    func getStudentList(subjectId: Int, gradeId: Int, page: Int) async throws -> [StudentSubmissionCount] {
+    func getStudentList(subjectId: Int, gradeId: Int, page: Int) async throws -> [TeacherClassItem] {
         let data : [StudentSubmissionCount] = [
             .init(id: 1, fullName: "Березин Артем Игоервич", firstName: "Артем", lastName: "Березин", patronymic: "Березин А.И.", submissionsCount: "0"),
             .init(id: 2, fullName: "Ревзин Иван Александрович", firstName: "Иван", lastName: "Ревзин", patronymic: "Ревизн И.А.", submissionsCount: "6"),
@@ -74,7 +74,8 @@ class MockTeacherDayScheduleAPI: TeacherLessonDayProtocol {
 
         ]
 
-        return data
+        return data.map { TeacherClassItem(studentSubmission: $0) }
+//        throw MyError.badNetwork
     }
     
 

@@ -24,8 +24,10 @@ class DayScheduleAPI: StudentLessonDayProtocol, TeacherLessonDayProtocol {
         try await networkAPI.cancelSubmission(submissionId: submissionId)
     }
     
-    func getStudentList(subjectId: Int, gradeId: Int, page: Int) async throws -> [StudentSubmissionCount] {
-        try await networkAPI.getStudentList(subjectId: subjectId, gradeId: gradeId, page: page, limit: 10)
+    func getStudentList(subjectId: Int, gradeId: Int, page: Int) async throws -> [TeacherClassItem] {
+
+        let studentSubmissionsList = try await networkAPI.getStudentList(subjectId: subjectId, gradeId: gradeId, page: page, limit: 10)
+        return studentSubmissionsList.map { TeacherClassItem(studentSubmission: $0) }
     }
 }
 
@@ -44,7 +46,7 @@ protocol TeacherLessonDayProtocol {
     
     func getTeacherLessonDetail(forLessonId lessonId: Int) async throws -> TeacherLessonDetail
     
-    func getStudentList(subjectId: Int, gradeId: Int, page: Int) async throws -> [StudentSubmissionCount]
-    
+    func getStudentList(subjectId: Int, gradeId: Int, page: Int) async throws -> [TeacherClassItem]
+
 }
 

@@ -178,8 +178,8 @@ class TeacherLessonDetailVC: DetailViewController {
 
     @objc func onTapStudentListButton() {
         let studentListVC = StudentsListViewController(subjectId: 1, gradeId: 1, teacherAPI: self.lessonAPI)
-        studentListVC.titleText = "Ученики 5 А класса"
-        studentListVC.studentsCountText = "Учеников: 0"
+        studentListVC.titleText = "Ученики \(lessonDetails?.grade.name ?? "") класса"
+        studentListVC.subtitleText = "Учеников: \(lessonDetails?.studentCount ?? 0)"
         self.navigationController?.pushViewController(studentListVC, animated: true)
     }
 

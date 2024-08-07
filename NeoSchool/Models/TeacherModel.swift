@@ -34,3 +34,22 @@ struct StudentSubmissionCount: Codable {
       let patronymic: String
       let submissionsCount: String
 }
+struct TeacherClassItem {
+    let id = UUID()
+    let title: String
+    let subtitle: String
+    let datetime: String?
+
+
+    init(title: String, subtitle: String, datetime: String) {
+        self.title = title
+        self.subtitle = subtitle
+        self.datetime = datetime
+    }
+
+    init(studentSubmission: StudentSubmissionCount) {
+        self.title = "\(studentSubmission.firstName) \(studentSubmission.lastName)"
+        self.subtitle = "Заданий сдано: \(studentSubmission.submissionsCount)"
+        self.datetime = nil
+    }
+}

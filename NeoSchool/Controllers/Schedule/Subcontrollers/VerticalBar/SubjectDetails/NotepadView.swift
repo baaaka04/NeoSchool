@@ -4,12 +4,19 @@ import SnapKit
 class NotepadView: UIView {
     
     private let notepadImageView = UIImageView(image: UIImage(named: "Notepad"))
+
+    var title: String? {
+        didSet { titleLabel.text = title }
+    }
     private let titleLabel: GrayUILabel = {
         let label = GrayUILabel(font: AppFont.font(type: .Medium, size: 22))
         label.textAlignment = .center
         return label
     }()
     
+    var subtitle: String? {
+        didSet { titleLabel.text = subtitle }
+    }
     private let subtitleLabel: GrayUILabel = {
         let label = GrayUILabel(font: AppFont.font(type: .Regular, size: 18))
         label.textAlignment = .center
@@ -17,7 +24,7 @@ class NotepadView: UIView {
         return label
     }()
 
-    init(title: String, subtitle: String? = nil) {
+    init(title: String? = nil, subtitle: String? = nil) {
         titleLabel.text = title
         subtitleLabel.text = subtitle
         

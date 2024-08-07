@@ -1,13 +1,13 @@
 import UIKit
 import SnapKit
 
-class StudentsListCollectionViewCell: UICollectionViewCell {
-    static let identifier = "StudentsListCollectionViewCell"
+class TeacherItemListCollectionViewCell: UICollectionViewCell {
+    static let identifier = "TeacherItemListCollectionViewCell"
     
     var id: Int? = nil
     
-    var studentName : String? {
-        didSet { titleLabel.text = studentName }
+    var title : String? {
+        didSet { titleLabel.text = title }
     }
     
     private let titleLabel: GrayUILabel = {
@@ -18,12 +18,23 @@ class StudentsListCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    var homeworkCount : String? {
-        didSet { subtitleLabel.text = homeworkCount }
+    var subtitle : String? {
+        didSet { subtitleLabel.text = subtitle }
     }
     
     private let subtitleLabel = GrayUILabel(font: AppFont.font(type: .Regular, size: 16))
-    
+
+    var datetimeText: String? {
+        didSet { self.datetimeLabel.text = datetimeText }
+    }
+
+    private let datetimeLabel: UILabel = {
+        let label = UILabel()
+        label.font = AppFont.font(type: .Regular, size: 16)
+        label.textColor = .neobisLightGray
+        return label
+    }()
+
     private let arrowRightView = UIImageView(image: UIImage(named: "regularchevron-right"))
         
     override init(frame: CGRect) {
@@ -43,6 +54,7 @@ class StudentsListCollectionViewCell: UICollectionViewCell {
         containerView.addSubview(arrowRightView)
         containerView.addSubview(titleLabel)
         containerView.addSubview(subtitleLabel)
+        containerView.addSubview(datetimeLabel)
 
         containerView.layer.cornerRadius = 16
         containerView.backgroundColor = .white
@@ -70,9 +82,14 @@ class StudentsListCollectionViewCell: UICollectionViewCell {
             make.top.equalTo(titleLabel.snp.bottom).offset(4)
             make.left.equalToSuperview().inset(16)
             make.right.equalTo(arrowRightView.snp.left).inset(16)
+        }
+        datetimeLabel.snp.makeConstraints { make in
+            make.top.equalTo(subtitleLabel.snp.bottom).offset(4)
+            make.left.equalToSuperview().inset(16)
+            make.right.equalTo(arrowRightView.snp.left).inset(16)
             make.bottom.equalToSuperview().inset(12)
         }
-        
+
     }
     
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
