@@ -40,7 +40,6 @@ struct TeacherClassItem {
     let subtitle: String
     let datetime: String?
 
-
     init(title: String, subtitle: String, datetime: String) {
         self.title = title
         self.subtitle = subtitle
@@ -52,4 +51,23 @@ struct TeacherClassItem {
         self.subtitle = "Заданий сдано: \(studentSubmission.submissionsCount)"
         self.datetime = nil
     }
+
+    init(studentLesson: StudentLesson) {
+        self.title = studentLesson.topic
+        self.subtitle = "Оценка: \(studentLesson.grade) · Предмет: \(studentLesson.name)"
+        self.datetime = studentLesson.submittedDate
+    }
+}
+struct StudentLessonsList: Codable {
+    let id: Int
+    let gradeId: Int
+    let student : FullNameUser
+    let lessons: [StudentLesson]?
+}
+struct StudentLesson: Codable {
+    let id: Int
+    let name: String
+    let topic: String
+    let grade: String
+    let submittedDate : String
 }

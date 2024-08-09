@@ -77,7 +77,22 @@ class MockTeacherDayScheduleAPI: TeacherLessonDayProtocol {
         return data.map { TeacherClassItem(studentSubmission: $0) }
 //        throw MyError.badNetwork
     }
-    
+
+    func getStudentLessons(studentId: Int, gradeId: Int, page: Int) async throws -> [TeacherClassItem] {
+
+        let data: [TeacherClassItem] = [
+            .init(title: "Строение клетки", subtitle: "Оценка: 5 · Предмет: Биология", datetime: "15.10.2023 в 20:22"),
+            .init(title: "Увеличительные приборы", subtitle: "Оценка: - · Предмет: Биология", datetime: "13.10.2023 в 19:00"),
+            .init(title: "Методы изучения природы", subtitle: "Оценка: 3 · Предмет: Биология", datetime: "11.10.2023 в 20:51"),
+            .init(title: "Свойства живого", subtitle: "Оценка: 4 · Предмет: Биология", datetime: "09.10.2023 в 19:45"),
+            .init(title: "Наука о живой природе", subtitle: "Оценка: 5 · Предмет: Биология", datetime: "04.10.2023 в 21:40"),
+            .init(title: "Введение в биологию", subtitle: "Оценка: - · Предмет: Биология", datetime: "02.10.2023 в 21:40"),
+        ]
+
+        return data
+//        throw MyError.badNetwork
+    }
+
 
 
 }

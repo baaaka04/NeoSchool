@@ -1,7 +1,7 @@
 import UIKit
 
-class DayScheduleAPI: StudentLessonDayProtocol, TeacherLessonDayProtocol {
-    
+class DayScheduleAPI: StudentLessonDayProtocol, TeacherLessonDayProtocol, TeachersStudentLessonsProtocol {
+
     let networkAPI = NetworkAPI()
     
     func getLessons(forDayId dayId: Int, userRole: UserRole) async throws -> [SchoolLesson] {
@@ -29,6 +29,13 @@ class DayScheduleAPI: StudentLessonDayProtocol, TeacherLessonDayProtocol {
         let studentSubmissionsList = try await networkAPI.getStudentList(subjectId: subjectId, gradeId: gradeId, page: page, limit: 10)
         return studentSubmissionsList.map { TeacherClassItem(studentSubmission: $0) }
     }
+
+    func getStudentLessons(studentId: Int, gradeId: Int, page: Int) async throws -> [TeacherClassItem] {
+
+        let studentLessonsList = try await networkAPI.getStudentLessons(studentId: studentId, gradeId: gradeId, page: page, limit: 10)
+        guard let studentLessons = studentLessonsList.lessons else { throw MyError.failDecoding }
+        return studentLessons.map { TeacherClassItem(studentLesson: $0) }
+    }
 }
 
 protocol StudentLessonDayProtocol {
@@ -41,12 +48,13 @@ protocol StudentLessonDayProtocol {
     func cancelSubmission(submissionId: Int) async throws
 }
 
-protocol TeacherLessonDayProtocol {
+protocol TeacherLessonDayProtocol: TeachersStudentLessonsProtocol {
     func getLessons(forDayId dayId: Int, userRole: UserRole) async throws -> [SchoolLesson]
     
     func getTeacherLessonDetail(forLessonId lessonId: Int) async throws -> TeacherLessonDetail
     
     func getStudentList(subjectId: Int, gradeId: Int, page: Int) async throws -> [TeacherClassItem]
-
 }
-
+protocol TeachersStudentLessonsProtocol {
+    func getStudentLessons(studentId: Int, gradeId: Int, page: Int) async throws -> [TeacherClassItem]
+}
