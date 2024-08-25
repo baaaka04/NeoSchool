@@ -26,15 +26,14 @@ class DayScheduleAPI: StudentLessonDayProtocol, TeacherLessonDayProtocol, Teache
     
     func getStudentList(subjectId: Int, gradeId: Int, page: Int) async throws -> [TeacherClassItem] {
 
-        let studentSubmissionsList = try await networkAPI.getStudentList(subjectId: subjectId, gradeId: gradeId, page: page, limit: 10)
+        let studentSubmissionsList: [StudentSubmissionCount] = try await networkAPI.getStudentList(subjectId: subjectId, gradeId: gradeId, page: page, limit: 10)
         return studentSubmissionsList.map { TeacherClassItem(studentSubmission: $0) }
     }
 
     func getStudentLessons(studentId: Int, gradeId: Int, page: Int) async throws -> [TeacherClassItem] {
 
-        let studentLessonsList = try await networkAPI.getStudentLessons(studentId: studentId, gradeId: gradeId, page: page, limit: 10)
-        guard let studentLessons = studentLessonsList.lessons else { throw MyError.failDecoding }
-        return studentLessons.map { TeacherClassItem(studentLesson: $0) }
+        let studentLessonsList = try await networkAPI.getStudentLessons(studentId: studentId, page: page, limit: 10)
+        return studentLessonsList.map { TeacherClassItem(studentLesson: $0) }
     }
 }
 

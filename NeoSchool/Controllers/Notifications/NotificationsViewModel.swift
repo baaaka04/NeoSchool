@@ -20,7 +20,7 @@ class NotificationsViewModel {
         Task {
             do {
                 let data = try await networkAPI.getNotifications(page: self.page, limit: 10)
-                self.pagesTotal = data.total_pages
+                self.pagesTotal = data.totalPages
                 self.notifications = convertNotifications(notifications: data.list)
                 DispatchQueue.main.sync {
                     self.view?.updateNotifications()
@@ -38,7 +38,7 @@ class NotificationsViewModel {
         Task {
             do {
                 let data = try await networkAPI.getNotifications(page: self.page, limit: 10)
-                self.pagesTotal = data.total_pages
+                self.pagesTotal = data.totalPages
                 let newNotifications = convertNotifications(notifications: data.list)
                 self.notifications?.append(contentsOf: newNotifications)
                 DispatchQueue.main.sync {

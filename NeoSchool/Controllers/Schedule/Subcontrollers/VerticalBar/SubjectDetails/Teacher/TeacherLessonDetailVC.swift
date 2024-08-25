@@ -1,13 +1,12 @@
 import UIKit
 import SnapKit
 
-class TeacherLessonDetailVC: DetailViewController {
-    
+class TeacherLessonDetailVC: DetailTitledViewController {
+
     private let lessonAPI : TeacherLessonDayProtocol
     private let lessonId: Int
     private var lessonDetails: TeacherLessonDetail?
     
-    private let titleLabel = GrayUILabel(font: AppFont.font(type: .SemiBold, size: 28))
     private let timeAndRoomLabel = GrayUILabel(font: AppFont.font(type: .Regular, size: 16))
     private let classInfoLabel = GrayUILabel(font: AppFont.font(type: .Medium, size: 16))
     private let lineView: UIView = {
@@ -53,7 +52,6 @@ class TeacherLessonDetailVC: DetailViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(titleLabel)
         view.addSubview(timeAndRoomLabel)
         view.addSubview(classInfoLabel)
         view.addSubview(openStudentsListButton)
@@ -69,11 +67,6 @@ class TeacherLessonDetailVC: DetailViewController {
     }
     
     private func setupUI () {
-        titleLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.top.equalToSuperview().offset(100)
-        }
         timeAndRoomLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(12)
             make.leading.trailing.equalToSuperview().inset(16)
@@ -112,22 +105,22 @@ class TeacherLessonDetailVC: DetailViewController {
         guard let lessonDetails else { return }
         titleLabel.text = lessonDetails.subject.name
 
-        let startTime = try? convertDataStringToHoursAndMinutes(from: lessonDetails.startTime)
-        let endTime = try? convertDataStringToHoursAndMinutes(from: lessonDetails.endTime)
+        let startTime = try? convertDateStringToHoursAndMinutes(from: lessonDetails.startTime)
+        let endTime = try? convertDateStringToHoursAndMinutes(from: lessonDetails.endTime)
 
         let timeAndRoomText = "\(startTime ?? "") - \(endTime ?? "") · Кабинет: \(lessonDetails.room.name)"
         timeAndRoomLabel.text = timeAndRoomText
-        let classInfoText = "\(lessonDetails.grade.name) класс · Учеников: \(lessonDetails.studentCount)"
+        let classInfoText = "\(lessonDetails.grade.name) класс · Учеников: \(lessonDetails.studentsCount)"
         classInfoLabel.text = classInfoText
 
-        let deadline = lessonDetails.homework.deadline
-        guard let deadlineString = try? convertDataStringToDay(from: deadline) else { return }
+        let deadline = lessonDetails.homework?.deadline ?? ""
+        guard let deadlineString = try? convertDateStringToDay(from: deadline) else { return }
         homeworkPanel.deadlineText = "Срок сдачи: \(deadlineString)"
     }
 
     private func getDateFromString(dateString: String) throws -> Date {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXX"
         guard let date = dateFormatter.date(from: dateString) else { throw MyError.invalidDateFormat }
         return date
     }
@@ -147,13 +140,13 @@ class TeacherLessonDetailVC: DetailViewController {
         return dateString
     }
 
-    private func convertDataStringToHoursAndMinutes(from dateString: String) throws -> String {
+    private func convertDateStringToHoursAndMinutes(from dateString: String) throws -> String {
         let date = try getDateFromString(dateString: dateString)
         let timeString = getTimeFromDate(date: date)
         return timeString
     }
 
-    private func convertDataStringToDay(from dateString: String) throws -> String {
+    private func convertDateStringToDay(from dateString: String) throws -> String {
         let date = try getDateFromString(dateString: dateString)
         let dayString = getDayFromDate(date: date)
         return dayString
@@ -177,9 +170,10 @@ class TeacherLessonDetailVC: DetailViewController {
     }
 
     @objc func onTapStudentListButton() {
-        let studentListVC = GradeStudentsListViewController(subjectId: 1, gradeId: 1, teacherAPI: self.lessonAPI)
-        studentListVC.titleText = "Ученики \(lessonDetails?.grade.name ?? "") класса"
-        studentListVC.subtitleText = "Учеников: \(lessonDetails?.studentCount ?? 0)"
+        guard let lessonDetails else { return }
+        let studentListVC = GradeStudentsListViewController(subjectId: lessonDetails.subject.id, gradeId: lessonDetails.grade.id, gradeName: lessonDetails.grade.name, teacherAPI: self.lessonAPI)
+        studentListVC.titleText = "Ученики \(lessonDetails.grade.name) класса"
+        studentListVC.subtitleText = "Учеников: \(lessonDetails.studentsCount)"
         self.navigationController?.pushViewController(studentListVC, animated: true)
     }
 

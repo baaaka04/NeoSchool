@@ -68,6 +68,8 @@
 		F76C6BD92B6A96A900EACFEB /* Jost-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BC72B6A96A900EACFEB /* Jost-MediumItalic.ttf */; };
 		F79083072B9F2C8300B9386E /* NeobisUILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79083062B9F2C8300B9386E /* NeobisUILabel.swift */; };
 		F79083092B9F31B400B9386E /* HomeworkPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79083082B9F31B400B9386E /* HomeworkPanelViewController.swift */; };
+		F7948FE02C665D990028E3EA /* StudentHomeworkDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7948FDF2C665D990028E3EA /* StudentHomeworkDetailsViewController.swift */; };
+		F7948FE22C665EB60028E3EA /* DetailTitledViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7948FE12C665EB60028E3EA /* DetailTitledViewController.swift */; };
 		F79533F92BDFD461004A76C6 /* SnackBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79533F82BDFD461004A76C6 /* SnackBarView.swift */; };
 		F79533FB2BDFF9D8004A76C6 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79533FA2BDFF9D8004A76C6 /* Errors.swift */; };
 		F79533FD2BE10098004A76C6 /* SnackbarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79533FC2BE10098004A76C6 /* SnackbarExtension.swift */; };
@@ -177,6 +179,8 @@
 		F76C6BC72B6A96A900EACFEB /* Jost-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-MediumItalic.ttf"; sourceTree = "<group>"; };
 		F79083062B9F2C8300B9386E /* NeobisUILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeobisUILabel.swift; sourceTree = "<group>"; };
 		F79083082B9F31B400B9386E /* HomeworkPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeworkPanelViewController.swift; sourceTree = "<group>"; };
+		F7948FDF2C665D990028E3EA /* StudentHomeworkDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentHomeworkDetailsViewController.swift; sourceTree = "<group>"; };
+		F7948FE12C665EB60028E3EA /* DetailTitledViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTitledViewController.swift; sourceTree = "<group>"; };
 		F79533F82BDFD461004A76C6 /* SnackBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarView.swift; sourceTree = "<group>"; };
 		F79533FA2BDFF9D8004A76C6 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		F79533FC2BE10098004A76C6 /* SnackbarExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SnackbarExtension.swift; path = NeoSchool/Extensions/SnackbarExtension.swift; sourceTree = SOURCE_ROOT; };
@@ -274,6 +278,7 @@
 			children = (
 				F7CB51522BFCEDD900E1580C /* CommentModalViewController.swift */,
 				F79533FE2BE38890004A76C6 /* DetailViewController.swift */,
+				F7948FE12C665EB60028E3EA /* DetailTitledViewController.swift */,
 				F79534102BF657AA004A76C6 /* ZoomPictureViewController.swift */,
 			);
 			path = SupportViewControllers;
@@ -464,6 +469,7 @@
 				F7C0D1122C4BD7FC003CEC19 /* TeacherLessonDetailVC.swift */,
 				F7C0D11F2C515857003CEC19 /* GradeStudentsListViewController.swift */,
 				F722B00B2C6503CF002D519C /* StudentLessonsListViewController.swift */,
+				F7948FDF2C665D990028E3EA /* StudentHomeworkDetailsViewController.swift */,
 				F722B0092C6115D1002D519C /* ItemsListViewController.swift */,
 				F7C0D1222C5BCE2B003CEC19 /* TeacherItemListCollectionViewCell.swift */,
 			);
@@ -680,6 +686,7 @@
 				F75B04D12C1F3E9800626265 /* KeyboardMovableViewController.swift in Sources */,
 				F79533FF2BE38890004A76C6 /* DetailViewController.swift in Sources */,
 				F70FCF4C2C00D61F0088AACD /* KeychainHelper.swift in Sources */,
+				F7948FE22C665EB60028E3EA /* DetailTitledViewController.swift in Sources */,
 				F722B00C2C6503CF002D519C /* StudentLessonsListViewController.swift in Sources */,
 				F7CAE6A12B73DD01004916E3 /* WorkdayScheduleViewController.swift in Sources */,
 				F74713FF2C1889BE00B4C0EC /* PasswordHasChangedView.swift in Sources */,
@@ -749,6 +756,7 @@
 				F760814C2B8B75CA00B6D792 /* NotSubmittedSubjectDetailsViewController.swift in Sources */,
 				F75B04DD2C26F97700626265 /* ChangePasswordViewController.swift in Sources */,
 				F744FD542B7CD3F80054CBC1 /* StudentsModel.swift in Sources */,
+				F7948FE02C665D990028E3EA /* StudentHomeworkDetailsViewController.swift in Sources */,
 				F7962AF92C08CF630045ADA0 /* OneTimeCodeViewController.swift in Sources */,
 				F79534032BEA5DD7004A76C6 /* ImagesAPI.swift in Sources */,
 				F79534192BFA9CF5004A76C6 /* SubjectDetailsViewController.swift in Sources */,

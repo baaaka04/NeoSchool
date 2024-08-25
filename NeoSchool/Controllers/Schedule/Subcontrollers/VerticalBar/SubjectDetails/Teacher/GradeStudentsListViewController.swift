@@ -3,13 +3,15 @@ import SnapKit
 
 class GradeStudentsListViewController: ItemsListViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
-    let subjectId: Int
-    let gradeId: Int
-    let teacherAPI: TeacherLessonDayProtocol
+    private let subjectId: Int
+    private let gradeId: Int
+    private let teacherAPI: TeacherLessonDayProtocol
+    private let gradeName: String
 
-    init(subjectId: Int, gradeId: Int, teacherAPI: TeacherLessonDayProtocol) {
+    init(subjectId: Int, gradeId: Int, gradeName: String, teacherAPI: TeacherLessonDayProtocol) {
         self.subjectId = subjectId
         self.gradeId = gradeId
+        self.gradeName = gradeName
         self.teacherAPI = teacherAPI
         super.init(nibName: nil, bundle: nil)
     }
@@ -30,8 +32,10 @@ class GradeStudentsListViewController: ItemsListViewController, UICollectionView
     
     private func getStudentList() {
         Task {
-            self.itemsList = try? await teacherAPI.getStudentList(subjectId: self.subjectId, gradeId: self.gradeId, page: 1)
-            updateUI()
+            do {
+                self.itemsList = try await teacherAPI.getStudentList(subjectId: self.subjectId, gradeId: self.gradeId, page: 1)
+                updateUI()
+            } catch { print(error) }
         }
     }
     
@@ -56,7 +60,7 @@ class GradeStudentsListViewController: ItemsListViewController, UICollectionView
         guard let student = self.itemsList?[indexPath.item] else { return }
         let studentLessonsVC = StudentLessonsListViewController(studentId: 123, gradeId: 123, teacherAPI: self.teacherAPI)
         studentLessonsVC.titleText = student.title
-        studentLessonsVC.subtitleText = self.titleText
+        studentLessonsVC.subtitleText = self.gradeName + " класс"
         self.navigationController?.pushViewController(studentLessonsVC, animated: true)
     }
 

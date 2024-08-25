@@ -3,13 +3,13 @@ import Foundation
 struct TeacherLessonDetail: Codable {
     let id: Int
     let subject: StudentSubject
-    let homework: TeacherHomework
+    let homework: TeacherHomework?
     let submissions: [TeacherSubmission]?
     let grade: GradeName
     let room: Room
     let startTime: String
     let endTime: String
-    let studentCount: Int
+    let studentsCount: Int
 }
 struct TeacherSubmission: Codable {
     let id : Int
@@ -26,13 +26,18 @@ struct TeacherHomework: Codable {
     let deadline: String
     let filesCount: Int
 }
+struct DTOStudentSubmissionCount: Decodable {
+    let totalCount : Int
+    let totalPages : Int
+    let list : [StudentSubmissionCount]
+}
 struct StudentSubmissionCount: Codable {
-      let id: Int
-      let fullName: String
-      let firstName: String
-      let lastName: String
-      let patronymic: String
-      let submissionsCount: String
+    let id: Int
+    let fullName: String
+    let firstName: String
+    let lastName: String
+    let patronymic: String
+    let submissionsCount: Int
 }
 struct TeacherClassItem {
     let id = UUID()
@@ -53,21 +58,22 @@ struct TeacherClassItem {
     }
 
     init(studentLesson: StudentLesson) {
-        self.title = studentLesson.topic
-        self.subtitle = "Оценка: \(studentLesson.grade) · Предмет: \(studentLesson.name)"
+        self.title = "test topic"//studentLesson.topic
+        self.subtitle = "Оценка: \(studentLesson.mark) · Предмет: test subject"
         self.datetime = studentLesson.submittedDate
     }
 }
-struct StudentLessonsList: Codable {
-    let id: Int
-    let gradeId: Int
-    let student : FullNameUser
-    let lessons: [StudentLesson]?
+struct DTOStudentLessonsList: Decodable {
+    let totalCount : Int
+    let totalPages : Int
+    let list : [StudentLesson]
 }
 struct StudentLesson: Codable {
     let id: Int
-    let name: String
-    let topic: String
-    let grade: String
+    let student: FullNameUser
+    let homework: Int
     let submittedDate : String
+    let submittedOnTime : String
+    let mark: String
+    let lessonId: String
 }

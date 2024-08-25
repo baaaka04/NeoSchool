@@ -1,18 +1,13 @@
 import UIKit
 import SnapKit
 
-class ItemsListViewController: DetailViewController {
-
-    var titleText: String? {
-        didSet { titleLabel.text = titleText }
-    }
+class ItemsListViewController: DetailTitledViewController {
 
     var subtitleText: String? {
         didSet { subtitleLabel.text = subtitleText }
     }
     var itemsList : [TeacherClassItem]?
 
-    private let titleLabel = GrayUILabel(font: AppFont.font(type: .SemiBold, size: 28))
     private let subtitleLabel = GrayUILabel(font: AppFont.font(type: .Medium, size: 16))
 
     let emptyListView = NotepadView()
@@ -35,7 +30,6 @@ class ItemsListViewController: DetailViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.addSubview(titleLabel)
         view.addSubview(subtitleLabel)
         view.addSubview(emptyListView)
         view.addSubview(teacherListCollectionView)
@@ -45,10 +39,6 @@ class ItemsListViewController: DetailViewController {
 
     private func setupUI() {
 
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(100)
-            make.left.right.equalToSuperview().inset(16)
-        }
         subtitleLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(8)
             make.left.right.equalToSuperview().inset(16)

@@ -115,7 +115,7 @@ extension NeobisNotification {
 }
 
 struct DTONotifications: Decodable {
-    let total_count : Int
-    let total_pages : Int
+    let totalCount : Int
+    let totalPages : Int
     let list : [NeobisNotification]
 }

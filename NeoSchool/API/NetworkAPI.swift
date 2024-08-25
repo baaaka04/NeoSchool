@@ -263,6 +263,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
 
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
         decoder.dateDecodingStrategy = .formatted(formatter)
@@ -274,35 +275,44 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
     // GET-REQUEST
     // ENDPOINT /schedule/teacher/grades/{grade_id}/students/
     func getStudentList(subjectId: Int, gradeId: Int, page: Int, limit: Int) async throws -> [StudentSubmissionCount] {
-        let urlString = "\(domen)/neoschool/schedule/teacher/grades/\(gradeId)/students/?page=\(page)&limit=\(limit)"
+        let urlString = "\(domen)/neoschool/schedule/teacher/" +
+        "grades/\(gradeId)/students/?" +
+        "subject=\(subjectId)&" +
+        "page=\(page)&" +
+        "limit=\(limit)"
         let request = try generateAuthorizedRequest(urlString: urlString)
         let (data, _) = try await URLSession.shared.data(for: request)
 
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
         decoder.dateDecodingStrategy = .formatted(formatter)
-        let decodedData = try decoder.decode([StudentSubmissionCount].self, from: data)
+        let decodedData = try decoder.decode(DTOStudentSubmissionCount.self, from: data)
 
-        return decodedData
+        return decodedData.list
     }
 
     // GET-REQUEST
-    // MARK: need to check ENDPOINT /schedule/teacher/students/{student_id}/{grade_id}/
-    func getStudentLessons(studentId: Int, gradeId: Int, page: Int, limit: Int) async throws -> StudentLessonsList {
-        let urlString = "\(domen)/neoschool/schedule/teacher/students/\(studentId)/\(gradeId)/?page=\(page)&limit=\(limit)"
+    // ENDPOINT /neoschool/schedule/teacher/students/{student_id}/all_submissions/
+    func getStudentLessons(studentId: Int, page: Int, limit: Int) async throws -> [StudentLesson] {
+        let urlString = "\(domen)/neoschool/schedule/teacher/" +
+        "students/\(studentId)/all_submissions/?" +
+        "page=\(page)&" +
+        "limit=\(limit)"
         let request = try generateAuthorizedRequest(urlString: urlString)
         let (data, _) = try await URLSession.shared.data(for: request)
 
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
         decoder.dateDecodingStrategy = .formatted(formatter)
-        let decodedData = try decoder.decode(StudentLessonsList.self, from: data)
+        let decodedData = try decoder.decode(DTOStudentLessonsList.self, from: data)
 
-        return decodedData
+        return decodedData.list
     }
 
 }
