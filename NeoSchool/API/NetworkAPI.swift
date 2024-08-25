@@ -2,11 +2,14 @@ import Foundation
 import UIKit
 
 class NetworkAPI: NotificationsNetworkAPIProtocol {
-    
+
+//    private let domen: String = "https://neobook.online"
+    private let domen: String = "http://localhost:8000"
+
     // GET-REQUEST
     // ENDPOINT /schedule/{userRole}/days/
     func loadSchoolWeek(userRole: UserRole) async throws -> [SchoolDay] {
-        let urlString = "https://neobook.online/neoschool/schedule/\(userRole.rawValue)/days/"
+        let urlString = "\(domen)/neoschool/schedule/\(userRole.rawValue)/days/"
         let request = try generateAuthorizedRequest(urlString: urlString)
         let (data, _) = try await URLSession.shared.data(for: request)
         
@@ -20,7 +23,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
     // GET-REQUEST
     // ENDPOINT /schedule/{userRole}/days/{dayId}/lessons/
     func loadLessons(forDay day: Int, userRole: UserRole) async throws -> [SchoolLesson] {
-        let urlString = "https://neobook.online/neoschool/schedule/\(userRole.rawValue)/days/\(day)/lessons/"
+        let urlString = "\(domen)/neoschool/schedule/\(userRole.rawValue)/days/\(day)/lessons/"
         let request = try generateAuthorizedRequest(urlString: urlString)
         let (data, _) = try await URLSession.shared.data(for: request)
                 
@@ -34,7 +37,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
     // GET-REQUEST
     // ENDPOINT /schedule/{userRole}/lessons/{lessonID}/
     func loadLesssonDetail<T: Decodable>(forLesson lesson: Int, userRole: UserRole) async throws -> T {
-        let urlString = "https://neobook.online/neoschool/schedule/\(userRole.rawValue)/lessons/\(lesson)/"
+        let urlString = "\(domen)/neoschool/schedule/\(userRole.rawValue)/lessons/\(lesson)/"
         let request = try generateAuthorizedRequest(urlString: urlString)
         let (data, _) = try await URLSession.shared.data(for: request)
                 
@@ -49,7 +52,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
     //POST-REQUEST
     //ENDPOINT /schedule/student/homeworks/{homework_id}/submit/
     func uploadFiles(homeworkId: Int, files: [AttachedFile], studentComment: String?) async throws -> Void {
-        let urlString = "https://neobook.online/neoschool/schedule/student/homeworks/\(homeworkId)/submit/"
+        let urlString = "\(domen)/neoschool/schedule/student/homeworks/\(homeworkId)/submit/"
         let boundary = "Boundary-\(UUID().uuidString)"
         var params : [[String : String]]? = nil
         if let studentComment { params = [["student_comment": studentComment]] }
@@ -67,7 +70,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
     //DELETE-REQUEST
     //ENDPOINT /schedule/student/homeworks/submissions/{submission_id}/cancel/
     func cancelSubmission(submissionId: Int) async throws -> Void {
-        let urlString = "https://neobook.online/neoschool/schedule/student/homeworks/submissions/\(submissionId)/cancel/"
+        let urlString = "\(domen)/neoschool/schedule/student/homeworks/submissions/\(submissionId)/cancel/"
         var request = try generateAuthorizedRequest(urlString: urlString)
         request.httpMethod = "DELETE"
         let (_, resp) = try await URLSession.shared.data(for: request)
@@ -80,7 +83,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
     //POST-REUEST
     //ENDPOINT /users/login/refresh/
     func refreshAccessToken(refreshToken token: String) async throws -> Data {
-        let urlString = "https://neobook.online/neoschool/users/login/refresh/"
+        let urlString = "\(domen)/neoschool/users/login/refresh/"
         guard let url = URL(string: urlString) else { throw URLError(.badURL) }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -107,7 +110,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
     //POST-REUEST
     //ENDPOINT /users/login/
     func login(username: String, password: String, isTeacher: Bool) async throws -> (Data, Data) {
-        let urlString = "https://neobook.online/neoschool/users/login/"
+        let urlString = "\(domen)/neoschool/users/login/"
         guard let url = URL(string: urlString) else { throw URLError(.badURL) }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -140,7 +143,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
     //POST-REQUEST
     //ENDPOINT /users/password/reset/
     func sendResetPasswordCode(for email: String) async throws -> Int {
-        let urlString = "https://neobook.online/neoschool/users/password/reset/"
+        let urlString = "\(domen)/neoschool/users/password/reset/"
         guard let url = URL(string: urlString) else { throw URLError(.badURL) }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -165,7 +168,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
     //POST-REQUEST
     //ENDPOINT /users/{id}/password/verify/
     func checkResetPasswordCode(userId: Int, code: Int) async throws -> Bool {
-        let urlString = "https://neobook.online/neoschool/users/\(userId)/password/verify/"
+        let urlString = "\(domen)/neoschool/users/\(userId)/password/verify/"
         guard let url = URL(string: urlString) else { throw URLError(.badURL) }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -192,7 +195,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
     //PUT-REQUEST
     //ENDPOINT /users/password/forgot/
     func updatePassword(with password: String) async throws -> Void {
-        let urlString = "https://neobook.online/neoschool/users/password/forgot/"
+        let urlString = "\(domen)/neoschool/users/password/forgot/"
         var request = try generateAuthorizedRequest(urlString: urlString)
         request.httpMethod = "PUT"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -215,7 +218,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
     //PUT-REQUEST
     //ENDPOINT /users/password/change/
     func changePassword(from currentPassword: String, to newPassword: String) async throws -> Void {
-        let urlString = "https://neobook.online/neoschool/users/password/change/"
+        let urlString = "\(domen)/neoschool/users/password/change/"
         var request = try generateAuthorizedRequest(urlString: urlString)
         request.httpMethod = "PUT"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -239,7 +242,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
     // GET-REQUEST
     // ENDPOINT /users/profile/
     func getProfileData() async throws -> UserProfile {
-        let urlString = "https://neobook.online/neoschool/users/profile/"
+        let urlString = "\(domen)/neoschool/users/profile/"
         let request = try generateAuthorizedRequest(urlString: urlString)
         let (data, _) = try await URLSession.shared.data(for: request)
                 
@@ -254,7 +257,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
     // GET-REQUEST
     // ENDPOINT /notifications/
     func getNotifications(page: Int, limit: Int) async throws -> DTONotifications {
-        let urlString = "https://neobook.online/neoschool/notifications/?page=\(page)&limit=\(limit)"
+        let urlString = "\(domen)/neoschool/notifications/?page=\(page)&limit=\(limit)"
         let request = try generateAuthorizedRequest(urlString: urlString)
         let (data, _) = try await URLSession.shared.data(for: request)
 
@@ -271,7 +274,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
     // GET-REQUEST
     // ENDPOINT /schedule/teacher/grades/{grade_id}/students/
     func getStudentList(subjectId: Int, gradeId: Int, page: Int, limit: Int) async throws -> [StudentSubmissionCount] {
-        let urlString = "https://neobook.online/neoschool/schedule/teacher/grades/\(gradeId)/students/?page=\(page)&limit=\(limit)"
+        let urlString = "\(domen)/neoschool/schedule/teacher/grades/\(gradeId)/students/?page=\(page)&limit=\(limit)"
         let request = try generateAuthorizedRequest(urlString: urlString)
         let (data, _) = try await URLSession.shared.data(for: request)
 
@@ -288,7 +291,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
     // GET-REQUEST
     // MARK: need to check ENDPOINT /schedule/teacher/students/{student_id}/{grade_id}/
     func getStudentLessons(studentId: Int, gradeId: Int, page: Int, limit: Int) async throws -> StudentLessonsList {
-        let urlString = "https://neobook.online/neoschool/schedule/teacher/students/\(studentId)/\(gradeId)/?page=\(page)&limit=\(limit)"
+        let urlString = "\(domen)/neoschool/schedule/teacher/students/\(studentId)/\(gradeId)/?page=\(page)&limit=\(limit)"
         let request = try generateAuthorizedRequest(urlString: urlString)
         let (data, _) = try await URLSession.shared.data(for: request)
 
