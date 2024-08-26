@@ -81,12 +81,12 @@ class MockTeacherDayScheduleAPI: TeacherLessonDayProtocol {
     func getStudentLessons(studentId: Int, gradeId: Int, page: Int) async throws -> [TeacherClassItem] {
 
         let data: [TeacherClassItem] = [
-            .init(title: "Строение клетки", subtitle: "Оценка: 5 · Предмет: Биология", datetime: "15.10.2023 в 20:22"),
-            .init(title: "Увеличительные приборы", subtitle: "Оценка: - · Предмет: Биология", datetime: "13.10.2023 в 19:00"),
-            .init(title: "Методы изучения природы", subtitle: "Оценка: 3 · Предмет: Биология", datetime: "11.10.2023 в 20:51"),
-            .init(title: "Свойства живого", subtitle: "Оценка: 4 · Предмет: Биология", datetime: "09.10.2023 в 19:45"),
-            .init(title: "Наука о живой природе", subtitle: "Оценка: 5 · Предмет: Биология", datetime: "04.10.2023 в 21:40"),
-            .init(title: "Введение в биологию", subtitle: "Оценка: - · Предмет: Биология", datetime: "02.10.2023 в 21:40"),
+            .init(id: 1, title: "Строение клетки", subtitle: "Оценка: 5 · Предмет: Биология", datetime: "15.10.2023 в 20:22"),
+            .init(id: 2, title: "Увеличительные приборы", subtitle: "Оценка: - · Предмет: Биология", datetime: "13.10.2023 в 19:00"),
+            .init(id: 3, title: "Методы изучения природы", subtitle: "Оценка: 3 · Предмет: Биология", datetime: "11.10.2023 в 20:51"),
+            .init(id: 4, title: "Свойства живого", subtitle: "Оценка: 4 · Предмет: Биология", datetime: "09.10.2023 в 19:45"),
+            .init(id: 5, title: "Наука о живой природе", subtitle: "Оценка: 5 · Предмет: Биология", datetime: "04.10.2023 в 21:40"),
+            .init(id: 6, title: "Введение в биологию", subtitle: "Оценка: - · Предмет: Биология", datetime: "02.10.2023 в 21:40"),
         ]
 
         return data

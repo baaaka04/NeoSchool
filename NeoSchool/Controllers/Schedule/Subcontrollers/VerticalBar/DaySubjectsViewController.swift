@@ -117,14 +117,15 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
     
     // TAP ON A LESSON IN THE SCHEDULE LIST
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let subject = dayLessonsData?[indexPath.item] else { return }
-        
+        guard let lesson = dayLessonsData?[indexPath.item] else { return }
+
         switch userRole {
         case .teacher:
-            let teacherLessonDetailsVC = TeacherLessonDetailVC(lessonId: subject.id, lessonAPI: self.dayScheduleAPI)
+            let viewModel = TeacherDetailsViewModel(lessonId: lesson.id, teacherAPI: self.dayScheduleAPI)
+            let teacherLessonDetailsVC = TeacherLessonDetailVC(viewModel: viewModel)
             self.navigationController?.pushViewController(teacherLessonDetailsVC, animated: true)
         case .student:
-            let viewModel = SubjectDetailsViewModel(lessonId: subject.id, lessonAPI: self.dayScheduleAPI)
+            let viewModel = SubjectDetailsViewModel(lessonId: lesson.id, lessonAPI: self.dayScheduleAPI)
             let studentLessonDetailsVC = SubjectDetailsStatefulViewController(viewModel: viewModel)
             self.navigationController?.pushViewController(studentLessonDetailsVC, animated: true)
         }

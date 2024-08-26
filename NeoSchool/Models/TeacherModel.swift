@@ -15,9 +15,9 @@ struct TeacherSubmission: Codable {
     let id : Int
     let student : FullNameUser
     let homework: Int
-    let submittedString : String
+    let submittedDate : String
     let submittedOnTime : Bool
-    let mark : String
+    let mark : String?
     let lessonId: Int
 }
 struct TeacherHomework: Codable {
@@ -40,26 +40,29 @@ struct StudentSubmissionCount: Codable {
     let submissionsCount: Int
 }
 struct TeacherClassItem {
-    let id = UUID()
+    let id: Int
     let title: String
     let subtitle: String
     let datetime: String?
 
-    init(title: String, subtitle: String, datetime: String) {
+    init(id: Int, title: String, subtitle: String, datetime: String) {
+        self.id = id
         self.title = title
         self.subtitle = subtitle
         self.datetime = datetime
     }
-
+    // init for the list of the grade's students and their submissions
     init(studentSubmission: StudentSubmissionCount) {
+        self.id = studentSubmission.id
         self.title = "\(studentSubmission.firstName) \(studentSubmission.lastName)"
         self.subtitle = "Заданий сдано: \(studentSubmission.submissionsCount)"
         self.datetime = nil
     }
-
+    // init for the list of the student's submissions
     init(studentLesson: StudentLesson) {
-        self.title = "test topic"//studentLesson.topic
-        self.subtitle = "Оценка: \(studentLesson.mark) · Предмет: test subject"
+        self.id = studentLesson.id
+        self.title = studentLesson.topic
+        self.subtitle = "Оценка: \(studentLesson.mark ?? "-") · Предмет: \(studentLesson.subject.name)"
         self.datetime = studentLesson.submittedDate
     }
 }
@@ -73,7 +76,9 @@ struct StudentLesson: Codable {
     let student: FullNameUser
     let homework: Int
     let submittedDate : String
-    let submittedOnTime : String
-    let mark: String
-    let lessonId: String
+    let submittedOnTime : Bool
+    let mark: String?
+    let lessonId: Int
+    let subject: SubjectName
+    let topic: String
 }

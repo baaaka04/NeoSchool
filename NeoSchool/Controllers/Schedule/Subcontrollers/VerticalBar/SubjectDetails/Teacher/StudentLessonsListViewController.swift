@@ -2,14 +2,12 @@ import UIKit
 
 class StudentLessonsListViewController: ItemsListViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
-    let studentId: Int
-    let gradeId: Int
-    let teacherAPI: TeachersStudentLessonsProtocol
+    private let vm: TeacherDetailsViewModel
+    private let studentId: Int
 
-    init(studentId: Int, gradeId: Int, teacherAPI: TeachersStudentLessonsProtocol) {
+    init(viewModel: TeacherDetailsViewModel, studentId: Int) {
         self.studentId = studentId
-        self.gradeId = gradeId
-        self.teacherAPI = teacherAPI
+        self.vm = viewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -29,8 +27,11 @@ class StudentLessonsListViewController: ItemsListViewController, UICollectionVie
 
     private func getStudentLessons() {
         Task {
-            self.itemsList = try? await teacherAPI.getStudentLessons(studentId: self.studentId, gradeId: self.gradeId, page: 1)
-            updateUI()
+            do {
+                try await vm.getStudentLessons(studentId: self.studentId)
+                self.itemsList = vm.submissions
+                updateUI()
+            } catch { print(error) }
         }
     }
 

@@ -26,7 +26,7 @@ class DayScheduleAPI: StudentLessonDayProtocol, TeacherLessonDayProtocol, Teache
     
     func getStudentList(subjectId: Int, gradeId: Int, page: Int) async throws -> [TeacherClassItem] {
 
-        let studentSubmissionsList: [StudentSubmissionCount] = try await networkAPI.getStudentList(subjectId: subjectId, gradeId: gradeId, page: page, limit: 10)
+        let studentSubmissionsList: [StudentSubmissionCount] = try await networkAPI.getStudentList(subjectId: subjectId, gradeId: gradeId, page: page, limit: 54)
         return studentSubmissionsList.map { TeacherClassItem(studentSubmission: $0) }
     }
 

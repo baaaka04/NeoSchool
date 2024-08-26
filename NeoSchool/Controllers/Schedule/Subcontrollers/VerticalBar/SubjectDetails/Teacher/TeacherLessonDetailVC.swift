@@ -3,10 +3,8 @@ import SnapKit
 
 class TeacherLessonDetailVC: DetailTitledViewController {
 
-    private let lessonAPI : TeacherLessonDayProtocol
-    private let lessonId: Int
-    private var lessonDetails: TeacherLessonDetail?
-    
+    private let vm: TeacherDetailsViewModel
+
     private let timeAndRoomLabel = GrayUILabel(font: AppFont.font(type: .Regular, size: 16))
     private let classInfoLabel = GrayUILabel(font: AppFont.font(type: .Medium, size: 16))
     private let lineView: UIView = {
@@ -39,9 +37,8 @@ class TeacherLessonDetailVC: DetailTitledViewController {
         return label
     }()
     
-    init(lessonId: Int, lessonAPI: TeacherLessonDayProtocol = DayScheduleAPI()) {
-        self.lessonId = lessonId
-        self.lessonAPI = lessonAPI
+    init(viewModel: TeacherDetailsViewModel) {
+        self.vm = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -101,12 +98,13 @@ class TeacherLessonDetailVC: DetailTitledViewController {
         homeworkPanel.view.addGestureRecognizer(tapGesture)
     }
     
-    private func updateData() {
-        guard let lessonDetails else { return }
+    func updateUI() {
+
+        guard let lessonDetails = vm.lessonDetails else { return }
         titleLabel.text = lessonDetails.subject.name
 
-        let startTime = try? convertDateStringToHoursAndMinutes(from: lessonDetails.startTime)
-        let endTime = try? convertDateStringToHoursAndMinutes(from: lessonDetails.endTime)
+        let startTime = try? vm.convertDateStringToHoursAndMinutes(from: lessonDetails.startTime)
+        let endTime = try? vm.convertDateStringToHoursAndMinutes(from: lessonDetails.endTime)
 
         let timeAndRoomText = "\(startTime ?? "") - \(endTime ?? "") · Кабинет: \(lessonDetails.room.name)"
         timeAndRoomLabel.text = timeAndRoomText
@@ -114,64 +112,27 @@ class TeacherLessonDetailVC: DetailTitledViewController {
         classInfoLabel.text = classInfoText
 
         let deadline = lessonDetails.homework?.deadline ?? ""
-        guard let deadlineString = try? convertDateStringToDay(from: deadline) else { return }
+        guard let deadlineString = try? vm.convertDateStringToDay(from: deadline) else { return }
         homeworkPanel.deadlineText = "Срок сдачи: \(deadlineString)"
-    }
-
-    private func getDateFromString(dateString: String) throws -> Date {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXX"
-        guard let date = dateFormatter.date(from: dateString) else { throw MyError.invalidDateFormat }
-        return date
-    }
-
-    private func getTimeFromDate(date: Date) -> String {
-        let timeFormatter = DateFormatter()
-        timeFormatter.dateFormat = "HH:mm"
-        let timeString = timeFormatter.string(from: date)
-
-        return timeString
-    }
-
-    private func getDayFromDate(date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy"
-        let dateString = dateFormatter.string(from: date)
-        return dateString
-    }
-
-    private func convertDateStringToHoursAndMinutes(from dateString: String) throws -> String {
-        let date = try getDateFromString(dateString: dateString)
-        let timeString = getTimeFromDate(date: date)
-        return timeString
-    }
-
-    private func convertDateStringToDay(from dateString: String) throws -> String {
-        let date = try getDateFromString(dateString: dateString)
-        let dayString = getDayFromDate(date: date)
-        return dayString
     }
 
     private func getLessonDetails() {
         Task {
             do {
-                let lessonDetailsData = try await lessonAPI.getTeacherLessonDetail(forLessonId: self.lessonId)
-                DispatchQueue.main.async {
-                    self.lessonDetails = lessonDetailsData
-                    self.updateData()
-                }
+                try await vm.getLessonDetails()
+                updateUI()
             } catch { print(error) }
         }
     }
-    
+
     @objc func onTapHomework() {
         let setHomeworkVC = SetHomeworkViewController()
         self.navigationController?.pushViewController(setHomeworkVC, animated: true)
     }
 
     @objc func onTapStudentListButton() {
-        guard let lessonDetails else { return }
-        let studentListVC = GradeStudentsListViewController(subjectId: lessonDetails.subject.id, gradeId: lessonDetails.grade.id, gradeName: lessonDetails.grade.name, teacherAPI: self.lessonAPI)
+        let studentListVC = GradeStudentsListViewController(viewModel: self.vm)
+        guard let lessonDetails = vm.lessonDetails else { return }
         studentListVC.titleText = "Ученики \(lessonDetails.grade.name) класса"
         studentListVC.subtitleText = "Учеников: \(lessonDetails.studentsCount)"
         self.navigationController?.pushViewController(studentListVC, animated: true)

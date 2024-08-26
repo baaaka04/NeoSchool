@@ -3,16 +3,10 @@ import SnapKit
 
 class GradeStudentsListViewController: ItemsListViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
-    private let subjectId: Int
-    private let gradeId: Int
-    private let teacherAPI: TeacherLessonDayProtocol
-    private let gradeName: String
+    private let vm: TeacherDetailsViewModel
 
-    init(subjectId: Int, gradeId: Int, gradeName: String, teacherAPI: TeacherLessonDayProtocol) {
-        self.subjectId = subjectId
-        self.gradeId = gradeId
-        self.gradeName = gradeName
-        self.teacherAPI = teacherAPI
+    init( viewModel: TeacherDetailsViewModel) {
+        self.vm = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -33,7 +27,8 @@ class GradeStudentsListViewController: ItemsListViewController, UICollectionView
     private func getStudentList() {
         Task {
             do {
-                self.itemsList = try await teacherAPI.getStudentList(subjectId: self.subjectId, gradeId: self.gradeId, page: 1)
+                try await vm.getStudentList()
+                self.itemsList = vm.students
                 updateUI()
             } catch { print(error) }
         }
@@ -57,10 +52,11 @@ class GradeStudentsListViewController: ItemsListViewController, UICollectionView
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let student = self.itemsList?[indexPath.item] else { return }
-        let studentLessonsVC = StudentLessonsListViewController(studentId: 123, gradeId: 123, teacherAPI: self.teacherAPI)
+        guard let student: TeacherClassItem = self.itemsList?[indexPath.item],
+        let lessonDetails = vm.lessonDetails else { return }
+        let studentLessonsVC = StudentLessonsListViewController(viewModel: self.vm, studentId: student.id)
         studentLessonsVC.titleText = student.title
-        studentLessonsVC.subtitleText = self.gradeName + " класс"
+        studentLessonsVC.subtitleText = lessonDetails.grade.name + " класс"
         self.navigationController?.pushViewController(studentLessonsVC, animated: true)
     }
 
