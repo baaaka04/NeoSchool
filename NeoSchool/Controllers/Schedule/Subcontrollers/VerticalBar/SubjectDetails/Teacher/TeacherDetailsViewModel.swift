@@ -26,26 +26,34 @@ class TeacherDetailsViewModel {
     }
 
     func getStudentLessons(studentId: Int) async throws {
-        guard let lessonDetails else { return }
-        self.submissions = try await teacherAPI?.getStudentLessons(studentId: studentId, gradeId: lessonDetails.grade.id, page: 1)
+        guard let lessonDetails,
+              var submissions = try await teacherAPI?.getStudentLessons(studentId: studentId, gradeId: lessonDetails.grade.id, page: 1),
+              submissions.count != 0 else { return }
+
+        for i in 0..<submissions.count {
+            guard let date = try? convertDateStringToDay(from: submissions[i].datetime ?? "", dateFormat: .long),
+                  let time = try? convertDateStringToHoursAndMinutes(from: submissions[i].datetime ?? "", dateFormat: .long) else { return }
+            submissions[i].datetime = date + " в " + time
+        }
+        self.submissions = submissions
     }
 
-    //MARK: - Service functions
-    func convertDateStringToHoursAndMinutes(from dateString: String) throws -> String {
-        let date = try getDateFromString(dateString: dateString)
+    //MARK: - Public functions
+    func convertDateStringToHoursAndMinutes(from dateString: String, dateFormat: DateFormat) throws -> String {
+        let date = try getDateFromString(dateString: dateString, dateFormat: dateFormat)
         let timeString = getTimeFromDate(date: date)
         return timeString
     }
 
-    func convertDateStringToDay(from dateString: String) throws -> String {
-        let date = try getDateFromString(dateString: dateString)
+    func convertDateStringToDay(from dateString: String, dateFormat: DateFormat) throws -> String {
+        let date = try getDateFromString(dateString: dateString, dateFormat: dateFormat)
         let dayString = getDayFromDate(date: date)
         return dayString
     }
 
-    private func getDateFromString(dateString: String) throws -> Date {
+    private func getDateFromString(dateString: String, dateFormat: DateFormat) throws -> Date {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXX"
+        dateFormatter.dateFormat = dateFormat.rawValue
         guard let date = dateFormatter.date(from: dateString) else { throw MyError.invalidDateFormat }
         return date
     }

@@ -43,7 +43,7 @@ struct TeacherClassItem {
     let id: Int
     let title: String
     let subtitle: String
-    let datetime: String?
+    var datetime: String?
 
     init(id: Int, title: String, subtitle: String, datetime: String) {
         self.id = id
@@ -81,4 +81,8 @@ struct StudentLesson: Codable {
     let lessonId: Int
     let subject: SubjectName
     let topic: String
+}
+enum DateFormat: String {
+    case long = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
+    case short = "yyyy-MM-dd'T'HH:mm:ssXXX"
 }

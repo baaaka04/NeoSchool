@@ -103,8 +103,8 @@ class TeacherLessonDetailVC: DetailTitledViewController {
         guard let lessonDetails = vm.lessonDetails else { return }
         titleLabel.text = lessonDetails.subject.name
 
-        let startTime = try? vm.convertDateStringToHoursAndMinutes(from: lessonDetails.startTime)
-        let endTime = try? vm.convertDateStringToHoursAndMinutes(from: lessonDetails.endTime)
+        let startTime = try? vm.convertDateStringToHoursAndMinutes(from: lessonDetails.startTime, dateFormat: .short)
+        let endTime = try? vm.convertDateStringToHoursAndMinutes(from: lessonDetails.endTime, dateFormat: .short)
 
         let timeAndRoomText = "\(startTime ?? "") - \(endTime ?? "") · Кабинет: \(lessonDetails.room.name)"
         timeAndRoomLabel.text = timeAndRoomText
@@ -112,7 +112,7 @@ class TeacherLessonDetailVC: DetailTitledViewController {
         classInfoLabel.text = classInfoText
 
         let deadline = lessonDetails.homework?.deadline ?? ""
-        guard let deadlineString = try? vm.convertDateStringToDay(from: deadline) else { return }
+        guard let deadlineString = try? vm.convertDateStringToDay(from: deadline, dateFormat: .short) else { return }
         homeworkPanel.deadlineText = "Срок сдачи: \(deadlineString)"
     }
 

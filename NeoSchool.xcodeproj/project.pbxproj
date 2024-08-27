@@ -455,6 +455,18 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		F7948FE52C7DFAD10028E3EA /* Student */ = {
+			isa = PBXGroup;
+			children = (
+				F79534142BFA329F004A76C6 /* SubjectDetailsStatefulViewController.swift */,
+				F7D00B262B9B58370072FAB2 /* SubjectDetailsViewModel.swift */,
+				F70FCF412BFF8C760088AACD /* MainSubcontrollers */,
+				F70FCF422BFF8D900088AACD /* SecondarySubcontrollers */,
+				F7F581642BBC494D00FFC6C9 /* AttachedFiles */,
+			);
+			path = Student;
+			sourceTree = "<group>";
+		};
 		F7C0D11E2C5137E0003CEC19 /* HomeworkPanelVCs */ = {
 			isa = PBXGroup;
 			children = (
@@ -544,13 +556,9 @@
 		F7F581612BB8474600FFC6C9 /* SubjectDetails */ = {
 			isa = PBXGroup;
 			children = (
-				F79534142BFA329F004A76C6 /* SubjectDetailsStatefulViewController.swift */,
-				F7D00B262B9B58370072FAB2 /* SubjectDetailsViewModel.swift */,
+				F7948FE52C7DFAD10028E3EA /* Student */,
 				F7C0D1212C5BCA9C003CEC19 /* Teacher */,
 				F7C0D1162C4D4050003CEC19 /* NotepadView.swift */,
-				F70FCF412BFF8C760088AACD /* MainSubcontrollers */,
-				F70FCF422BFF8D900088AACD /* SecondarySubcontrollers */,
-				F7F581642BBC494D00FFC6C9 /* AttachedFiles */,
 			);
 			path = SubjectDetails;
 			sourceTree = "<group>";
