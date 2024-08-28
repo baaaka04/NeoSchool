@@ -1,7 +1,7 @@
 import Foundation
 
 enum MyError: Error {
-    case badNetwork, failDecoding, nothingToCancel, cannotEncodeData, noRefreshToken, noAccessToken, failSavingToken, noUserRole, invalidDateFormat
+    case badNetwork, failDecoding, nothingToCancel, cannotEncodeData, noRefreshToken, noAccessToken, failSavingToken, noUserRole, invalidDateFormat, noDataReceived
 
     var description: String {
         switch self {
@@ -23,6 +23,8 @@ enum MyError: Error {
             "Fail getting user's type"
         case .invalidDateFormat:
             "Invalid Date Format"
+        case .noDataReceived:
+            "No data received"
         }
     }
 }

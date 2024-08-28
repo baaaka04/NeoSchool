@@ -467,6 +467,15 @@
 			path = Student;
 			sourceTree = "<group>";
 		};
+		F7948FE62C7E0D180028E3EA /* Subcontrollers */ = {
+			isa = PBXGroup;
+			children = (
+				F722B0092C6115D1002D519C /* ItemsListViewController.swift */,
+				F7C0D1222C5BCE2B003CEC19 /* TeacherItemListCollectionViewCell.swift */,
+			);
+			path = Subcontrollers;
+			sourceTree = "<group>";
+		};
 		F7C0D11E2C5137E0003CEC19 /* HomeworkPanelVCs */ = {
 			isa = PBXGroup;
 			children = (
@@ -480,13 +489,12 @@
 		F7C0D1212C5BCA9C003CEC19 /* Teacher */ = {
 			isa = PBXGroup;
 			children = (
-				F7C0D1122C4BD7FC003CEC19 /* TeacherLessonDetailVC.swift */,
 				F7948FE32C7CBC2B0028E3EA /* TeacherDetailsViewModel.swift */,
+				F7C0D1122C4BD7FC003CEC19 /* TeacherLessonDetailVC.swift */,
 				F7C0D11F2C515857003CEC19 /* GradeStudentsListViewController.swift */,
 				F722B00B2C6503CF002D519C /* StudentLessonsListViewController.swift */,
 				F7948FDF2C665D990028E3EA /* StudentHomeworkDetailsViewController.swift */,
-				F722B0092C6115D1002D519C /* ItemsListViewController.swift */,
-				F7C0D1222C5BCE2B003CEC19 /* TeacherItemListCollectionViewCell.swift */,
+				F7948FE62C7E0D180028E3EA /* Subcontrollers */,
 			);
 			path = Teacher;
 			sourceTree = "<group>";

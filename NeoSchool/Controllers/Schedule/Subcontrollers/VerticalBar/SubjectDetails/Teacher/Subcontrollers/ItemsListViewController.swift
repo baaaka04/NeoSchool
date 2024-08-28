@@ -3,10 +3,15 @@ import SnapKit
 
 class ItemsListViewController: DetailTitledViewController {
 
+    //MARK: Pagination
+    var currentPage: Int = 1
+    var totalPages: Int = 1
+    var isLoading: Bool = false
+
     var subtitleText: String? {
         didSet { subtitleLabel.text = subtitleText }
     }
-    var itemsList : [TeacherClassItem]?
+    var itemsList : [TeacherClassItem] = []
 
     private let subtitleLabel = GrayUILabel(font: AppFont.font(type: .Medium, size: 16))
 
@@ -55,8 +60,8 @@ class ItemsListViewController: DetailTitledViewController {
 
     func updateUI() {
         teacherListCollectionView.reloadData()
-        emptyListView.isHidden = self.itemsList != nil
-        teacherListCollectionView.isHidden = self.itemsList == nil
+        emptyListView.isHidden = self.itemsList.count != 0
+        teacherListCollectionView.isHidden = self.itemsList.count == 0
     }
 
 }

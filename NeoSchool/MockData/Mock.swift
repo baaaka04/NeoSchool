@@ -58,7 +58,7 @@ class MockTeacherDayScheduleAPI: TeacherLessonDayProtocol {
         return TeacherLessonDetail(id: 1, subject: StudentSubject(id: 1, name: "Биология", teacher: FullNameUser(id: 1, fullName: "Петрова Ольга Викторовна", firstName: "Ольга", lastName: "Петрова", patronymic: "Петрова О.В.")), homework: TeacherHomework(id: 1, text: "Прочитать главу 3", deadline: "2012-01-26T08:40:00.000+06:00", filesCount: 1), submissions: nil, grade: GradeName(id: 1, name: "5 A"), room: Room(id: 1, name: "301"), startTime: "2012-01-26T08:00:00.000+06:00", endTime: "2012-01-26T08:40:00.000+06:00", studentsCount: 15)
     }
     
-    func getStudentList(subjectId: Int, gradeId: Int, page: Int) async throws -> [TeacherClassItem] {
+    func getStudentList(subjectId: Int, gradeId: Int, page: Int) async throws -> DTOStudentSubmissionCount {
         let data : [StudentSubmissionCount] = [
             .init(id: 1, fullName: "Березин Артем Игоервич", firstName: "Артем", lastName: "Березин", patronymic: "Березин А.И.", submissionsCount: 0),
             .init(id: 2, fullName: "Ревзин Иван Александрович", firstName: "Иван", lastName: "Ревзин", patronymic: "Ревизн И.А.", submissionsCount: 6),
@@ -73,23 +73,15 @@ class MockTeacherDayScheduleAPI: TeacherLessonDayProtocol {
             .init(id: 11, fullName: "Иванов Иван Иванович", firstName: "Иван", lastName: "Иванов", patronymic: "Иванов И.И.", submissionsCount: 4),
 
         ]
-
-        return data.map { TeacherClassItem(studentSubmission: $0) }
+        return DTOStudentSubmissionCount(totalCount: 1, totalPages: 1, list: data)
 //        throw MyError.badNetwork
     }
 
-    func getStudentLessons(studentId: Int, gradeId: Int, page: Int) async throws -> [TeacherClassItem] {
+    func getStudentLessons(studentId: Int, page: Int) async throws -> DTOStudentLessonsList {
+        return DTOStudentLessonsList(totalCount: 5, totalPages: 5, list:  [
+            .init(id: 1, student: FullNameUser(id: 1, fullName: "", firstName: "", lastName: "", patronymic: ""), homework: 1, submittedDate: "", submittedOnTime: true, mark: "", lessonId: 1, subject: SubjectName(id: 1, name: ""), topic: "")
+        ])
 
-        let data: [TeacherClassItem] = [
-            .init(id: 1, title: "Строение клетки", subtitle: "Оценка: 5 · Предмет: Биология", datetime: "15.10.2023 в 20:22"),
-            .init(id: 2, title: "Увеличительные приборы", subtitle: "Оценка: - · Предмет: Биология", datetime: "13.10.2023 в 19:00"),
-            .init(id: 3, title: "Методы изучения природы", subtitle: "Оценка: 3 · Предмет: Биология", datetime: "11.10.2023 в 20:51"),
-            .init(id: 4, title: "Свойства живого", subtitle: "Оценка: 4 · Предмет: Биология", datetime: "09.10.2023 в 19:45"),
-            .init(id: 5, title: "Наука о живой природе", subtitle: "Оценка: 5 · Предмет: Биология", datetime: "04.10.2023 в 21:40"),
-            .init(id: 6, title: "Введение в биологию", subtitle: "Оценка: - · Предмет: Биология", datetime: "02.10.2023 в 21:40"),
-        ]
-
-        return data
 //        throw MyError.badNetwork
     }
 

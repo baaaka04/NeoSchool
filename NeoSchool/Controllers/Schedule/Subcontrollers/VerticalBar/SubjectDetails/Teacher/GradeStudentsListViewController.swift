@@ -20,27 +20,32 @@ class GradeStudentsListViewController: ItemsListViewController, UICollectionView
         teacherListCollectionView.delegate = self
         teacherListCollectionView.dataSource = self
         emptyListView.title = "Учеников еще нет"
+        vm.students = []
 
         getStudentList()
     }
     
     private func getStudentList() {
-        Task {
-            do {
-                try await vm.getStudentList()
-                self.itemsList = vm.students
-                updateUI()
-            } catch { print(error) }
+        if !isLoading {
+            Task {
+                isLoading = true
+                do {
+                    self.totalPages = try await vm.getStudentList(currentPage: self.currentPage)
+                    self.itemsList = vm.students
+                    updateUI()
+                } catch { print(error) }
+                isLoading = false
+            }
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        itemsList?.count ?? 0
+        itemsList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = self.teacherListCollectionView.dequeueReusableCell(withReuseIdentifier: TeacherItemListCollectionViewCell.identifier, for: indexPath) as? TeacherItemListCollectionViewCell,
-              let student = itemsList?[indexPath.item]
+        let student = itemsList[indexPath.item]
+        guard let cell = self.teacherListCollectionView.dequeueReusableCell(withReuseIdentifier: TeacherItemListCollectionViewCell.identifier, for: indexPath) as? TeacherItemListCollectionViewCell
         else { return TeacherItemListCollectionViewCell(frame: .zero) }
         cell.title = student.title
         cell.subtitle = student.subtitle
@@ -52,13 +57,31 @@ class GradeStudentsListViewController: ItemsListViewController, UICollectionView
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let student: TeacherClassItem = self.itemsList?[indexPath.item],
-        let lessonDetails = vm.lessonDetails else { return }
+        let student = self.itemsList[indexPath.item]
+        guard let lessonDetails = vm.lessonDetails else { return }
         let studentLessonsVC = StudentLessonsListViewController(viewModel: self.vm, studentId: student.id)
         studentLessonsVC.titleText = student.title
         studentLessonsVC.subtitleText = lessonDetails.grade.name + " класс"
         self.navigationController?.pushViewController(studentLessonsVC, animated: true)
     }
 
-    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let visibleItems = teacherListCollectionView.indexPathsForVisibleItems
+        guard let visibleItemsLastIndexPath = visibleItems.max() else { return }
+
+        let totalItems = teacherListCollectionView.numberOfItems(inSection: 0)
+        let triggerIndex = totalItems - 3 // Trigger when the third-to-last element is visible
+
+        if visibleItemsLastIndexPath.item >= triggerIndex && !isLoading && currentPage < totalPages {
+            currentPage += 1
+            Task {
+                isLoading = true
+                self.totalPages = try await vm.getStudentList(currentPage: currentPage)
+                self.itemsList = vm.students
+                updateUI()
+                isLoading = false
+            }
+        }
+    }
+
 }

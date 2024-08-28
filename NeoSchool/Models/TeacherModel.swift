@@ -36,7 +36,7 @@ struct StudentSubmissionCount: Codable {
     let fullName: String
     let firstName: String
     let lastName: String
-    let patronymic: String
+    let patronymic: String?
     let submissionsCount: Int
 }
 struct TeacherClassItem {
@@ -75,7 +75,7 @@ struct StudentLesson: Codable {
     let id: Int
     let student: FullNameUser
     let homework: Int
-    let submittedDate : String
+    var submittedDate : String
     let submittedOnTime : Bool
     let mark: String?
     let lessonId: Int

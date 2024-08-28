@@ -274,7 +274,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
     
     // GET-REQUEST
     // ENDPOINT /schedule/teacher/grades/{grade_id}/students/
-    func getStudentList(subjectId: Int, gradeId: Int, page: Int, limit: Int) async throws -> [StudentSubmissionCount] {
+    func getStudentList(subjectId: Int, gradeId: Int, page: Int, limit: Int) async throws -> DTOStudentSubmissionCount {
         let urlString = "\(domen)/neoschool/schedule/teacher/" +
         "grades/\(gradeId)/students/?" +
         "subject=\(subjectId)&" +
@@ -291,12 +291,12 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
         decoder.dateDecodingStrategy = .formatted(formatter)
         let decodedData = try decoder.decode(DTOStudentSubmissionCount.self, from: data)
 
-        return decodedData.list
+        return decodedData
     }
 
     // GET-REQUEST
     // ENDPOINT /neoschool/schedule/teacher/students/{student_id}/all_submissions/
-    func getStudentLessons(studentId: Int, page: Int, limit: Int) async throws -> [StudentLesson] {
+    func getStudentLessons(studentId: Int, page: Int, limit: Int) async throws -> DTOStudentLessonsList {
         let urlString = "\(domen)/neoschool/schedule/teacher/" +
         "students/\(studentId)/all_submissions/?" +
         "page=\(page)&" +
@@ -312,7 +312,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
         decoder.dateDecodingStrategy = .formatted(formatter)
         let decodedData = try decoder.decode(DTOStudentLessonsList.self, from: data)
 
-        return decodedData.list
+        return decodedData
     }
 
 }

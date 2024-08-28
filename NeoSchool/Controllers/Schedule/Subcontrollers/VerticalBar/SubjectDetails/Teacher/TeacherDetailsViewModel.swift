@@ -7,8 +7,8 @@ class TeacherDetailsViewModel {
 
     private let lessonId: Int
     var lessonDetails: TeacherLessonDetail?
-    var students: [TeacherClassItem]?
-    var submissions: [TeacherClassItem]?
+    var students: [TeacherClassItem] = []
+    var submissions: [TeacherClassItem] = []
 
     init(lessonId: Int, teacherAPI: DayScheduleAPI?) {
         self.lessonId = lessonId
@@ -20,22 +20,27 @@ class TeacherDetailsViewModel {
         self.lessonDetails = try await teacherAPI?.getTeacherLessonDetail(forLessonId: self.lessonId)
     }
 
-    func getStudentList() async throws {
-        guard let lessonDetails else { return }
-        self.students = try await teacherAPI?.getStudentList(subjectId: lessonDetails.subject.id, gradeId: lessonDetails.grade.id, page: 1)
+    func getStudentList(currentPage: Int) async throws -> Int {
+        guard let lessonDetails,
+              let students = try await teacherAPI?.getStudentList(subjectId: lessonDetails.subject.id, gradeId: lessonDetails.grade.id, page: currentPage) else {
+            throw MyError.noDataReceived }
+        let newStudents = students.list.map { TeacherClassItem(studentSubmission: $0) }
+        self.students.append(contentsOf: newStudents)
+        return students.totalPages
     }
 
-    func getStudentLessons(studentId: Int) async throws {
-        guard let lessonDetails,
-              var submissions = try await teacherAPI?.getStudentLessons(studentId: studentId, gradeId: lessonDetails.grade.id, page: 1),
-              submissions.count != 0 else { return }
+    func getStudentLessons(studentId: Int, currentPage: Int) async throws -> Int {
+        guard var submissionsDTO = try await teacherAPI?.getStudentLessons(studentId: studentId, page: currentPage) else { throw MyError.noDataReceived }
+        var submissions = submissionsDTO.list
 
         for i in 0..<submissions.count {
-            guard let date = try? convertDateStringToDay(from: submissions[i].datetime ?? "", dateFormat: .long),
-                  let time = try? convertDateStringToHoursAndMinutes(from: submissions[i].datetime ?? "", dateFormat: .long) else { return }
-            submissions[i].datetime = date + " в " + time
+            guard let date = try? convertDateStringToDay(from: submissions[i].submittedDate, dateFormat: .long),
+                  let time = try? convertDateStringToHoursAndMinutes(from: submissions[i].submittedDate, dateFormat: .long) else { throw MyError.noDataReceived }
+            submissions[i].submittedDate = date + " в " + time
         }
-        self.submissions = submissions
+        let newSubmissions = submissions.map { TeacherClassItem(studentLesson: $0) }
+        self.submissions.append(contentsOf: newSubmissions)
+        return submissionsDTO.totalPages
     }
 
     //MARK: - Public functions

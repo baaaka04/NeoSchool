@@ -24,16 +24,12 @@ class DayScheduleAPI: StudentLessonDayProtocol, TeacherLessonDayProtocol, Teache
         try await networkAPI.cancelSubmission(submissionId: submissionId)
     }
     
-    func getStudentList(subjectId: Int, gradeId: Int, page: Int) async throws -> [TeacherClassItem] {
-
-        let studentSubmissionsList: [StudentSubmissionCount] = try await networkAPI.getStudentList(subjectId: subjectId, gradeId: gradeId, page: page, limit: 54)
-        return studentSubmissionsList.map { TeacherClassItem(studentSubmission: $0) }
+    func getStudentList(subjectId: Int, gradeId: Int, page: Int) async throws -> DTOStudentSubmissionCount {
+        return try await networkAPI.getStudentList(subjectId: subjectId, gradeId: gradeId, page: page, limit: 15)
     }
 
-    func getStudentLessons(studentId: Int, gradeId: Int, page: Int) async throws -> [TeacherClassItem] {
-
-        let studentLessonsList = try await networkAPI.getStudentLessons(studentId: studentId, page: page, limit: 10)
-        return studentLessonsList.map { TeacherClassItem(studentLesson: $0) }
+    func getStudentLessons(studentId: Int, page: Int) async throws -> DTOStudentLessonsList {
+        return try await networkAPI.getStudentLessons(studentId: studentId, page: page, limit: 15)
     }
 }
 
@@ -52,8 +48,8 @@ protocol TeacherLessonDayProtocol: TeachersStudentLessonsProtocol {
     
     func getTeacherLessonDetail(forLessonId lessonId: Int) async throws -> TeacherLessonDetail
     
-    func getStudentList(subjectId: Int, gradeId: Int, page: Int) async throws -> [TeacherClassItem]
+    func getStudentList(subjectId: Int, gradeId: Int, page: Int) async throws -> DTOStudentSubmissionCount
 }
 protocol TeachersStudentLessonsProtocol {
-    func getStudentLessons(studentId: Int, gradeId: Int, page: Int) async throws -> [TeacherClassItem]
+    func getStudentLessons(studentId: Int, page: Int) async throws -> DTOStudentLessonsList
 }
