@@ -1,9 +1,14 @@
 import UIKit
 import SnapKit
 
-class NotificationsOverviewViewController: DetailViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, NotificationsRefreshable {
+class NotificationsOverviewViewController: DetailViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
-    private let viewModel : NotificationsViewModel
+    private let viewModel: NotificationsViewModel
+
+    //MARK: Pagination
+    private var isLoading: Bool = false
+    private var currentPage: Int = 1
+    private var totalPages: Int = 1
 
     private lazy var notificationsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -19,7 +24,9 @@ class NotificationsOverviewViewController: DetailViewController, UICollectionVie
         collectionView.register(NotificationCollectionViewCell.self, forCellWithReuseIdentifier: NotificationCollectionViewCell.identifier)
         return collectionView
     }()
-    
+
+    private let notepadView = NotepadView(title: "Уведомлений еще нет", subtitle: "Здесь будут показаны уведомления")
+
     init(viewModel: NotificationsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -32,37 +39,12 @@ class NotificationsOverviewViewController: DetailViewController, UICollectionVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if !viewModel.isLoading {
-            viewModel.getNotifications()
-        }
+        viewModel.notifications = []
+        
+        setupUI()
+        getNotifications()
     }
-    
-    private func showEmptyScreen() {
-        let imageView = UIImageView(image: UIImage(named: "Notepad"))
-        view.addSubview(imageView)
-        imageView.snp.makeConstraints { make in
-            make.centerX.centerY.equalToSuperview()
-            make.width.equalTo(120)
-            make.height.equalTo(134)
-        }
-        let titleLabel = GrayUILabel(font: AppFont.font(type: .Medium, size: 22))
-        titleLabel.text = "Уведомлений еще нет"
-        titleLabel.textAlignment = .center
-        view.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(40)
-            make.width.equalToSuperview()
-        }
-        let subtitleLabel = GrayUILabel(font: AppFont.font(type: .Regular, size: 18))
-        subtitleLabel.text = "Здесь будут показаны уведомления"
-        subtitleLabel.textAlignment = .center
-        view.addSubview(subtitleLabel)
-        subtitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(20)
-            make.width.equalToSuperview()
-        }
-    }
-    
+
     private func setupUI() {
                         
         view.addSubview(notificationsCollectionView)
@@ -73,28 +55,40 @@ class NotificationsOverviewViewController: DetailViewController, UICollectionVie
             make.leading.trailing.equalToSuperview().inset(16)
             make.bottom.equalToSuperview()
         }
-    }
-    
-    func checkNotifications() {
-        if let notifications = viewModel.notifications, !notifications.isEmpty {
-            setupUI()
-        } else {
-            showEmptyScreen()
+
+        view.addSubview(notepadView)
+
+        notepadView.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
         }
     }
-        
-    func updateNotifications() {
+
+    private func updateUI() {
         self.notificationsCollectionView.reloadData()
+        self.notepadView.isHidden = viewModel.notifications.count != 0
+        self.notificationsCollectionView.isHidden = viewModel.notifications.count == 0
     }
-        
+
+    private func getNotifications() {
+        if !isLoading {
+            Task {
+                do {
+                    isLoading = true
+                    self.totalPages = try await viewModel.getNotifications(currentPage: self.currentPage)
+                    updateUI()
+                } catch { print(error) }
+                isLoading = false
+            }
+        }
+    }
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.notifications?.count ?? 0
+        return viewModel.notifications.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = notificationsCollectionView.dequeueReusableCell(withReuseIdentifier: NotificationCollectionViewCell.identifier, for: indexPath) as? NotificationCollectionViewCell,
-              let notification = viewModel.notifications?[indexPath.item]
-        else { return NotificationCollectionViewCell(frame: .zero) }
+        let notification = viewModel.notifications[indexPath.item]
+        guard let cell = notificationsCollectionView.dequeueReusableCell(withReuseIdentifier: NotificationCollectionViewCell.identifier, for: indexPath) as? NotificationCollectionViewCell else { return NotificationCollectionViewCell(frame: .zero) }
         cell.id = notification.id
         cell.isRead = notification.isRead
         cell.date = notification.date
@@ -107,7 +101,7 @@ class NotificationsOverviewViewController: DetailViewController, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let notification = viewModel.notifications?[indexPath.item] else { return }
+        let notification = viewModel.notifications[indexPath.item]
         let notificationVC = NotificationDetailViewController(notification: notification)
         self.navigationController?.pushViewController(notificationVC, animated: true)
     }
@@ -117,8 +111,14 @@ class NotificationsOverviewViewController: DetailViewController, UICollectionVie
         let contentHeight = scrollView.contentSize.height
         let height = scrollView.frame.size.height
         
-        if offsetY > contentHeight - height, !viewModel.isLoading {
-            viewModel.loadMoreNotifications()
+        if offsetY > contentHeight - height && !isLoading && currentPage < totalPages {
+            currentPage += 1
+            Task {
+                isLoading = true
+                self.totalPages = try await viewModel.getNotifications(currentPage: self.currentPage)
+                updateUI()
+                isLoading = false
+            }
         }
     }
     

@@ -441,6 +441,7 @@
 		F76C6BDA2B6BCC4500EACFEB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F7C0D1162C4D4050003CEC19 /* NotepadView.swift */,
 				F76C6B852B694DF900EACFEB /* EllipseView.swift */,
 				F79534062BEBBF1E004A76C6 /* CommentView.swift */,
 				F795340A2BF35C50004A76C6 /* ConfirmUIView.swift */,
@@ -566,7 +567,6 @@
 			children = (
 				F7948FE52C7DFAD10028E3EA /* Student */,
 				F7C0D1212C5BCA9C003CEC19 /* Teacher */,
-				F7C0D1162C4D4050003CEC19 /* NotepadView.swift */,
 			);
 			path = SubjectDetails;
 			sourceTree = "<group>";

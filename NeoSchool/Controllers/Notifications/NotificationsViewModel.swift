@@ -2,52 +2,19 @@ import Foundation
 
 class NotificationsViewModel {
     
-    weak var view: NotificationsRefreshable?
     var networkAPI: NotificationsNetworkAPIProtocol
 
-    var notifications : [NeobisNotificationToPresent]?
-    var isLoading = false
-    var pagesTotal: Int = 1
-    var page: Int = 1
+    var notifications : [NeobisNotificationToPresent] = []
 
     init(networkAPI: NotificationsNetworkAPIProtocol = NetworkAPI()) {
         self.networkAPI = networkAPI
     }
 
-    func getNotifications() {
-        guard page <= pagesTotal, self.notifications == nil else { return }
-        self.isLoading = true
-        Task {
-            do {
-                let data = try await networkAPI.getNotifications(page: self.page, limit: 10)
-                self.pagesTotal = data.totalPages
-                self.notifications = convertNotifications(notifications: data.list)
-                DispatchQueue.main.sync {
-                    self.view?.updateNotifications()
-                    self.view?.checkNotifications()
-                }
-                self.isLoading = false
-                self.page = 2
-            } catch { print(error) }
-        }
-    }
-    
-    func loadMoreNotifications() {
-        guard page <= pagesTotal, let notifications else { return }
-        self.isLoading = true
-        Task {
-            do {
-                let data = try await networkAPI.getNotifications(page: self.page, limit: 10)
-                self.pagesTotal = data.totalPages
-                let newNotifications = convertNotifications(notifications: data.list)
-                self.notifications?.append(contentsOf: newNotifications)
-                DispatchQueue.main.sync {
-                    self.view?.updateNotifications()
-                }
-                self.isLoading = false
-                self.page += 1
-            } catch { print(error) }
-        }
+    func getNotifications(currentPage: Int) async throws -> Int {
+        let data: DTONotifications = try await networkAPI.getNotifications(page: currentPage, limit: 15)
+        let newNotifications = convertNotifications(notifications: data.list)
+        self.notifications.append(contentsOf: newNotifications)
+        return data.totalPages
     }
     
     internal func convertNotifications(notifications: [NeobisNotification]) -> [NeobisNotificationToPresent] {
@@ -68,9 +35,4 @@ class NotificationsViewModel {
         }
     }
 
-}
-
-protocol NotificationsRefreshable: AnyObject {
-    func updateNotifications()
-    func checkNotifications()
 }

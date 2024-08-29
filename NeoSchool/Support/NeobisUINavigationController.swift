@@ -42,7 +42,6 @@ class NeobisUINavigationController: UINavigationController {
     @objc private func onPressNotifications () {
         let viewModel = NotificationsViewModel()
         let notificationsVC = NotificationsOverviewViewController(viewModel: viewModel)
-        viewModel.view = notificationsVC
         notificationsVC.title = "Уведомления"
         self.tabBarController?.tabBar.isHidden = true
         self.pushViewController(notificationsVC, animated: true)
