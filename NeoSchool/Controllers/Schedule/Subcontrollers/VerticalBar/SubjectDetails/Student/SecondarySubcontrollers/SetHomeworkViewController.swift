@@ -5,6 +5,7 @@ import PhotosUI
 class SetHomeworkViewController: DetailTitledViewController, SubjectDetailsViewModelActionable, PHPickerViewControllerDelegate, UIDocumentPickerDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate, Notifiable {
 
     private let vm: TeacherDetailsViewModel
+    var popVC: (() -> Void)?
 
     var subtitleText: String? {
         didSet { subtitleLabel.text = subtitleText }
@@ -200,9 +201,9 @@ class SetHomeworkViewController: DetailTitledViewController, SubjectDetailsViewM
                             if done {
                                 self?.showNotification(message: "Задание успешно отправлено", isSucceed: true)
                             } else {
-                                self?.showNotification(message: "Неверный логин или пароль", isSucceed: false)
+                                self?.showNotification(message: "Произошла ошибка", isSucceed: false)
                             }
-                            self?.navigationController?.popViewController(animated: true)
+                            self?.popVC?()
                         }
                     }
             } catch { print(error) }

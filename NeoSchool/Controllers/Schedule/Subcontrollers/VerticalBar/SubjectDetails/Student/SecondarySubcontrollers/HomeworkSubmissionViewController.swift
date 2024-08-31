@@ -1,6 +1,6 @@
 import UIKit
 import SnapKit
-
+// VC has student's and teacher's comments and list of student's files
 class HomeworkSubmissionViewController: UIViewController {
 
     weak var viewModel : HomeworkSubmissionRepresentable?

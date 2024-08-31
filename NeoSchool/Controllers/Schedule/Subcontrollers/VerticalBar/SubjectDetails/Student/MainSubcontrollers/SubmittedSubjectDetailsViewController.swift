@@ -43,7 +43,8 @@ class SubmittedSubjectDetailsViewController: SubjectDetailsViewController, Notif
         
         homeworkPanel.homeworkText = viewModel.homeworkText
         homeworkPanel.attachedFilesNumber = viewModel.homeworkFileURLs?.count
-        
+        homeworkPanel.updateUI()
+
         setupHomeworkSubmissionUI()
         self.cancelButton.isHidden = !(self.viewModel.isCancelable ?? false)
     }

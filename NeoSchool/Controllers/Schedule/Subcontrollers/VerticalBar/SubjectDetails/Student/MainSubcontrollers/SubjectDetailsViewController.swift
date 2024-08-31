@@ -6,7 +6,7 @@ class SubjectDetailsViewController: DetailViewController {
     //MARK: - Properties
     
     let viewModel: SubjectDetailsViewModelRepresentable
-    let homeworkPanel = StudentHomeworkPanelViewController()
+    let homeworkPanel = HomeworkPanelViewController()
     var getLessonDetails: ( () -> Void)?
     
     lazy var scrollView = UIScrollView()
@@ -111,10 +111,8 @@ class SubjectDetailsViewController: DetailViewController {
             make.top.equalTo(firstSubTitleLabel.snp.bottom)
         }
         homeworkPanel.view.snp.makeConstraints { make in
-            make.width.equalToSuperview().offset(-Constants.horizontalMargin)
-            make.height.equalTo(142)
-            make.centerX.equalToSuperview()
             make.top.equalTo(secondSubTitleLabel.snp.bottom).offset(Constants.gap)
+            make.right.left.equalTo(secondSubTitleLabel)
         }
         deadlineLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()

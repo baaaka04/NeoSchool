@@ -63,11 +63,6 @@ class TeacherLessonDetailVC: DetailTitledViewController {
         getLessonDetails()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        updateUI()
-    }
-
     private func setupUI () {
         timeAndRoomLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(12)
@@ -117,9 +112,12 @@ class TeacherLessonDetailVC: DetailTitledViewController {
         classInfoLabel.text = classInfoText
 
         let deadline = lessonDetails.homework?.deadline ?? ""
-        guard let deadlineString = try? vm.convertDateStringToDay(from: deadline, dateFormat: .short) else { return }
-        homeworkPanel.deadlineText = "Срок сдачи: \(deadlineString)"
-        homeworkPanel.homeworkText = lessonDetails.homework?.text
+        if let deadlineString = try? vm.convertDateStringToDay(from: deadline, dateFormat: .short) {
+            homeworkPanel.deadlineText = "Срок сдачи: \(deadlineString)"
+            homeworkPanel.homeworkText = lessonDetails.homework?.text
+            homeworkPanel.attachedFilesNumber = lessonDetails.homework?.filesCount
+        }
+        homeworkPanel.updateUI()
     }
 
     private func getLessonDetails() {
@@ -134,6 +132,10 @@ class TeacherLessonDetailVC: DetailTitledViewController {
     @objc func onTapHomework() {
         let setHomeworkVC = SetHomeworkViewController(vm: vm)
         setHomeworkVC.titleText = "Редактировать задание"
+        setHomeworkVC.popVC = { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+            self?.updateUI()
+        }
         if let lessonDetails = vm.lessonDetails {
             let subjectAndGradeNames = lessonDetails.subject.name + " · " + lessonDetails.grade.name + " класс"
             setHomeworkVC.subtitleText = subjectAndGradeNames

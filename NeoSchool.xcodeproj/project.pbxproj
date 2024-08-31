@@ -98,7 +98,6 @@
 		F7C0D1132C4BD7FC003CEC19 /* TeacherLessonDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0D1122C4BD7FC003CEC19 /* TeacherLessonDetailVC.swift */; };
 		F7C0D1152C4BE0F9003CEC19 /* TeacherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0D1142C4BE0F9003CEC19 /* TeacherModel.swift */; };
 		F7C0D1172C4D4050003CEC19 /* NotepadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0D1162C4D4050003CEC19 /* NotepadView.swift */; };
-		F7C0D1192C513032003CEC19 /* StudentHomeworkPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0D1182C513032003CEC19 /* StudentHomeworkPanelViewController.swift */; };
 		F7C0D11B2C5131D4003CEC19 /* SetHomeworkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0D11A2C5131D4003CEC19 /* SetHomeworkViewController.swift */; };
 		F7C0D11D2C5137D8003CEC19 /* TeacherHomeworkPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0D11C2C5137D8003CEC19 /* TeacherHomeworkPanelViewController.swift */; };
 		F7C0D1202C515857003CEC19 /* GradeStudentsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0D11F2C515857003CEC19 /* GradeStudentsListViewController.swift */; };
@@ -212,7 +211,6 @@
 		F7C0D1122C4BD7FC003CEC19 /* TeacherLessonDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherLessonDetailVC.swift; sourceTree = "<group>"; };
 		F7C0D1142C4BE0F9003CEC19 /* TeacherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherModel.swift; sourceTree = "<group>"; };
 		F7C0D1162C4D4050003CEC19 /* NotepadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotepadView.swift; sourceTree = "<group>"; };
-		F7C0D1182C513032003CEC19 /* StudentHomeworkPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentHomeworkPanelViewController.swift; sourceTree = "<group>"; };
 		F7C0D11A2C5131D4003CEC19 /* SetHomeworkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetHomeworkViewController.swift; sourceTree = "<group>"; };
 		F7C0D11C2C5137D8003CEC19 /* TeacherHomeworkPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherHomeworkPanelViewController.swift; sourceTree = "<group>"; };
 		F7C0D11F2C515857003CEC19 /* GradeStudentsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeStudentsListViewController.swift; sourceTree = "<group>"; };
@@ -487,7 +485,6 @@
 			isa = PBXGroup;
 			children = (
 				F79083082B9F31B400B9386E /* HomeworkPanelViewController.swift */,
-				F7C0D1182C513032003CEC19 /* StudentHomeworkPanelViewController.swift */,
 				F7C0D11C2C5137D8003CEC19 /* TeacherHomeworkPanelViewController.swift */,
 			);
 			path = HomeworkPanelVCs;
@@ -764,7 +761,6 @@
 				F76C6B792B67E24600EACFEB /* ScheduleViewController.swift in Sources */,
 				F71ACC0B2BD6A7CC00EDE3A6 /* AppFont.swift in Sources */,
 				F7D00B272B9B58370072FAB2 /* SubjectDetailsViewModel.swift in Sources */,
-				F7C0D1192C513032003CEC19 /* StudentHomeworkPanelViewController.swift in Sources */,
 				F7CAE6AE2B78F4F4004916E3 /* StudentLessonCollectionViewCell.swift in Sources */,
 				F7CAE69D2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift in Sources */,
 				F76081432B88DFC300B6D792 /* SchoolWeekAPI.swift in Sources */,
