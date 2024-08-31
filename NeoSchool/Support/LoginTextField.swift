@@ -1,8 +1,8 @@
 import UIKit
 
-class CustomTextField: UITextField {
-        
-    enum CustomTextFieldType {
+class LoginTextField: NeobisTextField {
+
+    enum LoginTextField {
         case username
         case email
         case password
@@ -25,41 +25,25 @@ class CustomTextField: UITextField {
         return view
     }()
         
-    private let authTextFieldType: CustomTextFieldType
-    
-    init(fieldType: CustomTextFieldType) {
+    private let authTextFieldType: LoginTextField
+
+    init(fieldType: LoginTextField) {
         self.authTextFieldType = fieldType
         super.init(frame: .zero)
-        
-        self.font = AppFont.font(type: .Regular, size: 20)
-        self.backgroundColor = .neobisExtralightGray
-        self.textColor = .neobisDarkGray
-        self.layer.cornerRadius = 16
-        
-        self.returnKeyType = .done
-        self.autocorrectionType = .no
-        self.autocapitalizationType = .none
-        
-        self.leftViewMode = .always
-        self.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: self.frame.size.height))
-        
-        
+
         switch fieldType {
         case .email:
-            self.attributedPlaceholder =
-            NSAttributedString(string: "Электронная почта", attributes: [NSAttributedString.Key.foregroundColor: UIColor.neobisLightGray])
+            self.placeholder = "Электронная почта"
             self.keyboardType = .emailAddress
             self.textContentType = .emailAddress
         case .password:
-            self.attributedPlaceholder =
-            NSAttributedString(string: "Пароль", attributes: [NSAttributedString.Key.foregroundColor: UIColor.neobisLightGray])
+            self.placeholder = "Пароль"
             self.textContentType = .oneTimeCode
             self.isSecureTextEntry = true
             self.rightView = eyeImageViewContainer
             self.rightViewMode = .always
         case .username:
-            self.attributedPlaceholder =
-            NSAttributedString(string: "Логин", attributes: [NSAttributedString.Key.foregroundColor: UIColor.neobisLightGray])
+            self.placeholder = "Логин"
         }
     }
     
@@ -80,22 +64,5 @@ class CustomTextField: UITextField {
             self.isSecureTextEntry = true
         }
     }
-    
-    override func becomeFirstResponder() -> Bool {
-        let result = super.becomeFirstResponder()
-        if result {
-            self.layer.borderColor = UIColor.neobisPurple.cgColor
-            self.layer.borderWidth = 1
-        }
-        return result
-    }
-    
-    override func resignFirstResponder() -> Bool {
-        let result = super.resignFirstResponder()
-        if result {
-            self.layer.borderWidth = 0
-        }
-        return result
-    }
-    
+
 }

@@ -17,14 +17,8 @@ class CommentSubmitView: UIView {
         let input = PlaceholderTextView()
         input.placeholder = "Комментарий (необязательно)"
         input.placeholderInsets = UIEdgeInsets(top: 12, left: 16, bottom: Constants.inputHeight-34, right: 16)
-        input.placeholderLabel.font = AppFont.font(type: .Regular, size: 20)
         input.counterInsets = UIEdgeInsets(top: Constants.inputHeight-34, left: 16, bottom: 12, right: 16)
-        input.counterLabel.font = AppFont.font(type: .Regular, size: 12)
-        input.counterLabel.textAlignment = .right
         input.limit = 100
-        input.layer.cornerRadius = 16
-        input.font = AppFont.font(type: .Regular, size: 18)
-        input.backgroundColor = UIColor.neobisExtralightGray
         return input
     }()
     

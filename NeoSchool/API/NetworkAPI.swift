@@ -13,10 +13,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
         let request = try generateAuthorizedRequest(urlString: urlString)
         let (data, _) = try await URLSession.shared.data(for: request)
         
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let decodedData : [SchoolDay] = try decoder.decode([SchoolDay].self, from: data)
-        
+        let decodedData: [SchoolDay] = try decodeRecievedData(data: data)
         return decodedData
     }
     
@@ -27,10 +24,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
         let request = try generateAuthorizedRequest(urlString: urlString)
         let (data, _) = try await URLSession.shared.data(for: request)
                 
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let decodedData : [SchoolLesson] = try decoder.decode([SchoolLesson].self, from: data)
-        
+        let decodedData: [SchoolLesson] = try decodeRecievedData(data: data)
         return decodedData
     }
     
@@ -159,9 +153,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
         guard let httpresponse = resp as? HTTPURLResponse, httpresponse.statusCode == 200 else {
             throw MyError.badNetwork
         }
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let decodedData = try decoder.decode(ResetPasswordResponse.self, from: data)
+        let decodedData: ResetPasswordResponse = try decodeRecievedData(data: data)
         return decodedData.userId
     }
     
@@ -246,11 +238,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
         let request = try generateAuthorizedRequest(urlString: urlString)
         let (data, _) = try await URLSession.shared.data(for: request)
                 
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let decodedData : UserProfile = try decoder.decode(UserProfile.self, from: data)
-
+        let decodedData: UserProfile = try decodeRecievedData(data: data)
         return decodedData
     }
     
@@ -261,14 +249,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
         let request = try generateAuthorizedRequest(urlString: urlString)
         let (data, _) = try await URLSession.shared.data(for: request)
 
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
-        decoder.dateDecodingStrategy = .formatted(formatter)
-        let decodedData = try decoder.decode(DTONotifications.self, from: data)
-
+        let decodedData: DTONotifications = try decodeRecievedData(data: data)
         return decodedData
     }
     
@@ -283,14 +264,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
         let request = try generateAuthorizedRequest(urlString: urlString)
         let (data, _) = try await URLSession.shared.data(for: request)
 
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
-        decoder.dateDecodingStrategy = .formatted(formatter)
-        let decodedData = try decoder.decode(DTOStudentSubmissionCount.self, from: data)
-
+        let decodedData: DTOStudentSubmissionCount = try decodeRecievedData(data: data)
         return decodedData
     }
 
@@ -304,21 +278,38 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
         let request = try generateAuthorizedRequest(urlString: urlString)
         let (data, _) = try await URLSession.shared.data(for: request)
 
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
-        decoder.dateDecodingStrategy = .formatted(formatter)
-        let decodedData = try decoder.decode(DTOStudentLessonsList.self, from: data)
-
+        let decodedData: DTOStudentLessonsList = try decodeRecievedData(data: data)
         return decodedData
     }
 
+    //PUT-REQUEST
+    //ENDPOINT /schedule/teacher/lessons/{lesson_id}/
+    func setHomework(lessonId: Int, files: [AttachedFile], topic: String, text: String, deadline: String) async throws -> TeacherLessonDetail {
+        let urlString = "\(domen)/neoschool/schedule/teacher/lessons/\(lessonId)/"
+        let boundary = "Boundary-\(UUID().uuidString)"
+        let formattedDeadline = try convertToISOFormat(dateStr: deadline)
+        let params : [[String : String]] = [
+            ["topic": topic],
+            ["text": text],
+            ["deadline": formattedDeadline]
+        ]
+
+        let body = try multipartFormDataBody(boundary: boundary, files: files, parameters: params)
+        var request = try generateRequest(boundary: boundary, httpBody: body, urlString: urlString)
+        request.httpMethod = "PUT"
+
+        let (data, resp) = try await URLSession.shared.data(for: request)
+        guard let httpresponse = resp as? HTTPURLResponse, httpresponse.statusCode == 200 else {
+            throw MyError.badNetwork
+        }
+        
+        let decodedData: TeacherLessonDetail = try decodeRecievedData(data: data)
+        return decodedData
+    }
 }
 
 
-//MARK: Generate request with files
+//MARK: Service functions
 extension NetworkAPI {
     
     private func generateAuthorizedRequest(urlString: String) throws -> URLRequest {
@@ -366,6 +357,34 @@ extension NetworkAPI {
         body.append("--\(boundary)--\(lineBreak)")
         
         return body
+    }
+
+    private func decodeRecievedData<T: Decodable>(data: Data) throws -> T {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
+        decoder.dateDecodingStrategy = .formatted(formatter)
+        let decodedData = try decoder.decode(T.self, from: data)
+
+        return decodedData
+    }
+
+    private func convertToISOFormat(dateStr: String) throws -> String {
+        let dateFormatter = DateFormatter()
+
+        dateFormatter.dateFormat = "d/M/yy"
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+
+        guard let date = dateFormatter.date(from: dateStr) else {
+            throw MyError.cannotEncodeData
+        }
+
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
+        let isoFormattedString = dateFormatter.string(from: date)
+
+        return isoFormattedString
     }
 }
 

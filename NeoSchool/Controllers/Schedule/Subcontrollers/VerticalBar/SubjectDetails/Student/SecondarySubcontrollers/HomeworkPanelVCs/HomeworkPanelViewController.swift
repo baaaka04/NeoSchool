@@ -27,15 +27,7 @@ class HomeworkPanelViewController: UIViewController {
         homeworkbodyLabel.text = "Не задано"
         return homeworkbodyLabel
     }()
-        
-    private let editHomeworkLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Нажмите на блок, чтобы изменить задание"
-        label.font = AppFont.font(type: .Italic, size: 14)
-        label.textColor = UIColor.neobisLightGray
-        return label
-    }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -16,8 +16,13 @@ class NotSubmittedSubjectDetailsViewController: SubjectDetailsViewController, UI
         return uploadButton
     }()
     
-    private let addFilesButton = NeobisUIButton(type: .white)
-        
+    private lazy var addFilesButton: NeobisUIButton = {
+        let button = NeobisUIButton(type: .addFiles)
+        button.delegate = self
+        button.vc = self
+        return button
+    }()
+
     //MARK: - Initializers
     
     override init(viewModel: SubjectDetailsViewModelRepresentable) {
@@ -90,37 +95,6 @@ class NotSubmittedSubjectDetailsViewController: SubjectDetailsViewController, UI
             make.bottom.equalTo(uploadButton.snp.top).offset(-12)
         }
                 
-        let plusIcon = UIImage(systemName: "plus.circle")?.withTintColor(.neobisDarkPurple, renderingMode: .alwaysOriginal)
-        addFilesButton.setImage(plusIcon, for: .normal)
-        addFilesButton.setTitle(" Прикрепить файлы", for: .normal)
-        addFilesButton.setTitleColor(.neobisDarkPurple, for: .normal)
-        
-        let openMediaAction = UIAction(title: "Медиатека") { [weak self] _ in
-            var configuration = PHPickerConfiguration()
-            configuration.selectionLimit = 10
-            configuration.selection = .ordered
-            configuration.filter = .images
-            
-            let picker = PHPickerViewController(configuration: configuration)
-            picker.delegate = self
-            self?.present(picker, animated: true)
-        }
-        let takePhotoAction = UIAction(title: "Снять фото или видео") { [weak self] _ in
-            let picker = UIImagePickerController()
-            picker.sourceType = .camera
-            picker.delegate = self
-            self?.present(picker, animated: true)
-        }
-        let selectFilesAction = UIAction(title: "Выбор файлов") { [weak self] _ in
-            let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.image])
-            documentPicker.delegate = self
-            documentPicker.allowsMultipleSelection = true
-            self?.present(documentPicker, animated: true, completion: nil)
-        }
-        
-        let menu = UIMenu(options: .displayInline, children: [selectFilesAction, takePhotoAction, openMediaAction])
-        addFilesButton.menu = menu
-        addFilesButton.showsMenuAsPrimaryAction = true
     }
         
     //MARK: - Action Methods

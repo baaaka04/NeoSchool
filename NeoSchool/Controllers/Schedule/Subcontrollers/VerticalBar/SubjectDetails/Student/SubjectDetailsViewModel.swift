@@ -69,14 +69,14 @@ class SubjectDetailsViewModel: SubjectDetailsViewModelRepresentable, CommentRepr
     func add(image: UIImage) {
         self.attachedFiles.append(AttachedFile(image: image))
         
-        view?.updateUI()
+        view?.updateCollectionView()
     }
     
     func remove(file: AttachedFile) {
         guard let ind = self.attachedFiles.firstIndex(where: { $0.id == file.id }) else { return }
         self.attachedFiles.remove(at: ind)
         
-        view?.updateUI()
+        view?.updateCollectionView()
     }
     
     func sendFiles() async throws {
@@ -122,7 +122,7 @@ protocol SubjectDetailsViewModelRepresentable: AnyObject {
 }
 
 protocol SubjectDetailsViewModelActionable: AnyObject {
-    func updateUI()
+    func updateCollectionView()
 }
 
 protocol HomeworkSubmissionRepresentable: AnyObject {

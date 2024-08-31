@@ -5,9 +5,9 @@ class LoginViewController: KeyboardMovableViewController, Notifiable, UITextFiel
 
     private let isTeacher: Bool
         
-    private let usernameField = CustomTextField(fieldType: .username)
-    private let passwordField = CustomTextField(fieldType: .password)
-    
+    private let usernameField = LoginTextField(fieldType: .username)
+    private let passwordField = LoginTextField(fieldType: .password)
+
     lazy var loginButton: NeobisUIButton = {
         let button = NeobisUIButton(type: .purple)
         button.setTitle("Войти", for: .normal)

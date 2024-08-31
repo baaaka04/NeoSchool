@@ -3,7 +3,7 @@ import SnapKit
 
 class AlertPasswordInputView: UIView {
 
-    let inputTextField = CustomTextField(fieldType: .password)
+    let inputTextField = LoginTextField(fieldType: .password)
     
     private let hintLabel: UILabel = {
         let label = UILabel()

@@ -10,7 +10,7 @@
 		F702171D2C36E03B00B0D962 /* NotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F702171C2C36E03B00B0D962 /* NotificationModel.swift */; };
 		F702171F2C36E3AD00B0D962 /* NotificationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F702171E2C36E3AD00B0D962 /* NotificationCollectionViewCell.swift */; };
 		F7084A762C03679200A6DF4B /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7084A752C03679200A6DF4B /* WelcomeViewController.swift */; };
-		F7084A782C0381A000A6DF4B /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7084A772C0381A000A6DF4B /* CustomTextField.swift */; };
+		F7084A782C0381A000A6DF4B /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7084A772C0381A000A6DF4B /* LoginTextField.swift */; };
 		F70FCF452C0095E40088AACD /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70FCF442C0095E40088AACD /* Validator.swift */; };
 		F70FCF482C00C6EA0088AACD /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70FCF472C00C6EA0088AACD /* AuthService.swift */; };
 		F70FCF4A2C00CFC50088AACD /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70FCF492C00CFC50088AACD /* LoginViewController.swift */; };
@@ -71,6 +71,8 @@
 		F7948FE02C665D990028E3EA /* StudentHomeworkDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7948FDF2C665D990028E3EA /* StudentHomeworkDetailsViewController.swift */; };
 		F7948FE22C665EB60028E3EA /* DetailTitledViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7948FE12C665EB60028E3EA /* DetailTitledViewController.swift */; };
 		F7948FE42C7CBC2B0028E3EA /* TeacherDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7948FE32C7CBC2B0028E3EA /* TeacherDetailsViewModel.swift */; };
+		F7948FE82C809E020028E3EA /* NeobisTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7948FE72C809E020028E3EA /* NeobisTextField.swift */; };
+		F7948FEA2C821FC00028E3EA /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7948FE92C821FC00028E3EA /* CalendarView.swift */; };
 		F79533F92BDFD461004A76C6 /* SnackBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79533F82BDFD461004A76C6 /* SnackBarView.swift */; };
 		F79533FB2BDFF9D8004A76C6 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79533FA2BDFF9D8004A76C6 /* Errors.swift */; };
 		F79533FD2BE10098004A76C6 /* SnackbarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79533FC2BE10098004A76C6 /* SnackbarExtension.swift */; };
@@ -121,7 +123,7 @@
 		F702171C2C36E03B00B0D962 /* NotificationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationModel.swift; sourceTree = "<group>"; };
 		F702171E2C36E3AD00B0D962 /* NotificationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCollectionViewCell.swift; sourceTree = "<group>"; };
 		F7084A752C03679200A6DF4B /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
-		F7084A772C0381A000A6DF4B /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		F7084A772C0381A000A6DF4B /* LoginTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTextField.swift; sourceTree = "<group>"; };
 		F70FCF442C0095E40088AACD /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
 		F70FCF472C00C6EA0088AACD /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		F70FCF492C00CFC50088AACD /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -183,6 +185,8 @@
 		F7948FDF2C665D990028E3EA /* StudentHomeworkDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentHomeworkDetailsViewController.swift; sourceTree = "<group>"; };
 		F7948FE12C665EB60028E3EA /* DetailTitledViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTitledViewController.swift; sourceTree = "<group>"; };
 		F7948FE32C7CBC2B0028E3EA /* TeacherDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherDetailsViewModel.swift; sourceTree = "<group>"; };
+		F7948FE72C809E020028E3EA /* NeobisTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeobisTextField.swift; sourceTree = "<group>"; };
+		F7948FE92C821FC00028E3EA /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		F79533F82BDFD461004A76C6 /* SnackBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarView.swift; sourceTree = "<group>"; };
 		F79533FA2BDFF9D8004A76C6 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		F79533FC2BE10098004A76C6 /* SnackbarExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SnackbarExtension.swift; path = NeoSchool/Extensions/SnackbarExtension.swift; sourceTree = SOURCE_ROOT; };
@@ -290,7 +294,8 @@
 			isa = PBXGroup;
 			children = (
 				F75B04D52C25C1DC00626265 /* NeobisUINavigationController.swift */,
-				F7084A772C0381A000A6DF4B /* CustomTextField.swift */,
+				F7084A772C0381A000A6DF4B /* LoginTextField.swift */,
+				F7948FE72C809E020028E3EA /* NeobisTextField.swift */,
 				F79083062B9F2C8300B9386E /* NeobisUILabel.swift */,
 				F71ACC0C2BD78F1C00EDE3A6 /* PlaceholderTextView.swift */,
 				F7E39CA52C1DAC9D0070428A /* NeobisUIButton.swift */,
@@ -443,6 +448,7 @@
 			children = (
 				F7C0D1162C4D4050003CEC19 /* NotepadView.swift */,
 				F76C6B852B694DF900EACFEB /* EllipseView.swift */,
+				F7948FE92C821FC00028E3EA /* CalendarView.swift */,
 				F79534062BEBBF1E004A76C6 /* CommentView.swift */,
 				F795340A2BF35C50004A76C6 /* ConfirmUIView.swift */,
 				F74713FE2C1889BE00B4C0EC /* PasswordHasChangedView.swift */,
@@ -696,7 +702,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F7C0D1202C515857003CEC19 /* GradeStudentsListViewController.swift in Sources */,
-				F7084A782C0381A000A6DF4B /* CustomTextField.swift in Sources */,
+				F7084A782C0381A000A6DF4B /* LoginTextField.swift in Sources */,
 				F795340B2BF35C50004A76C6 /* ConfirmUIView.swift in Sources */,
 				F71ACC092BD553D100EDE3A6 /* CommentSubmitView.swift in Sources */,
 				F74714022C19E74900B4C0EC /* AuthModel.swift in Sources */,
@@ -720,6 +726,7 @@
 				F702171D2C36E03B00B0D962 /* NotificationModel.swift in Sources */,
 				F7F581662BBC49D000FFC6C9 /* FilesCollectionViewCell.swift in Sources */,
 				F7F581632BB84D6B00FFC6C9 /* FilesCollectionViewController.swift in Sources */,
+				F7948FE82C809E020028E3EA /* NeobisTextField.swift in Sources */,
 				F79EE1F12C087822009584D9 /* ConfirmCodeViewController.swift in Sources */,
 				F75B04DF2C28496100626265 /* AlertInputView.swift in Sources */,
 				F75B04DB2C26EC1500626265 /* ProfileSubmitView.swift in Sources */,
@@ -767,6 +774,7 @@
 				F7C0D1152C4BE0F9003CEC19 /* TeacherModel.swift in Sources */,
 				F7C0D11B2C5131D4003CEC19 /* SetHomeworkViewController.swift in Sources */,
 				F76C6B7B2B67E29000EACFEB /* PerformanceViewController.swift in Sources */,
+				F7948FEA2C821FC00028E3EA /* CalendarView.swift in Sources */,
 				F760814A2B8B73DA00B6D792 /* StringExtension.swift in Sources */,
 				F79534012BE3C076004A76C6 /* AttachedFilesDetailViewController.swift in Sources */,
 				F76081412B877D3A00B6D792 /* DayScheduleAPI.swift in Sources */,

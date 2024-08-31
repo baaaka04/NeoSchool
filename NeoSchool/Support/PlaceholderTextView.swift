@@ -4,7 +4,7 @@ class PlaceholderTextView: UITextView {
 
     let placeholderLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .lightGray
+        label.textColor = UIColor.neobisLightGray
         label.numberOfLines = 0
         return label
     }()
@@ -68,6 +68,13 @@ class PlaceholderTextView: UITextView {
         
         let padding = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         self.textContainerInset = padding
+
+        self.placeholderLabel.font = AppFont.font(type: .Regular, size: 20)
+        self.counterLabel.font = AppFont.font(type: .Regular, size: 12)
+        self.counterLabel.textAlignment = .right
+        self.layer.cornerRadius = 16
+        self.font = AppFont.font(type: .Regular, size: 18)
+        self.backgroundColor = UIColor.neobisExtralightGray
     }
 
     override func layoutSubviews() {
@@ -88,5 +95,22 @@ class PlaceholderTextView: UITextView {
 
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+
+    override func becomeFirstResponder() -> Bool {
+        let result = super.becomeFirstResponder()
+        if result {
+            self.layer.borderColor = UIColor.neobisPurple.cgColor
+            self.layer.borderWidth = 1
+        }
+        return result
+    }
+
+    override func resignFirstResponder() -> Bool {
+        let result = super.resignFirstResponder()
+        if result {
+            self.layer.borderWidth = 0
+        }
+        return result
     }
 }

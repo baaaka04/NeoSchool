@@ -2,7 +2,7 @@ import UIKit
 
 class DayScheduleAPI: StudentLessonDayProtocol, TeacherLessonDayProtocol, TeachersStudentLessonsProtocol {
 
-    let networkAPI = NetworkAPI()
+    private let networkAPI = NetworkAPI()
     
     func getLessons(forDayId dayId: Int, userRole: UserRole) async throws -> [SchoolLesson] {
         return try await networkAPI.loadLessons(forDay: dayId, userRole: userRole)
@@ -30,6 +30,10 @@ class DayScheduleAPI: StudentLessonDayProtocol, TeacherLessonDayProtocol, Teache
 
     func getStudentLessons(studentId: Int, page: Int) async throws -> DTOStudentLessonsList {
         return try await networkAPI.getStudentLessons(studentId: studentId, page: page, limit: 15)
+    }
+
+    func setHomework(lessonId: Int, files: [AttachedFile], topic: String, text: String, deadline: String) async throws -> TeacherLessonDetail {
+        try await networkAPI.setHomework(lessonId: lessonId, files: files, topic: topic, text: text, deadline: deadline)
     }
 }
 

@@ -1,14 +1,17 @@
 import Foundation
-
+import UIKit
 
 class TeacherDetailsViewModel {
 
     weak var teacherAPI: DayScheduleAPI?
+    weak var view: SubjectDetailsViewModelActionable?
 
     private let lessonId: Int
     var lessonDetails: TeacherLessonDetail?
     var students: [TeacherClassItem] = []
     var submissions: [TeacherClassItem] = []
+
+    var attachedFiles : [AttachedFile] = []
 
     init(lessonId: Int, teacherAPI: DayScheduleAPI?) {
         self.lessonId = lessonId
@@ -43,7 +46,30 @@ class TeacherDetailsViewModel {
         return submissionsDTO.totalPages
     }
 
+    func setHomework(topic: String, text: String, deadline: String, completion: @escaping(_ done: Bool) -> Void) async throws {
+        do {
+            self.lessonDetails = try await teacherAPI?.setHomework(lessonId: self.lessonId, files: self.attachedFiles, topic: topic, text: text, deadline: deadline)
+            completion(true)
+        } catch {
+            completion(false)
+            throw error
+        }
+    }
+
     //MARK: - Public functions
+    func add(image: UIImage) {
+        self.attachedFiles.append(AttachedFile(image: image))
+
+        view?.updateCollectionView()
+    }
+
+    func remove(file: AttachedFile) {
+        guard let ind = self.attachedFiles.firstIndex(where: { $0.id == file.id }) else { return }
+        self.attachedFiles.remove(at: ind)
+
+        view?.updateCollectionView()
+    }
+
     func convertDateStringToHoursAndMinutes(from dateString: String, dateFormat: DateFormat) throws -> String {
         let date = try getDateFromString(dateString: dateString, dateFormat: dateFormat)
         let timeString = getTimeFromDate(date: date)

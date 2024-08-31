@@ -13,8 +13,8 @@ class ResetPasswordViewController: KeyboardMovableViewController, UITextFieldDel
         return label
     }()
     
-    private let emailField = CustomTextField(fieldType: .email)
-    
+    private let emailField = LoginTextField(fieldType: .email)
+
     private let wrongEmailLabel: UILabel = {
         let label = UILabel()
         label.text = "Неверный адрес электронной почты"
