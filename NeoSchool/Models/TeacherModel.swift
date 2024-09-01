@@ -86,3 +86,8 @@ enum DateFormat: String {
     case long = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
     case short = "yyyy-MM-dd'T'HH:mm:ssXXX"
 }
+struct DTOTeacherHomeworkFiles: Decodable {
+    let totalCount : Int
+    let totalPages : Int
+    let list : [File]
+}

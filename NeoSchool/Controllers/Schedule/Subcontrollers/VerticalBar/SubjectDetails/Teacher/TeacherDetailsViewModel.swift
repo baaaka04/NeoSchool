@@ -12,6 +12,7 @@ class TeacherDetailsViewModel {
     var submissions: [TeacherClassItem] = []
 
     var attachedFiles : [AttachedFile] = []
+    var attachedFilesURLs: [String]?
 
     init(lessonId: Int, teacherAPI: DayScheduleAPI?) {
         self.lessonId = lessonId
@@ -54,6 +55,11 @@ class TeacherDetailsViewModel {
             completion(false)
             throw error
         }
+    }
+
+    func getTeacherHomeworkFiles() async throws -> Void {
+        guard let homeworkId = lessonDetails?.homework?.id else { throw MyError.badNetwork }
+        self.attachedFilesURLs = try await teacherAPI?.getTeacherHomeworkFiles(homeworkId: homeworkId)
     }
 
     //MARK: - Public functions

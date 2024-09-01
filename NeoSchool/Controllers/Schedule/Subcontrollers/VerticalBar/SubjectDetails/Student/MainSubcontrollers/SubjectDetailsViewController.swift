@@ -75,10 +75,11 @@ class SubjectDetailsViewController: DetailViewController {
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapHomework))
         homeworkPanel.view.addGestureRecognizer(tapGesture)
+        homeworkPanel.attachedFilesLabel.addTarget(self, action: #selector(onTapHomework), for: .touchUpInside)
     }
             
     @objc func onTapHomework() {
-        let attachedListVC = AttachedFilesDetailViewController(viewModel: self.viewModel)
+        let attachedListVC = AttachedFilesDetailViewController(URLs: viewModel.homeworkFileURLs)
         attachedListVC.title = "Прикрепленные материалы"
         
         self.navigationController?.pushViewController(attachedListVC, animated: true)

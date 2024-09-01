@@ -3,7 +3,6 @@ import SnapKit
 
 class AttachedFilesDetailViewController: DetailViewController {
     
-    private let viewModel : SubjectDetailsViewModelRepresentable?
     private let attachedFilesVC : FilesCollectionViewController
 
     override func viewDidLoad() {
@@ -12,9 +11,8 @@ class AttachedFilesDetailViewController: DetailViewController {
         setupUI()
     }
     
-    init(viewModel: SubjectDetailsViewModelRepresentable?) {
-        self.viewModel = viewModel
-        self.attachedFilesVC = FilesCollectionViewController(urls: viewModel?.homeworkFileURLs)
+    init(URLs: [String]?) {
+        self.attachedFilesVC = FilesCollectionViewController(urls: URLs)
         
         super.init(nibName: nil, bundle: nil)
     }

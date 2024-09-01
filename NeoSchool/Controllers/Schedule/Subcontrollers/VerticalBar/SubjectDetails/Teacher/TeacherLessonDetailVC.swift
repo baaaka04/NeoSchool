@@ -96,6 +96,7 @@ class TeacherLessonDetailVC: DetailTitledViewController {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapHomework))
         homeworkPanel.view.addGestureRecognizer(tapGesture)
+        homeworkPanel.attachedFilesLabel.addTarget(self, action: #selector(onTapAttachedFiles), for: .touchUpInside)
     }
     
     func updateUI() {
@@ -125,6 +126,7 @@ class TeacherLessonDetailVC: DetailTitledViewController {
             do {
                 try await vm.getLessonDetails()
                 updateUI()
+                try await vm.getTeacherHomeworkFiles()
             } catch { print(error) }
         }
     }
@@ -141,6 +143,14 @@ class TeacherLessonDetailVC: DetailTitledViewController {
             setHomeworkVC.subtitleText = subjectAndGradeNames
         }
         self.navigationController?.pushViewController(setHomeworkVC, animated: true)
+    }
+
+    @objc func onTapAttachedFiles() {
+        guard let urls = vm.attachedFilesURLs else { return }
+        let attachedListVC = AttachedFilesDetailViewController(URLs: urls)
+        attachedListVC.title = "Прикрепленные материалы"
+
+        self.navigationController?.pushViewController(attachedListVC, animated: true)
     }
 
     @objc func onTapStudentListButton() {

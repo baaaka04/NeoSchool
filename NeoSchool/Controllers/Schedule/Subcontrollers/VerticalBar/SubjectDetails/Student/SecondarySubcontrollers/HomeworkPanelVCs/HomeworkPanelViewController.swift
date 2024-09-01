@@ -30,17 +30,17 @@ class HomeworkPanelViewController: UIViewController {
 
     var attachedFilesNumber: Int? {
         didSet {
-            attachedFilesLabel.text = "Прикрепленные материалы: \(attachedFilesNumber ?? 0)"
+            attachedFilesLabel.setTitle("Прикрепленные материалы: \(attachedFilesNumber ?? 0)", for: .normal)
         }
     }
 
-    let attachedFilesLabel: UILabel = {
-        let label = UILabel()
-        label.font = AppFont.font(type: .Medium, size: 18)
-        label.textColor = .neobisPurple
-        label.text = "Прикрепленные материалы: 0"
-        label.textAlignment = .left
-        return label
+    let attachedFilesLabel: UIButton = {
+        let button = UIButton()
+        button.setTitle("Прикрепленные материалы: 0", for: .normal)
+        button.titleLabel?.font = AppFont.font(type: .Medium, size: 18)
+        button.setTitleColor(.neobisPurple, for: .normal)
+        button.contentHorizontalAlignment = .left
+        return button
     }()
 
     override func viewDidLoad() {
