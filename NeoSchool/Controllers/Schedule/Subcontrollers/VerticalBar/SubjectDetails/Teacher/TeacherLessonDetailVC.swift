@@ -14,7 +14,8 @@ class TeacherLessonDetailVC: DetailTitledViewController {
     }()
     
     private let noHomeworkView = NotepadView(title: "Пока нет заданий", subtitle: "Ученики пока не присылали работы по данному заданию")
-    
+    private let submissionsListVC = SubmissionsListVC()
+
     private lazy var openStudentsListButton: UIButton = {
         let button = UIButton()
         button.setTitle("Просмотреть учеников", for: .normal)
@@ -36,7 +37,7 @@ class TeacherLessonDetailVC: DetailTitledViewController {
         label.text = "Присланные задания:"
         return label
     }()
-    
+
     init(viewModel: TeacherDetailsViewModel) {
         self.vm = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -54,10 +55,14 @@ class TeacherLessonDetailVC: DetailTitledViewController {
         view.addSubview(openStudentsListButton)
         addChild(homeworkPanel)
         view.addSubview(homeworkPanel.view)
-        didMove(toParent: self)
+        homeworkPanel.didMove(toParent: self)
         view.addSubview(recievedHomeworksLabel)
         view.addSubview(lineView)
         view.addSubview(noHomeworkView)
+
+        addChild(submissionsListVC)
+        view.addSubview(submissionsListVC.view)
+        submissionsListVC.didMove(toParent: self)
 
         setupUI()
         getLessonDetails()
@@ -93,7 +98,11 @@ class TeacherLessonDetailVC: DetailTitledViewController {
             make.top.equalTo(lineView.snp.bottom).offset(16)
             make.leading.trailing.equalToSuperview().inset(16)
         }
-        
+        submissionsListVC.view.snp.makeConstraints { make in
+            make.top.equalTo(lineView.snp.bottom).offset(16)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
+
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapHomework))
         homeworkPanel.view.addGestureRecognizer(tapGesture)
         homeworkPanel.attachedFilesLabel.addTarget(self, action: #selector(onTapAttachedFiles), for: .touchUpInside)
@@ -119,6 +128,19 @@ class TeacherLessonDetailVC: DetailTitledViewController {
             homeworkPanel.attachedFilesNumber = lessonDetails.homework?.filesCount
         }
         homeworkPanel.updateUI()
+
+        updateSubmissionsUI()
+    }
+
+    private func updateSubmissionsUI() {
+        if let submissions = vm.lessonDetails?.submissions {
+            submissionsListVC.items = submissions.map { TeacherClassItem(submission: $0) }
+            submissionsListVC.gradeName = vm.lessonDetails?.grade.name
+
+            submissionsListVC.view.isHidden = submissions.isEmpty
+            noHomeworkView.isHidden = !submissions.isEmpty
+        }
+        submissionsListVC.updateUI()
     }
 
     private func getLessonDetails() {

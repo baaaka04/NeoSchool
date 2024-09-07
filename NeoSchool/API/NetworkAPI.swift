@@ -320,6 +320,17 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
         let decodedData: DTOTeacherHomeworkFiles = try decodeRecievedData(data: data)
         return decodedData.list.map { $0.file }
     }
+
+    //GET-REQUEST
+    //ENDPOINT /schedule/teacher/submissions/{submission_id}/
+    func getSubmissionDetails(submissionId: Int) async throws -> TeacherSubmissionDetails {
+        let urlString = "\(domen)/neoschool/schedule/teacher/submissions/\(submissionId)/"
+        let request = try generateAuthorizedRequest(urlString: urlString)
+        let (data, _) = try await URLSession.shared.data(for: request)
+
+        let decodedData: TeacherSubmissionDetails = try decodeRecievedData(data: data)
+        return decodedData
+    }
 }
 
 

@@ -39,6 +39,10 @@ class DayScheduleAPI: StudentLessonDayProtocol, TeacherLessonDayProtocol, Teache
     func getTeacherHomeworkFiles(homeworkId: Int) async throws -> [String] {
         try await networkAPI.getTeacherHomeworkFiles(homeworkId: homeworkId, page: 1, limit: 50)
     }
+
+    func getSubmissionDetails(submissionId: Int) async throws -> TeacherSubmissionDetails {
+        try await networkAPI.getSubmissionDetails(submissionId: submissionId)
+    }
 }
 
 protocol StudentLessonDayProtocol {

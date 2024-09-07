@@ -91,6 +91,7 @@
 		F7962AF92C08CF630045ADA0 /* OneTimeCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7962AF82C08CF630045ADA0 /* OneTimeCodeViewController.swift */; };
 		F7962AFB2C0A209A0045ADA0 /* PasswordCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7962AFA2C0A209A0045ADA0 /* PasswordCreationViewController.swift */; };
 		F79EE1F12C087822009584D9 /* ConfirmCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79EE1F02C087822009584D9 /* ConfirmCodeViewController.swift */; };
+		F79FFFD92C84A10D003790CB /* SubmissionsListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79FFFD82C84A10D003790CB /* SubmissionsListVC.swift */; };
 		F7C0D10B2C3A9C13003CEC19 /* NotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0D10A2C3A9C13003CEC19 /* NotificationsViewModel.swift */; };
 		F7C0D10D2C3D65B3003CEC19 /* NotificationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0D10C2C3D65B3003CEC19 /* NotificationDetailViewController.swift */; };
 		F7C0D10F2C46C0A5003CEC19 /* TeacherLessonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0D10E2C46C0A5003CEC19 /* TeacherLessonCollectionViewCell.swift */; };
@@ -204,6 +205,7 @@
 		F7962AF82C08CF630045ADA0 /* OneTimeCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTimeCodeViewController.swift; sourceTree = "<group>"; };
 		F7962AFA2C0A209A0045ADA0 /* PasswordCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordCreationViewController.swift; sourceTree = "<group>"; };
 		F79EE1F02C087822009584D9 /* ConfirmCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmCodeViewController.swift; sourceTree = "<group>"; };
+		F79FFFD82C84A10D003790CB /* SubmissionsListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmissionsListVC.swift; sourceTree = "<group>"; };
 		F7C0D10A2C3A9C13003CEC19 /* NotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewModel.swift; sourceTree = "<group>"; };
 		F7C0D10C2C3D65B3003CEC19 /* NotificationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDetailViewController.swift; sourceTree = "<group>"; };
 		F7C0D10E2C46C0A5003CEC19 /* TeacherLessonCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherLessonCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -496,6 +498,7 @@
 				F7948FE32C7CBC2B0028E3EA /* TeacherDetailsViewModel.swift */,
 				F7C0D1122C4BD7FC003CEC19 /* TeacherLessonDetailVC.swift */,
 				F7C0D11F2C515857003CEC19 /* GradeStudentsListViewController.swift */,
+				F79FFFD82C84A10D003790CB /* SubmissionsListVC.swift */,
 				F722B00B2C6503CF002D519C /* StudentLessonsListViewController.swift */,
 				F7948FDF2C665D990028E3EA /* StudentHomeworkDetailsViewController.swift */,
 				F7948FE62C7E0D180028E3EA /* Subcontrollers */,
@@ -735,6 +738,7 @@
 				F70FCF4A2C00CFC50088AACD /* LoginViewController.swift in Sources */,
 				F70FCF452C0095E40088AACD /* Validator.swift in Sources */,
 				F70FCF482C00C6EA0088AACD /* AuthService.swift in Sources */,
+				F79FFFD92C84A10D003790CB /* SubmissionsListVC.swift in Sources */,
 				F7C0D1172C4D4050003CEC19 /* NotepadView.swift in Sources */,
 				F79534112BF657AA004A76C6 /* ZoomPictureViewController.swift in Sources */,
 				F79533F92BDFD461004A76C6 /* SnackBarView.swift in Sources */,

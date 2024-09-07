@@ -65,6 +65,15 @@ struct TeacherClassItem {
         self.subtitle = "Оценка: \(studentLesson.mark ?? "-") · Предмет: \(studentLesson.subject.name)"
         self.datetime = studentLesson.submittedDate
     }
+    // init for the list of the student's submissions on TeacherLessonDetails screen
+    init(submission: TeacherSubmission) {
+        self.id = submission.id
+        self.title = "\(submission.student.firstName) \(submission.student.lastName)"
+        let submittedOnTimeString = submission.submittedOnTime ? "Прислано в срок" : "Срок сдачи пропущен"
+        let markString = "Оценка: \(submission.mark ?? "-")"
+        self.subtitle = submittedOnTimeString + " · " + markString
+        self.datetime = nil
+    }
 }
 struct DTOStudentLessonsList: Decodable {
     let totalCount : Int
@@ -90,4 +99,21 @@ struct DTOTeacherHomeworkFiles: Decodable {
     let totalCount : Int
     let totalPages : Int
     let list : [File]
+}
+struct TeacherSubmissionDetails: Decodable {
+    let id: Int
+    let student: FullNameUser
+    let homework: TeacherHomework
+    let subject: SubjectName
+    let submittedDate: String
+    let studentComment: String?
+    let teacherComment: String?
+    let files: [File]
+    let submittedOnTime: Bool
+    let mark: String?
+    let lessonId: Int
+    let isRevision: Bool
+    let canRevise: Bool
+    let canGrade: Bool
+    let canChangeMark: Bool
 }

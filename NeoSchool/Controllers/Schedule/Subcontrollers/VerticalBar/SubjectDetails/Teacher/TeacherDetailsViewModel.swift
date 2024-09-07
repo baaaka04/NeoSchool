@@ -1,13 +1,14 @@
 import Foundation
 import UIKit
 
-class TeacherDetailsViewModel {
+class TeacherDetailsViewModel: StudentHomeworkProtocol {
 
     weak var teacherAPI: DayScheduleAPI?
     weak var view: SubjectDetailsViewModelActionable?
 
     private let lessonId: Int
     var lessonDetails: TeacherLessonDetail?
+    var submissionDetails: TeacherSubmissionDetails?
     var students: [TeacherClassItem] = []
     var submissions: [TeacherClassItem] = []
 
@@ -60,6 +61,10 @@ class TeacherDetailsViewModel {
     func getTeacherHomeworkFiles() async throws -> Void {
         guard let homeworkId = lessonDetails?.homework?.id else { throw MyError.badNetwork }
         self.attachedFilesURLs = try await teacherAPI?.getTeacherHomeworkFiles(homeworkId: homeworkId)
+    }
+
+    func getSubmissionDetails(submissionId: Int) async throws {
+        self.submissionDetails = try await teacherAPI?.getSubmissionDetails(submissionId: submissionId)
     }
 
     //MARK: - Public functions
