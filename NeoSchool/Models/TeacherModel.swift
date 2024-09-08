@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 struct TeacherLessonDetail: Codable {
     let id: Int
@@ -44,12 +45,14 @@ struct TeacherClassItem {
     let title: String
     let subtitle: String
     var datetime: String?
+    let onTime: Bool?
 
-    init(id: Int, title: String, subtitle: String, datetime: String) {
+    init(id: Int, title: String, subtitle: String, datetime: String, onTime: Bool) {
         self.id = id
         self.title = title
         self.subtitle = subtitle
         self.datetime = datetime
+        self.onTime = onTime
     }
     // init for the list of the grade's students and their submissions
     init(studentSubmission: StudentSubmissionCount) {
@@ -57,6 +60,7 @@ struct TeacherClassItem {
         self.title = "\(studentSubmission.firstName) \(studentSubmission.lastName)"
         self.subtitle = "Заданий сдано: \(studentSubmission.submissionsCount)"
         self.datetime = nil
+        self.onTime = nil
     }
     // init for the list of the student's submissions
     init(studentLesson: StudentLesson) {
@@ -64,6 +68,7 @@ struct TeacherClassItem {
         self.title = studentLesson.topic
         self.subtitle = "Оценка: \(studentLesson.mark ?? "-") · Предмет: \(studentLesson.subject.name)"
         self.datetime = studentLesson.submittedDate
+        self.onTime = nil
     }
     // init for the list of the student's submissions on TeacherLessonDetails screen
     init(submission: TeacherSubmission) {
@@ -73,6 +78,7 @@ struct TeacherClassItem {
         let markString = "Оценка: \(submission.mark ?? "-")"
         self.subtitle = submittedOnTimeString + " · " + markString
         self.datetime = nil
+        self.onTime = submission.submittedOnTime
     }
 }
 struct DTOStudentLessonsList: Decodable {

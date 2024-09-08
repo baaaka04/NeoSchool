@@ -5,15 +5,11 @@ class TeacherLessonDetailVC: DetailTitledViewController {
 
     private let vm: TeacherDetailsViewModel
 
+    private let scrollview = UIScrollView()
     private let timeAndRoomLabel = GrayUILabel(font: AppFont.font(type: .Regular, size: 16))
     private let classInfoLabel = GrayUILabel(font: AppFont.font(type: .Medium, size: 16))
-    private let lineView: UIView = {
-        let line = UIView()
-        line.backgroundColor = .neobisGrayStroke
-        return line
-    }()
-    
-    private let noHomeworkView = NotepadView(title: "Пока нет заданий", subtitle: "Ученики пока не присылали работы по данному заданию")
+    private let lineView = UIView()
+
     private let submissionsListVC = SubmissionsListVC()
 
     private lazy var openStudentsListButton: UIButton = {
@@ -49,19 +45,19 @@ class TeacherLessonDetailVC: DetailTitledViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.addSubview(timeAndRoomLabel)
-        view.addSubview(classInfoLabel)
-        view.addSubview(openStudentsListButton)
+
+        view.addSubview(scrollview)
+        scrollview.addSubview(timeAndRoomLabel)
+        scrollview.addSubview(classInfoLabel)
+        scrollview.addSubview(openStudentsListButton)
         addChild(homeworkPanel)
-        view.addSubview(homeworkPanel.view)
+        scrollview.addSubview(homeworkPanel.view)
         homeworkPanel.didMove(toParent: self)
-        view.addSubview(recievedHomeworksLabel)
-        view.addSubview(lineView)
-        view.addSubview(noHomeworkView)
+        scrollview.addSubview(recievedHomeworksLabel)
+        scrollview.addSubview(lineView)
 
         addChild(submissionsListVC)
-        view.addSubview(submissionsListVC.view)
+        scrollview.addSubview(submissionsListVC.view)
         submissionsListVC.didMove(toParent: self)
 
         setupUI()
@@ -69,8 +65,13 @@ class TeacherLessonDetailVC: DetailTitledViewController {
     }
 
     private func setupUI () {
-        timeAndRoomLabel.snp.makeConstraints { make in
+        lineView.backgroundColor = .neobisGrayStroke
+        scrollview.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(12)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
+        timeAndRoomLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(16)
         }
         classInfoLabel.snp.makeConstraints { make in
@@ -83,7 +84,8 @@ class TeacherLessonDetailVC: DetailTitledViewController {
         }
         homeworkPanel.view.snp.makeConstraints { make in
             make.top.equalTo(openStudentsListButton.snp.bottom).offset(16)
-            make.leading.trailing.equalToSuperview().inset(16)
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().inset(16)
         }
         recievedHomeworksLabel.snp.makeConstraints { make in
             make.top.equalTo(homeworkPanel.view.snp.bottom).offset(16)
@@ -91,16 +93,15 @@ class TeacherLessonDetailVC: DetailTitledViewController {
         }
         lineView.snp.makeConstraints { make in
             make.top.equalTo(recievedHomeworksLabel.snp.bottom).offset(16)
-            make.leading.trailing.equalToSuperview().inset(16)
+            make.width.equalToSuperview().inset(16)
+            make.centerX.equalToSuperview()
             make.height.equalTo(1)
-        }
-        noHomeworkView.snp.makeConstraints { make in
-            make.top.equalTo(lineView.snp.bottom).offset(16)
-            make.leading.trailing.equalToSuperview().inset(16)
         }
         submissionsListVC.view.snp.makeConstraints { make in
             make.top.equalTo(lineView.snp.bottom).offset(16)
-            make.leading.trailing.bottom.equalToSuperview()
+            make.width.equalToSuperview()
+            make.bottom.equalToSuperview().inset(16)
+            make.height.equalTo(300)
         }
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapHomework))
@@ -133,12 +134,10 @@ class TeacherLessonDetailVC: DetailTitledViewController {
     }
 
     private func updateSubmissionsUI() {
-        if let submissions = vm.lessonDetails?.submissions {
+        if let submissions = vm.lessonDetails?.submissions, !submissions.isEmpty {
             submissionsListVC.items = submissions.map { TeacherClassItem(submission: $0) }
             submissionsListVC.gradeName = vm.lessonDetails?.grade.name
-
-            submissionsListVC.view.isHidden = submissions.isEmpty
-            noHomeworkView.isHidden = !submissions.isEmpty
+            submissionsListVC.view.snp.updateConstraints { $0.height.equalTo(20+submissions.count*94) }
         }
         submissionsListVC.updateUI()
     }

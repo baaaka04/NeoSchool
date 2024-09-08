@@ -7,12 +7,13 @@ class SubmissionsListVC: UIViewController, UICollectionViewDelegate, UICollectio
     var gradeName: String?
     private var vm: StudentHomeworkProtocol?
 
+    private let noHomeworkView = NotepadView(title: "Пока нет заданий", subtitle: "Ученики пока не присылали работы по данному заданию")
     private lazy var submissionsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         layout.minimumLineSpacing = 0
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.dataSource = self
@@ -33,11 +34,16 @@ class SubmissionsListVC: UIViewController, UICollectionViewDelegate, UICollectio
 
     private func setupUI() {
         view.addSubview(submissionsCollectionView)
+        view.addSubview(noHomeworkView)
         submissionsCollectionView.snp.makeConstraints { $0.edges.equalToSuperview() }
+        noHomeworkView.snp.makeConstraints { $0.edges.equalToSuperview() }
     }
 
     func updateUI() {
         submissionsCollectionView.reloadData()
+
+        submissionsCollectionView.isHidden = self.items.isEmpty
+        noHomeworkView.isHidden = !self.items.isEmpty
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -49,7 +55,20 @@ class SubmissionsListVC: UIViewController, UICollectionViewDelegate, UICollectio
         guard let cell = self.submissionsCollectionView.dequeueReusableCell(withReuseIdentifier: TeacherItemListCollectionViewCell.identifier, for: indexPath) as? TeacherItemListCollectionViewCell
         else { return TeacherItemListCollectionViewCell(frame: .zero) }
         cell.title = submission.title
-        cell.subtitle = submission.subtitle
+
+        var submittedOnTimeString : NSAttributedString {
+            let attributedString = NSMutableAttributedString(string: submission.subtitle)
+            guard let onTime = submission.onTime else { return attributedString }
+            let headColor: UIColor = onTime ? .neobisGreen : .neobisRed
+            attributedString.addAttribute(
+                .foregroundColor, 
+                value: headColor,
+                range: NSRange(location: 0, length: attributedString.length-12) //12 is the length of " · Оценка: -"
+            )
+            return  attributedString
+        }
+
+        cell.attributedSubtitle = submittedOnTimeString
         return cell
     }
 

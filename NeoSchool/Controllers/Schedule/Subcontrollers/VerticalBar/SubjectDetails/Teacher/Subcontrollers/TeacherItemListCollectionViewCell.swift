@@ -21,7 +21,11 @@ class TeacherItemListCollectionViewCell: UICollectionViewCell {
     var subtitle : String? {
         didSet { subtitleLabel.text = subtitle }
     }
-    
+
+    var attributedSubtitle : NSAttributedString? {
+        didSet { subtitleLabel.attributedText = attributedSubtitle }
+    }
+
     private let subtitleLabel = GrayUILabel(font: AppFont.font(type: .Regular, size: 16))
 
     var datetimeText: String? {
