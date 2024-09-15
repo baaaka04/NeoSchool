@@ -26,6 +26,16 @@ class SubmissionsListVC: UIViewController, UICollectionViewDelegate, UICollectio
         return collectionView
     }()
 
+    init(vm: StudentHomeworkProtocol? = nil) {
+        self.vm = vm
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -78,7 +88,7 @@ class SubmissionsListVC: UIViewController, UICollectionViewDelegate, UICollectio
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let submission = self.items[indexPath.item]
-        let submissionDetailsVC = StudentHomeworkDetailsViewController(submissionId: submission.id, vm: self.vm)
+        let submissionDetailsVC = StudentHomeworkDetailsViewController(submissionId: submission.id, editable: true, vm: self.vm)
         submissionDetailsVC.titleText = submission.title
         submissionDetailsVC.subtitleText = "\(self.gradeName ?? "NuN") класс"
         self.navigationController?.pushViewController(submissionDetailsVC, animated: true)

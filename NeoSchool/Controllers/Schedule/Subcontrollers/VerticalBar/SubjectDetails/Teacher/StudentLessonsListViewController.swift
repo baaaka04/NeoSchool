@@ -4,6 +4,12 @@ class StudentLessonsListViewController: ItemsListViewController, UICollectionVie
 
     private let vm: TeacherDetailsViewModel
     private let studentId: Int
+    var gradeName: String? {
+        didSet {
+            guard let gradeName else { return }
+            subtitleText = gradeName + " класс"
+        }
+    }
 
     init(viewModel: TeacherDetailsViewModel, studentId: Int) {
         self.studentId = studentId
@@ -56,6 +62,14 @@ class StudentLessonsListViewController: ItemsListViewController, UICollectionVie
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 100, height: 100) //The size defines automatically, but we need an initial size bigger than all cell's elements to avoid yellow SnapKit errors at the console.
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let submission = self.itemsList[indexPath.item]
+        let submissionDetailsVC = StudentHomeworkDetailsViewController(submissionId: submission.id, editable: false, vm: self.vm)
+        submissionDetailsVC.titleText = submission.title
+        submissionDetailsVC.subtitleText = "\(self.gradeName ?? "NuN") класс"
+        self.navigationController?.pushViewController(submissionDetailsVC, animated: true)
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

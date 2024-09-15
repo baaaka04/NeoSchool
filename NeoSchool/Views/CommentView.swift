@@ -13,7 +13,13 @@ class CommentView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
+    var contentText: String? {
+        didSet {
+            contentLabel.text = contentText ?? "-"
+        }
+    }
+
     private let contentLabel: GrayUILabel = {
         let label = GrayUILabel()
         label.font = AppFont.font(type: .Regular, size: 16)

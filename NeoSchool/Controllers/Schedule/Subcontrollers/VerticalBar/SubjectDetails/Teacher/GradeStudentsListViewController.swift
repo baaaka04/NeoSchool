@@ -61,7 +61,7 @@ class GradeStudentsListViewController: ItemsListViewController, UICollectionView
         guard let lessonDetails = vm.lessonDetails else { return }
         let studentLessonsVC = StudentLessonsListViewController(viewModel: self.vm, studentId: student.id)
         studentLessonsVC.titleText = student.title
-        studentLessonsVC.subtitleText = lessonDetails.grade.name + " класс"
+        studentLessonsVC.gradeName = lessonDetails.grade.name
         self.navigationController?.pushViewController(studentLessonsVC, animated: true)
     }
 

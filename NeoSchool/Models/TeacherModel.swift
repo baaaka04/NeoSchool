@@ -24,7 +24,7 @@ struct TeacherSubmission: Codable {
 struct TeacherHomework: Codable {
     let id: Int
     let text: String
-    let deadline: String
+    var deadline: String
     let filesCount: Int
 }
 struct DTOStudentSubmissionCount: Decodable {
@@ -109,9 +109,9 @@ struct DTOTeacherHomeworkFiles: Decodable {
 struct TeacherSubmissionDetails: Decodable {
     let id: Int
     let student: FullNameUser
-    let homework: TeacherHomework
+    var homework: TeacherHomework
     let subject: SubjectName
-    let submittedDate: String
+    var submittedDate: String
     let studentComment: String?
     let teacherComment: String?
     let files: [File]
@@ -122,4 +122,5 @@ struct TeacherSubmissionDetails: Decodable {
     let canRevise: Bool
     let canGrade: Bool
     let canChangeMark: Bool
+    let topic: String
 }

@@ -1,15 +1,7 @@
 import UIKit
 import SnapKit
 
-class TeacherHomeworkPanelViewController: HomeworkPanelViewController {
-    
-    var deadlineText: String? {
-        didSet {
-            deadlineLabel.text = deadlineText
-        }
-    }
-    
-    private let deadlineLabel = GrayUILabel(font: AppFont.font(type: .Italic, size: 18))
+class TeacherHomeworkPanelViewController: HomeworkDeadlineViewController {
 
     private let editTipLabel: UILabel = {
         let label = UILabel()

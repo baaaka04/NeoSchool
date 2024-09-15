@@ -6,7 +6,7 @@ class FilesCollectionViewController: UIViewController, UICollectionViewDelegate,
     private let imagesAPI: ImagesAPI?
     
     private var attachedFiles : [AttachedFile]?
-    private let urls : [String]?
+    private var urls : [String]?
     var onPressRemove : ((_ file: AttachedFile) -> Void)?
     
     lazy var collectionView: UICollectionView = {
@@ -16,13 +16,14 @@ class FilesCollectionViewController: UIViewController, UICollectionViewDelegate,
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.dataSource = self
         cv.delegate = self
+        cv.isScrollEnabled = false
         cv.backgroundColor = .clear
         cv.register(FilesCollectionViewCell.self, forCellWithReuseIdentifier: FilesCollectionViewCell.identifier)
         return cv
     }()
     
     //MARK: initialization to display images from backend
-    init(urls: [String]?) {
+    init(urls: [String]? = nil) {
         self.urls = urls
         self.imagesAPI = ImagesAPI()
         self.attachedFiles = nil
@@ -100,6 +101,11 @@ class FilesCollectionViewController: UIViewController, UICollectionViewDelegate,
     func update(attachedFiles: [AttachedFile]) {
         self.attachedFiles = attachedFiles
         collectionView.reloadData()
+    }
+
+    func update(urls: [String]?) {
+        self.urls = urls
+        getDataFromUrls()
     }
 
 }

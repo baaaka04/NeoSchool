@@ -14,6 +14,7 @@ class TeacherDetailsViewModel: StudentHomeworkProtocol {
 
     var attachedFiles : [AttachedFile] = []
     var attachedFilesURLs: [String]?
+    var submissionFilesUrls: [String]?
 
     init(lessonId: Int, teacherAPI: DayScheduleAPI?) {
         self.lessonId = lessonId
@@ -64,7 +65,15 @@ class TeacherDetailsViewModel: StudentHomeworkProtocol {
     }
 
     func getSubmissionDetails(submissionId: Int) async throws {
-        self.submissionDetails = try await teacherAPI?.getSubmissionDetails(submissionId: submissionId)
+        self.submissionFilesUrls = nil
+        guard var submission = try await teacherAPI?.getSubmissionDetails(submissionId: submissionId) else { throw MyError.badNetwork }
+        let day = try convertDateStringToDay(from: submission.submittedDate, dateFormat: .long)
+        let time = try convertDateStringToHoursAndMinutes(from: submission.submittedDate, dateFormat: .long)
+        submission.submittedDate = day + " в " + time
+        let deadlineDate = try convertDateStringToDay(from: submission.homework.deadline, dateFormat: .short)
+        submission.homework.deadline = "Срок сдачи: \(deadlineDate)"
+        self.submissionDetails = submission
+        self.submissionFilesUrls = submission.files.map { $0.file }
     }
 
     //MARK: - Public functions

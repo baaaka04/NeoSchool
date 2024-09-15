@@ -10,7 +10,7 @@ class TeacherLessonDetailVC: DetailTitledViewController {
     private let classInfoLabel = GrayUILabel(font: AppFont.font(type: .Medium, size: 16))
     private let lineView = UIView()
 
-    private let submissionsListVC = SubmissionsListVC()
+    private lazy var submissionsListVC = SubmissionsListVC(vm: self.vm)
 
     private lazy var openStudentsListButton: UIButton = {
         let button = UIButton()
