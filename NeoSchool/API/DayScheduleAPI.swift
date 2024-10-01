@@ -43,6 +43,14 @@ class DayScheduleAPI: StudentLessonDayProtocol, TeacherLessonDayProtocol, Teache
     func getSubmissionDetails(submissionId: Int) async throws -> TeacherSubmissionDetails {
         try await networkAPI.getSubmissionDetails(submissionId: submissionId)
     }
+
+    func reviseSubmission(submissionId: Int) async throws {
+        try await networkAPI.reviseSubmission(submissionId: submissionId)
+    }
+
+    func gradeSubmission(submissionId: Int, grade: String, teacherComment: String?) async throws -> TeacherSubmissionDetails {
+        try await networkAPI.gradeSubmission(submissionId: submissionId, mark: grade, teacherComment: teacherComment)
+    }
 }
 
 protocol StudentLessonDayProtocol {
@@ -51,7 +59,7 @@ protocol StudentLessonDayProtocol {
     func getStudentLessonDetail(forLessonId lessonId: Int) async throws -> StudentLessonDetail
     
     func uploadFiles(homeworkId: Int, files: [AttachedFile], studentComment: String?) async throws
-    
+
     func cancelSubmission(submissionId: Int) async throws
 }
 

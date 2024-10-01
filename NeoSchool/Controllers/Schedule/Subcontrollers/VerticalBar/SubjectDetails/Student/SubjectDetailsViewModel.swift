@@ -9,8 +9,9 @@ class SubjectDetailsViewModel: SubjectDetailsViewModelRepresentable, CommentRepr
     private let lessonId: Int
     
     var attachedFiles : [AttachedFile] = []
-    var studentComment : String?
-    
+    var userComment : String?
+    var grade: Grade?
+
     var subjectName: String {
         lessonDetails?.subject.name ?? ""
     }
@@ -79,10 +80,10 @@ class SubjectDetailsViewModel: SubjectDetailsViewModelRepresentable, CommentRepr
         view?.updateCollectionView()
     }
     
-    func sendFiles() async throws {
+    func submit(_ submissionId: Int? = nil) async throws {
         guard attachedFiles.count > 0,
             let homeworkId : Int = lessonDetails?.homework?.id else { throw URLError(.fileDoesNotExist) }
-        try await lessonAPI?.uploadFiles(homeworkId: homeworkId, files: attachedFiles, studentComment: studentComment)
+        try await lessonAPI?.uploadFiles(homeworkId: homeworkId, files: attachedFiles, studentComment: userComment)
         self.attachedFiles = []
     }
     
@@ -102,15 +103,15 @@ protocol SubjectDetailsViewModelRepresentable: AnyObject {
     var homeworkText: String? { get }
     var attachedFiles: [AttachedFile] { get }
     var homeworkFileURLs: [String]? { get }
-    var studentComment: String? { get set }
-    
+    var userComment: String? { get set }
+
     var view: SubjectDetailsViewModelActionable? { get set }
     
     func getLessonDetailData() async throws
     
     func add(image: UIImage)
     func remove(file: AttachedFile)
-    func sendFiles() async throws
+    func submit(_ submissionId: Int?) async throws
     
     var files: [String]? { get }
     var studentCommentSubmitted: String? { get }

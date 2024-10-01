@@ -2,17 +2,19 @@ import UIKit
 import SnapKit
 
 protocol CommentRepresentable: AnyObject {
-    func sendFiles() async throws
-    var studentComment: String? { get set }
+    func submit(_ submissionId: Int?) async throws
+    var userComment: String? { get set }
+    var grade: Grade? { get set }
 }
 
 class CommentModalViewController: UIViewController, Notifiable {    
-    
-    private let commentView = CommentSubmitView()
-    
+
+    private let commentViewHeight: CGFloat
+    private let commentView: CommentSubmitView
     weak var delegate: CommentRepresentable?
     var getLessonDetails: (() -> Void)?
-        
+    private let submissionId: Int?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,30 +29,52 @@ class CommentModalViewController: UIViewController, Notifiable {
                 do {
                     guard let strongSelf = self else { return }
                     let commentText = strongSelf.commentView.commentInput.text
-                    strongSelf.delegate?.studentComment = commentText == "" ? nil : commentText
-                    try await strongSelf.delegate?.sendFiles()
+                    let grade = strongSelf.commentView.selectedGrade
+                    strongSelf.delegate?.userComment = commentText == "" ? nil : commentText
+                    strongSelf.delegate?.grade = grade
+                    try await strongSelf.delegate?.submit(strongSelf.submissionId)
                     strongSelf.hideCommentView()
-                    strongSelf.getLessonDetails?()
                     self?.showNotification(message: "Задание успешно отправлено", isSucceed: true)
+                    self?.getLessonDetails?()
                 } catch {
                     print(error)
                     self?.showNotification(message: "Произошла ошибка", isSucceed: false)
+                    self?.hideCommentView()
+                    self?.getLessonDetails?()
                 }
             }
         }
         commentView.snp.makeConstraints { make in
-            make.height.equalTo(374)
+            make.height.equalTo( self.commentViewHeight )
             make.top.equalTo(view.snp.bottom)
             make.width.centerX.equalToSuperview()
         }
         
+    }
+
+    init(userRole: UserRole, submissionId: Int? = nil) {
+        self.submissionId = submissionId
+        self.commentView = CommentSubmitView(userRole: userRole)
+
+        switch userRole {
+        case .teacher:
+            self.commentViewHeight = 496
+        case .student:
+            self.commentViewHeight = 374
+        }
+
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         UIView.animate(withDuration: 0.3) {
             self.commentView.snp.updateConstraints { make in
-                make.top.equalTo(self.view.snp.bottom).offset(-374)
+                make.top.equalTo(self.view.snp.bottom).offset(-self.commentViewHeight)
             }
             self.view.layoutIfNeeded()
         }
@@ -89,12 +113,14 @@ extension CommentModalViewController {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             
             commentView.snp.updateConstraints {
-                $0.top.equalTo(self.view.snp.bottom).offset( -(374+keyboardSize.height-32) )
+                $0.top.equalTo(self.view.snp.bottom).offset( -(self.commentViewHeight+keyboardSize.height-32) )
             }
         }
     }
 
     @objc func keyboardWillHide(_ notification: Notification) {
-        commentView.snp.updateConstraints { $0.top.equalTo(self.view.snp.bottom).offset(-374) }
+        commentView.snp.updateConstraints { $0.top.equalTo(self.view.snp.bottom).offset(-self.commentViewHeight) }
     }
 }
+
+

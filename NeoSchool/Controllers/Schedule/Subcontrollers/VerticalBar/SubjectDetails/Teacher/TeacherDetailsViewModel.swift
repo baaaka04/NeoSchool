@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-class TeacherDetailsViewModel: StudentHomeworkProtocol {
+class TeacherDetailsViewModel: StudentHomeworkProtocol, CommentRepresentable {
 
     weak var teacherAPI: DayScheduleAPI?
     weak var view: SubjectDetailsViewModelActionable?
@@ -15,6 +15,9 @@ class TeacherDetailsViewModel: StudentHomeworkProtocol {
     var attachedFiles : [AttachedFile] = []
     var attachedFilesURLs: [String]?
     var submissionFilesUrls: [String]?
+
+    var userComment: String?
+    var grade: Grade?
 
     init(lessonId: Int, teacherAPI: DayScheduleAPI?) {
         self.lessonId = lessonId
@@ -66,12 +69,24 @@ class TeacherDetailsViewModel: StudentHomeworkProtocol {
 
     func getSubmissionDetails(submissionId: Int) async throws {
         self.submissionFilesUrls = nil
+        self.submissionDetails = nil
         guard var submission = try await teacherAPI?.getSubmissionDetails(submissionId: submissionId) else { throw MyError.badNetwork }
         let day = try convertDateStringToDay(from: submission.submittedDate, dateFormat: .long)
         let time = try convertDateStringToHoursAndMinutes(from: submission.submittedDate, dateFormat: .long)
         submission.submittedDate = day + " в " + time
         let deadlineDate = try convertDateStringToDay(from: submission.homework.deadline, dateFormat: .short)
         submission.homework.deadline = "Срок сдачи: \(deadlineDate)"
+        self.submissionDetails = submission
+        self.submissionFilesUrls = submission.files.map { $0.file }
+    }
+
+    func reviseSubmission(submissionId: Int) async throws {
+        try await teacherAPI?.reviseSubmission(submissionId: submissionId)
+    }
+
+    func submit(_ submissionId: Int?) async throws {
+        guard let submissionId, let grade else { throw MyError.noDataReceived }
+        guard let submission = try await teacherAPI?.gradeSubmission(submissionId: submissionId, grade: grade.rawValue, teacherComment: userComment) else { throw MyError.badNetwork }
         self.submissionDetails = submission
         self.submissionFilesUrls = submission.files.map { $0.file }
     }

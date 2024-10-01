@@ -21,6 +21,8 @@
 		F722B0072C5FC208002D519C /* Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F722B0062C5FC208002D519C /* Mock.swift */; };
 		F722B00A2C6115D1002D519C /* ItemsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F722B0092C6115D1002D519C /* ItemsListViewController.swift */; };
 		F722B00C2C6503CF002D519C /* StudentLessonsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F722B00B2C6503CF002D519C /* StudentLessonsListViewController.swift */; };
+		F72CD0ED2CA85B64006BBB4E /* StudentHomeworkDetailsSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72CD0EC2CA85B4B006BBB4E /* StudentHomeworkDetailsSections.swift */; };
+		F72CD0EF2CA85BAB006BBB4E /* AutosizeUICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72CD0EE2CA85BAB006BBB4E /* AutosizeUICollectionViewCell.swift */; };
 		F744FD542B7CD3F80054CBC1 /* StudentsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F744FD532B7CD3F80054CBC1 /* StudentsModel.swift */; };
 		F74713FF2C1889BE00B4C0EC /* PasswordHasChangedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74713FE2C1889BE00B4C0EC /* PasswordHasChangedView.swift */; };
 		F74714022C19E74900B4C0EC /* AuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74714012C19E74900B4C0EC /* AuthModel.swift */; };
@@ -67,7 +69,7 @@
 		F76C6BD82B6A96A900EACFEB /* Jost-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BC62B6A96A900EACFEB /* Jost-SemiBold.ttf */; };
 		F76C6BD92B6A96A900EACFEB /* Jost-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F76C6BC72B6A96A900EACFEB /* Jost-MediumItalic.ttf */; };
 		F79083072B9F2C8300B9386E /* NeobisUILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79083062B9F2C8300B9386E /* NeobisUILabel.swift */; };
-		F79083092B9F31B400B9386E /* HomeworkPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79083082B9F31B400B9386E /* HomeworkPanelViewController.swift */; };
+		F79083092B9F31B400B9386E /* HomeworkPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79083082B9F31B400B9386E /* HomeworkPanelView.swift */; };
 		F7948FE02C665D990028E3EA /* StudentHomeworkDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7948FDF2C665D990028E3EA /* StudentHomeworkDetailsViewController.swift */; };
 		F7948FE22C665EB60028E3EA /* DetailTitledViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7948FE12C665EB60028E3EA /* DetailTitledViewController.swift */; };
 		F7948FE42C7CBC2B0028E3EA /* TeacherDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7948FE32C7CBC2B0028E3EA /* TeacherDetailsViewModel.swift */; };
@@ -92,7 +94,6 @@
 		F7962AFB2C0A209A0045ADA0 /* PasswordCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7962AFA2C0A209A0045ADA0 /* PasswordCreationViewController.swift */; };
 		F79EE1F12C087822009584D9 /* ConfirmCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79EE1F02C087822009584D9 /* ConfirmCodeViewController.swift */; };
 		F79FFFD92C84A10D003790CB /* SubmissionsListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79FFFD82C84A10D003790CB /* SubmissionsListVC.swift */; };
-		F79FFFDB2C8ECFEA003790CB /* HomeworkDeadlineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79FFFDA2C8ECFEA003790CB /* HomeworkDeadlineViewController.swift */; };
 		F7C0D10B2C3A9C13003CEC19 /* NotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0D10A2C3A9C13003CEC19 /* NotificationsViewModel.swift */; };
 		F7C0D10D2C3D65B3003CEC19 /* NotificationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0D10C2C3D65B3003CEC19 /* NotificationDetailViewController.swift */; };
 		F7C0D10F2C46C0A5003CEC19 /* TeacherLessonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0D10E2C46C0A5003CEC19 /* TeacherLessonCollectionViewCell.swift */; };
@@ -101,7 +102,6 @@
 		F7C0D1152C4BE0F9003CEC19 /* TeacherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0D1142C4BE0F9003CEC19 /* TeacherModel.swift */; };
 		F7C0D1172C4D4050003CEC19 /* NotepadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0D1162C4D4050003CEC19 /* NotepadView.swift */; };
 		F7C0D11B2C5131D4003CEC19 /* SetHomeworkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0D11A2C5131D4003CEC19 /* SetHomeworkViewController.swift */; };
-		F7C0D11D2C5137D8003CEC19 /* TeacherHomeworkPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0D11C2C5137D8003CEC19 /* TeacherHomeworkPanelViewController.swift */; };
 		F7C0D1202C515857003CEC19 /* GradeStudentsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0D11F2C515857003CEC19 /* GradeStudentsListViewController.swift */; };
 		F7C0D1232C5BCE2B003CEC19 /* TeacherItemListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0D1222C5BCE2B003CEC19 /* TeacherItemListCollectionViewCell.swift */; };
 		F7CAE69D2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CAE69C2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift */; };
@@ -135,6 +135,8 @@
 		F722B0062C5FC208002D519C /* Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mock.swift; sourceTree = "<group>"; };
 		F722B0092C6115D1002D519C /* ItemsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsListViewController.swift; sourceTree = "<group>"; };
 		F722B00B2C6503CF002D519C /* StudentLessonsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentLessonsListViewController.swift; sourceTree = "<group>"; };
+		F72CD0EC2CA85B4B006BBB4E /* StudentHomeworkDetailsSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentHomeworkDetailsSections.swift; sourceTree = "<group>"; };
+		F72CD0EE2CA85BAB006BBB4E /* AutosizeUICollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutosizeUICollectionViewCell.swift; sourceTree = "<group>"; };
 		F744FD532B7CD3F80054CBC1 /* StudentsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentsModel.swift; sourceTree = "<group>"; };
 		F74713FE2C1889BE00B4C0EC /* PasswordHasChangedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordHasChangedView.swift; sourceTree = "<group>"; };
 		F74714012C19E74900B4C0EC /* AuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModel.swift; sourceTree = "<group>"; };
@@ -182,7 +184,7 @@
 		F76C6BC62B6A96A900EACFEB /* Jost-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-SemiBold.ttf"; sourceTree = "<group>"; };
 		F76C6BC72B6A96A900EACFEB /* Jost-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-MediumItalic.ttf"; sourceTree = "<group>"; };
 		F79083062B9F2C8300B9386E /* NeobisUILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeobisUILabel.swift; sourceTree = "<group>"; };
-		F79083082B9F31B400B9386E /* HomeworkPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeworkPanelViewController.swift; sourceTree = "<group>"; };
+		F79083082B9F31B400B9386E /* HomeworkPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeworkPanelView.swift; sourceTree = "<group>"; };
 		F7948FDF2C665D990028E3EA /* StudentHomeworkDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentHomeworkDetailsViewController.swift; sourceTree = "<group>"; };
 		F7948FE12C665EB60028E3EA /* DetailTitledViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTitledViewController.swift; sourceTree = "<group>"; };
 		F7948FE32C7CBC2B0028E3EA /* TeacherDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherDetailsViewModel.swift; sourceTree = "<group>"; };
@@ -207,7 +209,6 @@
 		F7962AFA2C0A209A0045ADA0 /* PasswordCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordCreationViewController.swift; sourceTree = "<group>"; };
 		F79EE1F02C087822009584D9 /* ConfirmCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmCodeViewController.swift; sourceTree = "<group>"; };
 		F79FFFD82C84A10D003790CB /* SubmissionsListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmissionsListVC.swift; sourceTree = "<group>"; };
-		F79FFFDA2C8ECFEA003790CB /* HomeworkDeadlineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeworkDeadlineViewController.swift; sourceTree = "<group>"; };
 		F7C0D10A2C3A9C13003CEC19 /* NotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewModel.swift; sourceTree = "<group>"; };
 		F7C0D10C2C3D65B3003CEC19 /* NotificationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDetailViewController.swift; sourceTree = "<group>"; };
 		F7C0D10E2C46C0A5003CEC19 /* TeacherLessonCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherLessonCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -216,7 +217,6 @@
 		F7C0D1142C4BE0F9003CEC19 /* TeacherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherModel.swift; sourceTree = "<group>"; };
 		F7C0D1162C4D4050003CEC19 /* NotepadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotepadView.swift; sourceTree = "<group>"; };
 		F7C0D11A2C5131D4003CEC19 /* SetHomeworkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetHomeworkViewController.swift; sourceTree = "<group>"; };
-		F7C0D11C2C5137D8003CEC19 /* TeacherHomeworkPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherHomeworkPanelViewController.swift; sourceTree = "<group>"; };
 		F7C0D11F2C515857003CEC19 /* GradeStudentsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeStudentsListViewController.swift; sourceTree = "<group>"; };
 		F7C0D1222C5BCE2B003CEC19 /* TeacherItemListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherItemListCollectionViewCell.swift; sourceTree = "<group>"; };
 		F7CAE69C2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdayCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -273,7 +273,6 @@
 		F70FCF422BFF8D900088AACD /* SecondarySubcontrollers */ = {
 			isa = PBXGroup;
 			children = (
-				F7C0D11E2C5137E0003CEC19 /* HomeworkPanelVCs */,
 				F79534042BEBB442004A76C6 /* HomeworkSubmissionViewController.swift */,
 				F79534002BE3C076004A76C6 /* AttachedFilesDetailViewController.swift */,
 				F7C0D11A2C5131D4003CEC19 /* SetHomeworkViewController.swift */,
@@ -297,6 +296,7 @@
 			children = (
 				F75B04D52C25C1DC00626265 /* NeobisUINavigationController.swift */,
 				F7084A772C0381A000A6DF4B /* LoginTextField.swift */,
+				F72CD0EE2CA85BAB006BBB4E /* AutosizeUICollectionViewCell.swift */,
 				F7948FE72C809E020028E3EA /* NeobisTextField.swift */,
 				F79083062B9F2C8300B9386E /* NeobisUILabel.swift */,
 				F71ACC0C2BD78F1C00EDE3A6 /* PlaceholderTextView.swift */,
@@ -311,6 +311,15 @@
 				F722B0062C5FC208002D519C /* Mock.swift */,
 			);
 			path = MockData;
+			sourceTree = "<group>";
+		};
+		F72CD0F02CA85CC7006BBB4E /* StudentHomeworkDetails */ = {
+			isa = PBXGroup;
+			children = (
+				F7948FDF2C665D990028E3EA /* StudentHomeworkDetailsViewController.swift */,
+				F72CD0EC2CA85B4B006BBB4E /* StudentHomeworkDetailsSections.swift */,
+			);
+			path = StudentHomeworkDetails;
 			sourceTree = "<group>";
 		};
 		F74714002C19D68C00B4C0EC /* Support */ = {
@@ -460,6 +469,7 @@
 				F79533F82BDFD461004A76C6 /* SnackBarView.swift */,
 				F75B04DA2C26EC1500626265 /* ProfileSubmitView.swift */,
 				F75B04DE2C28496100626265 /* AlertInputView.swift */,
+				F79083082B9F31B400B9386E /* HomeworkPanelView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -485,16 +495,6 @@
 			path = Subcontrollers;
 			sourceTree = "<group>";
 		};
-		F7C0D11E2C5137E0003CEC19 /* HomeworkPanelVCs */ = {
-			isa = PBXGroup;
-			children = (
-				F79083082B9F31B400B9386E /* HomeworkPanelViewController.swift */,
-				F7C0D11C2C5137D8003CEC19 /* TeacherHomeworkPanelViewController.swift */,
-				F79FFFDA2C8ECFEA003790CB /* HomeworkDeadlineViewController.swift */,
-			);
-			path = HomeworkPanelVCs;
-			sourceTree = "<group>";
-		};
 		F7C0D1212C5BCA9C003CEC19 /* Teacher */ = {
 			isa = PBXGroup;
 			children = (
@@ -503,7 +503,7 @@
 				F7C0D11F2C515857003CEC19 /* GradeStudentsListViewController.swift */,
 				F79FFFD82C84A10D003790CB /* SubmissionsListVC.swift */,
 				F722B00B2C6503CF002D519C /* StudentLessonsListViewController.swift */,
-				F7948FDF2C665D990028E3EA /* StudentHomeworkDetailsViewController.swift */,
+				F72CD0F02CA85CC7006BBB4E /* StudentHomeworkDetails */,
 				F7948FE62C7E0D180028E3EA /* Subcontrollers */,
 			);
 			path = Teacher;
@@ -718,23 +718,22 @@
 				F7948FE42C7CBC2B0028E3EA /* TeacherDetailsViewModel.swift in Sources */,
 				F722B00C2C6503CF002D519C /* StudentLessonsListViewController.swift in Sources */,
 				F7CAE6A12B73DD01004916E3 /* WorkdayScheduleViewController.swift in Sources */,
-				F79FFFDB2C8ECFEA003790CB /* HomeworkDeadlineViewController.swift in Sources */,
 				F74713FF2C1889BE00B4C0EC /* PasswordHasChangedView.swift in Sources */,
 				F795340D2BF51438004A76C6 /* ConfirmableExtension.swift in Sources */,
 				F76081482B8A170F00B6D792 /* KEYS.swift in Sources */,
 				F722B00A2C6115D1002D519C /* ItemsListViewController.swift in Sources */,
 				F79083072B9F2C8300B9386E /* NeobisUILabel.swift in Sources */,
 				F79533FB2BDFF9D8004A76C6 /* Errors.swift in Sources */,
-				F79083092B9F31B400B9386E /* HomeworkPanelViewController.swift in Sources */,
+				F79083092B9F31B400B9386E /* HomeworkPanelView.swift in Sources */,
 				F7E39CA62C1DAC9D0070428A /* NeobisUIButton.swift in Sources */,
 				F702171D2C36E03B00B0D962 /* NotificationModel.swift in Sources */,
 				F7F581662BBC49D000FFC6C9 /* FilesCollectionViewCell.swift in Sources */,
+				F72CD0ED2CA85B64006BBB4E /* StudentHomeworkDetailsSections.swift in Sources */,
 				F7F581632BB84D6B00FFC6C9 /* FilesCollectionViewController.swift in Sources */,
 				F7948FE82C809E020028E3EA /* NeobisTextField.swift in Sources */,
 				F79EE1F12C087822009584D9 /* ConfirmCodeViewController.swift in Sources */,
 				F75B04DF2C28496100626265 /* AlertInputView.swift in Sources */,
 				F75B04DB2C26EC1500626265 /* ProfileSubmitView.swift in Sources */,
-				F7C0D11D2C5137D8003CEC19 /* TeacherHomeworkPanelViewController.swift in Sources */,
 				F7CAE6AB2B78F13F004916E3 /* DaySubjectsViewController.swift in Sources */,
 				F7084A762C03679200A6DF4B /* WelcomeViewController.swift in Sources */,
 				F76C6B7D2B67E2C500EACFEB /* ProfileViewController.swift in Sources */,
@@ -755,6 +754,7 @@
 				F79534172BFA32DD004A76C6 /* SubmittedSubjectDetailsViewController.swift in Sources */,
 				F76C6B632B67D06900EACFEB /* AppDelegate.swift in Sources */,
 				F76C6B652B67D06900EACFEB /* SceneDelegate.swift in Sources */,
+				F72CD0EF2CA85BAB006BBB4E /* AutosizeUICollectionViewCell.swift in Sources */,
 				F79534152BFA329F004A76C6 /* SubjectDetailsStatefulViewController.swift in Sources */,
 				F702171F2C36E3AD00B0D962 /* NotificationCollectionViewCell.swift in Sources */,
 				F76C6B862B694DF900EACFEB /* EllipseView.swift in Sources */,

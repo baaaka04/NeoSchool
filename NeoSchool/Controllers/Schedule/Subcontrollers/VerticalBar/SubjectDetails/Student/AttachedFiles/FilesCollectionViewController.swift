@@ -5,7 +5,7 @@ class FilesCollectionViewController: UIViewController, UICollectionViewDelegate,
 
     private let imagesAPI: ImagesAPI?
     
-    private var attachedFiles : [AttachedFile]?
+    private var attachedFiles : [AttachedFile] = []
     private var urls : [String]?
     var onPressRemove : ((_ file: AttachedFile) -> Void)?
     
@@ -26,13 +26,12 @@ class FilesCollectionViewController: UIViewController, UICollectionViewDelegate,
     init(urls: [String]? = nil) {
         self.urls = urls
         self.imagesAPI = ImagesAPI()
-        self.attachedFiles = nil
-        
+
         super.init(nibName: nil, bundle: nil)
     }
     //MARK: initialization to display images from device
     init(attachedFiles: [AttachedFile]?) {
-        self.attachedFiles = attachedFiles
+        self.attachedFiles = attachedFiles ?? []
         self.imagesAPI = nil
         self.urls = nil
         
@@ -42,54 +41,67 @@ class FilesCollectionViewController: UIViewController, UICollectionViewDelegate,
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
 
         view.addSubview(collectionView)
-        
+
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         getDataFromUrls()
     }
-    
+
     private func getDataFromUrls() {
-        
         guard let urls else { return }
         self.attachedFiles = []
-        
-        for url in urls {
-            Task {
-                do {
-                    let image = try await imagesAPI?.loadImage(url: url)
-                    let newFile = AttachedFile(image: image)
-                    DispatchQueue.main.async {
-                        self.attachedFiles?.append(newFile)
-                        self.collectionView.reloadData()
+
+        Task {
+            await withTaskGroup(of: (String, UIImage?).self) { taskGroup in
+                for url in urls {
+                    taskGroup.addTask {
+                        do {
+                            let image = try await self.imagesAPI?.loadImage(url: url)
+                            return (url, image)
+                        } catch {
+                            print("Error loading image from URL: \(url), \(error)")
+                            return (url, nil)
+                        }
                     }
-                } catch {
-                    print(error)
+                }
+
+                for await (url, image) in taskGroup {
+                    if let image = image {
+                        let newFile = AttachedFile(image: image)
+                        self.attachedFiles.append(newFile)
+                    } else {
+                        print("No image loaded for URL: \(url)")
+                    }
+                }
+
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
                 }
             }
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        attachedFiles?.count ?? 0
+        attachedFiles.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilesCollectionViewCell.identifier, for: indexPath) as? FilesCollectionViewCell else { return FilesCollectionViewCell(frame: .zero) }
         
-        cell.attachedFile = attachedFiles?[indexPath.item]
+        cell.attachedFile = attachedFiles[indexPath.item]
         cell.onPressRemove = onPressRemove
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let image = attachedFiles?[indexPath.item].image else { return }
+        guard let image = attachedFiles[indexPath.item].image else { return }
         let zoomImageView = ZoomPictureViewController(image: image)
         self.navigationController?.pushViewController(zoomImageView, animated: true)
     }

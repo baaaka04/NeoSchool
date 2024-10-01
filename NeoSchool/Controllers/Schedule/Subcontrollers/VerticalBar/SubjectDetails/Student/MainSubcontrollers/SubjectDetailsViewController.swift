@@ -6,7 +6,7 @@ class SubjectDetailsViewController: DetailViewController {
     //MARK: - Properties
     
     let viewModel: SubjectDetailsViewModelRepresentable
-    let homeworkPanel = HomeworkPanelViewController()
+    let homeworkPanel = HomeworkPanelView(presentaionMode: .student)
     var getLessonDetails: ( () -> Void)?
     
     lazy var scrollView = UIScrollView()
@@ -69,12 +69,10 @@ class SubjectDetailsViewController: DetailViewController {
     }
 
     func setupHomeworkUI () {
-        self.addChild(homeworkPanel)
-        scrollView.addSubview(homeworkPanel.view)
-        homeworkPanel.didMove(toParent: self)
+        scrollView.addSubview(homeworkPanel)
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapHomework))
-        homeworkPanel.view.addGestureRecognizer(tapGesture)
+        homeworkPanel.addGestureRecognizer(tapGesture)
         homeworkPanel.attachedFilesLabel.addTarget(self, action: #selector(onTapHomework), for: .touchUpInside)
     }
             
@@ -111,14 +109,14 @@ class SubjectDetailsViewController: DetailViewController {
             make.width.equalToSuperview().offset(-Constants.horizontalMargin)
             make.top.equalTo(firstSubTitleLabel.snp.bottom)
         }
-        homeworkPanel.view.snp.makeConstraints { make in
+        homeworkPanel.snp.makeConstraints { make in
             make.top.equalTo(secondSubTitleLabel.snp.bottom).offset(Constants.gap)
             make.right.left.equalTo(secondSubTitleLabel)
         }
         deadlineLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().offset(-Constants.horizontalMargin)
-            make.top.equalTo(homeworkPanel.view.snp.bottom).offset(Constants.gap)
+            make.top.equalTo(homeworkPanel.snp.bottom).offset(Constants.gap)
         }
         markLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()

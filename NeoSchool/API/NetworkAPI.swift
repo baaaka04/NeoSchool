@@ -51,7 +51,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
         var params : [[String : String]]? = nil
         if let studentComment { params = [["student_comment": studentComment]] }
         
-        let body = try multipartFormDataBody(boundary: boundary, files: files, parameters: params)
+        let body = try multipartFormDataBody(boundary: boundary, parameters: params, files: files)
         let request = try generateRequest(boundary: boundary, httpBody: body, urlString: urlString)
         
         let (_, resp) = try await URLSession.shared.data(for: request)
@@ -294,7 +294,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
             ["deadline": formattedDeadline]
         ]
 
-        let body = try multipartFormDataBody(boundary: boundary, files: files, parameters: params)
+        let body = try multipartFormDataBody(boundary: boundary, parameters: params, files: files)
         var request = try generateRequest(boundary: boundary, httpBody: body, urlString: urlString)
         request.httpMethod = "PUT"
 
@@ -331,6 +331,40 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
         let decodedData: TeacherSubmissionDetails = try decodeRecievedData(data: data)
         return decodedData
     }
+
+    //POST-REQUEST
+    //ENDPOINT /schedule/teacher/submissions/{submission_id}/revise/
+    func reviseSubmission(submissionId: Int) async throws -> Void {
+        let urlString = "\(domen)/neoschool//schedule/teacher/submissions/\(submissionId)/revise/"
+        var request = try generateAuthorizedRequest(urlString: urlString)
+        request.httpMethod = "POST"
+        let (data, resp) = try await URLSession.shared.data(for: request)
+    }
+
+    //POST-REQUEST
+    //ENDPOINT /schedule/teacher/submissions/{submission_id}/rate/
+    func gradeSubmission(submissionId: Int, mark: String, teacherComment: String?) async throws -> TeacherSubmissionDetails {
+        let urlString = "\(domen)/neoschool/schedule/teacher/submissions/\(submissionId)/rate/"
+        let boundary = "Boundary-\(UUID().uuidString)"
+        var params : [[String : String]]? = nil
+        if let teacherComment { params = [
+            ["mark": mark],
+            ["teacher_comment": teacherComment]
+        ]}
+
+        let body = try multipartFormDataBody(boundary: boundary, parameters: params)
+        let request = try generateRequest(boundary: boundary, httpBody: body, urlString: urlString)
+
+        let (data, resp) = try await URLSession.shared.data(for: request)
+
+        guard let httpresponse = resp as? HTTPURLResponse, httpresponse.statusCode == 200 else {
+            throw MyError.badNetwork
+        }
+
+        let decodedData: TeacherSubmissionDetails = try decodeRecievedData(data: data)
+        return decodedData
+    }
+
 }
 
 
@@ -354,20 +388,22 @@ extension NetworkAPI {
         return request
     }
     
-    private func multipartFormDataBody(boundary: String, files: [AttachedFile], parameters: [[String: String]]?) throws -> Data {
+    private func multipartFormDataBody(boundary: String, parameters: [[String: String]]?, files: [AttachedFile]? = nil) throws -> Data {
         let lineBreak = "\r\n"
         var body = Data()
-                        
-        for file in files {
-            body.append("--\(boundary + lineBreak)")
-            body.append("Content-Disposition: form-data; name=\"files\"; filename=\"\(file.name)\"\(lineBreak)")
-            body.append("Content-Type: image/jpeg\(lineBreak + lineBreak)")
-            guard let image = file.image,
-                  let imageData = image.jpegData(compressionQuality: 1.0) else { throw URLError(.cannotCreateFile) }
-            body.append(imageData)
-            body.append(lineBreak)
+
+        if let files {
+            for file in files {
+                body.append("--\(boundary + lineBreak)")
+                body.append("Content-Disposition: form-data; name=\"files\"; filename=\"\(file.name)\"\(lineBreak)")
+                body.append("Content-Type: image/jpeg\(lineBreak + lineBreak)")
+                guard let image = file.image,
+                      let imageData = image.jpegData(compressionQuality: 1.0) else { throw URLError(.cannotCreateFile) }
+                body.append(imageData)
+                body.append(lineBreak)
+            }
         }
-        
+
         if let parameters {
             for param in parameters {
                 for (key, value) in param {

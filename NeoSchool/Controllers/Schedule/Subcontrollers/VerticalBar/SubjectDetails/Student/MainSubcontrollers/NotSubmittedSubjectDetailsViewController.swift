@@ -111,7 +111,7 @@ class NotSubmittedSubjectDetailsViewController: SubjectDetailsViewController, UI
     }
     
     @objc private func openCommentView() {
-        let commentVC = CommentModalViewController()
+        let commentVC = CommentModalViewController(userRole: .student)
         commentVC.delegate = self.viewModel as? CommentRepresentable
         commentVC.getLessonDetails = { [weak self] in
             self?.getLessonDetails?()

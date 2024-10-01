@@ -10,8 +10,12 @@ class NeobisUIButton: UIButton {
         case white, purple, red, addFiles
     }
     
-    private let type: ButtonType
-    
+    var type: ButtonType {
+        didSet {
+            self.setupUI()
+        }
+    }
+
     override var isEnabled: Bool {
         didSet {
             switch self.type {

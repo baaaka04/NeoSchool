@@ -9,6 +9,7 @@ class TeacherLessonDetailVC: DetailTitledViewController {
     private let timeAndRoomLabel = GrayUILabel(font: AppFont.font(type: .Regular, size: 16))
     private let classInfoLabel = GrayUILabel(font: AppFont.font(type: .Medium, size: 16))
     private let lineView = UIView()
+    private let homeworkPanel = HomeworkPanelView(presentaionMode: .teacherFull)
 
     private lazy var submissionsListVC = SubmissionsListVC(vm: self.vm)
 
@@ -25,8 +26,6 @@ class TeacherLessonDetailVC: DetailTitledViewController {
         button.addTarget(self, action: #selector(onTapStudentListButton), for: .touchUpInside)
         return button
     }()
-    
-    private let homeworkPanel = TeacherHomeworkPanelViewController()
     
     private let recievedHomeworksLabel: GrayUILabel = {
         let label = GrayUILabel(font: AppFont.font(type: .Regular, size: 20))
@@ -50,9 +49,7 @@ class TeacherLessonDetailVC: DetailTitledViewController {
         scrollview.addSubview(timeAndRoomLabel)
         scrollview.addSubview(classInfoLabel)
         scrollview.addSubview(openStudentsListButton)
-        addChild(homeworkPanel)
-        scrollview.addSubview(homeworkPanel.view)
-        homeworkPanel.didMove(toParent: self)
+        scrollview.addSubview(homeworkPanel)
         scrollview.addSubview(recievedHomeworksLabel)
         scrollview.addSubview(lineView)
 
@@ -61,6 +58,11 @@ class TeacherLessonDetailVC: DetailTitledViewController {
         submissionsListVC.didMove(toParent: self)
 
         setupUI()
+        getLessonDetails()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         getLessonDetails()
     }
 
@@ -82,13 +84,13 @@ class TeacherLessonDetailVC: DetailTitledViewController {
             make.top.equalTo(classInfoLabel.snp.bottom).offset(12)
             make.leading.equalToSuperview().inset(16)
         }
-        homeworkPanel.view.snp.makeConstraints { make in
+        homeworkPanel.snp.makeConstraints { make in
             make.top.equalTo(openStudentsListButton.snp.bottom).offset(16)
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().inset(16)
         }
         recievedHomeworksLabel.snp.makeConstraints { make in
-            make.top.equalTo(homeworkPanel.view.snp.bottom).offset(16)
+            make.top.equalTo(homeworkPanel.snp.bottom).offset(16)
             make.leading.trailing.equalToSuperview().inset(16)
         }
         lineView.snp.makeConstraints { make in
@@ -105,7 +107,7 @@ class TeacherLessonDetailVC: DetailTitledViewController {
         }
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapHomework))
-        homeworkPanel.view.addGestureRecognizer(tapGesture)
+        homeworkPanel.addGestureRecognizer(tapGesture)
         homeworkPanel.attachedFilesLabel.addTarget(self, action: #selector(onTapAttachedFiles), for: .touchUpInside)
     }
     
@@ -128,7 +130,6 @@ class TeacherLessonDetailVC: DetailTitledViewController {
             homeworkPanel.homeworkText = lessonDetails.homework?.text
             homeworkPanel.attachedFilesNumber = lessonDetails.homework?.filesCount
         }
-        homeworkPanel.updateUI()
 
         updateSubmissionsUI()
     }
