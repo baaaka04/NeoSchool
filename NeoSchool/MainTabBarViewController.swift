@@ -16,8 +16,10 @@ class MainTabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let (navControllerName, navControllerIcon, navControllerIconSelected) = getNavControllerDetails(for: userRole)
+
         let vc1 = self.createVC(with: "Расписание", image: UIImage(named: "ScheduleIcon"), selectedImage: UIImage(named: "ScheduleIconSelected"), vc: ScheduleViewController(navbarTitle: "Расписание", navbarColor: .neobisPurple, userRole: self.userRole))
-        let vc2 = self.createVC(with: "Успеваемость", image: UIImage(named: "LineChartIcon"), selectedImage: UIImage(named: "LineChartIconSelected"), vc: PerformanceViewController(navbarTitle: "Успеваемость", navbarColor: .neobisBlue))
+        let vc2 = self.createVC(with: navControllerName, image: navControllerIcon, selectedImage: navControllerIconSelected, vc: PerformanceViewController(navbarTitle: navControllerName, navbarColor: .neobisBlue))
         let vc3 = self.createVC(with: "Профиль", image: UIImage(named: "ProfileIcon"), selectedImage: UIImage(named: "ProfileIconSelected"), vc: ProfileViewController(navbarTitle: "Профиль", navbarColor: .neobisGreen))
         
         self.tabBar.tintColor = UIColor.neobisDarkPurple
@@ -41,7 +43,16 @@ class MainTabBarViewController: UITabBarController {
         
         self.setViewControllers([vc1, vc2, vc3], animated: true)
     }
-        
+
+    private func getNavControllerDetails(for role: UserRole) -> (String, UIImage?, UIImage?) {
+            switch role {
+            case .teacher:
+                return ("Журнал", UIImage(named: "BookIcon"), UIImage(named: "BookIconSelected"))
+            case .student:
+                return ("Успеваемость", UIImage(named: "LineChartIcon"), UIImage(named: "LineChartIconSelected"))
+            }
+        }
+
     private func createVC(with title: String, image: UIImage?, selectedImage: UIImage?, vc: UIViewController) -> NeobisUINavigationController {
         
         vc.tabBarItem.title = title
