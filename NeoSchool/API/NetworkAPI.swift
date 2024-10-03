@@ -365,6 +365,24 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
         return decodedData
     }
 
+    //GET-REQUEST
+    //ENDPOINT /marks/teacher/grades/
+    func getGrades() async throws -> [GradeName] {
+        let urlString = "\(domen)/neoschool/marks/teacher/grades/"
+        let request = try generateAuthorizedRequest(urlString: urlString)
+        let (data, _) = try await URLSession.shared.data(for: request)
+        do {
+            let decodedData: DTOModel = try decodeRecievedData(data: data)
+            var grades: [GradeName] = []
+            for grade in decodedData.list {
+                grades.append( GradeName(dtoItem: grade))
+            }
+            return grades
+        } catch {
+            throw MyError.failDecoding
+        }
+    }
+
 }
 
 

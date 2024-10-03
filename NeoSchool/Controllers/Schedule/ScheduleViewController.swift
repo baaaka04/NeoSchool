@@ -19,10 +19,10 @@ final class ScheduleViewController: SchoolNavViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
                 
-        configureWeekBar()
+        setupUI()
     }
     
-    private func configureWeekBar () {
+    private func setupUI () {
         let weekBar = WorkdayScheduleViewController(userRole: self.userRole)
         addChild(weekBar)
         

@@ -1,7 +1,7 @@
 import Foundation
 
 enum MyError: Error {
-    case badNetwork, failDecoding, nothingToCancel, cannotEncodeData, noRefreshToken, noAccessToken, failSavingToken, noUserRole, invalidDateFormat, noDataReceived
+    case badNetwork, failDecoding, nothingToCancel, cannotEncodeData, noRefreshToken, noAccessToken, failSavingToken, noUserRole, invalidDateFormat, noDataReceived, failMapping
 
     var description: String {
         switch self {
@@ -25,6 +25,8 @@ enum MyError: Error {
             "Invalid Date Format"
         case .noDataReceived:
             "No data received"
+        case .failMapping:
+            "Something went wrong while mapping"
         }
     }
 }

@@ -17,6 +17,16 @@ struct SchoolLesson: Codable {
 struct GradeName: Codable {
     let id: Int
     let name: String
+
+    init(id: Int, name: String) {
+        self.id = id
+        self.name = name
+    }
+
+    init(dtoItem: DTOListItem) {
+        self.id = dtoItem.id
+        self.name = dtoItem.name
+    }
 }
 struct Day: Codable {
     let id : Int

@@ -124,3 +124,14 @@ struct TeacherSubmissionDetails: Decodable {
     let canChangeMark: Bool
     let topic: String
 }
+
+struct DTOModel: Codable {
+    let totalCount: Int
+    let totalPages: Int
+    let list: [DTOListItem]
+}
+
+struct DTOListItem: Codable {
+    let id: Int
+    let name: String
+}
