@@ -55,7 +55,7 @@ class MockTeacherDayScheduleAPI: TeacherLessonDayProtocol {
     }
     
     func getTeacherLessonDetail(forLessonId lessonId: Int) async throws -> TeacherLessonDetail {
-        return TeacherLessonDetail(id: 1, subject: StudentSubject(id: 1, name: "Биология", teacher: FullNameUser(id: 1, fullName: "Петрова Ольга Викторовна", firstName: "Ольга", lastName: "Петрова", patronymic: "Петрова О.В.")), homework: TeacherHomework(id: 1, text: "Прочитать главу 3", deadline: "2012-01-26T08:40:00.000+06:00", filesCount: 1), submissions: nil, grade: GradeName(id: 1, name: "5 A"), room: Room(id: 1, name: "301"), startTime: "2012-01-26T08:00:00.000+06:00", endTime: "2012-01-26T08:40:00.000+06:00", studentsCount: 15)
+        return TeacherLessonDetail(id: 1, subject: StudentSubject(id: 1, name: "Биология", teacher: FullNameUser(id: 1, fullName: "Петрова Ольга Викторовна", firstName: "Ольга", lastName: "Петрова", patronymic: "Петрова О.В.", mark: nil)), homework: TeacherHomework(id: 1, text: "Прочитать главу 3", deadline: "2012-01-26T08:40:00.000+06:00", filesCount: 1), submissions: nil, grade: GradeName(id: 1, name: "5 A", subjects: nil), room: Room(id: 1, name: "301"), startTime: "2012-01-26T08:00:00.000+06:00", endTime: "2012-01-26T08:40:00.000+06:00", studentsCount: 15)
     }
     
     func getStudentList(subjectId: Int, gradeId: Int, page: Int) async throws -> DTOStudentSubmissionCount {
@@ -79,7 +79,7 @@ class MockTeacherDayScheduleAPI: TeacherLessonDayProtocol {
 
     func getStudentLessons(studentId: Int, page: Int) async throws -> DTOStudentLessonsList {
         return DTOStudentLessonsList(totalCount: 5, totalPages: 5, list:  [
-            .init(id: 1, student: FullNameUser(id: 1, fullName: "", firstName: "", lastName: "", patronymic: ""), homework: 1, submittedDate: "", submittedOnTime: true, mark: "", lessonId: 1, subject: SubjectName(id: 1, name: ""), topic: "")
+            .init(id: 1, student: FullNameUser(id: 1, fullName: "", firstName: "", lastName: "", patronymic: "", mark: nil), homework: 1, submittedDate: "", submittedOnTime: true, mark: "", lessonId: 1, subject: SubjectName(id: 1, name: ""), topic: "")
         ])
 
 //        throw MyError.badNetwork
@@ -87,4 +87,61 @@ class MockTeacherDayScheduleAPI: TeacherLessonDayProtocol {
 
 
 
+}
+
+
+class MockPerformanceAPI: PerformanceAPIProtocol {
+
+    func getGrades() async throws -> [GradeName] {
+        return [
+            .init(id: 1, name: "5 A", subjects: nil),
+            .init(id: 2, name: "5 Б", subjects: nil),
+            .init(id: 3, name: "5 В", subjects: nil),
+            .init(id: 4, name: "6 A", subjects: nil),
+        ]
+    }
+
+    func getGradeDayData(gradeId: Int, subjectId: Int, date: Date) async throws -> [FullNameUser] {
+        return [
+            .init(
+                id: 71,
+                fullName: "Соколов Игорь Станиславович",
+                firstName: "Игорь",
+                lastName: "Соколов",
+                patronymic: "Станиславович",
+                mark: nil
+            ),
+            .init(
+                id: 72,
+                fullName: "Попова Ольга Валентиновна",
+                firstName: "Ольга",
+                lastName: "Попова",
+                patronymic: "Валентиновна",
+                mark: nil
+            ),
+            .init(
+                id: 73,
+                fullName: "Новиков Николай Александрович",
+                firstName: "Николай",
+                lastName: "Новиков",
+                patronymic: "Александрович",
+                mark: nil
+            )
+        ]
+    }
+}
+
+struct DTOPerformance {
+    let totalCount: Int
+    let totalPages: Int
+    let list: [StudentMark]
+}
+
+struct StudentMark {
+    let id: Int
+    let fullName: String
+    let firstName: String
+    let lastName: String
+    let patronymic: String
+    let mark: String?
 }

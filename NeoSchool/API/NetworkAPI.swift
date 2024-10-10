@@ -371,15 +371,28 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
         let urlString = "\(domen)/neoschool/marks/teacher/grades/"
         let request = try generateAuthorizedRequest(urlString: urlString)
         let (data, _) = try await URLSession.shared.data(for: request)
+        let decodedData: DTOTeacherGradesWithSubjects = try decodeRecievedData(data: data)
+        return decodedData.list
+    }
+
+    //GET-REQUEST
+    //ENDPOINT /marks/teacher/grades/{grade_id}/students/
+    func getGradeDayData(gradeId: Int, subjectId: Int, date: Date) async throws -> [FullNameUser] {
+        let dateString = formatToISO8601(date: date)
+        let urlString = "\(domen)/neoschool/marks/teacher/" +
+        "grades/\(gradeId)/students/?" +
+        "page=1" +
+        "&limit=1000" + //TODO: Pagination
+        "&date_time=\(dateString)" +//2024-10-06T15%3A37%3A48.093Z"
+        "&subject=\(subjectId)"
         do {
-            let decodedData: DTOModel = try decodeRecievedData(data: data)
-            var grades: [GradeName] = []
-            for grade in decodedData.list {
-                grades.append( GradeName(dtoItem: grade))
-            }
-            return grades
+            let request = try generateAuthorizedRequest(urlString: urlString)
+            let (data, _) = try await URLSession.shared.data(for: request)
+            let decodedData: DTOStudentsMarks = try decodeRecievedData(data: data)
+            return decodedData.list
         } catch {
-            throw MyError.failDecoding
+            print(error)
+            throw error
         }
     }
 
@@ -464,6 +477,16 @@ extension NetworkAPI {
         let isoFormattedString = dateFormatter.string(from: date)
 
         return isoFormattedString
+    }
+
+    func formatToISO8601(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        if let bishkekTimeZone = TimeZone(identifier: "Asia/Bishkek") {
+            formatter.timeZone = bishkekTimeZone
+        }
+        formatter.locale = Locale(identifier: "en_US_POSIX")  // Ensures consistent formatting
+        return formatter.string(from: date)
     }
 }
 

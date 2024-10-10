@@ -19,7 +19,7 @@ class MainTabBarViewController: UITabBarController {
         let (navControllerName, navControllerIcon, navControllerIconSelected) = getNavControllerDetails(for: userRole)
 
         let vc1 = self.createVC(with: "Расписание", image: UIImage(named: "ScheduleIcon"), selectedImage: UIImage(named: "ScheduleIconSelected"), vc: ScheduleViewController(navbarTitle: "Расписание", navbarColor: .neobisPurple, userRole: self.userRole))
-        let vc2 = self.createVC(with: navControllerName, image: navControllerIcon, selectedImage: navControllerIconSelected, vc: PerformanceViewController(navbarTitle: navControllerName, navbarColor: .neobisBlue, userRole: self.userRole))
+        let vc2 = self.createVC(with: navControllerName, image: navControllerIcon, selectedImage: navControllerIconSelected, vc: PerformanceViewController(navbarTitle: navControllerName, navbarColor: .neobisBlue, userRole: self.userRole, performanceAPI: PerformanceAPI()))
         let vc3 = self.createVC(with: "Профиль", image: UIImage(named: "ProfileIcon"), selectedImage: UIImage(named: "ProfileIconSelected"), vc: ProfileViewController(navbarTitle: "Профиль", navbarColor: .neobisGreen))
         
         self.tabBar.tintColor = UIColor.neobisDarkPurple

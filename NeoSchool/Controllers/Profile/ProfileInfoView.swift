@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 
 
-class ProfileInfoView: UIView {
+class ProfileInfoView: ContainerView {
     
     private let profileInfo: ProfileInfo
     
@@ -39,15 +39,7 @@ class ProfileInfoView: UIView {
     }
 
     private func setupUI() {
-        
-        backgroundColor = .white
-        layer.cornerRadius = 16
-        
-        layer.shadowColor = UIColor.neobisShadow.cgColor
-        layer.shadowOpacity = 0.1
-        layer.shadowOffset = .zero
-        layer.shadowRadius = 10
-                
+                        
         userTitleLabel.textColor = .neobisGreen
         userTitleLabel.font = AppFont.font(type: .SemiBold, size: 20)
         
@@ -75,20 +67,8 @@ class ProfileInfoView: UIView {
         let lineImage = UIView()
         lineImage.backgroundColor = .neobisGrayStroke
         
-        addSubview(userTitleLabel)
-        addSubview(FIOTitleLabel)
-        addSubview(userFullName)
-        addSubview(emailTitleLabel)
-        addSubview(userEmail)
-        addSubview(lineImage)
-        addSubview(schoolTitleLabel)
-        addSubview(schoolNameTitleLabel)
-        addSubview(schoolNameLabel)
-        addSubview(mainClassTitleLabel)
-        addSubview(mainClassLabel)
-        addSubview(otherInfoTitleLabel)
-        addSubview(otherInfoLabel)
-        
+        [userTitleLabel, FIOTitleLabel, userFullName, emailTitleLabel, userEmail, lineImage, schoolTitleLabel, schoolNameTitleLabel, schoolNameLabel, mainClassTitleLabel, mainClassLabel, otherInfoTitleLabel, otherInfoLabel].forEach { addSubview($0) }
+
         userTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(Constants.sectionGap)
             make.centerX.equalToSuperview()

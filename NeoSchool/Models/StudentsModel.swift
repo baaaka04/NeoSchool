@@ -17,16 +17,7 @@ struct SchoolLesson: Codable {
 struct GradeName: Codable {
     let id: Int
     let name: String
-
-    init(id: Int, name: String) {
-        self.id = id
-        self.name = name
-    }
-
-    init(dtoItem: DTOListItem) {
-        self.id = dtoItem.id
-        self.name = dtoItem.name
-    }
+    let subjects: [SubjectName]?
 }
 struct Day: Codable {
     let id : Int
@@ -36,7 +27,7 @@ struct Room: Codable {
     let id : Int
     let name : String
 }
-struct SubjectName: Codable {
+struct SubjectName: Codable, Equatable {
     let id : Int
     let name : String
 }
@@ -44,13 +35,13 @@ struct Homework: Codable {
     let id : Int
     let text : String
 }
-enum Grade: String {
+enum Grade: String, CaseIterable {
+    case absent = "H"
     case two = "2"
     case three = "3"
     case four = "4"
     case five = "5"
     case noGrade = "-"
-    case absent = "H"
     
     var color: UIColor {
         switch self {
@@ -104,7 +95,8 @@ struct FullNameUser: Codable {
     let fullName : String
     let firstName : String
     let lastName : String
-    let patronymic : String
+    let patronymic : String?
+    let mark: String?
 }
 struct StudentSubmission: Codable {
     let id : Int

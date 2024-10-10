@@ -52,21 +52,13 @@ class TeacherItemListCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupUI() {
-        let containerView = UIView()
-        
+        let containerView = ContainerView()
+
         contentView.addSubview(containerView)
         containerView.addSubview(arrowRightView)
         containerView.addSubview(titleLabel)
         containerView.addSubview(subtitleLabel)
         containerView.addSubview(datetimeLabel)
-
-        containerView.layer.cornerRadius = 16
-        containerView.backgroundColor = .white
-        containerView.layer.shadowColor = UIColor.neobisShadow.cgColor
-        containerView.layer.shadowOpacity = 0.1
-        containerView.layer.shadowOffset = .zero
-        containerView.layer.shadowRadius = 10
-        containerView.layer.masksToBounds = false
 
         containerView.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(16)

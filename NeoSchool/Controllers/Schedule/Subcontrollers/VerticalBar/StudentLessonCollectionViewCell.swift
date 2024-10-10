@@ -41,7 +41,6 @@ class StudentLessonCollectionViewCell: LessonCollectionViewCell {
         
         contentView.addSubview(gradeView)
         let gradeViewWidth = CGFloat(48)
-        let gradeViewLeftMargin = CGFloat(16)
         gradeView.snp.makeConstraints { make in
             make.right.equalToSuperview()
             make.centerY.equalToSuperview()

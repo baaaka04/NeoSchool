@@ -37,7 +37,6 @@
 		F76081412B877D3A00B6D792 /* DayScheduleAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76081402B877D3A00B6D792 /* DayScheduleAPI.swift */; };
 		F76081432B88DFC300B6D792 /* SchoolWeekAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76081422B88DFC300B6D792 /* SchoolWeekAPI.swift */; };
 		F76081462B88E46000B6D792 /* NetworkAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76081452B88E46000B6D792 /* NetworkAPI.swift */; };
-		F76081482B8A170F00B6D792 /* KEYS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76081472B8A170F00B6D792 /* KEYS.swift */; };
 		F760814A2B8B73DA00B6D792 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76081492B8B73DA00B6D792 /* StringExtension.swift */; };
 		F760814C2B8B75CA00B6D792 /* NotSubmittedSubjectDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F760814B2B8B75CA00B6D792 /* NotSubmittedSubjectDetailsViewController.swift */; };
 		F76C6B632B67D06900EACFEB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C6B622B67D06900EACFEB /* AppDelegate.swift */; };
@@ -97,7 +96,10 @@
 		F7BBB2DE2CAECBAF0082DD8B /* GradesBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BBB2DD2CAECBAF0082DD8B /* GradesBarVC.swift */; };
 		F7BBB2E02CAEF2C10082DD8B /* GradeBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BBB2DF2CAEF2C10082DD8B /* GradeBarCell.swift */; };
 		F7BBB2E32CAEF3010082DD8B /* PerformanceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BBB2E22CAEF2FB0082DD8B /* PerformanceAPI.swift */; };
-		F7BBB2E52CAEF3280082DD8B /* PerformanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BBB2E42CAEF31D0082DD8B /* PerformanceViewModel.swift */; };
+		F7BBB2E92CB04AFA0082DD8B /* MarksPanelVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BBB2E82CB04AFA0082DD8B /* MarksPanelVC.swift */; };
+		F7BBB2EB2CB870D40082DD8B /* SmallGradeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BBB2EA2CB870D40082DD8B /* SmallGradeCell.swift */; };
+		F7BBB2ED2CB871060082DD8B /* StudentNameAndMarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BBB2EC2CB871060082DD8B /* StudentNameAndMarkCell.swift */; };
+		F7BBB2F02CB8720D0082DD8B /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BBB2EF2CB8720D0082DD8B /* ContainerView.swift */; };
 		F7C0D10B2C3A9C13003CEC19 /* NotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0D10A2C3A9C13003CEC19 /* NotificationsViewModel.swift */; };
 		F7C0D10D2C3D65B3003CEC19 /* NotificationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0D10C2C3D65B3003CEC19 /* NotificationDetailViewController.swift */; };
 		F7C0D10F2C46C0A5003CEC19 /* TeacherLessonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C0D10E2C46C0A5003CEC19 /* TeacherLessonCollectionViewCell.swift */; };
@@ -155,7 +157,6 @@
 		F76081402B877D3A00B6D792 /* DayScheduleAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayScheduleAPI.swift; sourceTree = "<group>"; };
 		F76081422B88DFC300B6D792 /* SchoolWeekAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolWeekAPI.swift; sourceTree = "<group>"; };
 		F76081452B88E46000B6D792 /* NetworkAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAPI.swift; sourceTree = "<group>"; };
-		F76081472B8A170F00B6D792 /* KEYS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KEYS.swift; sourceTree = "<group>"; };
 		F76081492B8B73DA00B6D792 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		F760814B2B8B75CA00B6D792 /* NotSubmittedSubjectDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotSubmittedSubjectDetailsViewController.swift; sourceTree = "<group>"; };
 		F76C6B5F2B67D06900EACFEB /* NeoSchool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NeoSchool.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -216,7 +217,10 @@
 		F7BBB2DD2CAECBAF0082DD8B /* GradesBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradesBarVC.swift; sourceTree = "<group>"; };
 		F7BBB2DF2CAEF2C10082DD8B /* GradeBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeBarCell.swift; sourceTree = "<group>"; };
 		F7BBB2E22CAEF2FB0082DD8B /* PerformanceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceAPI.swift; sourceTree = "<group>"; };
-		F7BBB2E42CAEF31D0082DD8B /* PerformanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceViewModel.swift; sourceTree = "<group>"; };
+		F7BBB2E82CB04AFA0082DD8B /* MarksPanelVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarksPanelVC.swift; sourceTree = "<group>"; };
+		F7BBB2EA2CB870D40082DD8B /* SmallGradeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallGradeCell.swift; sourceTree = "<group>"; };
+		F7BBB2EC2CB871060082DD8B /* StudentNameAndMarkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentNameAndMarkCell.swift; sourceTree = "<group>"; };
+		F7BBB2EF2CB8720D0082DD8B /* ContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerView.swift; sourceTree = "<group>"; };
 		F7C0D10A2C3A9C13003CEC19 /* NotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewModel.swift; sourceTree = "<group>"; };
 		F7C0D10C2C3D65B3003CEC19 /* NotificationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDetailViewController.swift; sourceTree = "<group>"; };
 		F7C0D10E2C46C0A5003CEC19 /* TeacherLessonCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherLessonCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -407,7 +411,6 @@
 				F76C6B622B67D06900EACFEB /* AppDelegate.swift */,
 				F76C6B642B67D06900EACFEB /* SceneDelegate.swift */,
 				F76C6B662B67D06900EACFEB /* MainTabBarViewController.swift */,
-				F76081472B8A170F00B6D792 /* KEYS.swift */,
 				F7084A742C025D9A00A6DF4B /* Authentification */,
 				F7E562592BD029B20029B822 /* Models */,
 				F76081442B88E08100B6D792 /* API */,
@@ -470,6 +473,7 @@
 				F76C6B852B694DF900EACFEB /* EllipseView.swift */,
 				F7948FE92C821FC00028E3EA /* CalendarView.swift */,
 				F79534062BEBBF1E004A76C6 /* CommentView.swift */,
+				F7BBB2EF2CB8720D0082DD8B /* ContainerView.swift */,
 				F795340A2BF35C50004A76C6 /* ConfirmUIView.swift */,
 				F74713FE2C1889BE00B4C0EC /* PasswordHasChangedView.swift */,
 				F71ACC082BD553D100EDE3A6 /* CommentSubmitView.swift */,
@@ -507,12 +511,22 @@
 		F7BBB2DC2CAEB6BA0082DD8B /* Performance */ = {
 			isa = PBXGroup;
 			children = (
+				F7BBB2EE2CB871380082DD8B /* CollectionViewCells */,
 				F76C6B7A2B67E29000EACFEB /* PerformanceViewController.swift */,
-				F7BBB2E42CAEF31D0082DD8B /* PerformanceViewModel.swift */,
+				F7BBB2E82CB04AFA0082DD8B /* MarksPanelVC.swift */,
 				F7BBB2DD2CAECBAF0082DD8B /* GradesBarVC.swift */,
 				F7BBB2DF2CAEF2C10082DD8B /* GradeBarCell.swift */,
 			);
 			path = Performance;
+			sourceTree = "<group>";
+		};
+		F7BBB2EE2CB871380082DD8B /* CollectionViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				F7BBB2EC2CB871060082DD8B /* StudentNameAndMarkCell.swift */,
+				F7BBB2EA2CB870D40082DD8B /* SmallGradeCell.swift */,
+			);
+			path = CollectionViewCells;
 			sourceTree = "<group>";
 		};
 		F7C0D1212C5BCA9C003CEC19 /* Teacher */ = {
@@ -734,15 +748,16 @@
 				F75B04D12C1F3E9800626265 /* KeyboardMovableViewController.swift in Sources */,
 				F79533FF2BE38890004A76C6 /* DetailViewController.swift in Sources */,
 				F70FCF4C2C00D61F0088AACD /* KeychainHelper.swift in Sources */,
+				F7BBB2E92CB04AFA0082DD8B /* MarksPanelVC.swift in Sources */,
 				F7948FE22C665EB60028E3EA /* DetailTitledViewController.swift in Sources */,
 				F7948FE42C7CBC2B0028E3EA /* TeacherDetailsViewModel.swift in Sources */,
 				F722B00C2C6503CF002D519C /* StudentLessonsListViewController.swift in Sources */,
 				F7CAE6A12B73DD01004916E3 /* WorkdayScheduleViewController.swift in Sources */,
 				F74713FF2C1889BE00B4C0EC /* PasswordHasChangedView.swift in Sources */,
 				F795340D2BF51438004A76C6 /* ConfirmableExtension.swift in Sources */,
-				F76081482B8A170F00B6D792 /* KEYS.swift in Sources */,
 				F722B00A2C6115D1002D519C /* ItemsListViewController.swift in Sources */,
 				F79083072B9F2C8300B9386E /* NeobisUILabel.swift in Sources */,
+				F7BBB2EB2CB870D40082DD8B /* SmallGradeCell.swift in Sources */,
 				F79533FB2BDFF9D8004A76C6 /* Errors.swift in Sources */,
 				F79083092B9F31B400B9386E /* HomeworkPanelView.swift in Sources */,
 				F7E39CA62C1DAC9D0070428A /* NeobisUIButton.swift in Sources */,
@@ -767,6 +782,7 @@
 				F79534112BF657AA004A76C6 /* ZoomPictureViewController.swift in Sources */,
 				F79533F92BDFD461004A76C6 /* SnackBarView.swift in Sources */,
 				F7BBB2E02CAEF2C10082DD8B /* GradeBarCell.swift in Sources */,
+				F7BBB2F02CB8720D0082DD8B /* ContainerView.swift in Sources */,
 				F7CAE6B02B791D50004916E3 /* GradeView.swift in Sources */,
 				F7CAE6A52B762C81004916E3 /* SchoolNavViewController.swift in Sources */,
 				F75B04D42C20305700626265 /* ProfileInfoView.swift in Sources */,
@@ -796,6 +812,7 @@
 				F7CAE69D2B70A8BE004916E3 /* WeekdayCollectionViewCell.swift in Sources */,
 				F76081432B88DFC300B6D792 /* SchoolWeekAPI.swift in Sources */,
 				F7E5625B2BD173600029B822 /* DataStringExtension.swift in Sources */,
+				F7BBB2ED2CB871060082DD8B /* StudentNameAndMarkCell.swift in Sources */,
 				F7C0D1232C5BCE2B003CEC19 /* TeacherItemListCollectionViewCell.swift in Sources */,
 				F7CB51532BFCEDD900E1580C /* CommentModalViewController.swift in Sources */,
 				F7C0D1152C4BE0F9003CEC19 /* TeacherModel.swift in Sources */,
@@ -807,7 +824,6 @@
 				F76081412B877D3A00B6D792 /* DayScheduleAPI.swift in Sources */,
 				F75B04D62C25C1DC00626265 /* NeobisUINavigationController.swift in Sources */,
 				F7D04D672C077B5F00D2B285 /* ResetPasswordViewController.swift in Sources */,
-				F7BBB2E52CAEF3280082DD8B /* PerformanceViewModel.swift in Sources */,
 				F722B0072C5FC208002D519C /* Mock.swift in Sources */,
 				F760814C2B8B75CA00B6D792 /* NotSubmittedSubjectDetailsViewController.swift in Sources */,
 				F75B04DD2C26F97700626265 /* ChangePasswordViewController.swift in Sources */,

@@ -125,13 +125,14 @@ struct TeacherSubmissionDetails: Decodable {
     let topic: String
 }
 
-struct DTOModel: Codable {
+struct DTOTeacherGradesWithSubjects: Codable {
     let totalCount: Int
     let totalPages: Int
-    let list: [DTOListItem]
+    let list: [GradeName]
 }
 
-struct DTOListItem: Codable {
-    let id: Int
-    let name: String
+struct DTOStudentsMarks: Codable {
+    let totalCount: Int
+    let totalPages: Int
+    let list: [FullNameUser]
 }
