@@ -1,9 +1,12 @@
 import UIKit
 import SnapKit
 
+enum CommentType {
+    case studentWithComment, teacherWithComment, teacherWithoutComment
+}
+
 class CommentSubmitView: UIStackView {
 
-    private let userRole: UserRole
     var uploadFiles: (() -> Void)?
     var selectedGrade: Grade?
 
@@ -49,7 +52,7 @@ class CommentSubmitView: UIStackView {
         return stack
     }()
 
-    private let buttonValues: [Grade] = [.two, .three, .four, .five]
+    private var buttonValues: [Grade]
     private var buttons: [GradeUIButton] = []
 
     private struct Constants {
@@ -59,19 +62,26 @@ class CommentSubmitView: UIStackView {
     }
 
     //MARK: - Initializers
-    init(userRole: UserRole) {
-        self.userRole = userRole
+    init(type: CommentType) {
 
-        switch userRole {
-        case .teacher:
+        switch type {
+        case .teacherWithComment:
             self.titleLabel.text = "Оценка за задание"
+            self.buttonValues = [.two, .three, .four, .five]
             self.submitButton.isEnabled = false
             self.submitButton.setTitle("Выставить оценку", for: .normal)
-        case .student:
+        case .studentWithComment:
             self.titleLabel.text = "Сдать задание"
+            self.buttonValues = [.two, .three, .four, .five]
             self.submitButton.setTitle("Сдать", for: .normal)
             self.subtitleLabel.isHidden = true
             self.buttonSetView.isHidden = true
+        case .teacherWithoutComment:
+            self.titleLabel.text = "Оценка за урок"
+            self.buttonValues = [.absent, .two, .three, .four, .five]
+            self.submitButton.isEnabled = false
+            self.commentInput.isHidden = true
+            self.submitButton.setTitle("Выставить оценку", for: .normal)
         }
 
         super.init(frame: .zero)

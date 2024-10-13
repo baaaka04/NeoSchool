@@ -383,7 +383,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
         "grades/\(gradeId)/students/?" +
         "page=1" +
         "&limit=1000" + //TODO: Pagination
-        "&date_time=\(dateString)" +//2024-10-06T15%3A37%3A48.093Z"
+        "&date_time=\(dateString)" +//2024-10-06T15%3A37%3A48.093Z" UTC format
         "&subject=\(subjectId)"
         do {
             let request = try generateAuthorizedRequest(urlString: urlString)
@@ -395,6 +395,32 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
             throw error
         }
     }
+
+    //POST-REQUEST
+    //ENDPOINT /marks/teacher/classwork/rate/
+    func setGradeForLesson(grade: Grade, studentId: Int, subjectId: Int, date: Date) async throws {
+        let urlString = "\(domen)/neoschool/marks/teacher/classwork/rate/"
+        let dateString = formatToISO8601(date: date)
+        let params: [String: Any] = [
+            "student": studentId,
+            "subject": subjectId,
+            "mark": grade.rawValue,
+            "date_time": dateString
+        ]
+
+        var request = try generateAuthorizedRequest(urlString: urlString)
+        request.httpMethod = "POST"
+        let jsonData = try JSONSerialization.data(withJSONObject: params, options: [])
+        request.httpBody = jsonData
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let (_, response) = try await URLSession.shared.data(for: request)
+
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw MyError.badNetwork
+        }
+    }
+
 
 }
 
@@ -480,12 +506,10 @@ extension NetworkAPI {
     }
 
     func formatToISO8601(date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-        if let bishkekTimeZone = TimeZone(identifier: "Asia/Bishkek") {
-            formatter.timeZone = bishkekTimeZone
-        }
-        formatter.locale = Locale(identifier: "en_US_POSIX")  // Ensures consistent formatting
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+
         return formatter.string(from: date)
     }
 }

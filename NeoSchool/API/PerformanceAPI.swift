@@ -3,6 +3,7 @@ import Foundation
 protocol PerformanceAPIProtocol: AnyObject {
     func getGrades() async throws -> [GradeName]
     func getGradeDayData(gradeId: Int, subjectId: Int, date: Date) async throws -> [FullNameUser]
+    func setGradeForLesson(grade: Grade, studentId: Int, subjectId: Int, date: Date) async throws
 }
 
 class PerformanceAPI: PerformanceAPIProtocol {
@@ -19,5 +20,9 @@ class PerformanceAPI: PerformanceAPIProtocol {
 
     func getGradeDayData(gradeId: Int, subjectId: Int, date: Date) async throws -> [FullNameUser] {
         try await networkAPI.getGradeDayData(gradeId: gradeId, subjectId: subjectId, date: date)
+    }
+
+    func setGradeForLesson(grade: Grade, studentId: Int, subjectId: Int, date: Date) async throws {
+        try await networkAPI.setGradeForLesson(grade: grade, studentId: studentId, subjectId: subjectId, date: date)
     }
 }

@@ -36,7 +36,7 @@ struct Homework: Codable {
     let text : String
 }
 enum Grade: String, CaseIterable {
-    case absent = "H"
+    case absent = "Н"
     case two = "2"
     case three = "3"
     case four = "4"

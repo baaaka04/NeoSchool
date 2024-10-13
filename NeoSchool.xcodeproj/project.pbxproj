@@ -122,6 +122,7 @@
 		F7D6CE302BC97E64000CBB1F /* AttachedFilesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D6CE2F2BC97E64000CBB1F /* AttachedFilesModel.swift */; };
 		F7E39CA62C1DAC9D0070428A /* NeobisUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E39CA52C1DAC9D0070428A /* NeobisUIButton.swift */; };
 		F7E5625B2BD173600029B822 /* DataStringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E5625A2BD173600029B822 /* DataStringExtension.swift */; };
+		F7EDD6AB2CBA3CBB00E636CA /* StudentMarksListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EDD6AA2CBA3CBB00E636CA /* StudentMarksListVC.swift */; };
 		F7F581632BB84D6B00FFC6C9 /* FilesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F581622BB84D6B00FFC6C9 /* FilesCollectionViewController.swift */; };
 		F7F581662BBC49D000FFC6C9 /* FilesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F581652BBC49D000FFC6C9 /* FilesCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -243,6 +244,7 @@
 		F7D6CE2F2BC97E64000CBB1F /* AttachedFilesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachedFilesModel.swift; sourceTree = "<group>"; };
 		F7E39CA52C1DAC9D0070428A /* NeobisUIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeobisUIButton.swift; sourceTree = "<group>"; };
 		F7E5625A2BD173600029B822 /* DataStringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStringExtension.swift; sourceTree = "<group>"; };
+		F7EDD6AA2CBA3CBB00E636CA /* StudentMarksListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentMarksListVC.swift; sourceTree = "<group>"; };
 		F7F581622BB84D6B00FFC6C9 /* FilesCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesCollectionViewController.swift; sourceTree = "<group>"; };
 		F7F581652BBC49D000FFC6C9 /* FilesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -514,6 +516,7 @@
 				F7BBB2EE2CB871380082DD8B /* CollectionViewCells */,
 				F76C6B7A2B67E29000EACFEB /* PerformanceViewController.swift */,
 				F7BBB2E82CB04AFA0082DD8B /* MarksPanelVC.swift */,
+				F7EDD6AA2CBA3CBB00E636CA /* StudentMarksListVC.swift */,
 				F7BBB2DD2CAECBAF0082DD8B /* GradesBarVC.swift */,
 				F7BBB2DF2CAEF2C10082DD8B /* GradeBarCell.swift */,
 			);
@@ -790,6 +793,7 @@
 				F76C6B672B67D06900EACFEB /* MainTabBarViewController.swift in Sources */,
 				F75B04D82C26E99E00626265 /* ProfileModalViewController.swift in Sources */,
 				F7BBB2DE2CAECBAF0082DD8B /* GradesBarVC.swift in Sources */,
+				F7EDD6AB2CBA3CBB00E636CA /* StudentMarksListVC.swift in Sources */,
 				F79534172BFA32DD004A76C6 /* SubmittedSubjectDetailsViewController.swift in Sources */,
 				F76C6B632B67D06900EACFEB /* AppDelegate.swift in Sources */,
 				F76C6B652B67D06900EACFEB /* SceneDelegate.swift in Sources */,

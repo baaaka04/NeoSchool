@@ -148,8 +148,8 @@ class StudentHomeworkDetailsViewController: DetailTitledViewController, Confirma
     }
 
     @objc private func openCommentView() {
-        let commentVC = CommentModalViewController(userRole: .teacher, submissionId: self.submissionId)
-        commentVC.delegate = self.vm as? CommentRepresentable
+        let commentVC = CommentModalViewController(type: .teacherWithComment, submissionId: self.submissionId)
+        commentVC.delegate = self.vm as? CommentRepresentableProtocol
         commentVC.getLessonDetails = { [weak self] in
             self?.getSubmissionDetails()
         }

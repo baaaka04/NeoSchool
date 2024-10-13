@@ -15,6 +15,7 @@ class MarksPanelVC: UIViewController {
     private let containerView = ContainerView()
     private lazy var datePicker: UIDatePicker = {
         let picker = UIDatePicker()
+        picker.maximumDate = Date()
         picker.datePickerMode = .date
         picker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
         return picker
@@ -28,25 +29,14 @@ class MarksPanelVC: UIViewController {
         return label
     }()
 
-    private lazy var studentsCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        layout.itemSize = UICollectionViewFlowLayout.automaticSize
-        layout.sectionInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .clear
-        collectionView.isScrollEnabled = false
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.register(StudentNameAndMarkCell.self, forCellWithReuseIdentifier: StudentNameAndMarkCell.identifier)
-        return collectionView
-    }()
+    private let studentMarksListVC: StudentMarksListVC
 
     init(performanceAPI: PerformanceAPIProtocol) {
         self.performanceAPI = performanceAPI
+        self.studentMarksListVC = StudentMarksListVC(performanceAPI: performanceAPI)
 
         super.init(nibName: nil, bundle: nil)
+        studentMarksListVC.getGradeDayData = self.getGradeDayData
     }
 
     required init?(coder: NSCoder) {
@@ -85,12 +75,14 @@ class MarksPanelVC: UIViewController {
             make.top.equalTo(titleLabel.snp.bottom).offset(4)
             make.left.right.equalTo(titleLabel)
         }
-        containerView.addSubview(studentsCollectionView)
-        studentsCollectionView.snp.makeConstraints { make in
+        addChild(studentMarksListVC)
+        studentMarksListVC.didMove(toParent: self)
+        containerView.addSubview(studentMarksListVC.view)
+        studentMarksListVC.view.snp.makeConstraints { make in
             make.top.equalTo(quaterLabel.snp.bottom).offset(8)
             make.left.right.equalToSuperview().inset(16)
-            make.height.equalTo(0)
             make.bottom.equalToSuperview().inset(12)
+            make.height.greaterThanOrEqualTo(0)
         }
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector (changeSubject))
@@ -109,44 +101,45 @@ class MarksPanelVC: UIViewController {
             )
             DispatchQueue.main.async {
                 self.updateUI()
-                self.studentsCollectionView.reloadData()
             }
         }
     }
 
     private func updateUI() {
         self.titleLabel.text = subjects.first(where: { $0 == selectedSubject })?.name
-        self.quaterLabel.text = getQuarter(for: selectedDate)
-        self.studentsCollectionView.snp.updateConstraints { make in
-            make.height.equalTo(self.studentsMarks.count*(53+6+5))
-        }
+        let (quaterText, isVacation) = getQuarter(for: selectedDate)
+        self.quaterLabel.text = quaterText
+        self.datePicker.date = selectedDate
+        self.studentMarksListVC.studentsMarks = isVacation ? [] : self.studentsMarks
+        self.studentMarksListVC.selectedDate = selectedDate
+        self.studentMarksListVC.selectedSubjectId = selectedSubject?.id
+        self.studentMarksListVC.updateUI()
     }
 
-    private func getQuarter(for date: Date) -> String {
+    private func getQuarter(for date: Date) -> (String, Bool) {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.month, .day], from: date)
 
         guard let month = components.month, let day = components.day else {
-            return "Неизвестная дата"
+            return ("Неизвестная дата", true)
         }
 
         switch (month, day) {
         case (9, 1...30), (10, 1...15):
-            return "I четверть"
+            return ("I четверть", false)
         case (11, 1...30), (12, 1...25):
-            return "II четверть"
+            return ("II четверть", false)
         case (1, 10...31), (2, 1...29), (3, 1...20):
-            return "III четверть"
+            return ("III четверть", false)
         case (4, 1...30), (5, 1...25):
-            return "IV четверть"
+            return ("IV четверть", false)
         default:
-            return "Не в учебный период"
+            return ("Каникулы", true)
         }
     }
 
     @objc func dateChanged(_ sender: UIDatePicker) {
         self.selectedDate = sender.date
-        self.quaterLabel.text = getQuarter(for: sender.date)
         self.getGradeDayData()
     }
 
@@ -170,28 +163,3 @@ extension MarksPanelVC: GradesBarDelegate {
     }
 }
 
-extension MarksPanelVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.studentsMarks.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StudentNameAndMarkCell.identifier, for: indexPath) as? StudentNameAndMarkCell else { return UICollectionViewCell() }
-        cell.name = self.studentsMarks[indexPath.row].firstName
-        cell.lastName = self.studentsMarks[indexPath.row].lastName
-        if let mark = self.studentsMarks[indexPath.row].mark {
-            cell.grade = Grade(rawValue: mark)
-            cell.updateUI()
-        }
-        return cell
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.studentsCollectionView.frame.width, height: 53)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //open modal window
-    }
-
-}

@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-protocol CommentRepresentable: AnyObject {
+protocol CommentRepresentableProtocol: AnyObject {
     func submit(_ submissionId: Int?) async throws
     var userComment: String? { get set }
     var grade: Grade? { get set }
@@ -11,9 +11,10 @@ class CommentModalViewController: UIViewController, Notifiable {
 
     private let commentViewHeight: CGFloat
     private let commentView: CommentSubmitView
-    weak var delegate: CommentRepresentable?
+    weak var delegate: CommentRepresentableProtocol?
     var getLessonDetails: (() -> Void)?
     private let submissionId: Int?
+    private let succeedMessage: String
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +35,7 @@ class CommentModalViewController: UIViewController, Notifiable {
                     strongSelf.delegate?.grade = grade
                     try await strongSelf.delegate?.submit(strongSelf.submissionId)
                     strongSelf.hideCommentView()
-                    self?.showNotification(message: "Задание успешно отправлено", isSucceed: true)
+                    self?.showNotification(message: strongSelf.succeedMessage, isSucceed: true)
                     self?.getLessonDetails?()
                 } catch {
                     print(error)
@@ -52,15 +53,20 @@ class CommentModalViewController: UIViewController, Notifiable {
         
     }
 
-    init(userRole: UserRole, submissionId: Int? = nil) {
+    init(type: CommentType, submissionId: Int? = nil) {
         self.submissionId = submissionId
-        self.commentView = CommentSubmitView(userRole: userRole)
+        self.commentView = CommentSubmitView(type: type)
 
-        switch userRole {
-        case .teacher:
+        switch type {
+        case .teacherWithComment:
             self.commentViewHeight = 496
-        case .student:
+            self.succeedMessage = "Оценка успешна выставлена"
+        case .studentWithComment:
             self.commentViewHeight = 374
+            self.succeedMessage = "Задание успешно отправлено"
+        case .teacherWithoutComment:
+            self.commentViewHeight = 330
+            self.succeedMessage = "Оценка успешна выставлена"
         }
 
         super.init(nibName: nil, bundle: nil)

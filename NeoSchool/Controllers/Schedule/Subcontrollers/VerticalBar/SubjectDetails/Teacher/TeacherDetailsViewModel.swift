@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-class TeacherDetailsViewModel: StudentHomeworkProtocol, CommentRepresentable {
+class TeacherDetailsViewModel: StudentHomeworkProtocol, CommentRepresentableProtocol {
 
     weak var teacherAPI: DayScheduleAPI?
     weak var view: SubjectDetailsViewModelActionable?

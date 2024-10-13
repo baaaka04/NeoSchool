@@ -20,7 +20,7 @@ class StudentNameAndMarkCell: AutosizeUICollectionViewCell, UICollectionViewDele
     private let nameLabel = GrayUILabel(font: AppFont.font(type: .Regular, size: 18))
     private let lastNameLabel = GrayUILabel(font: AppFont.font(type: .Regular, size: 18))
 
-    var grade: Grade?
+    var selectedGrade: Grade?
     private let grades: [Grade] = Grade.allCases.filter { $0 != .noGrade }
 
     private lazy var gradesCollectionView: UICollectionView = {
@@ -45,6 +45,9 @@ class StudentNameAndMarkCell: AutosizeUICollectionViewCell, UICollectionViewDele
     }
 
     private func setupUI() {
+
+        gradesCollectionView.isUserInteractionEnabled = false
+
         [nameLabel, lastNameLabel, gradesCollectionView].forEach { contentView.addSubview($0) }
         [nameLabel, lastNameLabel].forEach { $0.numberOfLines = 1 }
 
@@ -76,10 +79,12 @@ class StudentNameAndMarkCell: AutosizeUICollectionViewCell, UICollectionViewDele
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SmallGradeCell.identifier, for: indexPath) as? SmallGradeCell else {
             return UICollectionViewCell()
         }
-
-        cell.gradeName = grades[indexPath.row].rawValue
-        if self.grade == grades[indexPath.row] {
-            cell.selectedBackgroundColor = grade?.color
+        let grade = grades[indexPath.row]
+        cell.gradeName = grade.rawValue
+        if self.selectedGrade == grade {
+            cell.selectedBackgroundColor = self.selectedGrade?.color
+        } else {
+            cell.selectedBackgroundColor = .neobisGray
         }
 
         return cell
