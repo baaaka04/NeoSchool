@@ -47,7 +47,6 @@ class CommentSubmitView: UIStackView {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.alignment = .center
-        stack.spacing = 10
         stack.distribution = .equalSpacing
         return stack
     }()
@@ -98,12 +97,8 @@ class CommentSubmitView: UIStackView {
     //MARK: - UI functions
     private func setupUI () {
 
-        addArrangedSubview(grabber)
-        addArrangedSubview(titleLabel)
-        addArrangedSubview(subtitleLabel)
-        addArrangedSubview(buttonSetView)
-        addArrangedSubview(commentInput)
-        addArrangedSubview(submitButton)
+        [grabber, titleLabel, subtitleLabel, buttonSetView, commentInput, submitButton]
+            .forEach { addArrangedSubview($0) }
 
         layer.cornerRadius = 32
         backgroundColor = .white
