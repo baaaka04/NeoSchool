@@ -126,4 +126,14 @@ struct QuaterMark: Codable {
 }
 enum QuaterName: String, CaseIterable, Codable {
     case first, second, third, fourth, final
+
+    var romanNumber: String {
+        switch self {
+        case .first: return "I четверть"
+        case .second: return "II четверть"
+        case .third: return "III четверть"
+        case .fourth: return "IV четверть"
+        case .final: return "Годовая"
+        }
+    }
 }

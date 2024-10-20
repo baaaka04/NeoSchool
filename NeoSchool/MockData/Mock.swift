@@ -146,6 +146,10 @@ class MockPerformanceAPI: PerformanceAPIProtocol {
         return
     }
 
+    func setGradeForQuater(grade: Grade, studentId: Int, subjectId: Int, quater: QuaterName) async throws {
+        return
+    }
+
 }
 
 struct DTOPerformance {

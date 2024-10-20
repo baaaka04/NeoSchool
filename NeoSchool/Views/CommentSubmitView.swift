@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 
 enum CommentType {
-    case studentWithComment, teacherWithComment, teacherWithoutComment
+    case studentWithComment, teacherWithComment, teacherWithoutComment, teacherQuaterWithoutComment
 }
 
 class CommentSubmitView: UIStackView {
@@ -59,9 +59,20 @@ class CommentSubmitView: UIStackView {
         static let horizontalPadding: CGFloat = 32
         static let inputHeight: CGFloat = 158
     }
+    private let studentNameLabel = GrayUILabel(font: AppFont.font(type: .Regular, size: 24))
+    private let quaterNumberLabel = GrayUILabel(font: AppFont.font(type: .Regular, size: 20))
+    private let avarageMarkLabel: UILabel = {
+        let label = UILabel()
+        label.font = AppFont.font(type: .Regular, size: 18)
+        label.textColor = .neobisLightGray
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        return label
+    }()
+
 
     //MARK: - Initializers
-    init(type: CommentType) {
+    init(type: CommentType, commentInfo: CommentInfo? = nil) {
 
         switch type {
         case .teacherWithComment:
@@ -69,18 +80,41 @@ class CommentSubmitView: UIStackView {
             self.buttonValues = [.two, .three, .four, .five]
             self.submitButton.isEnabled = false
             self.submitButton.setTitle("Выставить оценку", for: .normal)
+            self.studentNameLabel.isHidden = true
+            self.quaterNumberLabel.isHidden = true
+            self.avarageMarkLabel.isHidden = true
         case .studentWithComment:
             self.titleLabel.text = "Сдать задание"
             self.buttonValues = [.two, .three, .four, .five]
             self.submitButton.setTitle("Сдать", for: .normal)
             self.subtitleLabel.isHidden = true
             self.buttonSetView.isHidden = true
+            self.studentNameLabel.isHidden = true
+            self.quaterNumberLabel.isHidden = true
+            self.avarageMarkLabel.isHidden = true
         case .teacherWithoutComment:
             self.titleLabel.text = "Оценка за урок"
             self.buttonValues = [.absent, .two, .three, .four, .five]
             self.submitButton.isEnabled = false
             self.commentInput.isHidden = true
+            self.studentNameLabel.isHidden = true
+            self.quaterNumberLabel.isHidden = true
+            self.avarageMarkLabel.isHidden = true
             self.submitButton.setTitle("Выставить оценку", for: .normal)
+        case .teacherQuaterWithoutComment:
+            self.titleLabel.text = "Редактировать оценки"
+            self.buttonValues = [.two, .three, .four, .five]
+            self.submitButton.isEnabled = false
+            self.subtitleLabel.isHidden = true
+            self.commentInput.isHidden = true
+            self.submitButton.setTitle("Выставить оценку", for: .normal)
+            self.studentNameLabel.text = commentInfo?.selectedStudentName
+            self.quaterNumberLabel.text = commentInfo?.selectedQuater.romanNumber
+            if let avarageMark = commentInfo?.avarageMark {
+                self.avarageMarkLabel.text = "Чаще всего этот ученик получал на ваших уроках оценку " + avarageMark
+            } else {
+                self.avarageMarkLabel.text = "Этот ученик не получал оценки на ваших уроках"
+            }
         }
 
         super.init(frame: .zero)
@@ -97,7 +131,7 @@ class CommentSubmitView: UIStackView {
     //MARK: - UI functions
     private func setupUI () {
 
-        [grabber, titleLabel, subtitleLabel, buttonSetView, commentInput, submitButton]
+        [grabber, titleLabel, subtitleLabel, studentNameLabel, quaterNumberLabel, avarageMarkLabel, buttonSetView, commentInput, submitButton]
             .forEach { addArrangedSubview($0) }
 
         layer.cornerRadius = 32
@@ -108,7 +142,7 @@ class CommentSubmitView: UIStackView {
         alignment = .center
         distribution = .equalSpacing
         isLayoutMarginsRelativeArrangement = true
-        layoutMargins = UIEdgeInsets(top: 8, left: 0, bottom: 34, right: 0)
+        layoutMargins = UIEdgeInsets(top: 8, left: 16, bottom: 34, right: 16)
 
         grabber.snp.makeConstraints { make in
             make.centerX.equalToSuperview()

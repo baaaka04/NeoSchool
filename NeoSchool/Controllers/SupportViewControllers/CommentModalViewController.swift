@@ -53,9 +53,9 @@ class CommentModalViewController: UIViewController, Notifiable {
         
     }
 
-    init(type: CommentType, submissionId: Int? = nil) {
+    init(type: CommentType, submissionId: Int? = nil, commentInfo: CommentInfo? = nil) {
         self.submissionId = submissionId
-        self.commentView = CommentSubmitView(type: type)
+        self.commentView = CommentSubmitView(type: type, commentInfo: commentInfo)
 
         switch type {
         case .teacherWithComment:
@@ -66,6 +66,9 @@ class CommentModalViewController: UIViewController, Notifiable {
             self.succeedMessage = "Задание успешно отправлено"
         case .teacherWithoutComment:
             self.commentViewHeight = 330
+            self.succeedMessage = "Оценка успешна выставлена"
+        case .teacherQuaterWithoutComment:
+            self.commentViewHeight = 496
             self.succeedMessage = "Оценка успешна выставлена"
         }
 

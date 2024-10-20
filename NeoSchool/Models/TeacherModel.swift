@@ -136,3 +136,8 @@ struct DTOStudentsMarks: Codable {
     let totalPages: Int
     let list: [FullNameUser]
 }
+struct CommentInfo {
+    let selectedStudentName: String
+    let selectedQuater: QuaterName
+    let avarageMark: String?
+}

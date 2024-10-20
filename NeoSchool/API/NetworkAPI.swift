@@ -440,6 +440,30 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
         }
     }
 
+    //POST-REQUEST
+    //ENDPOINT /marks/teacher/quarter/rate/
+    func setGradeForQuater(grade: Grade, studentId: Int, subjectId: Int, quater: QuaterName) async throws {
+        let urlString = "\(domen)/neoschool/marks/teacher/quarter/rate/"
+        let params: [String: Any] = [
+            "student": studentId,
+            "subject": subjectId,
+            "quarter": quater.rawValue,
+            "final_mark": grade.rawValue
+        ]
+
+        var request = try generateAuthorizedRequest(urlString: urlString)
+        request.httpMethod = "POST"
+        let jsonData = try JSONSerialization.data(withJSONObject: params, options: [])
+        request.httpBody = jsonData
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let (_, response) = try await URLSession.shared.data(for: request)
+
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw MyError.badNetwork
+        }
+    }
+
 }
 
 

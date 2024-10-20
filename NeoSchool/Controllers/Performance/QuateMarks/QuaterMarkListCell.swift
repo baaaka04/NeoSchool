@@ -1,6 +1,10 @@
 import UIKit
 import SnapKit
 
+protocol CellDelegate: AnyObject {
+    func presentVC(quater: QuaterName, studentId: Int, studentName: String, avarageMark: String?)
+}
+
 class QuaterMarkListCell: AutosizeUICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     static let identifier: String = "QuaterMarkListCell"
 
@@ -16,12 +20,14 @@ class QuaterMarkListCell: AutosizeUICollectionViewCell, UICollectionViewDelegate
         }
     }
     var quaterMarks: [QuaterMark]?
+    weak var delegate: CellDelegate?
 
     private let nameLabel = GrayUILabel(font: AppFont.font(type: .Regular, size: 18))
     private let avarageMarkLabel: UILabel = {
         let label = UILabel()
         label.textColor = .neobisLightGray
         label.font = AppFont.font(type: .Regular, size: 14)
+        label.text = "Средний балл: -"
         return label
     }()
 
@@ -35,7 +41,6 @@ class QuaterMarkListCell: AutosizeUICollectionViewCell, UICollectionViewDelegate
         collectionView.backgroundColor = .clear
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.isUserInteractionEnabled = false
         return collectionView
     }()
 
@@ -100,6 +105,13 @@ class QuaterMarkListCell: AutosizeUICollectionViewCell, UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         CGSize(width: (self.gradesCollectionView.frame.width-4*4)/5, height: self.gradesCollectionView.frame.height)
     }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let studentMark = self.quaterMarks?[indexPath.row], let name else { return }
+        let avarageMarkNumber = avarageMark?.last.map { String($0) }
+        self.delegate?.presentVC(quater: studentMark.quarter, studentId: studentMark.student, studentName: name, avarageMark: avarageMarkNumber)
+    }
+
 }
 
 

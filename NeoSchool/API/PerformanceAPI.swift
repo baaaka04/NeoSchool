@@ -5,6 +5,7 @@ protocol PerformanceAPIProtocol: AnyObject {
     func getGradeDayData(gradeId: Int, subjectId: Int, date: Date) async throws -> [FullNameUser]
     func getGradeQuaterData(gradeId: Int, subjectId: Int) async throws -> [FullNameUser]
     func setGradeForLesson(grade: Grade, studentId: Int, subjectId: Int, date: Date) async throws
+    func setGradeForQuater(grade: Grade, studentId: Int, subjectId: Int, quater: QuaterName) async throws
 }
 
 class PerformanceAPI: PerformanceAPIProtocol {
@@ -29,5 +30,9 @@ class PerformanceAPI: PerformanceAPIProtocol {
 
     func getGradeQuaterData(gradeId: Int, subjectId: Int) async throws -> [FullNameUser] {
         try await networkAPI.getGradeQuaterData(gradeId: gradeId, subjectId: subjectId)
+    }
+
+    func setGradeForQuater(grade: Grade, studentId: Int, subjectId: Int, quater: QuaterName) async throws {
+        try await networkAPI.setGradeForQuater(grade: grade, studentId: studentId, subjectId: subjectId, quater: quater)
     }
 }

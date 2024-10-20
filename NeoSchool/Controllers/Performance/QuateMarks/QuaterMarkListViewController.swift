@@ -2,16 +2,16 @@ import UIKit
 import SnapKit
 
 
-class QuaterMarkListViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class QuaterMarkListViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, CommentRepresentableProtocol, CellDelegate {
 
     private let performanceAPI: PerformanceAPIProtocol
 
-    private let subjectNameLabel = GrayUILabel(font: AppFont.font(type: .Medium, size: 24))
     private var subjects: [SubjectName] = []
     private var selectedSubject: SubjectName?
     private var selectedGradeId: Int?
     private var studentsMarks: [FullNameUser] = []
 
+    private let subjectNameLabel = GrayUILabel(font: AppFont.font(type: .Medium, size: 24))
     private let headerView = QuaterTableHeaderView()
     private lazy var quaterMarksCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -102,13 +102,11 @@ class QuaterMarkListViewController: UIViewController, UICollectionViewDelegate, 
 
         var quaterMarks: [QuaterMark] = []
         for quater in QuaterName.allCases {
-            let finalMark = studentMarks.quarterMarks?.first(where: { quaterMark in
-                quaterMark.quarter == quater
-            })
+            let finalMark = studentMarks.quarterMarks?.first(where: { $0.quarter == quater })
             let quaterMark = QuaterMark(
                 id: finalMark?.id ?? 1,
-                student: finalMark?.student ?? 1,
-                subject: finalMark?.subject ?? 1,
+                student: studentMarks.id,
+                subject: selectedSubject?.id ?? 1,
                 quarter: quater,
                 finalMark: finalMark?.finalMark ?? .noGrade
             )
@@ -116,9 +114,43 @@ class QuaterMarkListViewController: UIViewController, UICollectionViewDelegate, 
         }
         cell.quaterMarks = quaterMarks
         cell.name = studentMarks.firstName + " " + studentMarks.lastName
-        cell.avarageMark = "Средний балл: " + (studentMarks.avgMark ?? "-")
+        if let avgMark = studentMarks.avgMark {
+            cell.avarageMark = "Средний балл: " + avgMark
+        }
+        cell.delegate = self
         cell.updateUI()
         return cell
+    }
+
+    // CommentRepresentableProtocol and CellDelegate protocols
+    var userComment: String? = nil
+    var grade: Grade?
+    var selectedQuater: QuaterName?
+    var selectedStudentId: Int?
+
+    func presentVC(quater: QuaterName, studentId: Int, studentName: String, avarageMark: String?) {
+        self.selectedQuater = quater
+        self.selectedStudentId = studentId
+        openCommentView(studentName: studentName, avarageMark: avarageMark)
+    }
+
+    func openCommentView(studentName: String, avarageMark: String?) {
+        guard let selectedQuater else { return }
+        let commentInfo = CommentInfo(selectedStudentName: studentName, selectedQuater: selectedQuater, avarageMark: avarageMark)
+        let commentVC = CommentModalViewController(type: .teacherQuaterWithoutComment, commentInfo: commentInfo)
+        commentVC.delegate = self
+        commentVC.getLessonDetails = { [weak self] in
+            self?.getGradeYearData()
+        }
+        commentVC.modalPresentationStyle = .overFullScreen
+        self.present(commentVC, animated: false)
+    }
+
+    func submit(_ submissionId: Int?) async throws {
+        Task {
+            guard let grade, let selectedStudentId, let selectedSubject, let selectedQuater else { return }
+            try await performanceAPI.setGradeForQuater(grade: grade, studentId: selectedStudentId, subjectId: selectedSubject.id, quater: selectedQuater)
+        }
     }
 }
 
