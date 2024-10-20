@@ -96,9 +96,9 @@ class QuaterMarkListCell: AutosizeUICollectionViewCell, UICollectionViewDelegate
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SmallGradeCell.identifier, for: indexPath) as? SmallGradeCell else {
             return UICollectionViewCell()
         }
-        guard let grade = self.quaterMarks?[indexPath.row].finalMark else { return UICollectionViewCell() }
-        cell.gradeName = grade.rawValue
-        cell.selectedBackgroundColor = grade.color
+        let grade = self.quaterMarks?[indexPath.row].finalMark
+        cell.gradeName = grade?.rawValue
+        cell.selectedBackgroundColor = grade?.color
         return cell
     }
 

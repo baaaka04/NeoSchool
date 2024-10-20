@@ -49,7 +49,7 @@ enum Grade: String, CaseIterable, Codable {
         case .three: return UIColor.neobisGradeThree
         case .four: return UIColor.neobisGradeFour
         case .five: return UIColor.neobisGradeFive
-        case .noGrade: return UIColor.neobisExtralightGray
+        case .noGrade: return UIColor.neobisGradeN
         case .absent: return UIColor.neobisGradeN
         }
     }
@@ -122,7 +122,7 @@ struct QuaterMark: Codable {
     let student: Int
     let subject: Int
     let quarter: QuaterName
-    let finalMark: Grade
+    let finalMark: Grade?
 }
 enum QuaterName: String, CaseIterable, Codable {
     case first, second, third, fourth, final

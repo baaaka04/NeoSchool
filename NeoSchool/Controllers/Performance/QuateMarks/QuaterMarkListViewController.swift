@@ -108,7 +108,7 @@ class QuaterMarkListViewController: UIViewController, UICollectionViewDelegate, 
                 student: studentMarks.id,
                 subject: selectedSubject?.id ?? 1,
                 quarter: quater,
-                finalMark: finalMark?.finalMark ?? .noGrade
+                finalMark: finalMark?.finalMark
             )
             quaterMarks.append(quaterMark)
         }

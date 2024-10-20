@@ -12,7 +12,7 @@ class SmallGradeCell: UICollectionViewCell {
 
     var selectedBackgroundColor: UIColor? {
         didSet {
-            contentView.backgroundColor = selectedBackgroundColor
+            contentView.backgroundColor = selectedBackgroundColor ?? .neobisExtralightGray
         }
     }
 
