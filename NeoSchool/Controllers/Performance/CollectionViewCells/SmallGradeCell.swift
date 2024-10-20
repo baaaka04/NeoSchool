@@ -6,7 +6,7 @@ class SmallGradeCell: UICollectionViewCell {
 
     var gradeName: String? {
         didSet {
-            gradeLabel.text = gradeName
+            gradeLabel.text = gradeName ?? "-"
         }
     }
 
@@ -32,6 +32,7 @@ class SmallGradeCell: UICollectionViewCell {
         contentView.layer.cornerRadius = 12
         gradeLabel.numberOfLines = 1
         gradeLabel.textAlignment = .center
+        gradeLabel.text = "-"
 
         contentView.addSubview(gradeLabel)
         gradeLabel.snp.makeConstraints { make in

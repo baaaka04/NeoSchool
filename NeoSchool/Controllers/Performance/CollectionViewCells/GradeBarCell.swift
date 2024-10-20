@@ -8,8 +8,10 @@ class GradesBarCell: UICollectionViewCell {
         didSet {
             if self.isSelected {
                 contentView.backgroundColor = .neobisPurple
+                gradeNameLabel.textColor = .white
             } else {
                 contentView.backgroundColor = .clear
+                gradeNameLabel.textColor = textColor
             }
         }
     }
@@ -20,10 +22,16 @@ class GradesBarCell: UICollectionViewCell {
         }
     }
 
-    private let gradeNameLabel: UILabel = {
+    var textColor: UIColor = .white {
+        didSet {
+            self.gradeNameLabel.textColor = textColor
+        }
+    }
+
+    private lazy var gradeNameLabel: UILabel = {
         let label = UILabel()
         label.font = AppFont.font(type: .Bold, size: 20)
-        label.textColor = .white
+        label.textColor = self.textColor
         label.textAlignment = .center
         return label
     }()

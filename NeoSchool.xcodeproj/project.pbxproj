@@ -93,6 +93,7 @@
 		F7962AFB2C0A209A0045ADA0 /* PasswordCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7962AFA2C0A209A0045ADA0 /* PasswordCreationViewController.swift */; };
 		F79EE1F12C087822009584D9 /* ConfirmCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79EE1F02C087822009584D9 /* ConfirmCodeViewController.swift */; };
 		F79FFFD92C84A10D003790CB /* SubmissionsListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79FFFD82C84A10D003790CB /* SubmissionsListVC.swift */; };
+		F7A785F82CC516BD0088B274 /* QuaterMarkListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A785F72CC516BD0088B274 /* QuaterMarkListCell.swift */; };
 		F7BBB2DE2CAECBAF0082DD8B /* GradesBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BBB2DD2CAECBAF0082DD8B /* GradesBarVC.swift */; };
 		F7BBB2E02CAEF2C10082DD8B /* GradeBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BBB2DF2CAEF2C10082DD8B /* GradeBarCell.swift */; };
 		F7BBB2E32CAEF3010082DD8B /* PerformanceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BBB2E22CAEF2FB0082DD8B /* PerformanceAPI.swift */; };
@@ -123,6 +124,9 @@
 		F7E39CA62C1DAC9D0070428A /* NeobisUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E39CA52C1DAC9D0070428A /* NeobisUIButton.swift */; };
 		F7E5625B2BD173600029B822 /* DataStringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E5625A2BD173600029B822 /* DataStringExtension.swift */; };
 		F7EDD6AB2CBA3CBB00E636CA /* StudentMarksListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EDD6AA2CBA3CBB00E636CA /* StudentMarksListVC.swift */; };
+		F7EDD6AD2CC05CCF00E636CA /* QuaterMarksDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EDD6AC2CC05CCF00E636CA /* QuaterMarksDetailViewController.swift */; };
+		F7EDD6B02CC1ADFB00E636CA /* QuaterMarkListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EDD6AF2CC1ADFB00E636CA /* QuaterMarkListViewController.swift */; };
+		F7EDD6B22CC1AE4300E636CA /* QuaterTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EDD6B12CC1AE4300E636CA /* QuaterTableHeaderView.swift */; };
 		F7F581632BB84D6B00FFC6C9 /* FilesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F581622BB84D6B00FFC6C9 /* FilesCollectionViewController.swift */; };
 		F7F581662BBC49D000FFC6C9 /* FilesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F581652BBC49D000FFC6C9 /* FilesCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -215,6 +219,7 @@
 		F7962AFA2C0A209A0045ADA0 /* PasswordCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordCreationViewController.swift; sourceTree = "<group>"; };
 		F79EE1F02C087822009584D9 /* ConfirmCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmCodeViewController.swift; sourceTree = "<group>"; };
 		F79FFFD82C84A10D003790CB /* SubmissionsListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmissionsListVC.swift; sourceTree = "<group>"; };
+		F7A785F72CC516BD0088B274 /* QuaterMarkListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuaterMarkListCell.swift; sourceTree = "<group>"; };
 		F7BBB2DD2CAECBAF0082DD8B /* GradesBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradesBarVC.swift; sourceTree = "<group>"; };
 		F7BBB2DF2CAEF2C10082DD8B /* GradeBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeBarCell.swift; sourceTree = "<group>"; };
 		F7BBB2E22CAEF2FB0082DD8B /* PerformanceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceAPI.swift; sourceTree = "<group>"; };
@@ -245,6 +250,9 @@
 		F7E39CA52C1DAC9D0070428A /* NeobisUIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeobisUIButton.swift; sourceTree = "<group>"; };
 		F7E5625A2BD173600029B822 /* DataStringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStringExtension.swift; sourceTree = "<group>"; };
 		F7EDD6AA2CBA3CBB00E636CA /* StudentMarksListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentMarksListVC.swift; sourceTree = "<group>"; };
+		F7EDD6AC2CC05CCF00E636CA /* QuaterMarksDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuaterMarksDetailViewController.swift; sourceTree = "<group>"; };
+		F7EDD6AF2CC1ADFB00E636CA /* QuaterMarkListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuaterMarkListViewController.swift; sourceTree = "<group>"; };
+		F7EDD6B12CC1AE4300E636CA /* QuaterTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuaterTableHeaderView.swift; sourceTree = "<group>"; };
 		F7F581622BB84D6B00FFC6C9 /* FilesCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesCollectionViewController.swift; sourceTree = "<group>"; };
 		F7F581652BBC49D000FFC6C9 /* FilesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -513,12 +521,12 @@
 		F7BBB2DC2CAEB6BA0082DD8B /* Performance */ = {
 			isa = PBXGroup;
 			children = (
+				F7EDD6AE2CC05CF300E636CA /* QuateMarks */,
 				F7BBB2EE2CB871380082DD8B /* CollectionViewCells */,
 				F76C6B7A2B67E29000EACFEB /* PerformanceViewController.swift */,
+				F7BBB2DD2CAECBAF0082DD8B /* GradesBarVC.swift */,
 				F7BBB2E82CB04AFA0082DD8B /* MarksPanelVC.swift */,
 				F7EDD6AA2CBA3CBB00E636CA /* StudentMarksListVC.swift */,
-				F7BBB2DD2CAECBAF0082DD8B /* GradesBarVC.swift */,
-				F7BBB2DF2CAEF2C10082DD8B /* GradeBarCell.swift */,
 			);
 			path = Performance;
 			sourceTree = "<group>";
@@ -527,6 +535,7 @@
 			isa = PBXGroup;
 			children = (
 				F7BBB2EC2CB871060082DD8B /* StudentNameAndMarkCell.swift */,
+				F7BBB2DF2CAEF2C10082DD8B /* GradeBarCell.swift */,
 				F7BBB2EA2CB870D40082DD8B /* SmallGradeCell.swift */,
 			);
 			path = CollectionViewCells;
@@ -606,6 +615,17 @@
 				F74714012C19E74900B4C0EC /* AuthModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		F7EDD6AE2CC05CF300E636CA /* QuateMarks */ = {
+			isa = PBXGroup;
+			children = (
+				F7EDD6AC2CC05CCF00E636CA /* QuaterMarksDetailViewController.swift */,
+				F7EDD6B12CC1AE4300E636CA /* QuaterTableHeaderView.swift */,
+				F7EDD6AF2CC1ADFB00E636CA /* QuaterMarkListViewController.swift */,
+				F7A785F72CC516BD0088B274 /* QuaterMarkListCell.swift */,
+			);
+			path = QuateMarks;
 			sourceTree = "<group>";
 		};
 		F7F581612BB8474600FFC6C9 /* SubjectDetails */ = {
@@ -741,11 +761,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7EDD6AD2CC05CCF00E636CA /* QuaterMarksDetailViewController.swift in Sources */,
 				F7C0D1202C515857003CEC19 /* GradeStudentsListViewController.swift in Sources */,
 				F7084A782C0381A000A6DF4B /* LoginTextField.swift in Sources */,
 				F795340B2BF35C50004A76C6 /* ConfirmUIView.swift in Sources */,
 				F71ACC092BD553D100EDE3A6 /* CommentSubmitView.swift in Sources */,
 				F74714022C19E74900B4C0EC /* AuthModel.swift in Sources */,
+				F7EDD6B02CC1ADFB00E636CA /* QuaterMarkListViewController.swift in Sources */,
 				F7C0D1112C4963B5003CEC19 /* LessonCollectionViewCell.swift in Sources */,
 				F7C0D10B2C3A9C13003CEC19 /* NotificationsViewModel.swift in Sources */,
 				F75B04D12C1F3E9800626265 /* KeyboardMovableViewController.swift in Sources */,
@@ -775,12 +797,14 @@
 				F7CAE6AB2B78F13F004916E3 /* DaySubjectsViewController.swift in Sources */,
 				F7084A762C03679200A6DF4B /* WelcomeViewController.swift in Sources */,
 				F76C6B7D2B67E2C500EACFEB /* ProfileViewController.swift in Sources */,
+				F7EDD6B22CC1AE4300E636CA /* QuaterTableHeaderView.swift in Sources */,
 				F71ACC0D2BD78F1C00EDE3A6 /* PlaceholderTextView.swift in Sources */,
 				F7BBB2E32CAEF3010082DD8B /* PerformanceAPI.swift in Sources */,
 				F70FCF4A2C00CFC50088AACD /* LoginViewController.swift in Sources */,
 				F70FCF452C0095E40088AACD /* Validator.swift in Sources */,
 				F70FCF482C00C6EA0088AACD /* AuthService.swift in Sources */,
 				F79FFFD92C84A10D003790CB /* SubmissionsListVC.swift in Sources */,
+				F7A785F82CC516BD0088B274 /* QuaterMarkListCell.swift in Sources */,
 				F7C0D1172C4D4050003CEC19 /* NotepadView.swift in Sources */,
 				F79534112BF657AA004A76C6 /* ZoomPictureViewController.swift in Sources */,
 				F79533F92BDFD461004A76C6 /* SnackBarView.swift in Sources */,

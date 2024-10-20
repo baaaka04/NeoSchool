@@ -6,7 +6,17 @@ class SchoolNavViewController: UIViewController {
     
     let navbarTitle: String
     let navbarColor: UIColor?
-    
+
+    private lazy var ellipseView = EllipseView(color: navbarColor)
+
+    lazy var leftTabTitle: UILabel = {
+        let label = UILabel()
+        label.text = self.navbarTitle
+        label.font = AppFont.font(type: .SemiBold, size: 32)
+        label.textColor = .white
+        return label
+    }()
+
     init(navbarTitle: String, navbarColor: UIColor?) {
         self.navbarTitle = navbarTitle
         self.navbarColor = navbarColor
@@ -27,18 +37,10 @@ class SchoolNavViewController: UIViewController {
     }
     
     private func configureNavBar () {
-        
-        let ellipseView = EllipseView(color: navbarColor)
         ellipseView.backgroundColor = .clear
 
         view.addSubview(ellipseView)
-                
-        let tabTitle = UILabel(frame: .zero)
-        tabTitle.text = navbarTitle
-        tabTitle.font = AppFont.font(type: .SemiBold, size: 32)
-        tabTitle.textColor = .white
-        
-        view.addSubview(tabTitle)
+        view.addSubview(leftTabTitle)
 
         ellipseView.snp.makeConstraints { make in
             make.width.equalTo(644)
@@ -46,7 +48,7 @@ class SchoolNavViewController: UIViewController {
             make.centerY.equalTo(72)
             make.centerX.equalToSuperview()
         }
-        tabTitle.snp.makeConstraints { make in
+        leftTabTitle.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(112)
             make.left.equalToSuperview().inset(16)
         }

@@ -6,6 +6,19 @@ final class PerformanceViewController: SchoolNavViewController {
     private let userRole: UserRole
     private let performanceAPI: PerformanceAPIProtocol
 
+    private lazy var rightTabTitle: UIButton = {
+        let button = UIButton()
+        let attributedTitle = NSAttributedString(string: "Четвертные оценки", attributes: [
+            .underlineStyle: NSUnderlineStyle.single.rawValue
+        ])
+        button.setAttributedTitle(attributedTitle, for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = AppFont.font(type: .Medium, size: 18)
+        button.addTarget(self, action: #selector(onTapQuaterMarks), for: .touchUpInside)
+        button.isHidden = self.userRole == .student
+        return button
+    }()
+
     init(navbarTitle: String, navbarColor: UIColor?, userRole: UserRole, performanceAPI: PerformanceAPIProtocol) {
         self.userRole = userRole
         self.performanceAPI = performanceAPI
@@ -45,6 +58,18 @@ final class PerformanceViewController: SchoolNavViewController {
             make.bottom.equalToSuperview().inset(self.tabBarController?.tabBar.frame.size.height ?? 0)
         }
         gradesBar.delegate = marksPanel
+
+        view.addSubview(rightTabTitle)
+        rightTabTitle.snp.makeConstraints { make in
+            make.centerY.equalTo(leftTabTitle)
+            make.right.equalToSuperview().inset(16)
+        }
+    }
+
+    @objc private func onTapQuaterMarks () {
+        let vc = QuaterMarksDetailViewController(performanceAPI: performanceAPI)
+        vc.title = "Четвертные оценки"
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
 }

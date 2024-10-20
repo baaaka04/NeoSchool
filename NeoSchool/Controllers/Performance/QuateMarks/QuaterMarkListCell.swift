@@ -1,9 +1,8 @@
 import UIKit
 import SnapKit
 
-class StudentNameAndMarkCell: AutosizeUICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
-    static let identifier: String = "StudentNameAndMarkCell"
+class QuaterMarkListCell: AutosizeUICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    static let identifier: String = "QuaterMarkListCell"
 
     var name: String? {
         didSet {
@@ -11,17 +10,21 @@ class StudentNameAndMarkCell: AutosizeUICollectionViewCell, UICollectionViewDele
         }
     }
 
-    var lastName: String? {
+    var avarageMark: String? {
         didSet {
-            lastNameLabel.text = lastName
+            avarageMarkLabel.text = avarageMark
         }
     }
+    var quaterMarks: [QuaterMark]?
 
     private let nameLabel = GrayUILabel(font: AppFont.font(type: .Regular, size: 18))
-    private let lastNameLabel = GrayUILabel(font: AppFont.font(type: .Regular, size: 18))
+    private let avarageMarkLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .neobisLightGray
+        label.font = AppFont.font(type: .Regular, size: 14)
+        return label
+    }()
 
-    var selectedGrade: Grade?
-    private let grades: [Grade] = Grade.allCases.filter { $0 != .noGrade }
 
     private lazy var gradesCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -47,22 +50,32 @@ class StudentNameAndMarkCell: AutosizeUICollectionViewCell, UICollectionViewDele
 
     private func setupUI() {
 
-        [nameLabel, lastNameLabel, gradesCollectionView].forEach { contentView.addSubview($0) }
-        [nameLabel, lastNameLabel].forEach { $0.numberOfLines = 1 }
+        let containerView = UIView()
 
+        containerView.addSubview(nameLabel)
+        containerView.addSubview(avarageMarkLabel)
+
+        nameLabel.numberOfLines = 0
+        avarageMarkLabel.numberOfLines = 0
+
+        nameLabel.snp.makeConstraints { $0.left.top.right.equalToSuperview() }
+        avarageMarkLabel.snp.makeConstraints { make in
+            make.top.equalTo(nameLabel.snp.bottom)
+            make.left.right.bottom.equalToSuperview()
+        }
+
+        contentView.addSubview(gradesCollectionView)
         gradesCollectionView.snp.makeConstraints { make in
             make.centerY.right.equalToSuperview()
-            make.width.equalTo(220)
+            make.width.equalTo(183)
             make.height.equalTo(40)
         }
-        nameLabel.snp.makeConstraints { make in
-            make.top.left.equalToSuperview()
-            make.right.equalTo(gradesCollectionView.snp.left)
-        }
-        lastNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom)
-            make.left.bottom.equalToSuperview()
-            make.right.equalTo(gradesCollectionView.snp.left)
+
+        contentView.addSubview(containerView)
+        containerView.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview().inset(12)
+            make.centerY.left.equalToSuperview()
+            make.width.equalTo(165)
         }
     }
 
@@ -71,28 +84,22 @@ class StudentNameAndMarkCell: AutosizeUICollectionViewCell, UICollectionViewDele
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        self.grades.count
+        self.quaterMarks?.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SmallGradeCell.identifier, for: indexPath) as? SmallGradeCell else {
             return UICollectionViewCell()
         }
-        let grade = grades[indexPath.row]
+        guard let grade = self.quaterMarks?[indexPath.row].finalMark else { return UICollectionViewCell() }
         cell.gradeName = grade.rawValue
-        if self.selectedGrade == grade {
-            cell.selectedBackgroundColor = self.selectedGrade?.color
-        } else {
-            cell.selectedBackgroundColor = .neobisGray
-        }
-
+        cell.selectedBackgroundColor = grade.color
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: (self.gradesCollectionView.frame.width-4*4)/6, height: self.gradesCollectionView.frame.height)
+        CGSize(width: (self.gradesCollectionView.frame.width-4*4)/5, height: self.gradesCollectionView.frame.height)
     }
-
 }
 
 

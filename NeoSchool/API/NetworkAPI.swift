@@ -421,6 +421,24 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
         }
     }
 
+    //GET-REQUEST
+    //ENDPOINT /marks/teacher/grades/{grade_id}/quarter/students/
+    func getGradeQuaterData(gradeId: Int, subjectId: Int) async throws -> [FullNameUser] {
+        let urlString = "\(domen)/neoschool/marks/teacher/" +
+        "grades/\(gradeId)/quarter/students/?" +
+        "page=1" +
+        "&limit=1000" + //TODO: Pagination
+        "&subject=\(subjectId)"
+        do {
+            let request = try generateAuthorizedRequest(urlString: urlString)
+            let (data, _) = try await URLSession.shared.data(for: request)
+            let decodedData: DTOStudentsMarks = try decodeRecievedData(data: data)
+            return decodedData.list
+        } catch {
+            print(error)
+            throw error
+        }
+    }
 
 }
 

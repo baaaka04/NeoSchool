@@ -35,7 +35,7 @@ struct Homework: Codable {
     let id : Int
     let text : String
 }
-enum Grade: String, CaseIterable {
+enum Grade: String, CaseIterable, Codable {
     case absent = "Н"
     case two = "2"
     case three = "3"
@@ -49,7 +49,7 @@ enum Grade: String, CaseIterable {
         case .three: return UIColor.neobisGradeThree
         case .four: return UIColor.neobisGradeFour
         case .five: return UIColor.neobisGradeFive
-        case .noGrade: return UIColor.neobisGradeN
+        case .noGrade: return UIColor.neobisExtralightGray
         case .absent: return UIColor.neobisGradeN
         }
     }
@@ -97,6 +97,8 @@ struct FullNameUser: Codable {
     let lastName : String
     let patronymic : String?
     let mark: String?
+    let avgMark: String?
+    let quarterMarks: [QuaterMark]?
 }
 struct StudentSubmission: Codable {
     let id : Int
@@ -115,4 +117,13 @@ struct SchoolDay: Codable {
     let name: String
     let lessonsCount: Int
 }
-
+struct QuaterMark: Codable {
+    let id: Int
+    let student: Int
+    let subject: Int
+    let quarter: QuaterName
+    let finalMark: Grade
+}
+enum QuaterName: String, CaseIterable, Codable {
+    case first, second, third, fourth, final
+}

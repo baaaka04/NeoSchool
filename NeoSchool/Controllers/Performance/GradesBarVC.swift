@@ -10,6 +10,7 @@ class GradesBarVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     private var grades: [GradeName]?
     private let performanceAPI: PerformanceAPIProtocol
     weak var delegate: GradesBarDelegate?
+    private var textColor: UIColor
 
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -24,8 +25,9 @@ class GradesBarVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         return collection
     }()
 
-    init(performanceAPI: PerformanceAPIProtocol) {
+    init(performanceAPI: PerformanceAPIProtocol, textColor: UIColor = .white) {
         self.performanceAPI = performanceAPI
+        self.textColor = textColor
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -64,13 +66,14 @@ class GradesBarVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        grades?.count ?? 0
+        self.grades?.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: GradesBarCell.identifier, for: indexPath) as? GradesBarCell, let grade = self.grades?[indexPath.item]
         else { return GradesBarCell(frame: .zero) }
         cell.gradeNameText = grade.name
+        cell.textColor = self.textColor
 
         if indexPath.item == 0 && !cell.isSelected {
             self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredHorizontally)
