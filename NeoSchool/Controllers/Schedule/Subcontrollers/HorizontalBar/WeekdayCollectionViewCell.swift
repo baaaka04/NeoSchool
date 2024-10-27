@@ -9,13 +9,15 @@ class WeekdayCollectionViewCell: UICollectionViewCell {
     override var isSelected: Bool {
         didSet {
             if self.isSelected {
-                contentView.backgroundColor = .neobisGreen
+                contentView.backgroundColor = selectedColor
             } else {
                 contentView.backgroundColor = .clear
             }
         }
     }
-    
+
+    var selectedColor: UIColor = .neobisGreen
+
     var title : String? {
         didSet {titleLabel.text = title?.uppercased()}
     }
@@ -24,6 +26,7 @@ class WeekdayCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = AppFont.font(type: .Bold, size: 16)
         label.textColor = .neobisGray
+        label.textAlignment = .center
         return label
     }()
     
@@ -35,6 +38,7 @@ class WeekdayCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = AppFont.font(type: .SemiBold, size: 12)
         label.textColor = .neobisGray
+        label.textAlignment = .center
         return label
     }()
  
@@ -42,21 +46,18 @@ class WeekdayCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         
         contentView.layer.cornerRadius = 8
-        
-        addSubview(titleLabel)
 
+        contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(4)
-            make.top.left.greaterThanOrEqualToSuperview()
+            make.top.equalToSuperview()
+            make.left.right.equalToSuperview()
         }
 
-        addSubview(subtitleLabel)
-
+        contentView.addSubview(subtitleLabel)
         subtitleLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
             make.top.equalTo(titleLabel.snp.bottom)
-            make.top.left.greaterThanOrEqualToSuperview()
+            make.left.right.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
     }
     

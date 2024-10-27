@@ -45,7 +45,7 @@
 		F76C6B6C2B67D06B00EACFEB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F76C6B6B2B67D06B00EACFEB /* Assets.xcassets */; };
 		F76C6B6F2B67D06B00EACFEB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F76C6B6D2B67D06B00EACFEB /* LaunchScreen.storyboard */; };
 		F76C6B792B67E24600EACFEB /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C6B782B67E24600EACFEB /* ScheduleViewController.swift */; };
-		F76C6B7B2B67E29000EACFEB /* PerformanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C6B7A2B67E29000EACFEB /* PerformanceViewController.swift */; };
+		F76C6B7B2B67E29000EACFEB /* TeacherPerformanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C6B7A2B67E29000EACFEB /* TeacherPerformanceViewController.swift */; };
 		F76C6B7D2B67E2C500EACFEB /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C6B7C2B67E2C500EACFEB /* ProfileViewController.swift */; };
 		F76C6B802B693D4900EACFEB /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = F76C6B7F2B693D4900EACFEB /* SnapKit */; };
 		F76C6B862B694DF900EACFEB /* EllipseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F76C6B852B694DF900EACFEB /* EllipseView.swift */; };
@@ -91,9 +91,14 @@
 		F79534192BFA9CF5004A76C6 /* SubjectDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79534182BFA9CF5004A76C6 /* SubjectDetailsViewController.swift */; };
 		F7962AF92C08CF630045ADA0 /* OneTimeCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7962AF82C08CF630045ADA0 /* OneTimeCodeViewController.swift */; };
 		F7962AFB2C0A209A0045ADA0 /* PasswordCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7962AFA2C0A209A0045ADA0 /* PasswordCreationViewController.swift */; };
+		F79A10CB2CCED3BE000F5CBA /* QuaterMarksPanelVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79A10CA2CCED3BE000F5CBA /* QuaterMarksPanelVC.swift */; };
+		F79A10CD2CCED425000F5CBA /* SubjectLastMarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79A10CC2CCED425000F5CBA /* SubjectLastMarksCell.swift */; };
+		F79A10CF2CCED455000F5CBA /* LastMarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79A10CE2CCED455000F5CBA /* LastMarksCell.swift */; };
 		F79EE1F12C087822009584D9 /* ConfirmCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79EE1F02C087822009584D9 /* ConfirmCodeViewController.swift */; };
 		F79FFFD92C84A10D003790CB /* SubmissionsListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79FFFD82C84A10D003790CB /* SubmissionsListVC.swift */; };
 		F7A785F82CC516BD0088B274 /* QuaterMarkListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A785F72CC516BD0088B274 /* QuaterMarkListCell.swift */; };
+		F7A785FC2CC624480088B274 /* QuatersBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A785FB2CC624480088B274 /* QuatersBarVC.swift */; };
+		F7A785FE2CC6E9BE0088B274 /* StudentPerformanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A785FD2CC6E9BE0088B274 /* StudentPerformanceViewController.swift */; };
 		F7BBB2DE2CAECBAF0082DD8B /* GradesBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BBB2DD2CAECBAF0082DD8B /* GradesBarVC.swift */; };
 		F7BBB2E02CAEF2C10082DD8B /* GradeBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BBB2DF2CAEF2C10082DD8B /* GradeBarCell.swift */; };
 		F7BBB2E32CAEF3010082DD8B /* PerformanceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BBB2E22CAEF2FB0082DD8B /* PerformanceAPI.swift */; };
@@ -172,7 +177,7 @@
 		F76C6B6E2B67D06B00EACFEB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F76C6B702B67D06B00EACFEB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F76C6B782B67E24600EACFEB /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
-		F76C6B7A2B67E29000EACFEB /* PerformanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceViewController.swift; sourceTree = "<group>"; };
+		F76C6B7A2B67E29000EACFEB /* TeacherPerformanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherPerformanceViewController.swift; sourceTree = "<group>"; };
 		F76C6B7C2B67E2C500EACFEB /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F76C6B852B694DF900EACFEB /* EllipseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EllipseView.swift; sourceTree = "<group>"; };
 		F76C6BB62B6A96A900EACFEB /* Jost-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost-BoldItalic.ttf"; sourceTree = "<group>"; };
@@ -217,9 +222,14 @@
 		F79534182BFA9CF5004A76C6 /* SubjectDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectDetailsViewController.swift; sourceTree = "<group>"; };
 		F7962AF82C08CF630045ADA0 /* OneTimeCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTimeCodeViewController.swift; sourceTree = "<group>"; };
 		F7962AFA2C0A209A0045ADA0 /* PasswordCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordCreationViewController.swift; sourceTree = "<group>"; };
+		F79A10CA2CCED3BE000F5CBA /* QuaterMarksPanelVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuaterMarksPanelVC.swift; sourceTree = "<group>"; };
+		F79A10CC2CCED425000F5CBA /* SubjectLastMarksCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectLastMarksCell.swift; sourceTree = "<group>"; };
+		F79A10CE2CCED455000F5CBA /* LastMarksCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastMarksCell.swift; sourceTree = "<group>"; };
 		F79EE1F02C087822009584D9 /* ConfirmCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmCodeViewController.swift; sourceTree = "<group>"; };
 		F79FFFD82C84A10D003790CB /* SubmissionsListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmissionsListVC.swift; sourceTree = "<group>"; };
 		F7A785F72CC516BD0088B274 /* QuaterMarkListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuaterMarkListCell.swift; sourceTree = "<group>"; };
+		F7A785FB2CC624480088B274 /* QuatersBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuatersBarVC.swift; sourceTree = "<group>"; };
+		F7A785FD2CC6E9BE0088B274 /* StudentPerformanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentPerformanceViewController.swift; sourceTree = "<group>"; };
 		F7BBB2DD2CAECBAF0082DD8B /* GradesBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradesBarVC.swift; sourceTree = "<group>"; };
 		F7BBB2DF2CAEF2C10082DD8B /* GradeBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeBarCell.swift; sourceTree = "<group>"; };
 		F7BBB2E22CAEF2FB0082DD8B /* PerformanceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceAPI.swift; sourceTree = "<group>"; };
@@ -518,15 +528,44 @@
 			path = Subcontrollers;
 			sourceTree = "<group>";
 		};
-		F7BBB2DC2CAEB6BA0082DD8B /* Performance */ = {
+		F79A10D02CCED4C1000F5CBA /* CollectionViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				F79A10CC2CCED425000F5CBA /* SubjectLastMarksCell.swift */,
+				F79A10CE2CCED455000F5CBA /* LastMarksCell.swift */,
+			);
+			path = CollectionViewCells;
+			sourceTree = "<group>";
+		};
+		F7A785F92CC623FA0088B274 /* Teacher */ = {
 			isa = PBXGroup;
 			children = (
 				F7EDD6AE2CC05CF300E636CA /* QuateMarks */,
 				F7BBB2EE2CB871380082DD8B /* CollectionViewCells */,
-				F76C6B7A2B67E29000EACFEB /* PerformanceViewController.swift */,
+				F76C6B7A2B67E29000EACFEB /* TeacherPerformanceViewController.swift */,
 				F7BBB2DD2CAECBAF0082DD8B /* GradesBarVC.swift */,
 				F7BBB2E82CB04AFA0082DD8B /* MarksPanelVC.swift */,
 				F7EDD6AA2CBA3CBB00E636CA /* StudentMarksListVC.swift */,
+			);
+			path = Teacher;
+			sourceTree = "<group>";
+		};
+		F7A785FA2CC624160088B274 /* Student */ = {
+			isa = PBXGroup;
+			children = (
+				F79A10D02CCED4C1000F5CBA /* CollectionViewCells */,
+				F7A785FD2CC6E9BE0088B274 /* StudentPerformanceViewController.swift */,
+				F7A785FB2CC624480088B274 /* QuatersBarVC.swift */,
+				F79A10CA2CCED3BE000F5CBA /* QuaterMarksPanelVC.swift */,
+			);
+			path = Student;
+			sourceTree = "<group>";
+		};
+		F7BBB2DC2CAEB6BA0082DD8B /* Performance */ = {
+			isa = PBXGroup;
+			children = (
+				F7A785FA2CC624160088B274 /* Student */,
+				F7A785F92CC623FA0088B274 /* Teacher */,
 			);
 			path = Performance;
 			sourceTree = "<group>";
@@ -766,6 +805,7 @@
 				F7084A782C0381A000A6DF4B /* LoginTextField.swift in Sources */,
 				F795340B2BF35C50004A76C6 /* ConfirmUIView.swift in Sources */,
 				F71ACC092BD553D100EDE3A6 /* CommentSubmitView.swift in Sources */,
+				F79A10CD2CCED425000F5CBA /* SubjectLastMarksCell.swift in Sources */,
 				F74714022C19E74900B4C0EC /* AuthModel.swift in Sources */,
 				F7EDD6B02CC1ADFB00E636CA /* QuaterMarkListViewController.swift in Sources */,
 				F7C0D1112C4963B5003CEC19 /* LessonCollectionViewCell.swift in Sources */,
@@ -805,13 +845,16 @@
 				F70FCF482C00C6EA0088AACD /* AuthService.swift in Sources */,
 				F79FFFD92C84A10D003790CB /* SubmissionsListVC.swift in Sources */,
 				F7A785F82CC516BD0088B274 /* QuaterMarkListCell.swift in Sources */,
+				F7A785FE2CC6E9BE0088B274 /* StudentPerformanceViewController.swift in Sources */,
 				F7C0D1172C4D4050003CEC19 /* NotepadView.swift in Sources */,
 				F79534112BF657AA004A76C6 /* ZoomPictureViewController.swift in Sources */,
 				F79533F92BDFD461004A76C6 /* SnackBarView.swift in Sources */,
 				F7BBB2E02CAEF2C10082DD8B /* GradeBarCell.swift in Sources */,
 				F7BBB2F02CB8720D0082DD8B /* ContainerView.swift in Sources */,
 				F7CAE6B02B791D50004916E3 /* GradeView.swift in Sources */,
+				F79A10CF2CCED455000F5CBA /* LastMarksCell.swift in Sources */,
 				F7CAE6A52B762C81004916E3 /* SchoolNavViewController.swift in Sources */,
+				F79A10CB2CCED3BE000F5CBA /* QuaterMarksPanelVC.swift in Sources */,
 				F75B04D42C20305700626265 /* ProfileInfoView.swift in Sources */,
 				F76081462B88E46000B6D792 /* NetworkAPI.swift in Sources */,
 				F76C6B672B67D06900EACFEB /* MainTabBarViewController.swift in Sources */,
@@ -819,6 +862,7 @@
 				F7BBB2DE2CAECBAF0082DD8B /* GradesBarVC.swift in Sources */,
 				F7EDD6AB2CBA3CBB00E636CA /* StudentMarksListVC.swift in Sources */,
 				F79534172BFA32DD004A76C6 /* SubmittedSubjectDetailsViewController.swift in Sources */,
+				F7A785FC2CC624480088B274 /* QuatersBarVC.swift in Sources */,
 				F76C6B632B67D06900EACFEB /* AppDelegate.swift in Sources */,
 				F76C6B652B67D06900EACFEB /* SceneDelegate.swift in Sources */,
 				F72CD0EF2CA85BAB006BBB4E /* AutosizeUICollectionViewCell.swift in Sources */,
@@ -845,7 +889,7 @@
 				F7CB51532BFCEDD900E1580C /* CommentModalViewController.swift in Sources */,
 				F7C0D1152C4BE0F9003CEC19 /* TeacherModel.swift in Sources */,
 				F7C0D11B2C5131D4003CEC19 /* SetHomeworkViewController.swift in Sources */,
-				F76C6B7B2B67E29000EACFEB /* PerformanceViewController.swift in Sources */,
+				F76C6B7B2B67E29000EACFEB /* TeacherPerformanceViewController.swift in Sources */,
 				F7948FEA2C821FC00028E3EA /* CalendarView.swift in Sources */,
 				F760814A2B8B73DA00B6D792 /* StringExtension.swift in Sources */,
 				F79534012BE3C076004A76C6 /* AttachedFilesDetailViewController.swift in Sources */,

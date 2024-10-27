@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 
 protocol CellDelegate: AnyObject {
-    func presentVC(quater: QuaterName, studentId: Int, studentName: String, avarageMark: String?)
+    func presentVC(quater: Quater, studentId: Int, studentName: String, avarageMark: String?)
 }
 
 class QuaterMarkListCell: AutosizeUICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {

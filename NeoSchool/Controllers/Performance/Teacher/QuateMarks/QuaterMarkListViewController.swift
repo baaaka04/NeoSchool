@@ -101,7 +101,7 @@ class QuaterMarkListViewController: UIViewController, UICollectionViewDelegate, 
         let studentMarks = self.studentsMarks[indexPath.row]
 
         var quaterMarks: [QuaterMark] = []
-        for quater in QuaterName.allCases {
+        for quater in Quater.allCases {
             let finalMark = studentMarks.quarterMarks?.first(where: { $0.quarter == quater })
             let quaterMark = QuaterMark(
                 id: finalMark?.id ?? 1,
@@ -125,10 +125,10 @@ class QuaterMarkListViewController: UIViewController, UICollectionViewDelegate, 
     // CommentRepresentableProtocol and CellDelegate protocols
     var userComment: String? = nil
     var grade: Grade?
-    var selectedQuater: QuaterName?
+    var selectedQuater: Quater?
     var selectedStudentId: Int?
 
-    func presentVC(quater: QuaterName, studentId: Int, studentName: String, avarageMark: String?) {
+    func presentVC(quater: Quater, studentId: Int, studentName: String, avarageMark: String?) {
         self.selectedQuater = quater
         self.selectedStudentId = studentId
         openCommentView(studentName: studentName, avarageMark: avarageMark)

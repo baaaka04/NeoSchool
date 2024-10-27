@@ -162,11 +162,11 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
     }
 }
 
-extension DaySubjectsViewController: WorkdayScheduleViewDelegate {
+extension DaySubjectsViewController: ItemsBarDelegate {
     
-    func dayDidSelected(day: Int) {
+    func itemDidSelected(itemId: Int) {
         self.collectionHeight = 24
-        getLessonData(forDayID: day)
+        getLessonData(forDayID: itemId)
     }
 
 }

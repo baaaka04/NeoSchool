@@ -2,21 +2,26 @@ import UIKit
 import SnapKit
 
 class GradeView: UIView {
-    
+
+    var subtitleText: String? {
+        didSet {
+            subtitleLabel.text = subtitleText
+        }
+    }
+
     private var gradeLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.clipsToBounds = true
         return label
     }()
 
-    private let subtitle: UILabel = {
+    private let subtitleLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.textColor = .black
         label.font = AppFont.font(type: .Regular, size: 14)
+        label.numberOfLines = 0
         label.text = "Оценка"
         return label
     }()
@@ -34,19 +39,15 @@ class GradeView: UIView {
     private func setupUI() {
         
         addSubview(gradeLabel)
-        
         gradeLabel.snp.makeConstraints { make in
-            make.width.equalToSuperview()
-            make.height.equalTo(48)
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview()
+            make.top.centerX.equalToSuperview()
+            make.height.width.equalTo(48)
         }
 
-        addSubview(subtitle)
-        
-        subtitle.snp.makeConstraints { make in
-            make.bottom.equalToSuperview()
-            make.centerX.equalToSuperview()
+        addSubview(subtitleLabel)
+        subtitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(gradeLabel.snp.bottom).offset(4)
+            make.bottom.left.right.equalToSuperview()
         }
     }
 

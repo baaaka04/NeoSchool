@@ -15,7 +15,7 @@ class NotepadView: UIView {
     }()
     
     var subtitle: String? {
-        didSet { titleLabel.text = subtitle }
+        didSet { subtitleLabel.text = subtitle }
     }
     private let subtitleLabel: GrayUILabel = {
         let label = GrayUILabel(font: AppFont.font(type: .Regular, size: 18))

@@ -1,9 +1,8 @@
 import UIKit
 import SnapKit
 
-final class PerformanceViewController: SchoolNavViewController {
+final class TeacherPerformanceViewController: SchoolNavViewController {
 
-    private let userRole: UserRole
     private let performanceAPI: PerformanceAPIProtocol
 
     private lazy var rightTabTitle: UIButton = {
@@ -15,12 +14,10 @@ final class PerformanceViewController: SchoolNavViewController {
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = AppFont.font(type: .Medium, size: 18)
         button.addTarget(self, action: #selector(onTapQuaterMarks), for: .touchUpInside)
-        button.isHidden = self.userRole == .student
         return button
     }()
 
-    init(navbarTitle: String, navbarColor: UIColor?, userRole: UserRole, performanceAPI: PerformanceAPIProtocol) {
-        self.userRole = userRole
+    init(navbarTitle: String, navbarColor: UIColor?, performanceAPI: PerformanceAPIProtocol) {
         self.performanceAPI = performanceAPI
         super.init(navbarTitle: navbarTitle, navbarColor: navbarColor)
     }

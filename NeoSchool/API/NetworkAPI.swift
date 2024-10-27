@@ -442,7 +442,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
 
     //POST-REQUEST
     //ENDPOINT /marks/teacher/quarter/rate/
-    func setGradeForQuater(grade: Grade, studentId: Int, subjectId: Int, quater: QuaterName) async throws {
+    func setGradeForQuater(grade: Grade, studentId: Int, subjectId: Int, quater: Quater) async throws {
         let urlString = "\(domen)/neoschool/marks/teacher/quarter/rate/"
         let params: [String: Any] = [
             "student": studentId,
@@ -461,6 +461,24 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
 
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
             throw MyError.badNetwork
+        }
+    }
+
+    //GET-REQUEST
+    //ENDPOINT /marks/student/subjects/marks/
+    func getLastMarks(quater: String) async throws -> [LastMarks?] {
+        let urlString = "\(domen)/neoschool/marks/student/subjects/marks/?" +
+        "page=1" +
+        "&limit=1000" + //TODO: Pagination
+        "&quarter=\(quater)"
+        do {
+            let request = try generateAuthorizedRequest(urlString: urlString)
+            let (data, _) = try await URLSession.shared.data(for: request)
+            let decodedData: DTOLastMarks = try decodeRecievedData(data: data)
+            return decodedData.list
+        } catch {
+            print(error)
+            throw error
         }
     }
 

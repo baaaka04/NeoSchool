@@ -146,8 +146,12 @@ class MockPerformanceAPI: PerformanceAPIProtocol {
         return
     }
 
-    func setGradeForQuater(grade: Grade, studentId: Int, subjectId: Int, quater: QuaterName) async throws {
+    func setGradeForQuater(grade: Grade, studentId: Int, subjectId: Int, quater: Quater) async throws {
         return
+    }
+
+    func getLastMarks(quater: String) async throws -> [LastMarks?] {
+        throw MyError.badNetwork
     }
 
 }

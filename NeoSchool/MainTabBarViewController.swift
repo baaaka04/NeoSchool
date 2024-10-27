@@ -19,7 +19,8 @@ class MainTabBarViewController: UITabBarController {
         let (navControllerName, navControllerIcon, navControllerIconSelected) = getNavControllerDetails(for: userRole)
 
         let vc1 = self.createVC(with: "Расписание", image: UIImage(named: "ScheduleIcon"), selectedImage: UIImage(named: "ScheduleIconSelected"), vc: ScheduleViewController(navbarTitle: "Расписание", navbarColor: .neobisPurple, userRole: self.userRole))
-        let vc2 = self.createVC(with: navControllerName, image: navControllerIcon, selectedImage: navControllerIconSelected, vc: PerformanceViewController(navbarTitle: navControllerName, navbarColor: .neobisBlue, userRole: self.userRole, performanceAPI: PerformanceAPI()))
+        let vc2teacher = self.createVC(with: navControllerName, image: navControllerIcon, selectedImage: navControllerIconSelected, vc: TeacherPerformanceViewController(navbarTitle: navControllerName, navbarColor: .neobisBlue, performanceAPI: PerformanceAPI()))
+        let vc2student = self.createVC(with: navControllerName, image: navControllerIcon, selectedImage: navControllerIconSelected, vc: StudentPerformanceViewController(navbarTitle: navControllerName, navbarColor: .neobisBlue, performanceAPI: PerformanceAPI()))
         let vc3 = self.createVC(with: "Профиль", image: UIImage(named: "ProfileIcon"), selectedImage: UIImage(named: "ProfileIconSelected"), vc: ProfileViewController(navbarTitle: "Профиль", navbarColor: .neobisGreen))
         
         self.tabBar.tintColor = UIColor.neobisDarkPurple
@@ -40,8 +41,13 @@ class MainTabBarViewController: UITabBarController {
         let optionsButton = UIBarButtonItem(image: UIImage(named: "verticaldots"), style: .plain, target: self, action: #selector(onTapProfileOptions))
         optionsButton.tintColor = .white
         vc3.topViewController?.navigationItem.rightBarButtonItems?.insert(optionsButton, at: 0)
-        
-        self.setViewControllers([vc1, vc2, vc3], animated: true)
+
+        switch userRole {
+        case .teacher:
+            self.setViewControllers([vc1, vc2teacher, vc3], animated: true)
+        case .student:
+            self.setViewControllers([vc1, vc2student, vc3], animated: true)
+        }
     }
 
     private func getNavControllerDetails(for role: UserRole) -> (String, UIImage?, UIImage?) {

@@ -138,6 +138,6 @@ struct DTOStudentsMarks: Codable {
 }
 struct CommentInfo {
     let selectedStudentName: String
-    let selectedQuater: QuaterName
+    let selectedQuater: Quater
     let avarageMark: String?
 }

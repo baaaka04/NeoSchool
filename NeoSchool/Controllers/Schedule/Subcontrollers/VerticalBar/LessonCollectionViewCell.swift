@@ -45,12 +45,12 @@ class LessonCollectionViewCell: UICollectionViewCell {
 
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(16)
+            make.left.right.equalToSuperview()
             make.top.equalToSuperview()
         }
         contentView.addSubview(subtitleLabel)
         subtitleLabel.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(16)
+            make.left.right.equalToSuperview()
             make.top.equalTo(titleLabel.snp.bottom).offset(4)
         }
         

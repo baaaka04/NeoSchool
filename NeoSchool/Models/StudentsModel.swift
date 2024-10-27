@@ -63,6 +63,16 @@ enum Grade: String, CaseIterable, Codable {
         case .absent: return ""
         }
     }
+    var backgroundColor: UIColor {
+        switch self {
+        case .two: return UIColor.neobisGradeTwoBackground
+        case .three: return UIColor.neobisGradeThreeBackground
+        case .four: return UIColor.neobisGradeFourBackground
+        case .five: return UIColor.neobisGradeFiveBackground
+        case .noGrade: return UIColor.neobisExtralightGray
+        case .absent: return UIColor.neobisExtralightGray
+        }
+    }
 }
 
 // MARK: Student's lesson details
@@ -121,13 +131,13 @@ struct QuaterMark: Codable {
     let id: Int
     let student: Int
     let subject: Int
-    let quarter: QuaterName
+    let quarter: Quater
     let finalMark: Grade?
 }
-enum QuaterName: String, CaseIterable, Codable {
+enum Quater: String, CaseIterable, Codable {
     case first, second, third, fourth, final
 
-    var romanNumber: String {
+    var romanNumberSign: String {
         switch self {
         case .first: return "I четверть"
         case .second: return "II четверть"
@@ -136,4 +146,41 @@ enum QuaterName: String, CaseIterable, Codable {
         case .final: return "Годовая"
         }
     }
+
+    var romanNum: String {
+        switch self {
+        case .first: return "I"
+        case .second: return "II"
+        case .third: return "III"
+        case .fourth: return "IV"
+        case .final: return "ИТОГ"
+        }
+    }
+
+    var subtitle: String {
+        switch self {
+        case .first, .second, .third, .fourth: return "четверть"
+        case .final: return "за уч. год"
+        }
+    }
 }
+struct DTOLastMarks: Codable {
+    let totalCount: Int
+    let totalPages: Int
+    let list: [LastMarks?]
+}
+struct LastMarks: Codable {
+    let id: Int
+    let name: String
+    let marks: [Mark]?
+    let quarterMark: QuaterMark?
+}
+struct Mark: Codable {
+    let id: Int
+    let student: Int
+    let subject: Int
+    let submission: Int?
+    let quarter: String
+    let mark: Grade
+}
+

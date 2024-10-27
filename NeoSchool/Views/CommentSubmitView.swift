@@ -109,7 +109,7 @@ class CommentSubmitView: UIStackView {
             self.commentInput.isHidden = true
             self.submitButton.setTitle("Выставить оценку", for: .normal)
             self.studentNameLabel.text = commentInfo?.selectedStudentName
-            self.quaterNumberLabel.text = commentInfo?.selectedQuater.romanNumber
+            self.quaterNumberLabel.text = commentInfo?.selectedQuater.romanNumberSign
             if let avarageMark = commentInfo?.avarageMark {
                 self.avarageMarkLabel.text = "Чаще всего этот ученик получал на ваших уроках оценку " + avarageMark
             } else {
