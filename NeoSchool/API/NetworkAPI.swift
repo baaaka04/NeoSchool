@@ -343,21 +343,23 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
 
     //POST-REQUEST
     //ENDPOINT /schedule/teacher/submissions/{submission_id}/rate/
-    func gradeSubmission(submissionId: Int, mark: String, teacherComment: String?) async throws -> TeacherSubmissionDetails {
+    func gradeSubmission(submissionId: Int, mark: String, teacherComment: String?, date: String) async throws -> TeacherSubmissionDetails {
         let urlString = "\(domen)/neoschool/schedule/teacher/submissions/\(submissionId)/rate/"
-        let boundary = "Boundary-\(UUID().uuidString)"
-        var params : [[String : String]]? = nil
-        if let teacherComment { params = [
-            ["mark": mark],
-            ["teacher_comment": teacherComment]
-        ]}
+        let params: [String: Any] = [
+            "mark": mark,
+            "teacher_comment": teacherComment ?? "",
+            "date_time": date
+        ]
 
-        let body = try multipartFormDataBody(boundary: boundary, parameters: params)
-        let request = try generateRequest(boundary: boundary, httpBody: body, urlString: urlString)
+        var request = try generateAuthorizedRequest(urlString: urlString)
+        request.httpMethod = "POST"
+        let jsonData = try JSONSerialization.data(withJSONObject: params, options: [])
+        request.httpBody = jsonData
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        let (data, resp) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await URLSession.shared.data(for: request)
 
-        guard let httpresponse = resp as? HTTPURLResponse, httpresponse.statusCode == 200 else {
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
             throw MyError.badNetwork
         }
 
@@ -475,6 +477,43 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
             let request = try generateAuthorizedRequest(urlString: urlString)
             let (data, _) = try await URLSession.shared.data(for: request)
             let decodedData: DTOLastMarks = try decodeRecievedData(data: data)
+            return decodedData.list
+        } catch {
+            print(error)
+            throw error
+        }
+    }
+
+    //GET-REQUEST
+    //ENDPOINT /marks/student/subjects/{subject_id}/classwork/marks/
+    func getSubjectClassworkLastMarks(quater: String, subjectId: Int) async throws -> [StudentSubjectMark] {
+        let urlString = "\(domen)/neoschool/marks/student/subjects/\(subjectId)/classwork/marks/?" +
+        "page=1" +
+        "&limit=1000" + //TODO: Pagination
+        "&quarter=\(quater)"
+        do {
+            let request = try generateAuthorizedRequest(urlString: urlString)
+            let (data, _) = try await URLSession.shared.data(for: request)
+            let decodedData: DTOSubjectClassworkLastMarks = try decodeRecievedData(data: data)
+            return decodedData.list
+        } catch {
+            print(error)
+            throw error
+        }
+    }
+
+    //GET-REQUEST
+    //ENDPOINT /marks/student/subjects/{subject_id}/homework/marks/
+    func getSubjectHomeworkLastMarks(quater: String, subjectId: Int) async throws -> [TeacherSubmission] {
+        let urlString = "\(domen)/neoschool/marks/student/subjects/\(subjectId)/homework/marks/?" +
+        "page=1" +
+        "&limit=1000" + //TODO: Pagination
+        "&quarter=\(quater)"
+        do {
+            let request = try generateAuthorizedRequest(urlString: urlString)
+            let (data, _) = try await URLSession.shared.data(for: request)
+
+            let decodedData: DTOSubjectHomeworkLastMarks = try decodeRecievedData(data: data)
             return decodedData.list
         } catch {
             print(error)

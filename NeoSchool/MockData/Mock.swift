@@ -154,19 +154,13 @@ class MockPerformanceAPI: PerformanceAPIProtocol {
         throw MyError.badNetwork
     }
 
-}
+    func getSubjectClassworkLastMarks(quater: String, subjectId: Int) async throws -> [StudentSubjectMark] {
+        throw MyError.badNetwork
+    }
 
-struct DTOPerformance {
-    let totalCount: Int
-    let totalPages: Int
-    let list: [StudentMark]
-}
+    func getSubjectHomeworkLastMarks(quater: String, subjectId: Int) async throws -> [TeacherSubmission] {
+        throw MyError.badNetwork
+    }
 
-struct StudentMark {
-    let id: Int
-    let fullName: String
-    let firstName: String
-    let lastName: String
-    let patronymic: String
-    let mark: String?
+
 }

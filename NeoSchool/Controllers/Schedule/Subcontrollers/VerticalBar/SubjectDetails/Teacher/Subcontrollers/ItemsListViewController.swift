@@ -16,21 +16,7 @@ class ItemsListViewController: DetailTitledViewController {
     private let subtitleLabel = GrayUILabel(font: AppFont.font(type: .Medium, size: 16))
 
     let emptyListView = NotepadView()
-
-    lazy var teacherListCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        layout.minimumLineSpacing = 0
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
-
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .white
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.register(TeacherItemListCollectionViewCell.self, forCellWithReuseIdentifier: TeacherItemListCollectionViewCell.identifier)
-
-        return collectionView
-    }()
+    let teacherListCollectionView = TeacherListCollectionView()
 
     override func viewDidLoad() {
         super.viewDidLoad()

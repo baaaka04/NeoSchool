@@ -164,7 +164,7 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
 
 extension DaySubjectsViewController: ItemsBarDelegate {
     
-    func itemDidSelected(itemId: Int) {
+    func didSelectItem(itemId: Int) {
         self.collectionHeight = 24
         getLessonData(forDayID: itemId)
     }

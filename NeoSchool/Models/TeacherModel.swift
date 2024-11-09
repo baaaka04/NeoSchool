@@ -14,13 +14,39 @@ struct TeacherLessonDetail: Codable {
 }
 struct TeacherSubmission: Codable {
     let id : Int
-    let student : FullNameUser
-    let homework: Int
+    let student : FullNameUser?
+    let homework: HomeworkType
     let submittedDate : String
     let submittedOnTime : Bool
-    let mark : String?
+    let mark : Grade?
     let lessonId: Int
 }
+enum HomeworkType: Codable {
+    case id(Int)
+    case detailed(Homework)
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let homeworkId = try? container.decode(Int.self) {
+            self = .id(homeworkId)
+        } else if let detailedHomework = try? container.decode(Homework.self) {
+            self = .detailed(detailedHomework)
+        } else {
+            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Unknown HomeworkType")
+        }
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        switch self {
+        case .id(let homeworkId):
+            try container.encode(homeworkId)
+        case .detailed(let homework):
+            try container.encode(homework)
+        }
+    }
+}
+
 struct TeacherHomework: Codable {
     let id: Int
     let text: String
@@ -73,13 +99,38 @@ struct TeacherClassItem {
     // init for the list of the student's submissions on TeacherLessonDetails screen
     init(submission: TeacherSubmission) {
         self.id = submission.id
-        self.title = "\(submission.student.firstName) \(submission.student.lastName)"
+        self.title = "\(submission.student?.firstName) \(submission.student?.lastName)"
         let submittedOnTimeString = submission.submittedOnTime ? "Прислано в срок" : "Срок сдачи пропущен"
-        let markString = "Оценка: \(submission.mark ?? "-")"
+        let markString = "Оценка: \(submission.mark?.rawValue ?? "-")"
         self.subtitle = submittedOnTimeString + " · " + markString
         self.datetime = nil
         self.onTime = submission.submittedOnTime
     }
+    // init for the list of the student's classwork marks in ClasworkListViewController
+    init(classwork: StudentSubjectMark) {
+        self.id = classwork.id
+        let day = try? DateConverter.convertDateStringToDayAndMonth(from: classwork.createdAt, dateFormat: .short)
+        let time = try? DateConverter.convertDateStringToHoursAndMinutes(from: classwork.createdAt, dateFormat: .short)
+        self.title = day ?? ""
+        self.subtitle = "Оценка: \(classwork.mark.rawValue)"
+        self.datetime = time ?? ""
+        self.onTime = nil
+    }
+    // init for the list of the student's homework marks in HomeworkListViewController
+    init(homework: TeacherSubmission) {
+        self.id = homework.lessonId
+        let day = try? DateConverter.convertDateStringToDay(from: homework.submittedDate, dateFormat: .long)
+        let time = try? DateConverter.convertDateStringToHoursAndMinutes(from: homework.submittedDate, dateFormat: .long)
+        if case .detailed(let homework) = homework.homework {
+            self.title = homework.topic
+        } else {
+            self.title = ""
+        }
+        self.subtitle = "Оценка: \(homework.mark?.rawValue ?? "-")"
+        self.datetime = (day ?? "") + " в " + (time ?? "")
+        self.onTime = nil
+    }
+
 }
 struct DTOStudentLessonsList: Decodable {
     let totalCount : Int

@@ -7,6 +7,8 @@ protocol PerformanceAPIProtocol: AnyObject {
     func setGradeForLesson(grade: Grade, studentId: Int, subjectId: Int, date: Date) async throws
     func setGradeForQuater(grade: Grade, studentId: Int, subjectId: Int, quater: Quater) async throws
     func getLastMarks(quater: String) async throws -> [LastMarks?]
+    func getSubjectClassworkLastMarks(quater: String, subjectId: Int) async throws -> [StudentSubjectMark]
+    func getSubjectHomeworkLastMarks(quater: String, subjectId: Int) async throws -> [TeacherSubmission]
 }
 
 class PerformanceAPI: PerformanceAPIProtocol {
@@ -39,5 +41,13 @@ class PerformanceAPI: PerformanceAPIProtocol {
 
     func getLastMarks(quater: String) async throws -> [LastMarks?] {
         try await networkAPI.getLastMarks(quater: quater)
+    }
+
+    func getSubjectClassworkLastMarks(quater: String, subjectId: Int) async throws -> [StudentSubjectMark] {
+        try await networkAPI.getSubjectClassworkLastMarks(quater: quater, subjectId: subjectId)
+    }
+
+    func getSubjectHomeworkLastMarks(quater: String, subjectId: Int) async throws -> [TeacherSubmission] {
+        try await networkAPI.getSubjectHomeworkLastMarks(quater: quater, subjectId: subjectId)
     }
 }

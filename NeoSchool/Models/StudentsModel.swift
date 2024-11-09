@@ -32,8 +32,9 @@ struct SubjectName: Codable, Equatable {
     let name : String
 }
 struct Homework: Codable {
-    let id : Int
-    let text : String
+    let id: Int
+    let text: String
+    let topic: String
 }
 enum Grade: String, CaseIterable, Codable {
     case absent = "Н"
@@ -180,7 +181,24 @@ struct Mark: Codable {
     let student: Int
     let subject: Int
     let submission: Int?
-    let quarter: String
+    let quarter: Quater
     let mark: Grade
 }
-
+struct DTOSubjectClassworkLastMarks: Codable {
+    let totalCount: Int
+    let totalPages: Int
+    let list: [StudentSubjectMark]
+}
+struct StudentSubjectMark: Codable {
+    let id: Int
+    let student: Int
+    let subject: StudentSubject
+    let quarter: Quater
+    let mark: Grade
+    let createdAt: String
+}
+struct DTOSubjectHomeworkLastMarks: Codable {
+    let totalCount: Int
+    let totalPages: Int
+    let list: [TeacherSubmission]
+}

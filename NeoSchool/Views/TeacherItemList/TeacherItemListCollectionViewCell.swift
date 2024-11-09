@@ -115,4 +115,8 @@ class TeacherItemListCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         setupUI()
     }
+
+    func removeArrow() {
+        arrowRightView.removeFromSuperview()
+    }
 }

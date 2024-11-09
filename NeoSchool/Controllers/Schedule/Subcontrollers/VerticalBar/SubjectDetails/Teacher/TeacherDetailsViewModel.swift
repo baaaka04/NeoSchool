@@ -43,8 +43,8 @@ class TeacherDetailsViewModel: StudentHomeworkProtocol, CommentRepresentableProt
         var submissions = submissionsDTO.list
 
         for i in 0..<submissions.count {
-            guard let date = try? convertDateStringToDay(from: submissions[i].submittedDate, dateFormat: .long),
-                  let time = try? convertDateStringToHoursAndMinutes(from: submissions[i].submittedDate, dateFormat: .long) else { throw MyError.noDataReceived }
+            guard let date = try? DateConverter.convertDateStringToDay(from: submissions[i].submittedDate, dateFormat: .long),
+                  let time = try? DateConverter.convertDateStringToHoursAndMinutes(from: submissions[i].submittedDate, dateFormat: .long) else { throw MyError.noDataReceived }
             submissions[i].submittedDate = date + " в " + time
         }
         let newSubmissions = submissions.map { TeacherClassItem(studentLesson: $0) }
@@ -85,8 +85,11 @@ class TeacherDetailsViewModel: StudentHomeworkProtocol, CommentRepresentableProt
     }
 
     func submit(_ submissionId: Int?) async throws {
-        guard let submissionId, let grade else { throw MyError.noDataReceived }
-        guard let submission = try await teacherAPI?.gradeSubmission(submissionId: submissionId, grade: grade.rawValue, teacherComment: userComment) else { throw MyError.badNetwork }
+        guard let submissionId,
+              let grade,
+              let dateString = lessonDetails?.homework?.deadline
+        else { throw MyError.noDataReceived }
+        guard let submission = try await teacherAPI?.gradeSubmission(submissionId: submissionId, grade: grade.rawValue, teacherComment: userComment, date: dateString) else { throw MyError.badNetwork }
         self.submissionDetails = submission
         self.submissionFilesUrls = submission.files.map { $0.file }
     }

@@ -48,8 +48,8 @@ class DayScheduleAPI: StudentLessonDayProtocol, TeacherLessonDayProtocol, Teache
         try await networkAPI.reviseSubmission(submissionId: submissionId)
     }
 
-    func gradeSubmission(submissionId: Int, grade: String, teacherComment: String?) async throws -> TeacherSubmissionDetails {
-        try await networkAPI.gradeSubmission(submissionId: submissionId, mark: grade, teacherComment: teacherComment)
+    func gradeSubmission(submissionId: Int, grade: String, teacherComment: String?, date: String) async throws -> TeacherSubmissionDetails {
+        try await networkAPI.gradeSubmission(submissionId: submissionId, mark: grade, teacherComment: teacherComment, date: date)
     }
 }
 

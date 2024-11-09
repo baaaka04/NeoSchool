@@ -38,6 +38,7 @@ class SubjectLastMarksCell: UICollectionViewCell, UICollectionViewDelegate, UICo
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .clear
+        collectionView.isUserInteractionEnabled = false
         collectionView.register(LastMarksCell.self, forCellWithReuseIdentifier: LastMarksCell.identifier)
         return collectionView
     }()

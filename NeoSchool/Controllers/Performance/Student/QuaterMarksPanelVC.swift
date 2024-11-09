@@ -112,6 +112,14 @@ class QuaterMarksPanelVC: UIViewController, UICollectionViewDataSource, UICollec
         CGSize(width: lastMarksCollectionView.frame.size.width, height: 92)
     }
 
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let mark = lastMarks[indexPath.row]?.marks?.first else { return }
+        let lastMakrsDetailsVC = LastMarksDetailsVC(performanceAPI: performanceAPI, quater: mark.quarter, subjectId: mark.subject)
+        lastMakrsDetailsVC.titleText = lastMarks[indexPath.row]?.name
+        lastMakrsDetailsVC.title = "Последние оценки"
+        self.navigationController?.pushViewController(lastMakrsDetailsVC, animated: true)
+    }
+
 }
 
 extension QuaterMarksPanelVC: QuaterBarDelegate {

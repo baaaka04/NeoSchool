@@ -84,7 +84,7 @@ class WorkdayScheduleViewController: UIViewController, UICollectionViewDelegate,
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.itemDidSelected(itemId: indexPath.item + 1)
+        delegate?.didSelectItem(itemId: indexPath.item + 1)
     }
         
     private func changeEnding(byCount: Int, threeCases: [String]) -> String {
@@ -107,5 +107,5 @@ class WorkdayScheduleViewController: UIViewController, UICollectionViewDelegate,
 }
 
 protocol ItemsBarDelegate: AnyObject {
-    func itemDidSelected(itemId: Int)
+    func didSelectItem(itemId: Int)
 }
