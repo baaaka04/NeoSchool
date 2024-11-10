@@ -99,7 +99,7 @@ struct TeacherClassItem {
     // init for the list of the student's submissions on TeacherLessonDetails screen
     init(submission: TeacherSubmission) {
         self.id = submission.id
-        self.title = "\(submission.student?.firstName) \(submission.student?.lastName)"
+        self.title = "\(submission.student?.firstName ?? "") \(submission.student?.lastName ?? "")"
         let submittedOnTimeString = submission.submittedOnTime ? "Прислано в срок" : "Срок сдачи пропущен"
         let markString = "Оценка: \(submission.mark?.rawValue ?? "-")"
         self.subtitle = submittedOnTimeString + " · " + markString

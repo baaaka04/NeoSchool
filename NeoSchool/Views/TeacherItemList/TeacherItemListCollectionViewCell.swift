@@ -13,7 +13,7 @@ class TeacherItemListCollectionViewCell: UICollectionViewCell {
     private let titleLabel: GrayUILabel = {
         let label = GrayUILabel()
         label.font = AppFont.font(type: .Medium, size: 18)
-        label.numberOfLines = 0
+        label.numberOfLines = 1
         label.lineBreakMode = .byWordWrapping
         return label
     }()

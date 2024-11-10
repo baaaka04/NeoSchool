@@ -42,6 +42,10 @@ class LessonCollectionViewCell: UICollectionViewCell {
     
     private func setupUI () {
         contentView.backgroundColor = .clear
+        contentView.snp.makeConstraints { make in
+            make.width.equalToSuperview().inset(16)
+            make.centerX.height.equalToSuperview()
+        }
 
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
@@ -50,7 +54,7 @@ class LessonCollectionViewCell: UICollectionViewCell {
         }
         contentView.addSubview(subtitleLabel)
         subtitleLabel.snp.makeConstraints { make in
-            make.left.right.equalToSuperview()
+            make.left.right.equalTo(titleLabel)
             make.top.equalTo(titleLabel.snp.bottom).offset(4)
         }
         

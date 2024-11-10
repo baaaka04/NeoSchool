@@ -46,11 +46,9 @@ class TeacherLessonCollectionViewCell: LessonCollectionViewCell {
     }
     
     private func setupUI () {
-        contentView.backgroundColor = .clear
-
         contentView.addSubview(subjectNameLabel)
         subjectNameLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().inset(16)
+            make.left.equalToSuperview()
             make.top.equalTo(subtitleLabel.snp.bottom).offset(4)
             make.width.lessThanOrEqualTo(80)
         }
@@ -59,8 +57,6 @@ class TeacherLessonCollectionViewCell: LessonCollectionViewCell {
             make.leading.equalTo(subjectNameLabel.snp.trailing)
             make.top.equalTo(subtitleLabel.snp.bottom).offset(4)
         }
-        
     }
-       
     
 }

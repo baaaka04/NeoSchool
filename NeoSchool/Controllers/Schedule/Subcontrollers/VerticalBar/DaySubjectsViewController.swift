@@ -46,9 +46,6 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.addSubview(scrollview)
-        scrollview.addSubview(subjectCollectionView)
 
         setupUI()
         getLessonData(forDayID: 1)
@@ -129,8 +126,6 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
             let studentLessonDetailsVC = SubjectDetailsStatefulViewController(viewModel: viewModel)
             self.navigationController?.pushViewController(studentLessonDetailsVC, animated: true)
         }
-        
-
     }
     
     private func getLessonData(forDayID day: Int) {
@@ -145,9 +140,11 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     private func setupUI() {
-                
+        scrollview.showsVerticalScrollIndicator = false
+        view.addSubview(scrollview)
         scrollview.snp.makeConstraints { $0.top.left.bottom.width.equalToSuperview() }
 
+        scrollview.addSubview(subjectCollectionView)
         subjectCollectionView.snp.makeConstraints { make in
             make.top.bottom.width.equalToSuperview().inset(16)
             make.centerX.equalToSuperview()

@@ -10,7 +10,6 @@ class TeacherLessonDetailVC: DetailTitledViewController {
     private let classInfoLabel = GrayUILabel(font: AppFont.font(type: .Medium, size: 16))
     private let lineView = UIView()
     private let homeworkPanel = HomeworkPanelView(presentaionMode: .teacherFull)
-
     private lazy var submissionsListVC = SubmissionsListVC(vm: self.vm)
 
     private lazy var openStudentsListButton: UIButton = {
@@ -45,18 +44,6 @@ class TeacherLessonDetailVC: DetailTitledViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.addSubview(scrollview)
-        scrollview.addSubview(timeAndRoomLabel)
-        scrollview.addSubview(classInfoLabel)
-        scrollview.addSubview(openStudentsListButton)
-        scrollview.addSubview(homeworkPanel)
-        scrollview.addSubview(recievedHomeworksLabel)
-        scrollview.addSubview(lineView)
-
-        addChild(submissionsListVC)
-        scrollview.addSubview(submissionsListVC.view)
-        submissionsListVC.didMove(toParent: self)
-
         setupUI()
         getLessonDetails()
     }
@@ -67,6 +54,15 @@ class TeacherLessonDetailVC: DetailTitledViewController {
     }
 
     private func setupUI () {
+        view.addSubview(scrollview)
+        scrollview.showsVerticalScrollIndicator = false
+
+        addChild(submissionsListVC)
+        scrollview.addSubview(submissionsListVC.view)
+        submissionsListVC.didMove(toParent: self)
+
+        [timeAndRoomLabel, classInfoLabel, openStudentsListButton, homeworkPanel, recievedHomeworksLabel, lineView].forEach { scrollview.addSubview($0) }
+
         lineView.backgroundColor = .neobisGrayStroke
         scrollview.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(12)
