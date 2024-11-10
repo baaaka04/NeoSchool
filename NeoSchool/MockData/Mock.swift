@@ -4,42 +4,7 @@ import Foundation
 class MockNotificationsAPI: NotificationsNetworkAPIProtocol {
 
     func getNotifications(page: Int, limit: Int) async throws -> DTONotifications {
-        let data = DTONotifications(totalCount: 5, totalPages: 1, list: [
-            .init(id: 1, createdAt: Date(), updatedAt: Date(), sender: 1,
-                  extraData: ExtraData.classworkRate(mark: "5", subject: "Биология", subjectId: 1),
-                  title: "Вы получили оценку 5 по предмету Биология", description: "Тестовое описание",
-                  isRead: false, type: NotificationType.rate_classwork),
-            .init(id: 2, createdAt: Date(), updatedAt: Date(), sender: 1,
-                  extraData: ExtraData.classworkRate(mark: "4", subject: "Математика", subjectId: 2),
-                  title: "Вы получили оценку 4 по предмету Математика", description: "Тестовое описание",
-                  isRead: false, type: NotificationType.rate_classwork),
-            .init(id: 3, createdAt: Date(), updatedAt: Date(), sender: 1,
-                  extraData: ExtraData.classworkRate(mark: "3", subject: "Физика", subjectId: 3),
-                  title: "Вы получили оценку 3 по предмету Физика", description: "Тестовое описание",
-                  isRead: false, type: NotificationType.rate_classwork),
-            .init(id: 4, createdAt: Date(), updatedAt: Date(), sender: 1,
-                  extraData: ExtraData.classworkRate(mark: "2", subject: "География", subjectId: 4),
-                  title: "Вы получили оценку 2 по предмету География", description: "Тестовое описание",
-                  isRead: true, type: NotificationType.rate_classwork),
-            .init(id: 5, createdAt: Date(), updatedAt: Date(), sender: 1,
-                  extraData: ExtraData.classworkRate(mark: "5", subject: "Английский", subjectId: 5),
-                  title: "Вы получили оценку 5 по предмету Английский", description: "Тестовое описание",
-                  isRead: false, type: NotificationType.rate_classwork),
-            .init(id: 6, createdAt: Date(), updatedAt: Date(), sender: 1,
-                  extraData: ExtraData.classworkRate(mark: "4", subject: "Кыргызский", subjectId: 6),
-                  title: "Вы получили оценку 4 по предмету Кыргызский", description: "Тестовое описание",
-                  isRead: false, type: NotificationType.rate_classwork),
-            .init(id: 7, createdAt: Date(), updatedAt: Date(), sender: 1,
-                  extraData: ExtraData.classworkRate(mark: "5", subject: "Геометрия", subjectId: 7),
-                  title: "Вы получили оценку 5 по предмету Геометрия", description: "Тестовое описание",
-                  isRead: false, type: NotificationType.rate_classwork),
-            .init(id: 8, createdAt: Date(), updatedAt: Date(), sender: 1,
-                  extraData: ExtraData.classworkRate(mark: "3", subject: "Физкультура", subjectId: 8),
-                  title: "Вы получили оценку 3 по предмету Физкультура", description: "Тестовое описание",
-                  isRead: true, type: NotificationType.rate_classwork)
-        ])
-
-        return data
+        throw MyError.badNetwork
     }
 }
 

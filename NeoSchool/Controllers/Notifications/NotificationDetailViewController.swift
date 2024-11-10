@@ -29,7 +29,7 @@ class NotificationDetailViewController: DetailViewController {
     private lazy var navigateButton : NeobisUIButton = {
         let button = NeobisUIButton(type: .purple)
         switch self.notification.type {
-        case .rate_classwork, .rate_homework:
+        case .rate_classwork, .rate_homework, .submit_homework:
             button.setTitle("Просмотреть задание", for: .normal)
         case .rate_quarter, .revise_homework:
             button.setTitle("Просмотреть оценки по этому предмету", for: .normal)
@@ -98,6 +98,8 @@ class NotificationDetailViewController: DetailViewController {
             print("revise_homework")
         case .rate_quarter:
             print("rate_quarter")
+        case .submit_homework:
+            print("submit_homework")
         }
     }
 

@@ -31,6 +31,9 @@ class NotificationsViewModel {
             else if case let .quaterRate(_, _, subjectId, quater) = notif.extraData {
                 return NeobisNotificationToPresent(notification: notif, subjectId: subjectId, quater: quater)
             }
+            else if case let .homeworkSubmit(_, lesson) = notif.extraData {
+                return NeobisNotificationToPresent(notification: notif, lessonId: lesson)
+            }
             return nil
         }
     }

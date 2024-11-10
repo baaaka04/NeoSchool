@@ -248,8 +248,12 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
         let urlString = "\(domen)/neoschool/notifications/?page=\(page)&limit=\(limit)"
         let request = try generateAuthorizedRequest(urlString: urlString)
         let (data, _) = try await URLSession.shared.data(for: request)
-
-        let decodedData: DTONotifications = try decodeRecievedData(data: data)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
+        decoder.dateDecodingStrategy = .formatted(formatter)
+        let decodedData = try decoder.decode(DTONotifications.self, from: data)
         return decodedData
     }
     
