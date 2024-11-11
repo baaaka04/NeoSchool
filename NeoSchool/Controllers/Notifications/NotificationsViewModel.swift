@@ -13,10 +13,14 @@ class NotificationsViewModel {
     func getNotifications(currentPage: Int) async throws -> Int {
         let data: DTONotifications = try await networkAPI.getNotifications(page: currentPage, limit: 15)
         let newNotifications = convertNotifications(notifications: data.list)
-        self.notifications.append(contentsOf: newNotifications)
+        if currentPage > 1 {
+            self.notifications.append(contentsOf: newNotifications)
+        } else {
+            self.notifications = newNotifications
+        }
         return data.totalPages
     }
-    
+
     internal func convertNotifications(notifications: [NeobisNotification]) -> [NeobisNotificationToPresent] {
         return notifications.compactMap { notif -> NeobisNotificationToPresent? in
             if case let .submissionRate(_, _, _, teacherComment) = notif.extraData {
@@ -36,6 +40,10 @@ class NotificationsViewModel {
             }
             return nil
         }
+    }
+
+    func checkAsRead(notificationId: Int) async throws {
+        try await networkAPI.checkAsRead(notificationId: notificationId)
     }
 
 }

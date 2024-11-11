@@ -256,7 +256,15 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
         let decodedData = try decoder.decode(DTONotifications.self, from: data)
         return decodedData
     }
-    
+
+    // GET-REQUEST
+    // ENDPOINT /notifications/{notification_id}/
+    func checkAsRead(notificationId: Int) async throws -> Void {
+        let urlString = "\(domen)/neoschool/notifications/\(notificationId)/"
+        let request = try generateAuthorizedRequest(urlString: urlString)
+        try await URLSession.shared.data(for: request)
+    }
+
     // GET-REQUEST
     // ENDPOINT /schedule/teacher/grades/{grade_id}/students/
     func getStudentList(subjectId: Int, gradeId: Int, page: Int, limit: Int) async throws -> DTOStudentSubmissionCount {
@@ -619,4 +627,5 @@ extension NetworkAPI {
 
 protocol NotificationsNetworkAPIProtocol: AnyObject {
     func getNotifications(page: Int, limit: Int) async throws -> DTONotifications
+    func checkAsRead(notificationId: Int) async throws -> Void
 }

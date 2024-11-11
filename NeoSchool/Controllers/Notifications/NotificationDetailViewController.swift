@@ -2,7 +2,8 @@ import UIKit
 import SnapKit
 
 class NotificationDetailViewController: DetailViewController {
-    
+
+    private weak var viewModel: NotificationsViewModel?
     private let notification: NeobisNotificationToPresent
     
     private lazy var textLabel: GrayUILabel = {
@@ -35,10 +36,14 @@ class NotificationDetailViewController: DetailViewController {
             button.setTitle("Просмотреть оценки по этому предмету", for: .normal)
         }
         button.addTarget(self, action: #selector(onTapButton), for: .touchUpInside)
+        button.titleLabel?.numberOfLines = 0
+        button.titleLabel?.textAlignment = .center
+        button.titleLabel?.snp.makeConstraints { $0.edges.equalToSuperview().inset(12) }
         return button
     }()
     
-    init(notification: NeobisNotificationToPresent) {
+    init(viewModel: NotificationsViewModel?, notification: NeobisNotificationToPresent) {
+        self.viewModel = viewModel
         self.notification = notification
         
         super.init(nibName: nil, bundle: nil)
@@ -52,6 +57,7 @@ class NotificationDetailViewController: DetailViewController {
         super.viewDidLoad()
 
         setupUI()
+        checkAsRead()
     }
     
     private func setupUI() {
@@ -84,7 +90,6 @@ class NotificationDetailViewController: DetailViewController {
             make.top.equalTo(lastConstraint).offset(24)
             make.width.equalToSuperview().inset(32)
             make.centerX.equalToSuperview()
-            make.height.equalTo(52)
         }
     }
     
@@ -100,6 +105,12 @@ class NotificationDetailViewController: DetailViewController {
             print("rate_quarter")
         case .submit_homework:
             print("submit_homework")
+        }
+    }
+
+    private func checkAsRead() {
+        Task {
+            try await viewModel?.checkAsRead(notificationId: notification.id)
         }
     }
 

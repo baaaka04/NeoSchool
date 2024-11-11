@@ -45,10 +45,14 @@ class NotificationsOverviewViewController: DetailViewController, UICollectionVie
         getNotifications()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        getNotifications()
+    }
+
     private func setupUI() {
-                        
         view.addSubview(notificationsCollectionView)
-        
         notificationsCollectionView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(100)
             make.centerX.equalToSuperview()
@@ -57,7 +61,6 @@ class NotificationsOverviewViewController: DetailViewController, UICollectionVie
         }
 
         view.addSubview(notepadView)
-
         notepadView.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
         }
@@ -102,7 +105,7 @@ class NotificationsOverviewViewController: DetailViewController, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let notification = viewModel.notifications[indexPath.item]
-        let notificationVC = NotificationDetailViewController(notification: notification)
+        let notificationVC = NotificationDetailViewController(viewModel: self.viewModel, notification: notification)
         self.navigationController?.pushViewController(notificationVC, animated: true)
     }
     

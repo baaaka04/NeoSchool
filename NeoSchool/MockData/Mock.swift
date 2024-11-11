@@ -6,6 +6,10 @@ class MockNotificationsAPI: NotificationsNetworkAPIProtocol {
     func getNotifications(page: Int, limit: Int) async throws -> DTONotifications {
         throw MyError.badNetwork
     }
+    
+    func checkAsRead(notificationId: Int) async throws {
+        throw MyError.badNetwork
+    }
 }
 
 
