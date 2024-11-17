@@ -178,6 +178,7 @@ extension StudentHomeworkDetailsViewController: UICollectionViewDelegate, UIColl
                 cell?.firstDesciptionText = "\(submission.topic) · Предмет: \(submission.subject.name)"
                 cell?.secondDesciptionText = submission.submittedDate
                 cell?.onTimeText = submission.submittedOnTime ? "Прислано в срок" : "Срок сдачи пропущен"
+                cell?.onTime = submission.submittedOnTime
             }
 
             return cell ?? UICollectionViewCell()

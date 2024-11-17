@@ -127,6 +127,10 @@ class GeneralInfoCell: AutosizeUICollectionViewCell {
         didSet { onTimeLabel.text = onTimeText }
     }
 
+    var onTime: Bool? {
+        didSet { onTimeLabel.textColor = (onTime ?? true) ? .neobisGreen : .neobisRed}
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubviews()
