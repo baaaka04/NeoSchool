@@ -9,9 +9,12 @@ struct NeobisNotificationToPresent {
     let teacherComment: String?
     let subjectId: Int?
     let lessonId: Int?
-    let quater: String?
-    
-    init(notification: NeobisNotification, teacherComment: String? = nil, subjectId: Int? = nil, lessonId: Int? = nil, quater: String? = nil) {
+    let quater: Quater?
+    let submissionId: Int?
+    let studentName: String?
+    let subjectName: String?
+
+    init(notification: NeobisNotification, teacherComment: String? = nil, subjectId: Int? = nil, lessonId: Int? = nil, quater: Quater? = nil, submissionId: Int? = nil, studentName: String? = nil, subject: String? = nil) {
         self.id = notification.id
         self.type = notification.type
         self.text = notification.title
@@ -20,6 +23,9 @@ struct NeobisNotificationToPresent {
         self.lessonId = lessonId
         self.quater = quater
         self.teacherComment = teacherComment
+        self.submissionId = submissionId
+        self.studentName = studentName
+        self.subjectName = subject
 
         guard let formattedDate = try? DateConverter.convertDateStringToDay(from: notification.updatedAt, dateFormat: .long),
               let formattedTime = try? DateConverter.convertDateStringToHoursAndMinutes(from: notification.updatedAt, dateFormat: .long) else {
@@ -31,11 +37,11 @@ struct NeobisNotificationToPresent {
 }
 
 enum ExtraData: Decodable {
-    case classworkRate(mark: String, subject: String, subjectId: Int)
-    case submissionRate(mark: String, subject: String, submissionId: Int, teacherComment: String)
-    case homeworkRevise(lesson: Int, student: String)
-    case quaterRate(mark: String, subject: String, subjectId: Int, quater: String)
-    case homeworkSubmit(student: String, lesson: Int)
+    case classworkRate(mark: String, subject: String, subjectId: Int, quater: Quater)
+    case submissionRate(mark: String, subject: String, submissionId: Int, teacherComment: String, lessonId: Int)
+    case homeworkRevise(subject: String, submissionId: Int, lessonId: Int)
+    case quaterRate(mark: String, subject: String, subjectId: Int, quater: Quater)
+    case homeworkSubmit(student: String, submissionId: Int)
 }
 
 struct NeobisNotification: Decodable {
@@ -82,7 +88,8 @@ extension NeobisNotification {
     }
     
     private enum ExtraDataCodingKeys: String, CodingKey {
-        case mark, subject, lesson, student
+        case mark, subject, student
+        case lesson = "lesson_id"
         case subjectId = "subject_id"
         case quater = "quarter"
         case submissionId = "submission_id"
@@ -97,26 +104,29 @@ extension NeobisNotification {
             let subject = try container.decode(String.self, forKey: .subject)
             let submissionId = try container.decode(Int.self, forKey: .submissionId)
             let teacherComment = try container.decode(String.self, forKey: .teacherComment)
-            return .submissionRate(mark: mark, subject: subject, submissionId: submissionId, teacherComment: teacherComment)
+            let lessonId = try container.decode(Int.self, forKey: .lesson)
+            return .submissionRate(mark: mark, subject: subject, submissionId: submissionId, teacherComment: teacherComment, lessonId: lessonId)
         case .rate_classwork:
             let mark = try container.decode(String.self, forKey: .mark)
             let subject = try container.decode(String.self, forKey: .subject)
             let subjectId = try container.decode(Int.self, forKey: .subjectId)
-            return .classworkRate(mark: mark, subject: subject, subjectId: subjectId)
+            let quater = try container.decode(Quater.self, forKey: .quater)
+            return .classworkRate(mark: mark, subject: subject, subjectId: subjectId, quater: quater)
         case .revise_homework:
+            let subject = try container.decode(String.self, forKey: .subject)
+            let submissionId = try container.decode(Int.self, forKey: .submissionId)
             let lessonId = try container.decode(Int.self, forKey: .lesson)
-            let studentName = try container.decode(String.self, forKey: .student)
-            return .homeworkRevise(lesson: lessonId, student: studentName)
+            return .homeworkRevise(subject: subject, submissionId: submissionId, lessonId: lessonId)
         case .rate_quarter:
             let mark = try container.decode(String.self, forKey: .mark)
             let subject = try container.decode(String.self, forKey: .subject)
             let subjectId = try container.decode(Int.self, forKey: .subjectId)
-            let quater = try container.decode(String.self, forKey: .quater)
+            let quater = try container.decode(Quater.self, forKey: .quater)
             return .quaterRate(mark: mark, subject: subject, subjectId: subjectId, quater: quater)
         case .submit_homework:
             let studentName = try container.decode(String.self, forKey: .student)
-            let lessonId = try container.decode(Int.self, forKey: .lesson)
-            return .homeworkSubmit(student: studentName, lesson: lessonId)
+            let submissionId = try container.decode(Int.self, forKey: .submissionId)
+            return .homeworkSubmit(student: studentName, submissionId: submissionId)
         }
         // Add more cases if needed
     }

@@ -347,7 +347,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
     //POST-REQUEST
     //ENDPOINT /schedule/teacher/submissions/{submission_id}/revise/
     func reviseSubmission(submissionId: Int) async throws -> Void {
-        let urlString = "\(domen)/neoschool//schedule/teacher/submissions/\(submissionId)/revise/"
+        let urlString = "\(domen)/neoschool/schedule/teacher/submissions/\(submissionId)/revise/"
         var request = try generateAuthorizedRequest(urlString: urlString)
         request.httpMethod = "POST"
         let (data, resp) = try await URLSession.shared.data(for: request)
@@ -392,7 +392,11 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
     //GET-REQUEST
     //ENDPOINT /marks/teacher/grades/{grade_id}/students/
     func getGradeDayData(gradeId: Int, subjectId: Int, date: Date) async throws -> [FullNameUser] {
-        let dateString = formatToISO8601(date: date)
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+
+        let dateString = formatter.string(from: date)
         let urlString = "\(domen)/neoschool/marks/teacher/" +
         "grades/\(gradeId)/students/?" +
         "page=1" +
@@ -414,7 +418,11 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
     //ENDPOINT /marks/teacher/classwork/rate/
     func setGradeForLesson(grade: Grade, studentId: Int, subjectId: Int, date: Date) async throws {
         let urlString = "\(domen)/neoschool/marks/teacher/classwork/rate/"
-        let dateString = formatToISO8601(date: date)
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withDashSeparatorInDate, .withColonSeparatorInTime, .withTimeZone]
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+
+        let dateString = formatter.string(from: date)
         let params: [String: Any] = [
             "student": studentId,
             "subject": subjectId,
@@ -614,14 +622,6 @@ extension NetworkAPI {
         let isoFormattedString = dateFormatter.string(from: date)
 
         return isoFormattedString
-    }
-
-    func formatToISO8601(date: Date) -> String {
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        formatter.timeZone = TimeZone(secondsFromGMT: 0)
-
-        return formatter.string(from: date)
     }
 }
 
