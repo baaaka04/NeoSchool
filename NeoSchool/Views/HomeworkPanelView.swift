@@ -1,8 +1,7 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class HomeworkPanelView: UIView {
-
     enum PresentationMode {
         case student, teacherFull, teacherShort
     }
@@ -15,18 +14,18 @@ class HomeworkPanelView: UIView {
             homeworkbodyLabel.text = homeworkText
         }
     }
-        
+
     private let titleLabel: UILabel = {
         let title = UILabel()
         title.text = "Домашнее задание:"
-        title.font = AppFont.font(type: .Medium, size: 20)
+        title.font = AppFont.font(type: .medium, size: 20)
         title.textColor = UIColor.neobisBlue
         return title
     }()
-    
+
     private let homeworkbodyLabel: GrayUILabel = {
         let homeworkbodyLabel = GrayUILabel()
-        homeworkbodyLabel.font = AppFont.font(type: .Regular, size: 18)
+        homeworkbodyLabel.font = AppFont.font(type: .regular, size: 18)
         homeworkbodyLabel.numberOfLines = 2
         homeworkbodyLabel.lineBreakMode = .byWordWrapping
         homeworkbodyLabel.textAlignment = .left
@@ -40,7 +39,7 @@ class HomeworkPanelView: UIView {
         }
     }
 
-    private let deadlineLabel = GrayUILabel(font: AppFont.font(type: .Italic, size: 18))
+    private let deadlineLabel = GrayUILabel(font: AppFont.font(type: .italic, size: 18))
 
     var attachedFilesNumber: Int? {
         didSet {
@@ -51,7 +50,7 @@ class HomeworkPanelView: UIView {
     let attachedFilesLabel: UIButton = {
         let button = UIButton()
         button.setTitle("Прикрепленные материалы: 0", for: .normal)
-        button.titleLabel?.font = AppFont.font(type: .Medium, size: 18)
+        button.titleLabel?.font = AppFont.font(type: .medium, size: 18)
         button.setTitleColor(.neobisPurple, for: .normal)
         button.contentHorizontalAlignment = .left
         return button
@@ -59,16 +58,14 @@ class HomeworkPanelView: UIView {
 
     private lazy var editTipLabel: UILabel = {
         let label = UILabel()
-        label.font = AppFont.font(type: .Italic, size: 14)
+        label.font = AppFont.font(type: .italic, size: 14)
         label.textColor = .neobisLightGray
-//        if self.userRole == .teacher {
-            label.text = "Нажмите на блок, чтобы изменить задание"
-//        }
+        label.text = "Нажмите на блок, чтобы изменить задание"
         label.numberOfLines = 0
         return label
     }()
 
-    private let editImageView = UIImageView(image: UIImage(named: "regularedit"))
+    private let editImageView = UIImageView(image: UIImage(named: Asset.regularedit))
 
     private lazy var stackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [titleLabel, homeworkbodyLabel, deadlineLabel, editTipLabel, attachedFilesLabel])
@@ -79,22 +76,21 @@ class HomeworkPanelView: UIView {
         return stack
     }()
 
-
     init(presentaionMode: PresentationMode) {
         self.presentaionMode = presentaionMode
         super.init(frame: .zero)
 
         setupUI()
     }
-    
-    required init(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 
     private func setupUI() {
         layer.borderWidth = 1.0
-        layer.borderColor = CGColor(red: 234/255, green: 234/255, blue: 234/255, alpha: 1)
+        layer.borderColor = CGColor(red: 234 / 255, green: 234 / 255, blue: 234 / 255, alpha: 1)
         layer.cornerRadius = 16.0
 
         addSubview(stackView)
@@ -119,6 +115,5 @@ class HomeworkPanelView: UIView {
             editTipLabel.isHidden = true
             editImageView.isHidden = true
         }
-
     }
 }

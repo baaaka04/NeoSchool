@@ -1,9 +1,8 @@
-import UIKit
 import SnapKit
+import UIKit
 
-class SubjectLastMarksCell: UICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
-    static let identifier: String = "SubjectLastMarksCell"
+class SubjectLastMarksCell: UICollectionViewCell {
+    static let identifier = "SubjectLastMarksCell"
 
     var titleText: String? {
         didSet {
@@ -11,9 +10,9 @@ class SubjectLastMarksCell: UICollectionViewCell, UICollectionViewDelegate, UICo
         }
     }
 
-    var isYearGrades: Bool? {
+    var isYearGrades = false {
         didSet {
-            quaterGradeView.subtitleText = (self.isYearGrades ?? false) ? "Оцнека за год" : "Оцнека"
+            quaterGradeView.subtitleText = self.isYearGrades ? "Оцнека за год" : "Оцнека"
         }
     }
 
@@ -26,8 +25,8 @@ class SubjectLastMarksCell: UICollectionViewCell, UICollectionViewDelegate, UICo
         }
     }
 
-    private let titleLabel = GrayUILabel(font: AppFont.font(type: .Medium, size: 20))
-    private let subtitleLabel = GrayUILabel(font: AppFont.font(type: .Regular, size: 16))
+    private let titleLabel = GrayUILabel(font: AppFont.font(type: .medium, size: 20))
+    private let subtitleLabel = GrayUILabel(font: AppFont.font(type: .regular, size: 16))
     private let quaterGradeView = GradeView()
 
     private lazy var lastMarksCollectionView: UICollectionView = {
@@ -48,7 +47,8 @@ class SubjectLastMarksCell: UICollectionViewCell, UICollectionViewDelegate, UICo
         self.setupUI()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -87,21 +87,24 @@ class SubjectLastMarksCell: UICollectionViewCell, UICollectionViewDelegate, UICo
     func updateUI() {
         lastMarksCollectionView.reloadData()
     }
+}
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+extension SubjectLastMarksCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         lastMarks?.count ?? 0
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = lastMarksCollectionView.dequeueReusableCell(withReuseIdentifier: LastMarksCell.identifier, for: indexPath) as? LastMarksCell else { return UICollectionViewCell() }
+    func collectionView(_: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = lastMarksCollectionView.dequeueReusableCell(
+            withReuseIdentifier: LastMarksCell.identifier,
+            for: indexPath) as? LastMarksCell else { return UICollectionViewCell() }
 
         cell.grade = lastMarks?[indexPath.row]
         return cell
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt _: IndexPath) -> CGSize {
         let squareSize = lastMarksCollectionView.frame.size.height
         return CGSize(width: squareSize, height: squareSize)
     }
-
 }

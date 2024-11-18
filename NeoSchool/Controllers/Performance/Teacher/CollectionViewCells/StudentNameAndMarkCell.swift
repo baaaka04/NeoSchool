@@ -1,9 +1,8 @@
-import UIKit
 import SnapKit
+import UIKit
 
-class StudentNameAndMarkCell: AutosizeUICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
-    static let identifier: String = "StudentNameAndMarkCell"
+class StudentNameAndMarkCell: AutosizeUICollectionViewCell {
+    static let identifier = "StudentNameAndMarkCell"
 
     var name: String? {
         didSet {
@@ -17,8 +16,8 @@ class StudentNameAndMarkCell: AutosizeUICollectionViewCell, UICollectionViewDele
         }
     }
 
-    private let nameLabel = GrayUILabel(font: AppFont.font(type: .Regular, size: 18))
-    private let lastNameLabel = GrayUILabel(font: AppFont.font(type: .Regular, size: 18))
+    private let nameLabel = GrayUILabel(font: AppFont.font(type: .regular, size: 18))
+    private let lastNameLabel = GrayUILabel(font: AppFont.font(type: .regular, size: 18))
 
     var selectedGrade: Grade?
     private let grades: [Grade] = Grade.allCases.filter { $0 != .noGrade }
@@ -41,12 +40,12 @@ class StudentNameAndMarkCell: AutosizeUICollectionViewCell, UICollectionViewDele
         setupUI()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     private func setupUI() {
-
         [nameLabel, lastNameLabel, gradesCollectionView].forEach { contentView.addSubview($0) }
         [nameLabel, lastNameLabel].forEach { $0.numberOfLines = 1 }
 
@@ -69,15 +68,17 @@ class StudentNameAndMarkCell: AutosizeUICollectionViewCell, UICollectionViewDele
     func updateUI() {
         self.gradesCollectionView.reloadData()
     }
+}
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+extension StudentNameAndMarkCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         self.grades.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SmallGradeCell.identifier, for: indexPath) as? SmallGradeCell else {
-            return UICollectionViewCell()
-        }
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: SmallGradeCell.identifier,
+            for: indexPath) as? SmallGradeCell else { return UICollectionViewCell() }
         let grade = grades[indexPath.row]
         cell.gradeName = grade.rawValue
         if self.selectedGrade == grade {
@@ -89,10 +90,7 @@ class StudentNameAndMarkCell: AutosizeUICollectionViewCell, UICollectionViewDele
         return cell
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: (self.gradesCollectionView.frame.width-4*4)/6, height: self.gradesCollectionView.frame.height)
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt _: IndexPath) -> CGSize {
+        CGSize(width: (self.gradesCollectionView.frame.width - 4 * 4) / 6, height: self.gradesCollectionView.frame.height)
     }
-
 }
-
-

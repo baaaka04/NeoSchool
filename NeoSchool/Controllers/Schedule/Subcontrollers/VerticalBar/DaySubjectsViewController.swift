@@ -1,15 +1,14 @@
-import UIKit
 import SnapKit
+import UIKit
 
-class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-        
+class DaySubjectsViewController: UIViewController {
     private let userRole: UserRole
     private let dayScheduleAPI = DayScheduleAPI()
-    private var dayLessonsData : [SchoolLesson]?
+    private var dayLessonsData: [SchoolLesson]?
     private var collectionHeight: CGFloat = 24
-    
+
     private let scrollview = UIScrollView()
-        
+
     private lazy var subjectCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 0
@@ -33,45 +32,28 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
         }
         return collectionView
     }()
-    
+
     init(userRole: UserRole) {
         self.userRole = userRole
-        
+
         super.init(nibName: nil, bundle: nil)
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupUI()
         getLessonData(forDayID: 1)
     }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        dayLessonsData?.count ?? 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cellIdentifier: String
-        switch userRole {
-        case .teacher: cellIdentifier = TeacherLessonCollectionViewCell.identifier
-        case .student: cellIdentifier = StudentLessonCollectionViewCell.identifier
-        }
-
-        guard let lessonsDay = dayLessonsData?[indexPath.item] else { return UICollectionViewCell(frame: .zero) }
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as UICollectionViewCell
-        configureCell(cell, with: lessonsDay, for: userRole, at: indexPath)
-        return cell
-    }
 
     func configureCell(_ cell: UICollectionViewCell, with lessonsDay: SchoolLesson, for role: UserRole, at indexPath: IndexPath) {
         let subtitle = "\(lessonsDay.startTime) – \(lessonsDay.endTime) · Кабинет: \(lessonsDay.room.name)"
-        
+
         switch role {
         case .teacher:
             if let cell = cell as? TeacherLessonCollectionViewCell {
@@ -80,7 +62,7 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
                 cell.subjectName = lessonsDay.subject.name
                 cell.homeworkCount = lessonsDay.homeworkCount
             }
-            
+
         case .student:
             if let cell = cell as? StudentLessonCollectionViewCell {
                 cell.title = "\(indexPath.item + 1). \(lessonsDay.subject.name)"
@@ -90,44 +72,14 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
             }
         }
     }
-        
+
     struct Constants {
         static let subjectCellHorizontalMargin: CGFloat = 16
-        static let gradeLeftMargin : CGFloat = 16
-        static let gradeViewWidth : CGFloat = 48
-        static let subjectCellMinHeight : CGFloat = 51
+        static let gradeLeftMargin: CGFloat = 16
+        static let gradeViewWidth: CGFloat = 48
+        static let subjectCellMinHeight: CGFloat = 51
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard let lessonsDay = dayLessonsData?[indexPath.item] else { return .zero }
-        let cellWidth = view.frame.size.width - Constants.subjectCellHorizontalMargin * 2
-        let cellHeight = LessonCollectionViewCell.getCellHeightForWidth(
-            title: lessonsDay.subject.name,
-            font: AppFont.font(type: .Medium, size: 20),
-            minHeight: Constants.subjectCellMinHeight,
-            width: cellWidth - Constants.gradeViewWidth - Constants.gradeLeftMargin
-        )
-        self.collectionHeight += (cellHeight + 24)
-        subjectCollectionView.snp.updateConstraints { $0.height.equalTo(self.collectionHeight) }
-        return CGSize(width: cellWidth, height: cellHeight)
-    }
-    
-    // TAP ON A LESSON IN THE SCHEDULE LIST
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let lesson = dayLessonsData?[indexPath.item] else { return }
 
-        switch userRole {
-        case .teacher:
-            let viewModel = TeacherDetailsViewModel(lessonId: lesson.id, teacherAPI: self.dayScheduleAPI)
-            let teacherLessonDetailsVC = TeacherLessonDetailVC(viewModel: viewModel)
-            self.navigationController?.pushViewController(teacherLessonDetailsVC, animated: true)
-        case .student:
-            let viewModel = SubjectDetailsViewModel(lessonId: lesson.id, lessonAPI: self.dayScheduleAPI)
-            let studentLessonDetailsVC = SubjectDetailsStatefulViewController(viewModel: viewModel)
-            self.navigationController?.pushViewController(studentLessonDetailsVC, animated: true)
-        }
-    }
-    
     private func getLessonData(forDayID day: Int) {
         Task {
             do {
@@ -138,7 +90,7 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
             subjectCollectionView.reloadData()
         }
     }
-    
+
     private func setupUI() {
         scrollview.showsVerticalScrollIndicator = false
         view.addSubview(scrollview)
@@ -152,18 +104,64 @@ class DaySubjectsViewController: UIViewController, UICollectionViewDelegate, UIC
         }
     }
 
-            
     @objc private func didTapBackButton () {
         self.navigationController?.popViewController(animated: true)
         self.tabBarController?.tabBar.isHidden = false
     }
 }
 
+extension DaySubjectsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
+        dayLessonsData?.count ?? 0
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cellIdentifier: String
+        switch userRole {
+        case .teacher: cellIdentifier = TeacherLessonCollectionViewCell.identifier
+        case .student: cellIdentifier = StudentLessonCollectionViewCell.identifier
+        }
+
+        guard let lessonsDay = dayLessonsData?[indexPath.item] else { return UICollectionViewCell(frame: .zero) }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as UICollectionViewCell
+        configureCell(cell, with: lessonsDay, for: userRole, at: indexPath)
+        return cell
+    }
+
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        guard let lessonsDay = dayLessonsData?[indexPath.item] else { return .zero }
+        let cellWidth = view.frame.size.width - Constants.subjectCellHorizontalMargin * 2
+        let cellHeight = LessonCollectionViewCell.getCellHeightForWidth(
+            title: lessonsDay.subject.name,
+            font: AppFont.font(type: .medium, size: 20),
+            minHeight: Constants.subjectCellMinHeight,
+            width: cellWidth - Constants.gradeViewWidth - Constants.gradeLeftMargin
+        )
+        self.collectionHeight += (cellHeight + 24)
+        subjectCollectionView.snp.updateConstraints { $0.height.equalTo(self.collectionHeight) }
+        return CGSize(width: cellWidth, height: cellHeight)
+    }
+
+    // TAP ON A LESSON IN THE SCHEDULE LIST
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let lesson = dayLessonsData?[indexPath.item] else { return }
+
+        switch userRole {
+        case .teacher:
+            let viewModel = TeacherDetailsViewModel(lessonId: lesson.id, teacherAPI: self.dayScheduleAPI)
+            let teacherLessonDetailsVC = TeacherLessonDetailVC(viewModel: viewModel)
+            self.navigationController?.pushViewController(teacherLessonDetailsVC, animated: true)
+        case .student:
+            let viewModel = SubjectDetailsViewModel(lessonId: lesson.id, lessonAPI: self.dayScheduleAPI)
+            let studentLessonDetailsVC = SubjectDetailsStatefulViewController(viewModel: viewModel)
+            self.navigationController?.pushViewController(studentLessonDetailsVC, animated: true)
+        }
+    }
+}
+
 extension DaySubjectsViewController: ItemsBarDelegate {
-    
     func didSelectItem(itemId: Int) {
         self.collectionHeight = 24
         getLessonData(forDayID: itemId)
     }
-
 }

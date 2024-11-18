@@ -1,23 +1,22 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class WelcomeViewController: UIViewController {
-    
     private let welcomeLabel: BigSemiBoldUILabel = {
         let label = BigSemiBoldUILabel()
         label.text = "Добро пожаловать!"
         return label
     }()
-    
-    private let globeImage = UIImageView(image: UIImage(named: "Globe") )
-    
+
+    private let globeImage = UIImageView(image: UIImage(named: Asset.globe) )
+
     lazy var studentButton: NeobisUIButton = {
         let button = NeobisUIButton(type: .purple)
         button.setTitle("Я ученик", for: .normal)
         button.addTarget(self, action: #selector(onTapStudentButton), for: .touchUpInside)
         return button
     }()
-    
+
     lazy var teacherButton: NeobisUIButton = {
         let button = NeobisUIButton(type: .white)
         button.setTitle("Я учитель", for: .normal)
@@ -31,7 +30,7 @@ class WelcomeViewController: UIViewController {
 
         setupUI()
     }
-    
+
     private func setupUI() {
         view.addSubview(welcomeLabel)
         view.addSubview(globeImage)
@@ -61,21 +60,17 @@ class WelcomeViewController: UIViewController {
             make.width.equalToSuperview()
             make.height.equalTo(40)
         }
-
     }
-    
+
     @objc private func onTapStudentButton() {
         UserDefaults.standard.set("student", forKey: "userRole")
         let loginVC = LoginViewController(isTeacher: false)
         self.navigationController?.pushViewController(loginVC, animated: true)
     }
-    
+
     @objc private func onTapTeacherButton() {
         UserDefaults.standard.set("teacher", forKey: "userRole")
         let loginVC = LoginViewController(isTeacher: true)
         self.navigationController?.pushViewController(loginVC, animated: true)
     }
-
-
 }
-

@@ -1,8 +1,7 @@
-import UIKit
 import SnapKit
+import UIKit
 
-class QuaterMarksPanelVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-
+class QuaterMarksPanelVC: UIViewController {
     private let performanceAPI: PerformanceAPIProtocol
 
     private var lastMarks: [LastMarks?] = []
@@ -18,7 +17,8 @@ class QuaterMarksPanelVC: UIViewController, UICollectionViewDataSource, UICollec
         return collectionView
     }()
 
-    private let emptyView = NotepadView(title: "Данных пока нет", subtitle: "Мы оповестим вас, когда оценки за II четверть будут доступны в приложении")
+    private let emptyView = NotepadView(title: "Данных пока нет",
+                                        subtitle: "Мы оповестим вас, когда оценки за II четверть будут доступны в приложении")
 
     init(performanceAPI: PerformanceAPIProtocol) {
         self.performanceAPI = performanceAPI
@@ -26,7 +26,8 @@ class QuaterMarksPanelVC: UIViewController, UICollectionViewDataSource, UICollec
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -47,7 +48,7 @@ class QuaterMarksPanelVC: UIViewController, UICollectionViewDataSource, UICollec
         scrollView.addSubview(containerView)
         containerView.snp.makeConstraints { make in
             make.top.equalToSuperview()
-            make.width.equalTo(view.frame.size.width-32)
+            make.width.equalTo(view.frame.size.width - 32)
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview()
         }
@@ -66,10 +67,12 @@ class QuaterMarksPanelVC: UIViewController, UICollectionViewDataSource, UICollec
 
     private func getQuaterLastMarks(quater: String) {
         Task {
-            self.lastMarks = try await performanceAPI.getLastMarks(quater: quater)
-            DispatchQueue.main.async {
-                self.updateUI()
-            }
+            do {
+                self.lastMarks = try await performanceAPI.getLastMarks(quater: quater)
+                DispatchQueue.main.async {
+                    self.updateUI()
+                }
+            } catch { print(error) }
         }
     }
 
@@ -77,7 +80,7 @@ class QuaterMarksPanelVC: UIViewController, UICollectionViewDataSource, UICollec
         lastMarksCollectionView.reloadData()
         lastMarksCollectionView.snp.updateConstraints { make in
             if !lastMarks.isEmpty {
-                make.height.equalTo(lastMarks.count*92+(lastMarks.count-1)*16+24)
+                make.height.equalTo(lastMarks.count * 92 + (lastMarks.count - 1) * 16 + 24)
             } else {
                 make.height.equalTo(350)
             }
@@ -85,13 +88,17 @@ class QuaterMarksPanelVC: UIViewController, UICollectionViewDataSource, UICollec
         lastMarksCollectionView.isHidden = lastMarks.isEmpty
         emptyView.isHidden = !lastMarks.isEmpty
     }
+}
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+extension QuaterMarksPanelVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         lastMarks.count
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = lastMarksCollectionView.dequeueReusableCell(withReuseIdentifier: SubjectLastMarksCell.identifier, for: indexPath) as? SubjectLastMarksCell,
+    func collectionView(_: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = lastMarksCollectionView.dequeueReusableCell(
+            withReuseIdentifier: SubjectLastMarksCell.identifier,
+            for: indexPath) as? SubjectLastMarksCell,
               let subjectLastMarks = lastMarks[indexPath.row]
         else { return UICollectionViewCell() }
 
@@ -108,18 +115,17 @@ class QuaterMarksPanelVC: UIViewController, UICollectionViewDataSource, UICollec
         return cell
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt _: IndexPath) -> CGSize {
         CGSize(width: lastMarksCollectionView.frame.size.width, height: 92)
     }
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let mark = lastMarks[indexPath.row]?.marks?.first else { return }
         let lastMakrsDetailsVC = LastMarksDetailsVC(performanceAPI: performanceAPI, quater: mark.quarter, subjectId: mark.subject)
         lastMakrsDetailsVC.titleText = lastMarks[indexPath.row]?.name
         lastMakrsDetailsVC.title = "Последние оценки"
         self.navigationController?.pushViewController(lastMakrsDetailsVC, animated: true)
     }
-
 }
 
 extension QuaterMarksPanelVC: QuaterBarDelegate {

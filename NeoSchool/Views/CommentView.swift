@@ -1,14 +1,13 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class CommentView: UIView {
-    
     // MARK: - Properties
     private var author: CommentAuthor
-    
+
     private let titleLabel: GrayUILabel = {
         let label = GrayUILabel()
-        label.font = AppFont.font(type: .Medium, size: 18)
+        label.font = AppFont.font(type: .medium, size: 18)
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -22,15 +21,15 @@ class CommentView: UIView {
 
     private let contentLabel: GrayUILabel = {
         let label = GrayUILabel()
-        label.font = AppFont.font(type: .Regular, size: 16)
+        label.font = AppFont.font(type: .regular, size: 16)
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     // MARK: - Initializers
-    
+
     init(author: CommentAuthor, text: String?) {
         self.titleLabel.text = author.getText()
         self.contentLabel.text = text ?? "-"
@@ -38,21 +37,22 @@ class CommentView: UIView {
         super.init(frame: .zero)
         setupSubviews()
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Setup
-    
+
     private func setupSubviews() {
         addSubview(titleLabel)
         addSubview(contentLabel)
-                    
+
         layer.borderColor = author.getBorderColor()
         layer.cornerRadius = 16.0
         layer.borderWidth = 1.0
-        
+
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(16)
             make.left.equalToSuperview().offset(16)
@@ -64,9 +64,7 @@ class CommentView: UIView {
             make.right.equalToSuperview().offset(-16)
             make.bottom.equalToSuperview().offset(-16)
         }
-        
     }
-    
 }
 
 enum CommentAuthor {
@@ -74,7 +72,6 @@ enum CommentAuthor {
 
     func getText() -> String {
         switch self {
-            
         case .mineAsStudent:
             return "Мой комментарий:"
         case .mineAsTeacher:
@@ -85,7 +82,7 @@ enum CommentAuthor {
             return "📌 Комментарий учителя:"
         }
     }
-    
+
     func getBorderColor() -> CGColor {
         switch self {
         case .mineAsStudent, .student:

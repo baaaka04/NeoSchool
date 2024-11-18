@@ -28,7 +28,10 @@ struct NeobisNotificationToPresent {
         self.subjectName = subject
 
         guard let formattedDate = try? DateConverter.convertDateStringToDay(from: notification.updatedAt, dateFormat: .long),
-              let formattedTime = try? DateConverter.convertDateStringToHoursAndMinutes(from: notification.updatedAt, dateFormat: .long) else {
+              let formattedTime = try? DateConverter.convertDateStringToHoursAndMinutes(
+                from: notification.updatedAt,
+                dateFormat: .long
+              ) else {
             self.date = ""
             return
         }
@@ -45,7 +48,6 @@ enum ExtraData: Decodable {
 }
 
 struct NeobisNotification: Decodable {
-    
     let id: Int
     let createdAt: String
     let updatedAt: String
@@ -55,7 +57,7 @@ struct NeobisNotification: Decodable {
     let description: String
     let isRead: Bool
     let type: NotificationType
-    
+
     enum CodingKeys: String, CodingKey {
         case id, sender, title, description, type
         case createdAt = "created_at"
@@ -63,17 +65,20 @@ struct NeobisNotification: Decodable {
         case extraData = "extra_data"
         case isRead = "is_read"
     }
-
 }
 
 enum NotificationType: String, Decodable {
-    case rate_homework, rate_classwork, revise_homework, rate_quarter, submit_homework
+    case rateHomework = "rate_homework"
+    case rateClasswork = "rate_classwork"
+    case reviseHomework = "revise_homework"
+    case rateQuater = "rate_quarter"
+    case submitHomework = "submit_homework"
 }
 
 extension NeobisNotification {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
+
         id = try container.decode(Int.self, forKey: .id)
         createdAt = try container.decode(String.self, forKey: .createdAt)
         updatedAt = try container.decode(String.self, forKey: .updatedAt)
@@ -82,11 +87,11 @@ extension NeobisNotification {
         description = try container.decode(String.self, forKey: .description)
         isRead = try container.decode(Bool.self, forKey: .isRead)
         type = try container.decode(NotificationType.self, forKey: .type)
-        
+
         let extraDataContainer = try container.nestedContainer(keyedBy: ExtraDataCodingKeys.self, forKey: .extraData)
         extraData = try Self.decodeExtraData(from: extraDataContainer, for: type)
     }
-    
+
     private enum ExtraDataCodingKeys: String, CodingKey {
         case mark, subject, student
         case lesson = "lesson_id"
@@ -95,35 +100,34 @@ extension NeobisNotification {
         case submissionId = "submission_id"
         case teacherComment = "teacher_comment"
     }
-    
-    private static func decodeExtraData(from container: KeyedDecodingContainer<ExtraDataCodingKeys>, for type: NotificationType) throws -> ExtraData {
 
+    private static func decodeExtraData(from container: KeyedDecodingContainer<ExtraDataCodingKeys>, for type: NotificationType) throws -> ExtraData {
         switch type {
-        case .rate_homework:
+        case .rateHomework:
             let mark = try container.decode(String.self, forKey: .mark)
             let subject = try container.decode(String.self, forKey: .subject)
             let submissionId = try container.decode(Int.self, forKey: .submissionId)
             let teacherComment = try container.decode(String.self, forKey: .teacherComment)
             let lessonId = try container.decode(Int.self, forKey: .lesson)
             return .submissionRate(mark: mark, subject: subject, submissionId: submissionId, teacherComment: teacherComment, lessonId: lessonId)
-        case .rate_classwork:
+        case .rateClasswork:
             let mark = try container.decode(String.self, forKey: .mark)
             let subject = try container.decode(String.self, forKey: .subject)
             let subjectId = try container.decode(Int.self, forKey: .subjectId)
             let quater = try container.decode(Quater.self, forKey: .quater)
             return .classworkRate(mark: mark, subject: subject, subjectId: subjectId, quater: quater)
-        case .revise_homework:
+        case .reviseHomework:
             let subject = try container.decode(String.self, forKey: .subject)
             let submissionId = try container.decode(Int.self, forKey: .submissionId)
             let lessonId = try container.decode(Int.self, forKey: .lesson)
             return .homeworkRevise(subject: subject, submissionId: submissionId, lessonId: lessonId)
-        case .rate_quarter:
+        case .rateQuater:
             let mark = try container.decode(String.self, forKey: .mark)
             let subject = try container.decode(String.self, forKey: .subject)
             let subjectId = try container.decode(Int.self, forKey: .subjectId)
             let quater = try container.decode(Quater.self, forKey: .quater)
             return .quaterRate(mark: mark, subject: subject, subjectId: subjectId, quater: quater)
-        case .submit_homework:
+        case .submitHomework:
             let studentName = try container.decode(String.self, forKey: .student)
             let submissionId = try container.decode(Int.self, forKey: .submissionId)
             return .homeworkSubmit(student: studentName, submissionId: submissionId)
@@ -133,9 +137,9 @@ extension NeobisNotification {
 }
 
 struct DTONotifications: Decodable {
-    let totalCount : Int
-    let totalPages : Int
-    let list : [NeobisNotification]
+    let totalCount: Int
+    let totalPages: Int
+    let list: [NeobisNotification]
 
     enum CodingKeys: String, CodingKey {
         case list

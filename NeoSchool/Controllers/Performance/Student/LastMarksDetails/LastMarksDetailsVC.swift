@@ -1,8 +1,7 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class LastMarksDetailsVC: DetailTitledViewController {
-
     private let performanceAPI: PerformanceAPIProtocol
     private let quater: Quater
     private let subjectId: Int
@@ -13,8 +12,9 @@ class LastMarksDetailsVC: DetailTitledViewController {
         self.subjectId = subjectId
         super.init(nibName: nil, bundle: nil)
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -25,7 +25,6 @@ class LastMarksDetailsVC: DetailTitledViewController {
     }
 
     private func setupUI() {
-
         let typeSwitchBar = HomeworkClassworkBarView()
         view.addSubview(typeSwitchBar)
         typeSwitchBar.snp.makeConstraints { make in
@@ -45,4 +44,3 @@ class LastMarksDetailsVC: DetailTitledViewController {
         listsVC.delegate = typeSwitchBar
     }
 }
-

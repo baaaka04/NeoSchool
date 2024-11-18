@@ -1,8 +1,6 @@
 import UIKit
 
-
 class ImagesAPI {
-    
     func loadImage(url: String) async throws -> UIImage {
         guard let url = URL(string: url) else { throw URLError(.badURL) }
         let (data, resp) = try await URLSession.shared.data(from: url)

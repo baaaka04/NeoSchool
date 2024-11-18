@@ -6,9 +6,8 @@ protocol OneTimeCodeDelegate: AnyObject {
 }
 
 class OneTimeCodeViewController: UIViewController, UITextFieldDelegate {
-    
     weak var delegate: OneTimeCodeDelegate?
-    
+
     private var codeTextField1: MyTextField!
     private var codeTextField2: MyTextField!
     private var codeTextField3: MyTextField!
@@ -16,26 +15,26 @@ class OneTimeCodeViewController: UIViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         view.backgroundColor = .white
-        
+
         // Initialize text fields
         codeTextField1 = createCodeTextField()
         codeTextField2 = createCodeTextField()
         codeTextField3 = createCodeTextField()
         codeTextField4 = createCodeTextField()
-        
+
         // Set delegates
         codeTextField1.delegate = self
         codeTextField2.delegate = self
         codeTextField3.delegate = self
         codeTextField4.delegate = self
-        
+
         codeTextField1.myDelegate = self
         codeTextField2.myDelegate = self
         codeTextField3.myDelegate = self
         codeTextField4.myDelegate = self
-        
+
         // Disable all except first
         codeTextField2.isEnabled = false
         codeTextField3.isEnabled = false
@@ -48,23 +47,23 @@ class OneTimeCodeViewController: UIViewController, UITextFieldDelegate {
         stackView.spacing = 17
         stackView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stackView)
-        
+
         // Add constraints
         NSLayoutConstraint.activate([
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             stackView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            codeTextField1.heightAnchor.constraint(equalTo: view.heightAnchor)
+            codeTextField1.heightAnchor.constraint(equalTo: view.heightAnchor),
         ])
-        
+
         codeTextField1.becomeFirstResponder()
     }
-    
+
     // Create a text field with the necessary properties
     private func createCodeTextField() -> MyTextField {
         let textField = MyTextField()
         textField.backgroundColor = .neobisExtralightGray
-        textField.font = AppFont.font(type: .Regular, size: 32)
+        textField.font = AppFont.font(type: .regular, size: 32)
         textField.textColor = .neobisDarkGray
         textField.textAlignment = .center
         textField.keyboardType = .numberPad
@@ -76,14 +75,15 @@ class OneTimeCodeViewController: UIViewController, UITextFieldDelegate {
     }
 
     // Handle the text field's behavior when text is changed
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn _: NSRange, replacementString string: String) -> Bool {
         if string.count == 1 {
-            guard [0,1,2,3,4,5,6,7,8,9].contains(Int(string)) else { return false }
+            guard [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].contains(Int(string)) else { return false }
             textField.text = string
             moveToNextTextField(from: textField)
             checkEmptyFields()
             return false
-        } else if string.count == 0 {
+        }
+        if string.isEmpty {
             textField.text = ""
             moveToPreviousTextField(from: textField)
             delegate?.codeCleared()
@@ -135,23 +135,23 @@ class OneTimeCodeViewController: UIViewController, UITextFieldDelegate {
             break
         }
     }
-    
+
     private func checkEmptyFields() {
-        if codeTextField1.text != "",
-           codeTextField2.text != "",
-           codeTextField3.text != "",
-           codeTextField4.text != "" { delegate?.codeFilled() }
+        let textFields = [codeTextField1, codeTextField2, codeTextField3, codeTextField4]
+        if textFields.allSatisfy({ $0?.text?.isEmpty == false }) {
+            delegate?.codeFilled()
+        }
     }
-    
+
     func getCode() -> String {
         let dig1 = codeTextField1.text ?? ""
         let dig2 = codeTextField2.text ?? ""
         let dig3 = codeTextField3.text ?? ""
         let dig4 = codeTextField4.text ?? ""
-        
-        return dig1+dig2+dig3+dig4
+
+        return dig1 + dig2 + dig3 + dig4
     }
-    
+
     func changeBorderColor(isAlert: Bool) {
         if isAlert {
             codeTextField1.layer.borderWidth = 1
@@ -165,7 +165,6 @@ class OneTimeCodeViewController: UIViewController, UITextFieldDelegate {
             codeTextField4.layer.borderWidth = 0
         }
     }
-    
 }
 
 protocol MyTextFieldDelegate: AnyObject {
@@ -173,16 +172,14 @@ protocol MyTextFieldDelegate: AnyObject {
 }
 
 class MyTextField: UITextField {
-
     weak var myDelegate: MyTextFieldDelegate?
 
     override func deleteBackward() {
         super.deleteBackward()
-        if let text = self.text, text == "" {
+        if let text = self.text, text.isEmpty {
             myDelegate?.textFieldDidDelete(from: self)
         }
     }
-
 }
 
 extension OneTimeCodeViewController: MyTextFieldDelegate {

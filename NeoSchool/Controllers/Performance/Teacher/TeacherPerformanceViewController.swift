@@ -1,8 +1,7 @@
-import UIKit
 import SnapKit
+import UIKit
 
 final class TeacherPerformanceViewController: SchoolNavViewController {
-
     private let performanceAPI: PerformanceAPIProtocol
 
     private lazy var rightTabTitle: UIButton = {
@@ -12,7 +11,7 @@ final class TeacherPerformanceViewController: SchoolNavViewController {
         ])
         button.setAttributedTitle(attributedTitle, for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = AppFont.font(type: .Medium, size: 18)
+        button.titleLabel?.font = AppFont.font(type: .medium, size: 18)
         button.addTarget(self, action: #selector(onTapQuaterMarks), for: .touchUpInside)
         return button
     }()
@@ -22,7 +21,8 @@ final class TeacherPerformanceViewController: SchoolNavViewController {
         super.init(navbarTitle: navbarTitle, navbarColor: navbarColor)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -38,7 +38,7 @@ final class TeacherPerformanceViewController: SchoolNavViewController {
         view.addSubview(gradesBar.view)
         gradesBar.didMove(toParent: self)
         gradesBar.view.snp.makeConstraints { make in
-            make.width.equalTo(view.frame.size.width-32)
+            make.width.equalTo(view.frame.size.width - 32)
             make.height.equalTo(48)
             make.centerX.equalToSuperview()
             make.left.right.equalToSuperview().inset(16)
@@ -68,5 +68,4 @@ final class TeacherPerformanceViewController: SchoolNavViewController {
         vc.title = "Четвертные оценки"
         self.navigationController?.pushViewController(vc, animated: true)
     }
-
 }

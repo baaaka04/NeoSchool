@@ -1,14 +1,13 @@
 import UIKit
 
 class PlaceholderTextView: UITextView {
-
     let placeholderLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.neobisLightGray
         label.numberOfLines = 0
         return label
     }()
-    
+
     lazy var counterLabel: UILabel = {
         let label = UILabel()
         label.textColor = .lightGray
@@ -20,26 +19,26 @@ class PlaceholderTextView: UITextView {
             placeholderLabel.text = placeholder
         }
     }
-    
+
     var counter: String? {
         didSet {
             counterLabel.text = counter
         }
     }
-    
+
     var limit: Int? {
         didSet {
             counterLabel.text = "0/\(limit ?? 0)"
         }
     }
 
-    var placeholderInsets: UIEdgeInsets = UIEdgeInsets(top: 8, left: 6, bottom: 8, right: 6) {
+    var placeholderInsets = UIEdgeInsets(top: 8, left: 6, bottom: 8, right: 6) {
         didSet {
             setNeedsLayout()
         }
     }
-    
-    var counterInsets: UIEdgeInsets = UIEdgeInsets(top: 8, left: 6, bottom: 8, right: 6) {
+
+    var counterInsets = UIEdgeInsets(top: 8, left: 6, bottom: 8, right: 6) {
         didSet {
             setNeedsLayout()
         }
@@ -58,22 +57,25 @@ class PlaceholderTextView: UITextView {
     private func commonInit() {
         addSubview(placeholderLabel)
         addSubview(counterLabel)
-        NotificationCenter.default.addObserver(self, selector: #selector(textDidChange), name: UITextView.textDidChangeNotification, object: nil)
-        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(textDidChange),
+                                               name: UITextView.textDidChangeNotification,
+                                               object: nil)
+
         let constraints = [
             self.counterLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            self.counterLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+            self.counterLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
         ]
         NSLayoutConstraint.activate(constraints)
-        
+
         let padding = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         self.textContainerInset = padding
 
-        self.placeholderLabel.font = AppFont.font(type: .Regular, size: 20)
-        self.counterLabel.font = AppFont.font(type: .Regular, size: 12)
+        self.placeholderLabel.font = AppFont.font(type: .regular, size: 20)
+        self.counterLabel.font = AppFont.font(type: .regular, size: 12)
         self.counterLabel.textAlignment = .right
         self.layer.cornerRadius = 16
-        self.font = AppFont.font(type: .Regular, size: 18)
+        self.font = AppFont.font(type: .regular, size: 18)
         self.backgroundColor = UIColor.neobisExtralightGray
     }
 

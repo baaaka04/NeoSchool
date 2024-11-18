@@ -1,38 +1,36 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class NotificationDetailViewController: DetailViewController {
-
     private weak var viewModel: NotificationsViewModel?
     private let notification: NeobisNotificationToPresent
 
     private lazy var textLabel: GrayUILabel = {
         let label = GrayUILabel()
-        label.font = AppFont.font(type: .Medium, size: 20)
+        label.font = AppFont.font(type: .medium, size: 20)
         label.numberOfLines = 0
-        label.text = self.notification.text
+        label.text = notification.text
         return label
     }()
 
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
-        label.font = AppFont.font(type: .Regular, size: 16)
+        label.font = AppFont.font(type: .regular, size: 16)
         label.textColor = .neobisLightGray
-        label.text = self.notification.date
+        label.text = notification.date
         return label
     }()
 
     private lazy var teacherCommentView: CommentView = {
-        let view = CommentView(author: .teacher, text: notification.teacherComment)
-        return view
+        CommentView(author: .teacher, text: notification.teacherComment)
     }()
 
-    private lazy var navigateButton : NeobisUIButton = {
+    private lazy var navigateButton: NeobisUIButton = {
         let button = NeobisUIButton(type: .purple)
-        switch self.notification.type {
-        case .rate_homework, .submit_homework, .revise_homework:
+        switch notification.type {
+        case .rateHomework, .submitHomework, .reviseHomework:
             button.setTitle("Просмотреть задание", for: .normal)
-        case .rate_quarter, .rate_classwork:
+        case .rateQuater, .rateClasswork:
             button.setTitle("Просмотреть оценки по этому предмету", for: .normal)
         }
         button.addTarget(self, action: #selector(onTapButton), for: .touchUpInside)
@@ -49,7 +47,8 @@ class NotificationDetailViewController: DetailViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -61,7 +60,6 @@ class NotificationDetailViewController: DetailViewController {
     }
 
     private func setupUI() {
-
         view.addSubview(textLabel)
         textLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
@@ -75,7 +73,7 @@ class NotificationDetailViewController: DetailViewController {
             make.width.equalToSuperview().inset(32)
             make.centerX.equalToSuperview()
         }
-        if self.notification.type == .rate_homework {
+        if self.notification.type == .rateHomework {
             view.addSubview(teacherCommentView)
             teacherCommentView.snp.makeConstraints { make in
                 make.top.equalTo(dateLabel.snp.bottom).offset(24)
@@ -83,7 +81,7 @@ class NotificationDetailViewController: DetailViewController {
                 make.centerX.equalToSuperview()
             }
         }
-        let lastConstraint = self.notification.type == .rate_homework ? teacherCommentView.snp.bottom : dateLabel.snp.bottom
+        let lastConstraint = self.notification.type == .rateHomework ? teacherCommentView.snp.bottom : dateLabel.snp.bottom
 
         view.addSubview(navigateButton)
         navigateButton.snp.makeConstraints { make in
@@ -95,22 +93,24 @@ class NotificationDetailViewController: DetailViewController {
 
     @objc private func onTapButton() {
         switch self.notification.type {
-        case .rate_homework:
+        case .rateHomework:
             openLessonDetails()
-        case .rate_classwork:
+        case .rateClasswork:
             openQuaterMarks()
-        case .revise_homework:
+        case .reviseHomework:
             openLessonDetails()
-        case .rate_quarter:
+        case .rateQuater:
             openQuaterMarks()
-        case .submit_homework:
+        case .submitHomework:
             openStudentSubmission()
         }
     }
 
     private func checkAsRead() {
         Task {
-            try await viewModel?.checkAsRead(notificationId: notification.id)
+            do {
+                try await viewModel?.checkAsRead(notificationId: notification.id)
+            } catch {print(error) }
         }
     }
 
@@ -145,5 +145,4 @@ class NotificationDetailViewController: DetailViewController {
         lastMakrsDetailsVC.title = "Последние оценки"
         self.navigationController?.pushViewController(lastMakrsDetailsVC, animated: true)
     }
-
 }

@@ -1,8 +1,8 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class SmallGradeCell: UICollectionViewCell {
-    static let identifier: String = "SmallGradeCell"
+    static let identifier = "SmallGradeCell"
 
     var gradeName: String? {
         didSet {
@@ -16,14 +16,15 @@ class SmallGradeCell: UICollectionViewCell {
         }
     }
 
-    private let gradeLabel = GrayUILabel(font: AppFont.font(type: .Regular, size: 16))
+    private let gradeLabel = GrayUILabel(font: AppFont.font(type: .regular, size: 16))
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

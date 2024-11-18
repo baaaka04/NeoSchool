@@ -1,15 +1,14 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class ProfileModalViewController: UIViewController, Confirmable {
-    
     private let submitView = ProfileSubmitView()
-            
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
-        
+
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideSubmitView))
         view.addGestureRecognizer(tapGesture)
 
@@ -19,7 +18,10 @@ class ProfileModalViewController: UIViewController, Confirmable {
             self?.navigationController?.pushViewController(changePasswordVC, animated: true)
         }
         submitView.logout = { [weak self] in
-            self?.showConfirmView(title: "Выйти из аккаунта?", text: nil, confirmButtonText: "Да, выйти", declineButtonText: "Отмена") {
+            self?.showConfirmView(title: "Выйти из аккаунта?",
+                                  text: nil,
+                                  confirmButtonText: "Да, выйти",
+                                  declineButtonText: "Отмена") {
                 KeychainHelper.delete(key: .accessToken)
                 KeychainHelper.delete(key: .refreshToken)
                 if let sceneDelegate = self?.view.window?.windowScene?.delegate as? SceneDelegate {
@@ -32,9 +34,8 @@ class ProfileModalViewController: UIViewController, Confirmable {
             make.top.equalTo(view.snp.bottom)
             make.width.centerX.equalToSuperview()
         }
-        
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         UIView.animate(withDuration: 0.3) {
@@ -46,7 +47,7 @@ class ProfileModalViewController: UIViewController, Confirmable {
             self.view.layoutIfNeeded()
         }
     }
-    
+
     @objc private func hideSubmitView() {
         UIView.animate(withDuration: 0.3) {
             self.submitView.snp.removeConstraints()
@@ -55,7 +56,7 @@ class ProfileModalViewController: UIViewController, Confirmable {
                 make.width.centerX.equalToSuperview()
             }
             self.view.layoutIfNeeded()
-        } completion: { _ in self.dismiss(animated: false, completion: nil) }
+        } completion: { _ in self.dismiss(animated: false, completion: nil)
+        }
     }
-
 }

@@ -1,8 +1,7 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class CalendarView: UIView {
-
     weak var delegate: UITextField?
     var toggleCalendarView: ( () -> Void )?
 
@@ -18,7 +17,7 @@ class CalendarView: UIView {
         let button = UIButton()
         button.setTitle("Сбросить", for: .normal)
         button.setTitleColor(.neobisPurple, for: .normal)
-        button.titleLabel?.font = AppFont.font(type: .Medium, size: 16)
+        button.titleLabel?.font = AppFont.font(type: .medium, size: 16)
         button.addTarget(self, action: #selector(clearDateTextField), for: .touchUpInside)
         button.titleLabel?.textAlignment = .left
         return button
@@ -28,7 +27,7 @@ class CalendarView: UIView {
         let button = UIButton()
         button.setTitle("Готово", for: .normal)
         button.setTitleColor(.neobisPurple, for: .normal)
-        button.titleLabel?.font = AppFont.font(type: .Bold, size: 16)
+        button.titleLabel?.font = AppFont.font(type: .bold, size: 16)
         button.addTarget(self, action: #selector(toggleCalendar), for: .touchUpInside)
         button.titleLabel?.textAlignment = .right
         return button
@@ -48,12 +47,12 @@ class CalendarView: UIView {
         self.setupUI()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     private func setupUI() {
-
         self.addSubview(datePicker)
         datePicker.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview().inset(10)
@@ -70,7 +69,6 @@ class CalendarView: UIView {
             make.top.equalTo(datePicker.snp.bottom).offset(10)
             make.bottom.equalToSuperview()
         }
-
     }
 
     @objc private func toggleCalendar() {
@@ -87,5 +85,4 @@ class CalendarView: UIView {
         self.delegate?.text = nil
         self.toggleCalendar()
     }
-
 }

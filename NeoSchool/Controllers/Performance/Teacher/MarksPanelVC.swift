@@ -1,14 +1,13 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class MarksPanelVC: UIViewController {
-
     private let performanceAPI: PerformanceAPIProtocol
 
     private var subjects: [SubjectName] = []
     private var selectedSubject: SubjectName?
     private var selectedGradeId: Int?
-    private var selectedDate: Date = Date()
+    private var selectedDate = Date()
     private var studentsMarks: [FullNameUser] = []
 
     private let scrollView = UIScrollView()
@@ -21,10 +20,10 @@ class MarksPanelVC: UIViewController {
         return picker
     }()
 
-    private let titleLabel = GrayUILabel(font: AppFont.font(type: .Medium, size: 24))
+    private let titleLabel = GrayUILabel(font: AppFont.font(type: .medium, size: 24))
     private let quaterLabel: UILabel = {
         let label = UILabel()
-        label.font = AppFont.font(type: .Regular, size: 16)
+        label.font = AppFont.font(type: .regular, size: 16)
         label.textColor = .neobisLightGray
         return label
     }()
@@ -39,7 +38,8 @@ class MarksPanelVC: UIViewController {
         studentMarksListVC.getGradeDayData = self.getGradeDayData
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -88,20 +88,21 @@ class MarksPanelVC: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector (changeSubject))
         titleLabel.isUserInteractionEnabled = true
         titleLabel.addGestureRecognizer(tapGesture)
-
     }
 
     private func getGradeDayData() {
         guard let selectedGradeId, let selectedSubject else { return }
         Task {
-            self.studentsMarks = try await performanceAPI.getGradeDayData(
-                gradeId: selectedGradeId,
-                subjectId: selectedSubject.id,
-                date: self.selectedDate
-            )
-            DispatchQueue.main.async {
-                self.updateUI()
-            }
+            do {
+                self.studentsMarks = try await performanceAPI.getGradeDayData(
+                    gradeId: selectedGradeId,
+                    subjectId: selectedSubject.id,
+                    date: self.selectedDate
+                )
+                DispatchQueue.main.async {
+                    self.updateUI()
+                }
+            } catch { print(error) }
         }
     }
 
@@ -162,4 +163,3 @@ extension MarksPanelVC: GradesBarDelegate {
         self.getGradeDayData()
     }
 }
-

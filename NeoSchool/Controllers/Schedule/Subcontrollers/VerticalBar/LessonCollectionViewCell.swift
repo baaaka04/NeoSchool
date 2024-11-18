@@ -1,45 +1,44 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class LessonCollectionViewCell: UICollectionViewCell {
-        
     var title: String? {
         didSet {
             titleLabel.text = title
         }
     }
-    
+
     private let titleLabel: GrayUILabel = {
         let label = GrayUILabel()
-        label.font = AppFont.font(type: .Medium, size: 20)
+        label.font = AppFont.font(type: .medium, size: 20)
         label.lineBreakMode = NSLineBreakMode.byWordWrapping
         label.numberOfLines = 0
         return label
     }()
-    
+
     var subtitle: String? {
         didSet {
             subtitleLabel.text = subtitle
         }
     }
-    
+
     let subtitleLabel: GrayUILabel = {
         let label = GrayUILabel()
-        label.font = AppFont.font(type: .Regular, size: 16)
+        label.font = AppFont.font(type: .regular, size: 16)
         return label
     }()
-    
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         setupUI()
     }
-        
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupUI () {
         contentView.backgroundColor = .clear
         contentView.snp.makeConstraints { make in
@@ -57,10 +56,7 @@ class LessonCollectionViewCell: UICollectionViewCell {
             make.left.right.equalTo(titleLabel)
             make.top.equalTo(titleLabel.snp.bottom).offset(4)
         }
-        
     }
-       
-    
 }
 
 extension LessonCollectionViewCell {

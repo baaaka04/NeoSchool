@@ -1,54 +1,55 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class NotificationCollectionViewCell: AutosizeUICollectionViewCell {
     static let identifier = "NotificationCollectionViewCell"
-    
-    var id: Int? = nil
-    
-    var isRead: Bool? {
-        didSet { isReadIndicatorImage.isHidden = isRead ?? false }
+
+    var id: Int?
+
+    var isRead = false {
+        didSet { isReadIndicatorImage.isHidden = isRead }
     }
-    
+
     private let isReadIndicatorImage: UIImageView = {
         let image = UIImageView(image: UIImage(systemName: "circle.fill"))
         image.tintColor = .neobisGreen
         return image
     }()
-    
-    var text : String? {
+
+    var text: String? {
         didSet { textLabel.text = text }
     }
-    
+
     private let textLabel: GrayUILabel = {
         let label = GrayUILabel()
-        label.font = AppFont.font(type: .Medium, size: 16)
+        label.font = AppFont.font(type: .medium, size: 16)
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         return label
     }()
-    
-    var date : String? {
+
+    var date: String? {
         didSet { dateLabel.text = date }
     }
-    
+
     private let dateLabel: UILabel = {
         let label = UILabel()
-        label.font = AppFont.font(type: .Regular, size: 16)
+        label.font = AppFont.font(type: .regular, size: 16)
         label.textColor = .neobisLightGray
         return label
     }()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         setupUI()
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupUI() {
         contentView.layer.cornerRadius = 16
         contentView.backgroundColor = .white
@@ -57,16 +58,19 @@ class NotificationCollectionViewCell: AutosizeUICollectionViewCell {
         contentView.layer.shadowOffset = .zero
         contentView.layer.shadowRadius = 10
         contentView.layer.masksToBounds = false
-        contentView.layer.shadowPath = UIBezierPath(roundedRect: contentView.bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
-                
+        contentView.layer.shadowPath = UIBezierPath(
+            roundedRect: contentView.bounds,
+            cornerRadius: contentView.layer.cornerRadius)
+        .cgPath
+
         contentView.addSubview(isReadIndicatorImage)
-        
+
         isReadIndicatorImage.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.width.height.equalTo(8)
             make.leading.equalToSuperview().inset(16)
         }
-                
+
         contentView.addSubview(textLabel)
 
         textLabel.snp.makeConstraints { make in

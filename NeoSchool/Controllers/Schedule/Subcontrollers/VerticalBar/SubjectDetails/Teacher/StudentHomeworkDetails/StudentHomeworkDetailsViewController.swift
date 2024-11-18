@@ -1,17 +1,17 @@
-import UIKit
 import SnapKit
+import UIKit
 
 protocol StudentHomeworkProtocol {
     var submissionDetails: TeacherSubmissionDetails? { get set }
     var submissionFilesUrls: [String]? { get set }
     var grade: Grade? { get set }
-    func getSubmissionDetails(submissionId: Int) async throws -> Void
-    func reviseSubmission(submissionId: Int) async throws -> Void
-    func submit(_ submissionId: Int?) async throws -> Void
+
+    func getSubmissionDetails(submissionId: Int) async throws
+    func reviseSubmission(submissionId: Int) async throws
+    func submit(_ submissionId: Int?) async throws
 }
 
 class StudentHomeworkDetailsViewController: DetailTitledViewController, Confirmable, Notifiable {
-
     enum ScreenSections {
         case generalInfo
         case homeworkInfo
@@ -20,7 +20,7 @@ class StudentHomeworkDetailsViewController: DetailTitledViewController, Confirma
         case files
     }
 
-    private let sections : [ScreenSections]
+    private let sections: [ScreenSections]
     private var submissionId: Int
     private var vm: StudentHomeworkProtocol?
     private let editable: Bool
@@ -31,14 +31,14 @@ class StudentHomeworkDetailsViewController: DetailTitledViewController, Confirma
     private lazy var reviseButton: NeobisUIButton = {
         let button = NeobisUIButton(type: .white)
         button.setTitle("Вернуть на доработку", for: .normal)
-        button.isHidden = !self.editable
+        button.isHidden = !editable
         button.addTarget(self, action: #selector(onTapRevise), for: .touchUpInside)
         return button
     }()
     private lazy var gradeButton: NeobisUIButton = {
         let button = NeobisUIButton(type: .purple)
         button.setTitle("Выставить оценку", for: .normal)
-        button.isHidden = !self.editable
+        button.isHidden = !editable
         button.addTarget(self, action: #selector(openCommentView), for: .touchUpInside)
         return button
     }()
@@ -70,7 +70,8 @@ class StudentHomeworkDetailsViewController: DetailTitledViewController, Confirma
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -107,7 +108,6 @@ class StudentHomeworkDetailsViewController: DetailTitledViewController, Confirma
         collectionView.register(FilesCell.self, forCellWithReuseIdentifier: FilesCell.identifier)
     }
 
-
     private func getSubmissionDetails() {
         Task {
             do {
@@ -132,19 +132,23 @@ class StudentHomeworkDetailsViewController: DetailTitledViewController, Confirma
     }
 
     @objc private func onTapRevise() {
-        self.showConfirmView(title: "Вернуть задание на доработку?", text: "Ученику придет уведомление, что его задание должно быть доработано", confirmButtonText: "Вернуть на доработку", declineButtonText: "Отмена", confirmedAction: {[weak self] in
-            guard let strongSelf = self else { return }
-            Task {
-                do {
-                    try await strongSelf.vm?.reviseSubmission(submissionId: strongSelf.submissionId)
-                    strongSelf.showNotification(message: "Отправлено на доработку", isSucceed: true)
-                } catch {
-                    print(error)
-                    strongSelf.showNotification(message: "Произошла ошибка", isSucceed: false)
+        self.showConfirmView(
+            title: "Вернуть задание на доработку?",
+            text: "Ученику придет уведомление, что его задание должно быть доработано", confirmButtonText: "Вернуть на доработку",
+            declineButtonText: "Отмена",
+            confirmedAction: { [weak self] in
+                guard let self else { return }
+                Task {
+                    do {
+                        try await self.vm?.reviseSubmission(submissionId: self.submissionId)
+                        self.showNotification(message: "Отправлено на доработку", isSucceed: true)
+                    } catch {
+                        print(error)
+                        self.showNotification(message: "Произошла ошибка", isSucceed: false)
+                    }
+                    self.getSubmissionDetails()
                 }
-                strongSelf.getSubmissionDetails()
-            }
-        })
+            })
     }
 
     @objc private func openCommentView() {
@@ -156,22 +160,20 @@ class StudentHomeworkDetailsViewController: DetailTitledViewController, Confirma
         commentVC.modalPresentationStyle = .overFullScreen
         self.present(commentVC, animated: false)
     }
-
 }
 
 extension StudentHomeworkDetailsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sections.count
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
+        sections.count
     }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let section = sections[indexPath.item]
 
         switch section {
         case .generalInfo:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GeneralInfoCell.identifier, for: indexPath) as? GeneralInfoCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GeneralInfoCell.identifier,
+                                                          for: indexPath) as? GeneralInfoCell
 
             if let submission: TeacherSubmissionDetails = vm?.submissionDetails {
                 cell?.subtitleText = self.subtitleText
@@ -182,7 +184,8 @@ extension StudentHomeworkDetailsViewController: UICollectionViewDelegate, UIColl
 
             return cell ?? UICollectionViewCell()
         case .homeworkInfo:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeworkCell.identifier, for: indexPath) as? HomeworkCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeworkCell.identifier,
+                                                          for: indexPath) as? HomeworkCell
 
             if let submission = vm?.submissionDetails {
                 cell?.updateUI(submission: submission)
@@ -190,7 +193,8 @@ extension StudentHomeworkDetailsViewController: UICollectionViewDelegate, UIColl
 
             return cell ?? UICollectionViewCell()
         case .mark:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MarkInfoCell.identifier, for: indexPath) as? MarkInfoCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MarkInfoCell.identifier,
+                                                          for: indexPath) as? MarkInfoCell
 
             if let submission = vm?.submissionDetails {
                 cell?.mark = Grade(rawValue: submission.mark ?? "-")
@@ -198,7 +202,8 @@ extension StudentHomeworkDetailsViewController: UICollectionViewDelegate, UIColl
 
             return cell ?? UICollectionViewCell()
         case .comments:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CommentsCell.identifier, for: indexPath) as? CommentsCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CommentsCell.identifier,
+                                                          for: indexPath) as? CommentsCell
 
             if let submission = vm?.submissionDetails {
                 cell?.studentCommentText = submission.studentComment
@@ -207,16 +212,16 @@ extension StudentHomeworkDetailsViewController: UICollectionViewDelegate, UIColl
 
             return cell ?? UICollectionViewCell()
         case .files:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilesCell.identifier, for: indexPath) as? FilesCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilesCell.identifier,
+                                                          for: indexPath) as? FilesCell
 
-            //addSubview only if the parent doesn't have one
-            if let _ = cell?.contentView.subviews.first {
+            // addSubview only if the parent doesn't have one
+            if cell?.contentView.subviews.first != nil {
                 if let submission = vm?.submissionDetails {
-
                     let filesCount = submission.files.count
                     studentFilesVC.view.snp.makeConstraints { make in
-                        //picHeight = 64; picMargin = 8; bottomMargin = 168
-                        make.height.equalTo(filesCount > 0 ? (64*filesCount+(filesCount-1)*8+168) : 0)
+                        // picHeight = 64; picMargin = 8; bottomMargin = 168
+                        make.height.equalTo(filesCount > 0 ? (64 * filesCount + (filesCount - 1) * 8 + 168) : 0)
                     }
                 }
             } else {
@@ -229,7 +234,5 @@ extension StudentHomeworkDetailsViewController: UICollectionViewDelegate, UIColl
 
             return cell ?? UICollectionViewCell()
         }
-
     }
-
 }

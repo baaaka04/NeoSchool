@@ -1,19 +1,20 @@
 import UIKit
 
-
 class NeobisTextField: UITextField {
-
     override var placeholder: String? {
         didSet {
             guard let placeholder else { return }
-            self.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.neobisLightGray])
+            self.attributedPlaceholder = NSAttributedString(
+                string: placeholder,
+                attributes: [NSAttributedString.Key.foregroundColor: UIColor.neobisLightGray]
+            )
         }
     }
 
-    override init(frame: CGRect) {
+    override init(frame _: CGRect) {
         super.init(frame: .zero)
 
-        self.font = AppFont.font(type: .Regular, size: 20)
+        self.font = AppFont.font(type: .regular, size: 20)
         self.backgroundColor = .neobisExtralightGray
         self.textColor = .neobisDarkGray
         self.layer.cornerRadius = 16
@@ -26,7 +27,8 @@ class NeobisTextField: UITextField {
         self.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: self.frame.size.height))
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -46,6 +48,4 @@ class NeobisTextField: UITextField {
         }
         return result
     }
-
 }
-

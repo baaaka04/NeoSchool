@@ -1,22 +1,22 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class TeacherLessonCollectionViewCell: LessonCollectionViewCell {
     static let identifier = "TeacherLessonCollectionViewCell"
-    
+
     var subjectName: String? {
         didSet {
             guard let subjectName else { return }
             subjectNameLabel.text = subjectName + " · "
         }
     }
-    
+
     private let subjectNameLabel: GrayUILabel = {
         let label = GrayUILabel()
-        label.font = AppFont.font(type: .Medium, size: 16)
+        label.font = AppFont.font(type: .medium, size: 16)
         return label
     }()
-    
+
     var homeworkCount: Int? {
         didSet {
             if let homeworkCount {
@@ -28,23 +28,24 @@ class TeacherLessonCollectionViewCell: LessonCollectionViewCell {
             }
         }
     }
-    
+
     private let homeworkCountLabel: UILabel = {
         let label = UILabel()
-        label.font = AppFont.font(type: .Medium, size: 16)
+        label.font = AppFont.font(type: .medium, size: 16)
         return label
     }()
-        
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         setupUI()
     }
-        
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupUI () {
         contentView.addSubview(subjectNameLabel)
         subjectNameLabel.snp.makeConstraints { make in
@@ -58,5 +59,4 @@ class TeacherLessonCollectionViewCell: LessonCollectionViewCell {
             make.top.equalTo(subtitleLabel.snp.bottom).offset(4)
         }
     }
-    
 }

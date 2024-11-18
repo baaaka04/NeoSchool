@@ -1,5 +1,5 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class GradesBarCell: UICollectionViewCell {
     static let identifier = "GradesBarCell"
@@ -30,8 +30,8 @@ class GradesBarCell: UICollectionViewCell {
 
     private lazy var gradeNameLabel: UILabel = {
         let label = UILabel()
-        label.font = AppFont.font(type: .Bold, size: 20)
-        label.textColor = self.textColor
+        label.font = AppFont.font(type: .bold, size: 20)
+        label.textColor = textColor
         label.textAlignment = .center
         return label
     }()
@@ -42,7 +42,8 @@ class GradesBarCell: UICollectionViewCell {
         setupUI()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

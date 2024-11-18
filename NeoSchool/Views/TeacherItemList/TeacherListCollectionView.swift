@@ -1,7 +1,6 @@
 import UIKit
 
 class TeacherListCollectionView: UICollectionView {
-
     init() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -13,11 +12,14 @@ class TeacherListCollectionView: UICollectionView {
 
         self.backgroundColor = .white
         self.showsVerticalScrollIndicator = false
-        self.register(TeacherItemListCollectionViewCell.self, forCellWithReuseIdentifier: TeacherItemListCollectionViewCell.identifier)
+        self.register(
+            TeacherItemListCollectionViewCell.self,
+            forCellWithReuseIdentifier: TeacherItemListCollectionViewCell.identifier
+        )
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }

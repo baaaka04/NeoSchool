@@ -1,12 +1,12 @@
-import UIKit
 import SnapKit
+import UIKit
 
 protocol CellDelegate: AnyObject {
     func presentVC(quater: Quater, studentId: Int, studentName: String, avarageMark: String?)
 }
 
-class QuaterMarkListCell: AutosizeUICollectionViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    static let identifier: String = "QuaterMarkListCell"
+class QuaterMarkListCell: AutosizeUICollectionViewCell {
+    static let identifier = "QuaterMarkListCell"
 
     var name: String? {
         didSet {
@@ -22,15 +22,14 @@ class QuaterMarkListCell: AutosizeUICollectionViewCell, UICollectionViewDelegate
     var quaterMarks: [QuaterMark]?
     weak var delegate: CellDelegate?
 
-    private let nameLabel = GrayUILabel(font: AppFont.font(type: .Regular, size: 18))
+    private let nameLabel = GrayUILabel(font: AppFont.font(type: .regular, size: 18))
     private let avarageMarkLabel: UILabel = {
         let label = UILabel()
         label.textColor = .neobisLightGray
-        label.font = AppFont.font(type: .Regular, size: 14)
+        label.font = AppFont.font(type: .regular, size: 14)
         label.text = "Средний балл: -"
         return label
     }()
-
 
     private lazy var gradesCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -49,12 +48,12 @@ class QuaterMarkListCell: AutosizeUICollectionViewCell, UICollectionViewDelegate
         setupUI()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     private func setupUI() {
-
         let containerView = UIView()
 
         containerView.addSubview(nameLabel)
@@ -87,31 +86,33 @@ class QuaterMarkListCell: AutosizeUICollectionViewCell, UICollectionViewDelegate
     func updateUI() {
         self.gradesCollectionView.reloadData()
     }
+}
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+extension QuaterMarkListCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         self.quaterMarks?.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SmallGradeCell.identifier, for: indexPath) as? SmallGradeCell else {
-            return UICollectionViewCell()
-        }
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: SmallGradeCell.identifier,
+            for: indexPath) as? SmallGradeCell else { return UICollectionViewCell() }
         let grade = self.quaterMarks?[indexPath.row].finalMark
         cell.gradeName = grade?.rawValue
         cell.selectedBackgroundColor = grade?.color
         return cell
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: (self.gradesCollectionView.frame.width-4*4)/5, height: self.gradesCollectionView.frame.height)
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt _: IndexPath) -> CGSize {
+        CGSize(width: (self.gradesCollectionView.frame.width - 4 * 4) / 5, height: self.gradesCollectionView.frame.height)
     }
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let studentMark = self.quaterMarks?[indexPath.row], let name else { return }
         let avarageMarkNumber = avarageMark?.last.map { String($0) }
-        self.delegate?.presentVC(quater: studentMark.quarter, studentId: studentMark.student, studentName: name, avarageMark: avarageMarkNumber)
+        self.delegate?.presentVC(quater: studentMark.quarter,
+                                 studentId: studentMark.student,
+                                 studentName: name,
+                                 avarageMark: avarageMarkNumber)
     }
-
 }
-
-

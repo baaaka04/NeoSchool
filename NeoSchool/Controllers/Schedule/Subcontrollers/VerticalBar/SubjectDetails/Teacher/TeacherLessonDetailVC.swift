@@ -1,13 +1,12 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class TeacherLessonDetailVC: DetailTitledViewController {
-
     private let vm: TeacherDetailsViewModel
 
     private let scrollview = UIScrollView()
-    private let timeAndRoomLabel = GrayUILabel(font: AppFont.font(type: .Regular, size: 16))
-    private let classInfoLabel = GrayUILabel(font: AppFont.font(type: .Medium, size: 16))
+    private let timeAndRoomLabel = GrayUILabel(font: AppFont.font(type: .regular, size: 16))
+    private let classInfoLabel = GrayUILabel(font: AppFont.font(type: .medium, size: 16))
     private let lineView = UIView()
     private let homeworkPanel = HomeworkPanelView(presentaionMode: .teacherFull)
     private lazy var submissionsListVC = SubmissionsListVC(vm: self.vm)
@@ -21,13 +20,13 @@ class TeacherLessonDetailVC: DetailTitledViewController {
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.neobisGreen.cgColor
         button.titleLabel?.snp.makeConstraints { $0.width.equalToSuperview().offset(-30) }
-        button.titleLabel?.font = AppFont.font(type: .Medium, size: 18)
+        button.titleLabel?.font = AppFont.font(type: .medium, size: 18)
         button.addTarget(self, action: #selector(onTapStudentListButton), for: .touchUpInside)
         return button
     }()
-    
+
     private let recievedHomeworksLabel: GrayUILabel = {
-        let label = GrayUILabel(font: AppFont.font(type: .Regular, size: 20))
+        let label = GrayUILabel(font: AppFont.font(type: .regular, size: 20))
         label.text = "Присланные задания:"
         return label
     }()
@@ -36,11 +35,12 @@ class TeacherLessonDetailVC: DetailTitledViewController {
         self.vm = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -61,7 +61,8 @@ class TeacherLessonDetailVC: DetailTitledViewController {
         scrollview.addSubview(submissionsListVC.view)
         submissionsListVC.didMove(toParent: self)
 
-        [timeAndRoomLabel, classInfoLabel, openStudentsListButton, homeworkPanel, recievedHomeworksLabel, lineView].forEach { scrollview.addSubview($0) }
+        [timeAndRoomLabel, classInfoLabel, openStudentsListButton, homeworkPanel, recievedHomeworksLabel, lineView]
+            .forEach { scrollview.addSubview($0) }
 
         lineView.backgroundColor = .neobisGrayStroke
         scrollview.snp.makeConstraints { make in
@@ -106,9 +107,8 @@ class TeacherLessonDetailVC: DetailTitledViewController {
         homeworkPanel.addGestureRecognizer(tapGesture)
         homeworkPanel.attachedFilesLabel.addTarget(self, action: #selector(onTapAttachedFiles), for: .touchUpInside)
     }
-    
-    func updateUI() {
 
+    func updateUI() {
         guard let lessonDetails = vm.lessonDetails else { return }
         titleLabel.text = lessonDetails.subject.name
 
@@ -134,7 +134,7 @@ class TeacherLessonDetailVC: DetailTitledViewController {
         if let submissions = vm.lessonDetails?.submissions, !submissions.isEmpty {
             submissionsListVC.items = submissions.map { TeacherClassItem(submission: $0) }
             submissionsListVC.gradeName = vm.lessonDetails?.grade.name
-            submissionsListVC.view.snp.updateConstraints { $0.height.equalTo(20+submissions.count*94) }
+            submissionsListVC.view.snp.updateConstraints { $0.height.equalTo(20 + submissions.count * 94) }
         }
         submissionsListVC.updateUI()
     }
@@ -178,5 +178,4 @@ class TeacherLessonDetailVC: DetailTitledViewController {
         studentListVC.subtitleText = "Учеников: \(lessonDetails.studentsCount)"
         self.navigationController?.pushViewController(studentListVC, animated: true)
     }
-
 }

@@ -1,15 +1,15 @@
 import UIKit
 
 class MainTabBarViewController: UITabBarController {
-    
     private let userRole: UserRole
-    
+
     init(userRole: UserRole) {
         self.userRole = userRole
         super.init(nibName: nil, bundle: nil)
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -18,11 +18,46 @@ class MainTabBarViewController: UITabBarController {
 
         let (navControllerName, navControllerIcon, navControllerIconSelected) = getNavControllerDetails(for: userRole)
 
-        let vc1 = self.createVC(with: "Расписание", image: UIImage(named: "ScheduleIcon"), selectedImage: UIImage(named: "ScheduleIconSelected"), vc: ScheduleViewController(navbarTitle: "Расписание", navbarColor: .neobisPurple, userRole: self.userRole))
-        let vc2teacher = self.createVC(with: navControllerName, image: navControllerIcon, selectedImage: navControllerIconSelected, vc: TeacherPerformanceViewController(navbarTitle: navControllerName, navbarColor: .neobisBlue, performanceAPI: PerformanceAPI()))
-        let vc2student = self.createVC(with: navControllerName, image: navControllerIcon, selectedImage: navControllerIconSelected, vc: StudentPerformanceViewController(navbarTitle: navControllerName, navbarColor: .neobisBlue, performanceAPI: PerformanceAPI()))
-        let vc3 = self.createVC(with: "Профиль", image: UIImage(named: "ProfileIcon"), selectedImage: UIImage(named: "ProfileIconSelected"), vc: ProfileViewController(navbarTitle: "Профиль", navbarColor: .neobisGreen))
-        
+        let vc1 = self.createVC(
+            with: "Расписание",
+            image: UIImage(named: Asset.scheduleIcon),
+            selectedImage: UIImage(named: Asset.scheduleIconSelected),
+            vc: ScheduleViewController(
+                navbarTitle: "Расписание",
+                navbarColor: .neobisPurple,
+                userRole: self.userRole
+            )
+        )
+        let vc2teacher = self.createVC(
+            with: navControllerName,
+            image: navControllerIcon,
+            selectedImage: navControllerIconSelected,
+            vc: TeacherPerformanceViewController(
+                navbarTitle: navControllerName,
+                navbarColor: .neobisBlue,
+                performanceAPI: PerformanceAPI()
+            )
+        )
+        let vc2student = self.createVC(
+            with: navControllerName,
+            image: navControllerIcon,
+            selectedImage: navControllerIconSelected,
+            vc: StudentPerformanceViewController(
+                navbarTitle: navControllerName,
+                navbarColor: .neobisBlue,
+                performanceAPI: PerformanceAPI()
+            )
+        )
+        let vc3 = self.createVC(
+            with: "Профиль",
+            image: UIImage(named: Asset.profileIcon),
+            selectedImage: UIImage(named: Asset.profileIconSelected),
+            vc: ProfileViewController(
+                navbarTitle: "Профиль",
+                navbarColor: .neobisGreen
+            )
+        )
+
         self.tabBar.tintColor = UIColor.neobisDarkPurple
 
         if #available(iOS 13.0, *) {
@@ -37,8 +72,13 @@ class MainTabBarViewController: UITabBarController {
             tabBar.barTintColor = .white
         }
 
-        //Adding one more button for the ProfileViewController
-        let optionsButton = UIBarButtonItem(image: UIImage(named: "verticaldots"), style: .plain, target: self, action: #selector(onTapProfileOptions))
+        // Adding one more button for the ProfileViewController
+        let optionsButton = UIBarButtonItem(
+            image: UIImage(named: Asset.verticaldots),
+            style: .plain,
+            target: self,
+            action: #selector(onTapProfileOptions)
+        )
         optionsButton.tintColor = .white
         vc3.topViewController?.navigationItem.rightBarButtonItems?.insert(optionsButton, at: 0)
 
@@ -53,28 +93,24 @@ class MainTabBarViewController: UITabBarController {
     private func getNavControllerDetails(for role: UserRole) -> (String, UIImage?, UIImage?) {
             switch role {
             case .teacher:
-                return ("Журнал", UIImage(named: "BookIcon"), UIImage(named: "BookIconSelected"))
+                return ("Журнал", UIImage(named: Asset.bookIcon), UIImage(named: Asset.bookIconSelected))
             case .student:
-                return ("Успеваемость", UIImage(named: "LineChartIcon"), UIImage(named: "LineChartIconSelected"))
+                return ("Успеваемость", UIImage(named: Asset.lineChartIcon), UIImage(named: Asset.lineChartIconSelected))
             }
         }
 
     private func createVC(with title: String, image: UIImage?, selectedImage: UIImage?, vc: UIViewController) -> NeobisUINavigationController {
-        
         vc.tabBarItem.title = title
         vc.tabBarItem.image = image
         vc.tabBarItem.selectedImage = selectedImage
-        
+
         return NeobisUINavigationController(rootViewController: vc)
     }
-    
+
     @objc private func onTapProfileOptions () {
         let submitVC = ProfileModalViewController()
         let navVC = UINavigationController(rootViewController: submitVC)
         navVC.modalPresentationStyle = .overFullScreen
         self.present(navVC, animated: false)
     }
-
-
 }
-
