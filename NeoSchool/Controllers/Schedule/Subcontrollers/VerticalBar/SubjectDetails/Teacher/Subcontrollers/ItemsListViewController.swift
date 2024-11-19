@@ -1,19 +1,18 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class ItemsListViewController: DetailTitledViewController {
-
-    //MARK: Pagination
-    var currentPage: Int = 1
-    var totalPages: Int = 1
-    var isLoading: Bool = false
+    // MARK: Pagination
+    var currentPage = 1
+    var totalPages = 1
+    var isLoading = false
 
     var subtitleText: String? {
         didSet { subtitleLabel.text = subtitleText }
     }
-    var itemsList : [TeacherClassItem] = []
+    var itemsList: [TeacherClassItem] = []
 
-    private let subtitleLabel = GrayUILabel(font: AppFont.font(type: .Medium, size: 16))
+    private let subtitleLabel = GrayUILabel(font: AppFont.font(type: .medium, size: 16))
 
     let emptyListView = NotepadView()
     let teacherListCollectionView = TeacherListCollectionView()
@@ -29,7 +28,6 @@ class ItemsListViewController: DetailTitledViewController {
     }
 
     private func setupUI() {
-
         subtitleLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(8)
             make.left.right.equalToSuperview().inset(16)
@@ -46,8 +44,7 @@ class ItemsListViewController: DetailTitledViewController {
 
     func updateUI() {
         teacherListCollectionView.reloadData()
-        emptyListView.isHidden = self.itemsList.count != 0
-        teacherListCollectionView.isHidden = self.itemsList.count == 0
+        emptyListView.isHidden = !self.itemsList.isEmpty
+        teacherListCollectionView.isHidden = self.itemsList.isEmpty
     }
-
 }

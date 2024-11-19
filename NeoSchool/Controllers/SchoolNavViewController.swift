@@ -1,9 +1,7 @@
-import UIKit
 import SnapKit
-
+import UIKit
 
 class SchoolNavViewController: UIViewController {
-    
     let navbarTitle: String
     let navbarColor: UIColor?
 
@@ -11,8 +9,8 @@ class SchoolNavViewController: UIViewController {
 
     lazy var leftTabTitle: UILabel = {
         let label = UILabel()
-        label.text = self.navbarTitle
-        label.font = AppFont.font(type: .SemiBold, size: 32)
+        label.text = navbarTitle
+        label.font = AppFont.font(type: .semiBold, size: 32)
         label.textColor = .white
         return label
     }()
@@ -27,15 +25,15 @@ class SchoolNavViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .white
-        
+
         configureNavBar()
-        
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) is not supported")
     }
-    
+
     private func configureNavBar () {
         ellipseView.backgroundColor = .clear
 
@@ -53,5 +51,4 @@ class SchoolNavViewController: UIViewController {
             make.left.equalToSuperview().inset(16)
         }
     }
-
 }

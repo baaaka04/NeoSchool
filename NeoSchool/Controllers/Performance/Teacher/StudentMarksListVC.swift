@@ -1,11 +1,10 @@
-import UIKit
 import SnapKit
+import UIKit
 
-class StudentMarksListVC: UIViewController, CommentRepresentableProtocol, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
+class StudentMarksListVC: UIViewController, CommentRepresentableProtocol {
     private let performanceAPI: PerformanceAPIProtocol
 
-    var userComment: String? = nil
+    var userComment: String?
     var grade: Grade?
     var selectedSubjectId: Int?
     var selectedDate: Date?
@@ -27,7 +26,9 @@ class StudentMarksListVC: UIViewController, CommentRepresentableProtocol, UIColl
         collectionView.register(StudentNameAndMarkCell.self, forCellWithReuseIdentifier: StudentNameAndMarkCell.identifier)
         return collectionView
     }()
-    private let vacationView = NotepadView(title: "Идут каникулы", subtitle: "Вы выбрали дату, выпадающую на каникулы, поэтому поставить ученикам оценки невозможно. Выберите другую дату")
+    private let vacationView = NotepadView(
+        title: "Идут каникулы",
+        subtitle: "Вы выбрали дату, выпадающую на каникулы, поэтому поставить ученикам оценки невозможно. Выберите другую дату")
 
     init(performanceAPI: PerformanceAPIProtocol) {
         self.performanceAPI = performanceAPI
@@ -35,7 +36,8 @@ class StudentMarksListVC: UIViewController, CommentRepresentableProtocol, UIColl
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -61,38 +63,11 @@ class StudentMarksListVC: UIViewController, CommentRepresentableProtocol, UIColl
 
         studentsCollectionView.snp.remakeConstraints { make in
             make.edges.equalToSuperview()
-            make.height.greaterThanOrEqualTo(self.studentsMarks.count*(53+6+5))
+            make.height.greaterThanOrEqualTo(self.studentsMarks.count * (53 + 6 + 5))
         }
 
         studentsCollectionView.isHidden = self.studentsMarks.isEmpty
         vacationView.isHidden = !self.studentsMarks.isEmpty
-    }
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.studentsMarks.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StudentNameAndMarkCell.identifier, for: indexPath) as? StudentNameAndMarkCell else { return UICollectionViewCell() }
-        let student = self.studentsMarks[indexPath.row]
-        cell.name = student.firstName
-        cell.lastName = student.lastName
-        if let mark = student.mark {
-            cell.selectedGrade = Grade(rawValue: mark)
-        } else {
-            cell.selectedGrade = nil
-        }
-        cell.updateUI()
-        return cell
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.studentsCollectionView.frame.width, height: 53)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.selectedStudentId = self.studentsMarks[indexPath.row].id
-        openCommentView()
     }
 
     func openCommentView() {
@@ -105,18 +80,50 @@ class StudentMarksListVC: UIViewController, CommentRepresentableProtocol, UIColl
         self.present(commentVC, animated: false)
     }
 
-    func submit(_ submissionId: Int?) async throws {
+    func submit(_: Int?) async throws {
         Task {
-            guard let grade, let selectedStudentId, let selectedSubjectId, let selectedDate else {
-                throw MyError.noDataReceived
-            }
-            try await performanceAPI.setGradeForLesson (
-                grade: grade,
-                studentId: selectedStudentId,
-                subjectId: selectedSubjectId,
-                date: selectedDate
-            )
+            do {
+                guard let grade, let selectedStudentId, let selectedSubjectId, let selectedDate else {
+                    throw MyError.noDataReceived
+                }
+                try await performanceAPI.setGradeForLesson(
+                    grade: grade,
+                    studentId: selectedStudentId,
+                    subjectId: selectedSubjectId,
+                    date: selectedDate
+                )
+            } catch { print(error) }
         }
     }
+}
 
+extension StudentMarksListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
+        self.studentsMarks.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: StudentNameAndMarkCell.identifier,
+            for: indexPath) as? StudentNameAndMarkCell else { return UICollectionViewCell() }
+        let student = self.studentsMarks[indexPath.row]
+        cell.name = student.firstName
+        cell.lastName = student.lastName
+        if let mark = student.mark {
+            cell.selectedGrade = Grade(rawValue: mark)
+        } else {
+            cell.selectedGrade = nil
+        }
+        cell.updateUI()
+        return cell
+    }
+
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt _: IndexPath) -> CGSize {
+        CGSize(width: self.studentsCollectionView.frame.width, height: 53)
+    }
+
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.selectedStudentId = self.studentsMarks[indexPath.row].id
+        openCommentView()
+    }
 }

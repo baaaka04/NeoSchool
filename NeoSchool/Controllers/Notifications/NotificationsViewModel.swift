@@ -1,10 +1,9 @@
 import Foundation
 
 class NotificationsViewModel {
-    
     var networkAPI: NotificationsNetworkAPIProtocol
 
-    var notifications : [NeobisNotificationToPresent] = []
+    var notifications: [NeobisNotificationToPresent] = []
 
     init(networkAPI: NotificationsNetworkAPIProtocol = NetworkAPI()) {
         self.networkAPI = networkAPI
@@ -22,20 +21,20 @@ class NotificationsViewModel {
     }
 
     internal func convertNotifications(notifications: [NeobisNotification]) -> [NeobisNotificationToPresent] {
-        return notifications.compactMap { notif -> NeobisNotificationToPresent? in
+        notifications.compactMap { notif -> NeobisNotificationToPresent? in
             if case let .submissionRate(_, _, _, teacherComment, lessonId) = notif.extraData {
                 return NeobisNotificationToPresent(notification: notif, teacherComment: teacherComment, lessonId: lessonId)
             }
-            else if case let .classworkRate(_, _, subjectId, quater) = notif.extraData {
+            if case let .classworkRate(_, _, subjectId, quater) = notif.extraData {
                 return NeobisNotificationToPresent(notification: notif, subjectId: subjectId, quater: quater)
             }
-            else if case let .homeworkRevise(_, submissionId, lessonId) = notif.extraData {
+            if case let .homeworkRevise(_, submissionId, lessonId) = notif.extraData {
                 return NeobisNotificationToPresent(notification: notif, lessonId: lessonId, submissionId: submissionId)
             }
-            else if case let .quaterRate(_, subject, subjectId, quater) = notif.extraData {
+            if case let .quaterRate(_, subject, subjectId, quater) = notif.extraData {
                 return NeobisNotificationToPresent(notification: notif, subjectId: subjectId, quater: quater, subject: subject)
             }
-            else if case let .homeworkSubmit(studentName, submissionId) = notif.extraData {
+            if case let .homeworkSubmit(studentName, submissionId) = notif.extraData {
                 return NeobisNotificationToPresent(notification: notif, submissionId: submissionId, studentName: studentName)
             }
             return nil
@@ -45,5 +44,4 @@ class NotificationsViewModel {
     func checkAsRead(notificationId: Int) async throws {
         try await networkAPI.checkAsRead(notificationId: notificationId)
     }
-
 }

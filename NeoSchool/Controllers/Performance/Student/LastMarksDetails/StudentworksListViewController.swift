@@ -1,8 +1,7 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class ClassworkListViewController: StudentworksListViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -11,18 +10,22 @@ class ClassworkListViewController: StudentworksListViewController {
 
     private func getLastMarks() {
         Task {
-            let classworkMarks = try await performanceAPI.getSubjectClassworkLastMarks(quater: quater.rawValue, subjectId: subjectId)
-            self.items = classworkMarks.map { TeacherClassItem(classwork: $0) }
+            do {
+                let classworkMarks = try await performanceAPI.getSubjectClassworkLastMarks(
+                    quater: quater.rawValue,
+                    subjectId: subjectId
+                )
+                self.items = classworkMarks.map { TeacherClassItem(classwork: $0) }
 
-            DispatchQueue.main.async {
-                self.updateUI()
-            }
+                DispatchQueue.main.async {
+                    self.updateUI()
+                }
+            } catch { print(error) }
         }
     }
 }
 
 class HomeworkListViewController: StudentworksListViewController {
-
     let lessonAPI = DayScheduleAPI()
 
     override func viewDidLoad() {
@@ -33,30 +36,36 @@ class HomeworkListViewController: StudentworksListViewController {
 
     private func getLastMarks() {
         Task {
-            let homeworkMarks = try await performanceAPI.getSubjectHomeworkLastMarks(quater: quater.rawValue, subjectId: subjectId)
-            self.items = homeworkMarks.map { TeacherClassItem(homework: $0) }
+            do {
+                let homeworkMarks = try await performanceAPI.getSubjectHomeworkLastMarks(
+                    quater: quater.rawValue,
+                    subjectId: subjectId
+                )
+                self.items = homeworkMarks.map { TeacherClassItem(homework: $0) }
 
-            DispatchQueue.main.async {
-                self.updateUI()
-            }
+                DispatchQueue.main.async {
+                    self.updateUI()
+                }
+            } catch { print(error) }
         }
     }
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard self.items.isEmpty == false else { return }
         let lessonId = self.items[indexPath.row].id
         let vm = SubjectDetailsViewModel(lessonId: lessonId, lessonAPI: lessonAPI)
         let submissionDetailsVC = SubmittedSubjectDetailsViewController(viewModel: vm)
         self.navigationController?.pushViewController(submissionDetailsVC, animated: true)
         Task {
-            try await vm.getLessonDetailData()
-            submissionDetailsVC.updateUI()
+            do {
+                try await vm.getLessonDetailData()
+                submissionDetailsVC.updateUI()
+            } catch { print(error) }
         }
     }
 }
 
-class StudentworksListViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-
+class StudentworksListViewController: UIViewController {
     let performanceAPI: PerformanceAPIProtocol
     private let teacherListCollectionView = TeacherListCollectionView()
     var items: [TeacherClassItem] = []
@@ -64,7 +73,10 @@ class StudentworksListViewController: UIViewController, UICollectionViewDataSour
     let subjectId: Int
     private let hasDetails: Bool
 
-    private let emptyView = NotepadView(title: "Оценок пока нет", subtitle: "Когда учитель оценит вашу работу, здесь будут оценки")
+    private let emptyView = NotepadView(
+        title: "Оценок пока нет",
+        subtitle: "Когда учитель оценит вашу работу, здесь будут оценки"
+    )
 
     init(performanceAPI: PerformanceAPIProtocol, quater: Quater, subjectId: Int, hasDetails: Bool) {
         self.performanceAPI = performanceAPI
@@ -74,7 +86,8 @@ class StudentworksListViewController: UIViewController, UICollectionViewDataSour
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -99,14 +112,18 @@ class StudentworksListViewController: UIViewController, UICollectionViewDataSour
         self.teacherListCollectionView.isHidden = self.items.isEmpty
         self.teacherListCollectionView.reloadData()
     }
+}
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+extension StudentworksListViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         items.count
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let homework = items[indexPath.item]
-        guard let cell = self.teacherListCollectionView.dequeueReusableCell(withReuseIdentifier: TeacherItemListCollectionViewCell.identifier, for: indexPath) as? TeacherItemListCollectionViewCell
+        guard let cell = self.teacherListCollectionView.dequeueReusableCell(
+            withReuseIdentifier: TeacherItemListCollectionViewCell.identifier,
+            for: indexPath) as? TeacherItemListCollectionViewCell
         else { return TeacherItemListCollectionViewCell(frame: .zero) }
         cell.title = homework.title
         cell.subtitle = homework.subtitle
@@ -115,8 +132,7 @@ class StudentworksListViewController: UIViewController, UICollectionViewDataSour
         return cell
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: 100) //The size defines automatically, but we need an initial size bigger than all cell's elements to avoid yellow SnapKit errors at the console.
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt _: IndexPath) -> CGSize {
+        CGSize(width: 100, height: 100) // The size defines automatically, but we need an initial size bigger than all cell's elements to avoid yellow SnapKit errors at the console.
     }
-
 }

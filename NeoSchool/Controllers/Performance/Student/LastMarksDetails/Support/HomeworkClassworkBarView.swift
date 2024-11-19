@@ -1,8 +1,7 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class HomeworkClassworkBarView: UIView {
-
     weak var delegate: ItemsBarDelegate?
 
     private let label1: SelectableUILabel = {
@@ -82,5 +81,4 @@ extension HomeworkClassworkBarView: ItemsBarDelegate {
             self.selectLabel(selectedLabel)
         }
     }
-
 }

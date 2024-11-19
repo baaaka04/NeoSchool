@@ -25,7 +25,7 @@ struct UserProfile: Codable {
     let fullName: String
     let isTeacher: Bool
     let schoolName: String
-    
+
     let classTeacherGrade: SchoolGrade?
     let teacherGrades: [SchoolGrade]?
     let studentGrade: SchoolGrade?
@@ -46,19 +46,16 @@ struct StudentClassTeacher: Codable {
 }
 
 struct ProfileInfo {
-    
     init(userProfile: UserProfile) {
         self.userFullName = userProfile.fullName
         self.userEmail = userProfile.email
         self.userSchoolName = userProfile.schoolName
         self.userFirstName = userProfile.firstName
-        
+
         if userProfile.isTeacher {
             self.role = .teacher
             self.userMainClass = userProfile.classTeacherGrade?.name ?? ""
-            let teacherGrades = userProfile.teacherGrades?.reduce("", { result, grade in
-                result.isEmpty ? grade.name : result + ", " + grade.name
-            })
+            let teacherGrades = userProfile.teacherGrades?.compactMap { $0.name }.joined(separator: ", ")
             self.userOtherInfo = teacherGrades ?? ""
         } else {
             self.role = .student
@@ -66,7 +63,7 @@ struct ProfileInfo {
             self.userOtherInfo = userProfile.studentClassTeacher?.fullName ?? ""
         }
     }
-    
+
     let role: UserRole
     let userFirstName: String
     let userFullName: String

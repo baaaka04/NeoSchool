@@ -1,9 +1,8 @@
-import UIKit
-import SnapKit
 import PhotosUI
+import SnapKit
+import UIKit
 
-class SetHomeworkViewController: DetailTitledViewController, SubjectDetailsViewModelActionable, PHPickerViewControllerDelegate, UIDocumentPickerDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate, Notifiable {
-
+class SetHomeworkViewController: DetailTitledViewController, SubjectDetailsViewModelActionable, PHPickerViewControllerDelegate, UIDocumentPickerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, Notifiable {
     private let vm: TeacherDetailsViewModel
     var popVC: (() -> Void)?
 
@@ -11,14 +10,14 @@ class SetHomeworkViewController: DetailTitledViewController, SubjectDetailsViewM
         didSet { subtitleLabel.text = subtitleText }
     }
 
-    private let subtitleLabel = GrayUILabel(font: AppFont.font(type: .Medium, size: 16))
+    private let subtitleLabel = GrayUILabel(font: AppFont.font(type: .medium, size: 16))
     private let topicTextField = NeobisTextField()
 
     private let homeworkTaskTextView: PlaceholderTextView = {
         let textView = PlaceholderTextView()
         textView.placeholder = "Задание"
-        textView.placeholderInsets = UIEdgeInsets(top: 12, left: 16, bottom: Constants.textViewHeight-34, right: 16)
-        textView.counterInsets = UIEdgeInsets(top: Constants.textViewHeight-34, left: 16, bottom: 12, right: 16)
+        textView.placeholderInsets = UIEdgeInsets(top: 12, left: 16, bottom: Constants.textViewHeight - 34, right: 16)
+        textView.counterInsets = UIEdgeInsets(top: Constants.textViewHeight - 34, left: 16, bottom: 12, right: 16)
         textView.limit = 100
         return textView
     }()
@@ -32,15 +31,18 @@ class SetHomeworkViewController: DetailTitledViewController, SubjectDetailsViewM
         return textField
     }()
 
-    private lazy var calendarImageView : UIImageView = {
-        let image = UIImage(named: "CalendarIcon")?.withTintColor(.neobisLightGray, renderingMode: .alwaysOriginal)
+    private lazy var calendarImageView: UIImageView = {
+        let image = UIImage(named: Asset.calendarIcon)?.withTintColor(.neobisLightGray, renderingMode: .alwaysOriginal)
         let imageView = UIImageView(image: image)
         imageView.isUserInteractionEnabled = true
         return imageView
     }()
 
     private lazy var calendarImageViewContainer: UIView = {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: calendarImageView.frame.width+12, height: calendarImageView.frame.height))
+        let view = UIView(frame: CGRect(x: 0,
+                                        y: 0,
+                                        width: calendarImageView.frame.width + 12,
+                                        height: calendarImageView.frame.height))
         view.addSubview(calendarImageView)
         return view
     }()
@@ -69,11 +71,12 @@ class SetHomeworkViewController: DetailTitledViewController, SubjectDetailsViewM
         super.init(nibName: nil, bundle: nil)
         vm.view = self
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -148,7 +151,7 @@ class SetHomeworkViewController: DetailTitledViewController, SubjectDetailsViewM
             make.height.equalTo(52)
         }
 
-        //MARK: Date Picker
+        // MARK: Date Picker
         calendarView.delegate = dateTextField
         calendarView.toggleCalendarView = toggleCalendar
         view.addSubview(calendarView)
@@ -160,7 +163,7 @@ class SetHomeworkViewController: DetailTitledViewController, SubjectDetailsViewM
     }
 
     func updateCollectionView() {
-        if vm.attachedFiles.count > 0 {
+        if !vm.attachedFiles.isEmpty {
             self.saveButton.isEnabled = true
             updateFilesColletionHeight(numberOfElements: vm.attachedFiles.count)
         } else {
@@ -172,7 +175,7 @@ class SetHomeworkViewController: DetailTitledViewController, SubjectDetailsViewM
     private func updateFilesColletionHeight(numberOfElements count: Int) {
         attachedFilesVC.view.snp.updateConstraints { make in
 // 64 - cell height; 8 - cells gap; 200 - additional height to activate scroll after the 2d file has been added
-            let newHeight = 64+(8+64)*(count-1)+200
+            let newHeight = 64 + (8 + 64) * (count - 1) + 200
             make.height.equalTo(newHeight)
         }
     }
@@ -185,7 +188,7 @@ class SetHomeworkViewController: DetailTitledViewController, SubjectDetailsViewM
         }
         calendarView.datePicker.date = Date()
         calendarView.isHidden.toggle()
-        dateTextField.resignFirstResponder()
+        _ = dateTextField.resignFirstResponder()
     }
 
     @objc private func setHomework() {
@@ -205,13 +208,13 @@ class SetHomeworkViewController: DetailTitledViewController, SubjectDetailsViewM
                             }
                             self?.popVC?()
                         }
-                    }
+                }
             } catch { print(error) }
         }
     }
 
-    //MARK: - File picker functions
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    // MARK: - File picker functions
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let image = info[.originalImage] as? UIImage {
             vm.add(image: image)
         }
@@ -221,14 +224,14 @@ class SetHomeworkViewController: DetailTitledViewController, SubjectDetailsViewM
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
-    
+
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true)
 
         for result in results {
             let itemProvider = result.itemProvider
             if itemProvider.canLoadObject(ofClass: UIImage.self) {
-                itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
+                itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, _ in
                     guard let image = image as? UIImage else { return }
                     DispatchQueue.main.async {
                         self?.vm.add(image: image)
@@ -238,15 +241,12 @@ class SetHomeworkViewController: DetailTitledViewController, SubjectDetailsViewM
         }
     }
 
-    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-
+    func documentPicker(_: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         for url in urls {
             if let fileData = try? Data(contentsOf: url) {
-
                 if let image = UIImage(data: fileData) {
                     vm.add(image: image)
                 } else { print("Failed to create UIImage from file data: \(url)") }
-
             } else { print("Failed to load file data: \(url)") }
         }
     }

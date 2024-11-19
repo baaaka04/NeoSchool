@@ -1,32 +1,32 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class TeacherItemListCollectionViewCell: UICollectionViewCell {
     static let identifier = "TeacherItemListCollectionViewCell"
-    
-    var id: Int? = nil
-    
-    var title : String? {
+
+    var id: Int?
+
+    var title: String? {
         didSet { titleLabel.text = title }
     }
-    
+
     private let titleLabel: GrayUILabel = {
         let label = GrayUILabel()
-        label.font = AppFont.font(type: .Medium, size: 18)
+        label.font = AppFont.font(type: .medium, size: 18)
         label.numberOfLines = 1
         label.lineBreakMode = .byWordWrapping
         return label
     }()
-    
-    var subtitle : String? {
+
+    var subtitle: String? {
         didSet { subtitleLabel.text = subtitle }
     }
 
-    var attributedSubtitle : NSAttributedString? {
+    var attributedSubtitle: NSAttributedString? {
         didSet { subtitleLabel.attributedText = attributedSubtitle }
     }
 
-    private let subtitleLabel = GrayUILabel(font: AppFont.font(type: .Regular, size: 16))
+    private let subtitleLabel = GrayUILabel(font: AppFont.font(type: .regular, size: 16))
 
     var datetimeText: String? {
         didSet { self.datetimeLabel.text = datetimeText }
@@ -34,23 +34,24 @@ class TeacherItemListCollectionViewCell: UICollectionViewCell {
 
     private let datetimeLabel: UILabel = {
         let label = UILabel()
-        label.font = AppFont.font(type: .Regular, size: 16)
+        label.font = AppFont.font(type: .regular, size: 16)
         label.textColor = .neobisLightGray
         return label
     }()
 
-    private let arrowRightView = UIImageView(image: UIImage(named: "regularchevron-right"))
-        
+    private let arrowRightView = UIImageView(image: UIImage(named: Asset.regularchevronRight))
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         setupUI()
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupUI() {
         let containerView = ContainerView()
 
@@ -85,13 +86,12 @@ class TeacherItemListCollectionViewCell: UICollectionViewCell {
             make.right.equalTo(arrowRightView.snp.left).inset(16)
             make.bottom.equalToSuperview().inset(12)
         }
-
     }
-    
+
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         setNeedsLayout()
         layoutIfNeeded()
-        
+
         let collectionViewWidth = UIScreen.main.bounds.width
         let targetWidth = collectionViewWidth
         let targetSize = CGSize(width: targetWidth, height: UIView.layoutFittingCompressedSize.height)
@@ -104,13 +104,16 @@ class TeacherItemListCollectionViewCell: UICollectionViewCell {
         layoutAttributes.frame = newFrame
         return layoutAttributes
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         // Update the shadow path when the cell's bounds change
-        contentView.layer.shadowPath = UIBezierPath(roundedRect: contentView.bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
+        contentView.layer.shadowPath = UIBezierPath(
+            roundedRect: contentView.bounds,
+            cornerRadius: contentView.layer.cornerRadius
+        ).cgPath
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()

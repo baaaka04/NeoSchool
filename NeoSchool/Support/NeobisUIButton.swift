@@ -1,15 +1,14 @@
-import UIKit
 import PhotosUI
+import UIKit
 
 class NeobisUIButton: UIButton {
-
     weak var delegate: (PHPickerViewControllerDelegate & UIDocumentPickerDelegate & UIImagePickerControllerDelegate & UINavigationControllerDelegate)?
     weak var vc: UIViewController?
 
     enum ButtonType {
         case white, purple, red, addFiles
     }
-    
+
     var type: ButtonType {
         didSet {
             self.setupUI()
@@ -33,11 +32,12 @@ class NeobisUIButton: UIButton {
         setupUI()
         setupActions()
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupUI() {
         switch self.type {
         case .white, .addFiles:
@@ -53,12 +53,11 @@ class NeobisUIButton: UIButton {
             self.setTitleColor(.white, for: .normal)
         }
         self.layer.cornerRadius = 16
-        self.titleLabel?.font = AppFont.font(type: .Regular, size: 20)
+        self.titleLabel?.font = AppFont.font(type: .regular, size: 20)
     }
 
     private func setupActions() {
         switch self.type {
-
         case .addFiles:
             let plusIcon = UIImage(systemName: "plus.circle")?.withTintColor(.neobisDarkPurple, renderingMode: .alwaysOriginal)
             self.setImage(plusIcon, for: .normal)
@@ -94,8 +93,6 @@ class NeobisUIButton: UIButton {
 
         case .white, .purple, .red:
             break
-
         }
     }
-
 }

@@ -1,13 +1,14 @@
-import UIKit
 import SnapKit
+import UIKit
 
-class SubmissionsListVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
+class SubmissionsListVC: UIViewController {
     var items: [TeacherClassItem] = []
     var gradeName: String?
     private var vm: StudentHomeworkProtocol?
 
-    private let noHomeworkView = NotepadView(title: "Пока нет заданий", subtitle: "Ученики пока не присылали работы по данному заданию")
+    private let noHomeworkView = NotepadView(
+        title: "Пока нет заданий",
+        subtitle: "Ученики пока не присылали работы по данному заданию")
     private lazy var submissionsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -30,11 +31,11 @@ class SubmissionsListVC: UIViewController, UICollectionViewDelegate, UICollectio
         self.vm = vm
         super.init(nibName: nil, bundle: nil)
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,25 +56,28 @@ class SubmissionsListVC: UIViewController, UICollectionViewDelegate, UICollectio
         submissionsCollectionView.isHidden = self.items.isEmpty
         noHomeworkView.isHidden = !self.items.isEmpty
     }
+}
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+extension SubmissionsListVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         items.count
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let submission = items[indexPath.item]
-        guard let cell = self.submissionsCollectionView.dequeueReusableCell(withReuseIdentifier: TeacherItemListCollectionViewCell.identifier, for: indexPath) as? TeacherItemListCollectionViewCell
+        guard let cell = self.submissionsCollectionView.dequeueReusableCell(
+            withReuseIdentifier: TeacherItemListCollectionViewCell.identifier,
+            for: indexPath) as? TeacherItemListCollectionViewCell
         else { return TeacherItemListCollectionViewCell(frame: .zero) }
         cell.title = submission.title
 
-        var submittedOnTimeString : NSAttributedString {
+        var submittedOnTimeString: NSAttributedString {
             let attributedString = NSMutableAttributedString(string: submission.subtitle)
-            guard let onTime = submission.onTime else { return attributedString }
-            let headColor: UIColor = onTime ? .neobisGreen : .neobisRed
+            let headColor: UIColor = submission.onTime ? .neobisGreen : .neobisRed
             attributedString.addAttribute(
-                .foregroundColor, 
+                .foregroundColor,
                 value: headColor,
-                range: NSRange(location: 0, length: attributedString.length-12) //12 is the length of " · Оценка: -"
+                range: NSRange(location: 0, length: attributedString.length - 12) // 12 is the length of " · Оценка: -"
             )
             return  attributedString
         }
@@ -82,17 +86,15 @@ class SubmissionsListVC: UIViewController, UICollectionViewDelegate, UICollectio
         return cell
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: 100) //The size defines automatically, but we need an initial size bigger than all cell's elements to avoid yellow SnapKit errors at the console.
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt _: IndexPath) -> CGSize {
+        CGSize(width: 100, height: 100) // The size defines automatically, but we need an initial size bigger than all cell's elements to avoid yellow SnapKit errors at the console.
     }
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let submission = self.items[indexPath.item]
         let submissionDetailsVC = StudentHomeworkDetailsViewController(submissionId: submission.id, editable: true, vm: self.vm)
         submissionDetailsVC.titleText = submission.title
         submissionDetailsVC.subtitleText = "\(self.gradeName ?? "NuN") класс"
         self.navigationController?.pushViewController(submissionDetailsVC, animated: true)
     }
-
-
 }

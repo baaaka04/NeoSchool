@@ -1,23 +1,19 @@
 import UIKit
 
 class DateConverter {
-
     static func convertDateStringToHoursAndMinutes(from dateString: String, dateFormat: DateFormat) throws -> String {
         let date = try getDateFromString(dateString: dateString, dateFormat: dateFormat)
-        let timeString = getTimeFromDate(date: date)
-        return timeString
+        return getTimeFromDate(date: date)
     }
 
     static func convertDateStringToDay(from dateString: String, dateFormat: DateFormat) throws -> String {
         let date = try getDateFromString(dateString: dateString, dateFormat: dateFormat)
-        let dayString = getDayFromDate(date: date, format: "dd.MM.yyyy")
-        return dayString
+        return getDayFromDate(date: date, format: "dd.MM.yyyy")
     }
 
     static func convertDateStringToDayAndMonth(from dateString: String, dateFormat: DateFormat) throws -> String {
         let date = try getDateFromString(dateString: dateString, dateFormat: dateFormat)
-        let dayString = getDayFromDate(date: date, format: "dd LLLL yyyy")
-        return dayString
+        return getDayFromDate(date: date, format: "dd LLLL yyyy")
     }
 
     static func getDateFromString(dateString: String, dateFormat: DateFormat) throws -> Date {
@@ -30,15 +26,12 @@ class DateConverter {
     static func getTimeFromDate(date: Date) -> String {
         let timeFormatter = DateFormatter()
         timeFormatter.dateFormat = "HH:mm"
-        let timeString = timeFormatter.string(from: date)
-
-        return timeString
+        return timeFormatter.string(from: date)
     }
 
     static func getDayFromDate(date: Date, format: String) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
-        let dateString = dateFormatter.string(from: date)
-        return dateString
+        return dateFormatter.string(from: date)
     }
 }

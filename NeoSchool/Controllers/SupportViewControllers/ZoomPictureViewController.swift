@@ -1,7 +1,6 @@
 import UIKit
 
 class ZoomPictureViewController: DetailViewController {
-    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: view.bounds)
         scrollView.delegate = self
@@ -21,22 +20,20 @@ class ZoomPictureViewController: DetailViewController {
         imageView.frame = scrollView.bounds
         scrollView.addSubview(imageView)
     }
-    
+
     init(image: UIImage) {
         self.imageView.image = image
         super.init(nibName: nil, bundle: nil)
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-        
 }
 
 extension ZoomPictureViewController: UIScrollViewDelegate {
-    
-    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return imageView
+    func viewForZooming(in _: UIScrollView) -> UIView? {
+        imageView
     }
-    
 }

@@ -1,7 +1,8 @@
 import Foundation
 
 enum MyError: Error {
-    case badNetwork, failDecoding, nothingToCancel, cannotEncodeData, noRefreshToken, noAccessToken, failSavingToken, noUserRole, invalidDateFormat, noDataReceived, failMapping
+    case badNetwork, failDecoding, nothingToCancel, cannotEncodeData, noRefreshToken,
+         noAccessToken, failSavingToken, noUserRole, invalidDateFormat, noDataReceived, failMapping
 
     var description: String {
         switch self {

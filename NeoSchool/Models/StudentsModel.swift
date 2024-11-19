@@ -1,16 +1,15 @@
-import Foundation
 import UIKit
 
 // MARK: Student's lesson in the list of subjects
 struct SchoolLesson: Codable {
-    let id : Int
-    let day : Day
-    let room : Room
-    let subject : SubjectName
-    let homework : Homework?
-    let startTime : String
-    let endTime : String
-    let mark : String?
+    let id: Int
+    let day: Day
+    let room: Room
+    let subject: SubjectName
+    let homework: Homework?
+    let startTime: String
+    let endTime: String
+    let mark: String?
     let homeworkCount: Int?
     let grade: GradeName?
 }
@@ -20,16 +19,16 @@ struct GradeName: Codable {
     let subjects: [SubjectName]?
 }
 struct Day: Codable {
-    let id : Int
-    let name : String
+    let id: Int
+    let name: String
 }
 struct Room: Codable {
-    let id : Int
-    let name : String
+    let id: Int
+    let name: String
 }
 struct SubjectName: Codable, Equatable {
-    let id : Int
-    let name : String
+    let id: Int
+    let name: String
 }
 struct Homework: Codable {
     let id: Int
@@ -43,7 +42,7 @@ enum Grade: String, CaseIterable, Codable {
     case four = "4"
     case five = "5"
     case noGrade = "-"
-    
+
     var color: UIColor {
         switch self {
         case .two: return UIColor.neobisGradeTwo
@@ -78,49 +77,49 @@ enum Grade: String, CaseIterable, Codable {
 
 // MARK: Student's lesson details
 struct StudentLessonDetail: Codable {
-    let id : Int
-    let subject : StudentSubject
-    let homework : StudentHomework?
-    let submission : StudentSubmission?
+    let id: Int
+    let subject: StudentSubject
+    let homework: StudentHomework?
+    let submission: StudentSubmission?
 }
 struct StudentSubject: Codable {
-    let id : Int
-    let name : String
-    let teacher : FullNameUser
+    let id: Int
+    let name: String
+    let teacher: FullNameUser
 }
 struct StudentHomework: Codable {
-    let id : Int
-    let topic : String
-    let text : String
-    let deadline : Date
-    let files : [File]
-    let hasMark : Bool
-    let canCancel : Bool
+    let id: Int
+    let topic: String
+    let text: String
+    let deadline: Date
+    let files: [File]
+    let hasMark: Bool
+    let canCancel: Bool
 }
 struct File: Codable {
-    let id : Int
-    let file : String
+    let id: Int
+    let file: String
 }
 struct FullNameUser: Codable {
-    let id : Int
-    let fullName : String
-    let firstName : String
-    let lastName : String
-    let patronymic : String?
+    let id: Int
+    let fullName: String
+    let firstName: String
+    let lastName: String
+    let patronymic: String?
     let mark: String?
     let avgMark: String?
     let quarterMarks: [QuaterMark]?
 }
 struct StudentSubmission: Codable {
-    let id : Int
-    let student : FullNameUser
+    let id: Int
+    let student: FullNameUser
     let homework: Int
-    let files : [File]
-    let submittedDate : String
-    let studentComment : String?
-    let teacherComment : String?
-    let isRevision : Bool
-    let mark : String?
+    let files: [File]
+    let submittedDate: String
+    let studentComment: String?
+    let teacherComment: String?
+    let isRevision: Bool
+    let mark: String?
 }
 
 struct SchoolDay: Codable {

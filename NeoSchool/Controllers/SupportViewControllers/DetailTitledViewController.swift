@@ -1,12 +1,11 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class DetailTitledViewController: DetailViewController {
-
     var titleText: String? {
         didSet { titleLabel.text = titleText }
     }
-    let titleLabel = GrayUILabel(font: AppFont.font(type: .SemiBold, size: 28))
+    let titleLabel = GrayUILabel(font: AppFont.font(type: .semiBold, size: 28))
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,5 +17,4 @@ class DetailTitledViewController: DetailViewController {
             make.left.right.equalToSuperview().inset(16)
         }
     }
-
 }

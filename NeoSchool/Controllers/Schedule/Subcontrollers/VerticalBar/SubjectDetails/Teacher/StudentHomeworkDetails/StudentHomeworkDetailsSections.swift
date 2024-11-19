@@ -1,14 +1,11 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class FilesCell: AutosizeUICollectionViewCell {
-
     static let identifier = "FilesCell"
-
 }
 
 class CommentsCell: AutosizeUICollectionViewCell {
-
     static let identifier = "CommentsCell"
 
     private lazy var studentComment = CommentView(author: .student, text: nil)
@@ -27,6 +24,11 @@ class CommentsCell: AutosizeUICollectionViewCell {
         addSubviews()
     }
 
+    @available(*, unavailable)
+    required init(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     private func addSubviews() {
         teacherComment.isHidden = true
         contentView.addSubview(studentComment)
@@ -41,10 +43,6 @@ class CommentsCell: AutosizeUICollectionViewCell {
         }
     }
 
-    required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     func updateTeacherComment(text: String?) {
         if let text {
             self.teacherComment.isHidden = false
@@ -55,11 +53,9 @@ class CommentsCell: AutosizeUICollectionViewCell {
             self.bottomConstraint?.activate()
         }
     }
-
 }
 
 class MarkInfoCell: AutosizeUICollectionViewCell {
-
     static let identifier = "MarkInfoViewCell"
 
     private let lineView = UIView()
@@ -91,22 +87,21 @@ class MarkInfoCell: AutosizeUICollectionViewCell {
         }
     }
 
-    required init(coder: NSCoder) {
+    @available(*, unavailable)
+    required init(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
 
 class GeneralInfoCell: AutosizeUICollectionViewCell {
-
     static let identifier = "GeneralInfoViewCell"
 
-    private let subtitleLabel = GrayUILabel(font: AppFont.font(type: .Medium, size: 16))
-    private let firstDesciptionLabel = GrayUILabel(font: AppFont.font(type: .Regular, size: 16))
-    private let secondDesciptionLabel = GrayUILabel(font: AppFont.font(type: .Regular, size: 16))
+    private let subtitleLabel = GrayUILabel(font: AppFont.font(type: .medium, size: 16))
+    private let firstDesciptionLabel = GrayUILabel(font: AppFont.font(type: .regular, size: 16))
+    private let secondDesciptionLabel = GrayUILabel(font: AppFont.font(type: .regular, size: 16))
     private let onTimeLabel: UILabel = {
         let label = UILabel()
-        label.font = AppFont.font(type: .Medium, size: 18)
+        label.font = AppFont.font(type: .medium, size: 18)
         label.textColor = .neobisGreen
         return label
     }()
@@ -157,17 +152,15 @@ class GeneralInfoCell: AutosizeUICollectionViewCell {
             make.top.equalTo(secondDesciptionLabel.snp.bottom).offset(4)
             make.left.right.bottom.equalToSuperview()
         }
-
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
 
 class HomeworkCell: AutosizeUICollectionViewCell {
-
     static let identifier = "HomeworkCell"
 
     private let homeworkInfo = HomeworkPanelView(presentaionMode: .teacherShort)
@@ -182,10 +175,10 @@ class HomeworkCell: AutosizeUICollectionViewCell {
         homeworkInfo.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -194,5 +187,4 @@ class HomeworkCell: AutosizeUICollectionViewCell {
         homeworkInfo.deadlineText = submission.homework.deadline
         homeworkInfo.attachedFilesNumber = submission.homework.filesCount
     }
-
 }

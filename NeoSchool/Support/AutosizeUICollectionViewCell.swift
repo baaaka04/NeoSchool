@@ -22,6 +22,9 @@ class AutosizeUICollectionViewCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         // Update the shadow path when the cell's bounds change
-        contentView.layer.shadowPath = UIBezierPath(roundedRect: contentView.bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
+        contentView.layer.shadowPath = UIBezierPath(
+            roundedRect: contentView.bounds,
+            cornerRadius: contentView.layer.cornerRadius
+        ).cgPath
     }
 }

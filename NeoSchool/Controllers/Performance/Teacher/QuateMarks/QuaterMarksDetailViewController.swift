@@ -1,8 +1,7 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class QuaterMarksDetailViewController: DetailViewController {
-
     private let performanceAPI: PerformanceAPIProtocol
     private let gradesBar: GradesBarVC
     private let quaterMarkListVC: QuaterMarkListViewController
@@ -14,7 +13,8 @@ class QuaterMarksDetailViewController: DetailViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -29,7 +29,7 @@ class QuaterMarksDetailViewController: DetailViewController {
         view.addSubview(gradesBar.view)
         gradesBar.didMove(toParent: self)
         gradesBar.view.snp.makeConstraints { make in
-            make.width.equalTo(view.frame.size.width-32)
+            make.width.equalTo(view.frame.size.width - 32)
             make.height.equalTo(48)
             make.centerX.equalToSuperview()
             make.left.right.equalToSuperview().inset(16)
@@ -45,5 +45,4 @@ class QuaterMarksDetailViewController: DetailViewController {
         }
         gradesBar.delegate = quaterMarkListVC
     }
-
 }

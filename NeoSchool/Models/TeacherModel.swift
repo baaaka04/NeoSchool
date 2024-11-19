@@ -1,4 +1,3 @@
-import Foundation
 import UIKit
 
 struct TeacherLessonDetail: Codable {
@@ -13,12 +12,12 @@ struct TeacherLessonDetail: Codable {
     let studentsCount: Int
 }
 struct TeacherSubmission: Codable {
-    let id : Int
-    let student : FullNameUser?
+    let id: Int
+    let student: FullNameUser?
     let homework: HomeworkType
-    let submittedDate : String
-    let submittedOnTime : Bool
-    let mark : Grade?
+    let submittedDate: String
+    let submittedOnTime: Bool
+    let mark: Grade?
     let lessonId: Int
 }
 enum HomeworkType: Codable {
@@ -54,9 +53,9 @@ struct TeacherHomework: Codable {
     let filesCount: Int
 }
 struct DTOStudentSubmissionCount: Decodable {
-    let totalCount : Int
-    let totalPages : Int
-    let list : [StudentSubmissionCount]
+    let totalCount: Int
+    let totalPages: Int
+    let list: [StudentSubmissionCount]
 }
 struct StudentSubmissionCount: Codable {
     let id: Int
@@ -71,7 +70,7 @@ struct TeacherClassItem {
     let title: String
     let subtitle: String
     var datetime: String?
-    let onTime: Bool?
+    let onTime: Bool
 
     init(id: Int, title: String, subtitle: String, datetime: String, onTime: Bool) {
         self.id = id
@@ -86,7 +85,7 @@ struct TeacherClassItem {
         self.title = "\(studentSubmission.firstName) \(studentSubmission.lastName)"
         self.subtitle = "Заданий сдано: \(studentSubmission.submissionsCount)"
         self.datetime = nil
-        self.onTime = nil
+        self.onTime = false
     }
     // init for the list of the student's submissions
     init(studentLesson: StudentLesson) {
@@ -94,7 +93,7 @@ struct TeacherClassItem {
         self.title = studentLesson.topic
         self.subtitle = "Оценка: \(studentLesson.mark ?? "-") · Предмет: \(studentLesson.subject.name)"
         self.datetime = studentLesson.submittedDate
-        self.onTime = nil
+        self.onTime = false
     }
     // init for the list of the student's submissions on TeacherLessonDetails screen
     init(submission: TeacherSubmission) {
@@ -114,7 +113,7 @@ struct TeacherClassItem {
         self.title = day ?? ""
         self.subtitle = "Оценка: \(classwork.mark.rawValue)"
         self.datetime = time ?? ""
-        self.onTime = nil
+        self.onTime = false
     }
     // init for the list of the student's homework marks in HomeworkListViewController
     init(homework: TeacherSubmission) {
@@ -128,21 +127,20 @@ struct TeacherClassItem {
         }
         self.subtitle = "Оценка: \(homework.mark?.rawValue ?? "-")"
         self.datetime = (day ?? "") + " в " + (time ?? "")
-        self.onTime = nil
+        self.onTime = false
     }
-
 }
 struct DTOStudentLessonsList: Decodable {
-    let totalCount : Int
-    let totalPages : Int
-    let list : [StudentLesson]
+    let totalCount: Int
+    let totalPages: Int
+    let list: [StudentLesson]
 }
 struct StudentLesson: Codable {
     let id: Int
     let student: FullNameUser
     let homework: Int
-    var submittedDate : String
-    let submittedOnTime : Bool
+    var submittedDate: String
+    let submittedOnTime: Bool
     let mark: String?
     let lessonId: Int
     let subject: SubjectName
@@ -153,9 +151,9 @@ enum DateFormat: String {
     case short = "yyyy-MM-dd'T'HH:mm:ssXXX"
 }
 struct DTOTeacherHomeworkFiles: Decodable {
-    let totalCount : Int
-    let totalPages : Int
-    let list : [File]
+    let totalCount: Int
+    let totalPages: Int
+    let list: [File]
 }
 struct TeacherSubmissionDetails: Decodable {
     let id: Int

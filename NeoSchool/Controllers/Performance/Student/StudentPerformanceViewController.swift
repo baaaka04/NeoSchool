@@ -1,8 +1,7 @@
-import UIKit
 import SnapKit
+import UIKit
 
 final class StudentPerformanceViewController: SchoolNavViewController {
-
     private let performanceAPI: PerformanceAPIProtocol
 
     init(navbarTitle: String, navbarColor: UIColor?, performanceAPI: PerformanceAPIProtocol) {
@@ -10,7 +9,8 @@ final class StudentPerformanceViewController: SchoolNavViewController {
         super.init(navbarTitle: navbarTitle, navbarColor: navbarColor)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -26,7 +26,7 @@ final class StudentPerformanceViewController: SchoolNavViewController {
         view.addSubview(quatersBar.view)
         quatersBar.didMove(toParent: self)
         quatersBar.view.snp.makeConstraints { make in
-            make.width.equalTo(view.frame.size.width-32)
+            make.width.equalTo(view.frame.size.width - 32)
             make.height.equalTo(48)
             make.centerX.equalToSuperview()
             make.left.right.equalToSuperview().inset(16)
@@ -44,5 +44,4 @@ final class StudentPerformanceViewController: SchoolNavViewController {
         }
         quatersBar.delegate = marksPanel
     }
-
 }

@@ -1,12 +1,11 @@
-import UIKit
 import SnapKit
+import UIKit
 
 protocol QuaterBarDelegate: AnyObject {
     func quaterDidSelect(quater: Quater)
 }
 
 class QuatersBarVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-
     weak var delegate: QuaterBarDelegate?
     private let quaters: [Quater] = Quater.allCases
     private lazy var quatersCollectionView: UICollectionView = {
@@ -30,15 +29,16 @@ class QuatersBarVC: UIViewController, UICollectionViewDataSource, UICollectionVi
         quatersCollectionView.snp.makeConstraints { make in
             make.centerX.centerY.width.height.equalToSuperview()
         }
-
     }
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         quaters.count
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = quatersCollectionView.dequeueReusableCell(withReuseIdentifier: WeekdayCollectionViewCell.identifier, for: indexPath) as? WeekdayCollectionViewCell
+    func collectionView(_: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = quatersCollectionView.dequeueReusableCell(
+            withReuseIdentifier: WeekdayCollectionViewCell.identifier,
+            for: indexPath) as? WeekdayCollectionViewCell
         else { return UICollectionViewCell() }
 
         let quater = quaters[indexPath.row]
@@ -53,13 +53,11 @@ class QuatersBarVC: UIViewController, UICollectionViewDataSource, UICollectionVi
         return cell
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: quatersCollectionView.frame.size.width/5, height: quatersCollectionView.frame.size.height)
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt _: IndexPath) -> CGSize {
+        CGSize(width: quatersCollectionView.frame.size.width / 5, height: quatersCollectionView.frame.size.height)
     }
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.quaterDidSelect(quater: quaters[indexPath.row])
     }
-
-
 }

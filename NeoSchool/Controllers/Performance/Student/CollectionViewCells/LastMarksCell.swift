@@ -1,9 +1,8 @@
-import UIKit
 import SnapKit
-
+import UIKit
 
 class LastMarksCell: UICollectionViewCell {
-    static let identifier: String = "LastMarksCell"
+    static let identifier = "LastMarksCell"
 
     var grade: Grade? {
         didSet {
@@ -13,14 +12,15 @@ class LastMarksCell: UICollectionViewCell {
         }
     }
 
-    private let titleLabel = GrayUILabel(font: AppFont.font(type: .SemiBold, size: 20))
+    private let titleLabel = GrayUILabel(font: AppFont.font(type: .semiBold, size: 20))
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupUI()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -31,6 +31,5 @@ class LastMarksCell: UICollectionViewCell {
         titleLabel.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-
     }
 }

@@ -1,11 +1,9 @@
 import UIKit
 
-
 class QuaterTableHeaderView: UIStackView {
-
     private let columnOneLabel: UILabel = {
         let label = UILabel()
-        label.font = AppFont.font(type: .Regular, size: 16)
+        label.font = AppFont.font(type: .regular, size: 16)
         label.textColor = .neobisLightGray
         label.text = "Фамилия и имя"
         return label
@@ -19,7 +17,8 @@ class QuaterTableHeaderView: UIStackView {
         setupUI()
     }
 
-    required init(coder: NSCoder) {
+    @available(*, unavailable)
+    required init(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -34,12 +33,11 @@ class QuaterTableHeaderView: UIStackView {
         let numbers = ["I", "II", "III", "IV", "Год"]
         numbers.forEach {
             let label = UILabel()
-            label.font = AppFont.font(type: .Regular, size: 16)
+            label.text = $0
+            label.font = AppFont.font(type: .regular, size: 16)
             label.textColor = .neobisLightGray
             label.textAlignment = .center
-            label.text = $0
             columnTwoView.addArrangedSubview(label)
         }
     }
-
 }

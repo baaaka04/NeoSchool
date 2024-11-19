@@ -1,18 +1,17 @@
-import UIKit
 import SnapKit
+import UIKit
 
 enum CommentType {
     case studentWithComment, teacherWithComment, teacherWithoutComment, teacherQuaterWithoutComment
 }
 
 class CommentSubmitView: UIStackView {
-
     var uploadFiles: (() -> Void)?
     var selectedGrade: Grade?
 
     private let titleLabel: UILabel = {
         let label = GrayUILabel()
-        label.font = AppFont.font(type: .Medium, size: 22)
+        label.font = AppFont.font(type: .medium, size: 22)
         label.textAlignment = .center
         return label
     }()
@@ -20,7 +19,7 @@ class CommentSubmitView: UIStackView {
     private let subtitleLabel: UILabel = {
         let label = GrayUILabel()
         label.text = "Выберите одну из оценок:"
-        label.font = AppFont.font(type: .Regular, size: 18)
+        label.font = AppFont.font(type: .regular, size: 18)
         label.textAlignment = .center
         return label
     }()
@@ -28,8 +27,8 @@ class CommentSubmitView: UIStackView {
     let commentInput: PlaceholderTextView = {
         let input = PlaceholderTextView()
         input.placeholder = "Комментарий (необязательно)"
-        input.placeholderInsets = UIEdgeInsets(top: 12, left: 16, bottom: Constants.inputHeight-34, right: 16)
-        input.counterInsets = UIEdgeInsets(top: Constants.inputHeight-34, left: 16, bottom: 12, right: 16)
+        input.placeholderInsets = UIEdgeInsets(top: 12, left: 16, bottom: Constants.inputHeight - 34, right: 16)
+        input.counterInsets = UIEdgeInsets(top: Constants.inputHeight - 34, left: 16, bottom: 12, right: 16)
         input.limit = 100
         return input
     }()
@@ -59,21 +58,20 @@ class CommentSubmitView: UIStackView {
         static let horizontalPadding: CGFloat = 32
         static let inputHeight: CGFloat = 158
     }
-    private let studentNameLabel = GrayUILabel(font: AppFont.font(type: .Regular, size: 24))
-    private let quaterNumberLabel = GrayUILabel(font: AppFont.font(type: .Regular, size: 20))
+
+    private let studentNameLabel = GrayUILabel(font: AppFont.font(type: .regular, size: 24))
+    private let quaterNumberLabel = GrayUILabel(font: AppFont.font(type: .regular, size: 20))
     private let avarageMarkLabel: UILabel = {
         let label = UILabel()
-        label.font = AppFont.font(type: .Regular, size: 18)
+        label.font = AppFont.font(type: .regular, size: 18)
         label.textColor = .neobisLightGray
         label.numberOfLines = 0
         label.textAlignment = .center
         return label
     }()
 
-
-    //MARK: - Initializers
+    // MARK: - Initializers
     init(type: CommentType, commentInfo: CommentInfo? = nil) {
-
         switch type {
         case .teacherWithComment:
             self.titleLabel.text = "Оценка за задание"
@@ -124,14 +122,17 @@ class CommentSubmitView: UIStackView {
         setupButtonsUI()
     }
 
-    required init(coder: NSCoder) {
+    @available(*, unavailable)
+    required init(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    //MARK: - UI functions
+    // MARK: - UI functions
     private func setupUI () {
-
-        [grabber, titleLabel, subtitleLabel, studentNameLabel, quaterNumberLabel, avarageMarkLabel, buttonSetView, commentInput, submitButton]
+        [
+            grabber, titleLabel, subtitleLabel, studentNameLabel, quaterNumberLabel,
+            avarageMarkLabel, buttonSetView, commentInput, submitButton,
+        ]
             .forEach { addArrangedSubview($0) }
 
         layer.cornerRadius = 32
@@ -171,7 +172,7 @@ class CommentSubmitView: UIStackView {
             button.setTitle(value.rawValue, for: .normal)
             button.setTitleColor(.neobisLightGray, for: .normal)
             button.setTitleColor(.white, for: .selected)
-            button.titleLabel?.font = AppFont.font(type: .SemiBold, size: 24)
+            button.titleLabel?.font = AppFont.font(type: .semiBold, size: 24)
             button.backgroundColor = .neobisExtralightGray
             button.layer.cornerRadius = 8
 
@@ -187,7 +188,7 @@ class CommentSubmitView: UIStackView {
         }
     }
 
-    //MARK: - Action functions
+    // MARK: - Action functions
     @objc func buttonTapped(_ sender: GradeUIButton) {
         // Loop through all buttons and reset their background color to gray
         for button in buttons {
