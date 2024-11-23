@@ -5,7 +5,10 @@
 NeoSchool is a school simulation app designed for two types of users: teachers and students. This project includes the following features:  
 - Uploading and sending images from the camera or photo library  
 - Email-based authentication with options for password recovery and updates  
-- Notifications (excluding push notifications)  
+- Notifications (excluding push notifications)
+
+
+[![figma](readme_images/figma_overview.png)](https://www.figma.com/design/R5kqngkhbp3E6dlAEzkrzG/NeoSchool-(Copy)?node-id=60-185&node-type=canvas&t=Zw3SYaoVDfhO6TxF-0)
 
 ## User Features  
 
