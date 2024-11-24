@@ -118,8 +118,8 @@ class NotificationDetailViewController: DetailViewController {
     private let performanceAPI = PerformanceAPI()
 
     private func openStudentSubmission() {
-        guard let submissionId = notification.submissionId else { return }
-        let vm = TeacherDetailsViewModel(lessonId: 1, teacherAPI: scheduleAPI)
+        guard let submissionId = notification.submissionId, let lessonId = notification.lessonId else { return }
+        let vm = TeacherDetailsViewModel(lessonId: lessonId, teacherAPI: scheduleAPI)
         let submissionDetailsVC = StudentHomeworkDetailsViewController(submissionId: submissionId, editable: true, vm: vm)
         let studentFullName = notification.studentName
 

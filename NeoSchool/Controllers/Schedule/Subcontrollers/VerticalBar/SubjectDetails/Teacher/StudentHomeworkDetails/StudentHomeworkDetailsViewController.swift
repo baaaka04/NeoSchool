@@ -1,14 +1,13 @@
 import SnapKit
 import UIKit
 
-protocol StudentHomeworkProtocol {
+protocol StudentHomeworkProtocol: CommentRepresentableProtocol {
     var submissionDetails: TeacherSubmissionDetails? { get set }
     var submissionFilesUrls: [String]? { get set }
-    var grade: Grade? { get set }
 
     func getSubmissionDetails(submissionId: Int) async throws
     func reviseSubmission(submissionId: Int) async throws
-    func submit(_ submissionId: Int?) async throws
+    func getLessonDetails() async throws
 }
 
 class StudentHomeworkDetailsViewController: DetailTitledViewController, Confirmable, Notifiable {
@@ -111,6 +110,8 @@ class StudentHomeworkDetailsViewController: DetailTitledViewController, Confirma
     private func getSubmissionDetails() {
         Task {
             do {
+                // need to get LessonDetails and deadline date from it, because teacher rate submission on that date
+                try await vm?.getLessonDetails()
                 try await vm?.getSubmissionDetails(submissionId: self.submissionId)
 
                 if let submissionFilesUrls = vm?.submissionFilesUrls {

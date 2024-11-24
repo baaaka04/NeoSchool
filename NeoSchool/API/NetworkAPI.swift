@@ -348,7 +348,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
         let urlString = "\(domen)/neoschool/schedule/teacher/submissions/\(submissionId)/rate/"
         let params: [String: Any] = [
             "mark": mark,
-            "teacher_comment": teacherComment ?? "",
+            "teacher_comment": teacherComment ?? "-",
             "date_time": date,
         ]
 

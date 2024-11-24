@@ -44,7 +44,7 @@ enum ExtraData: Decodable {
     case submissionRate(mark: String, subject: String, submissionId: Int, teacherComment: String, lessonId: Int)
     case homeworkRevise(subject: String, submissionId: Int, lessonId: Int)
     case quaterRate(mark: String, subject: String, subjectId: Int, quater: Quater)
-    case homeworkSubmit(student: String, submissionId: Int)
+    case homeworkSubmit(student: String, submissionId: Int, lessonId: Int)
 }
 
 struct NeobisNotification: Decodable {
@@ -130,7 +130,8 @@ extension NeobisNotification {
         case .submitHomework:
             let studentName = try container.decode(String.self, forKey: .student)
             let submissionId = try container.decode(Int.self, forKey: .submissionId)
-            return .homeworkSubmit(student: studentName, submissionId: submissionId)
+            let lessonId = try container.decode(Int.self, forKey: .lesson)
+            return .homeworkSubmit(student: studentName, submissionId: submissionId, lessonId: lessonId)
         }
         // Add more cases if needed
     }
