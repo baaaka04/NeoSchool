@@ -45,3 +45,9 @@ Students can:
 ## Minimum Requirements  
 - iOS 16.6  
 - Swift 5.7
+
+## Technologies
+- UIKit
+- SnapKit
+- async/await
+- URLSession
