@@ -48,9 +48,9 @@ class AuthService {
     func changePassword(from currentPassword: String, to newPassword: String, completion: @escaping (_ done: Bool) -> Void) async throws {
         do {
             try await networkAPI.changePassword(from: currentPassword, to: newPassword)
-            DispatchQueue.main.sync { completion(true) }
+            DispatchQueue.main.async { completion(true) }
         } catch {
-            DispatchQueue.main.sync { completion(false) }
+            DispatchQueue.main.async { completion(false) }
         }
     }
 
