@@ -11,9 +11,13 @@ class AuthService {
             completion(false)
             return
         }
-        let newAccessToken = try await networkAPI.refreshAccessToken(refreshToken: refreshToken)
-        _ = KeychainHelper.save(key: .accessToken, data: newAccessToken)
-        completion(true)
+        do {
+            let newAccessToken = try await networkAPI.refreshAccessToken(refreshToken: refreshToken)
+            _ = KeychainHelper.save(key: .accessToken, data: newAccessToken)
+            completion(true)
+        } catch {
+            completion(false)
+        }
     }
 
     func login(username: String, password: String, isTeacher: Bool, completion: @escaping (_ done: Bool) -> Void) async throws {
