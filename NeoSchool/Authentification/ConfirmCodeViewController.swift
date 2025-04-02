@@ -2,7 +2,6 @@ import SnapKit
 import UIKit
 
 class ConfirmCodeViewController: KeyboardMovableViewController, UITextFieldDelegate {
-    private let authAPI: AuthService
     private let email: String
     private let otcVC = OneTimeCodeViewController()
 
@@ -52,9 +51,8 @@ class ConfirmCodeViewController: KeyboardMovableViewController, UITextFieldDeleg
         return button
     }()
 
-    init(authAPI: AuthService, email: String) {
+    init(email: String) {
         self.email = email
-        self.authAPI = authAPI
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -120,11 +118,12 @@ class ConfirmCodeViewController: KeyboardMovableViewController, UITextFieldDeleg
     @objc private func didTapProceed() {
         Task {
             do {
-                guard let code = Int(otcVC.getCode()) else { return }
-                if try await authAPI.checkResetPasswordCode(withCode: code) {
+                guard let code = Int(otcVC.getCode()),
+                      let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate else { return }
+                if try await sceneDelegate.authService.checkResetPasswordCode(withCode: code) {
                     DispatchQueue.main.async {
                         self.navigationController?.pushViewController(
-                            PasswordCreationViewController(authAPI: self.authAPI),
+                            PasswordCreationViewController(),
                             animated: true
                         )
                     }
@@ -138,7 +137,8 @@ class ConfirmCodeViewController: KeyboardMovableViewController, UITextFieldDeleg
     @objc private func didTapSendAgain() {
         Task {
             do {
-                try await authAPI.sendResetPasswordCode(for: self.email)
+                guard let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate else { return }
+                try await sceneDelegate.authService.sendResetPasswordCode(for: self.email)
             } catch { print(error) }
         }
         var time = 45

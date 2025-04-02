@@ -2,7 +2,6 @@ import SnapKit
 import UIKit
 
 class PasswordCreationViewController: KeyboardMovableViewController, Confirmable, UITextFieldDelegate {
-    private let authAPI: AuthService
 
     private lazy var newPasswordInputView: AlertPasswordInputView = {
         let input = AlertPasswordInputView(
@@ -31,16 +30,6 @@ class PasswordCreationViewController: KeyboardMovableViewController, Confirmable
         button.addTarget(self, action: #selector(onPressConfirm), for: .touchUpInside)
         return button
     }()
-
-    init(authAPI: AuthService) {
-        self.authAPI = authAPI
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    @available(*, unavailable)
-    required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -130,13 +119,12 @@ class PasswordCreationViewController: KeyboardMovableViewController, Confirmable
         if arePasswordsValid() {
             Task {
                 do {
-                    guard let password = newPasswordInputView.inputTextField.text else { return }
-                    try await authAPI.updatePassword(with: password) {
+                    guard let password = newPasswordInputView.inputTextField.text,
+                          let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate else { return }
+                    try await sceneDelegate.authService.updatePassword(with: password) {
                         self.showConfirmView(confirmedAction: { [weak self] in
-                            if let sceneDelegate = self?.view.window?.windowScene?.delegate as? SceneDelegate {
-                                sceneDelegate.checkAuthentication()
-                                self?.navigationController?.popToRootViewController(animated: true)
-                            }
+                            sceneDelegate.checkAuthentication()
+                            self?.navigationController?.popToRootViewController(animated: true)
                         })
                     }
                 } catch { print(error) }

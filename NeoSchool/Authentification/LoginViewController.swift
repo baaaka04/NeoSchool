@@ -106,16 +106,13 @@ class LoginViewController: KeyboardMovableViewController, Notifiable, UITextFiel
     }
 
     @objc private func didTapLogin() {
-        let authService = AuthService()
-
         Task {
             do {
-                guard let username = usernameField.text, let password = passwordField.text else { return }
-                try await authService.login(username: username, password: password, isTeacher: self.isTeacher) { [weak self] done in
+                guard let username = usernameField.text, let password = passwordField.text,
+                      let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate else { return }
+                try await sceneDelegate.authService.login(username: username, password: password, isTeacher: self.isTeacher) { [weak self] done in
                     if done {
-                        if let sceneDelegate = self?.view.window?.windowScene?.delegate as? SceneDelegate {
-                            sceneDelegate.checkAuthentication()
-                        }
+                        sceneDelegate.checkAuthentication()
                     } else {
                         self?.showNotification(message: "Неверный логин или пароль", isSucceed: false)
                         self?.usernameField.layer.borderWidth = 1

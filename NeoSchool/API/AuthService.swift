@@ -5,18 +5,18 @@ class AuthService {
 
     var userId: Int?
 
-    func refreshAccessToken(completion: @escaping (Bool) -> Void) async throws {
+//    func refreshAccessToken(completion: @escaping (Bool) -> Void) async throws {
+    func refreshAccessToken() async throws -> Bool {
         guard let refreshTokenData = KeychainHelper.load(key: .refreshToken),
               let refreshToken = String(data: refreshTokenData, encoding: .utf8) else {
-            completion(false)
-            return
+            return false
         }
         do {
             let newAccessToken = try await networkAPI.refreshAccessToken(refreshToken: refreshToken)
             _ = KeychainHelper.save(key: .accessToken, data: newAccessToken)
-            completion(true)
+            return true
         } catch {
-            completion(false)
+            return false
         }
     }
 

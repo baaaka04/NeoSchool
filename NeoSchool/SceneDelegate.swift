@@ -3,53 +3,48 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
+    let authService = AuthService()
 
     func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
-        guard let windowsScene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(frame: windowsScene.coordinateSpace.bounds)
-        window?.windowScene = windowsScene
-        window?.makeKeyAndVisible()
+        guard let windowScene = scene as? UIWindowScene else { return }
 
-        self.checkAuthentication()
+        let window = UIWindow(frame: windowScene.coordinateSpace.bounds)
+        window.windowScene = windowScene
+        self.window = window
+        window.makeKeyAndVisible()
+
+        checkAuthentication()
     }
 
-    func checkAuthentication() {
-        let authService = AuthService()
+    func checkAuthentication() { // Keep it public for login/logout/changePassword
+
         guard let userRoleString = UserDefaults.standard.string(forKey: "userRole"),
               let userRole = UserRole(rawValue: userRoleString) else {
-            goToWelcomeScreen()
+            transitionToRootViewController(WelcomeViewController())
             return
         }
 
         Task {
             do {
-                try await authService.refreshAccessToken { [weak self] done in
-                    DispatchQueue.main.async { [weak self] in
-                        UIView.animate(withDuration: 0.25) {
-                            self?.window?.layer.opacity = 0
-                        } completion: { [weak self] _ in
-                            // If it's authorized user then MainTabBarVC, if not - WelcomeVC
-                            if done {
-                                let rootViewController = MainTabBarViewController(userRole: userRole)
-                                rootViewController.modalPresentationStyle = .fullScreen
-                                self?.window?.rootViewController = rootViewController
-                            } else {
-                                self?.goToWelcomeScreen()
-                            }
-
-                            UIView.animate(withDuration: 0.25) { [weak self] in
-                                self?.window?.layer.opacity = 1
-                            }
-                        }
-                    }
-                }
-            } catch { print(error) }
+                let isAuthenticated = try await authService.refreshAccessToken()
+                let rootVC = isAuthenticated ? MainTabBarViewController(userRole: userRole) : WelcomeViewController()
+                transitionToRootViewController(rootVC)
+            } catch {
+                print("Auth error: \(error)")
+                transitionToRootViewController(WelcomeViewController())
+            }
         }
     }
 
-    private func goToWelcomeScreen() {
-        let welcomeNavVC = UINavigationController(rootViewController: WelcomeViewController())
-        welcomeNavVC.modalPresentationStyle = .fullScreen
-        self.window?.rootViewController = welcomeNavVC
+    private func transitionToRootViewController(_ viewController: UIViewController) {
+        let newRootVC = (viewController is WelcomeViewController) ?
+            UINavigationController(rootViewController: viewController) :
+            viewController
+
+        guard let window else { return }
+
+        UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve) {
+            window.rootViewController = newRootVC
+        }
     }
 }

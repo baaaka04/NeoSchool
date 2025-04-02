@@ -15,10 +15,10 @@ class NeobisUINavigationController: UINavigationController {
         let titleView = UIView()
         let titleLabel = UILabel()
 
-        let authService = AuthService()
         Task {
             do {
-                let profileData = try await authService.getProfileData()
+                guard let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate else { return }
+                let profileData = try await sceneDelegate.authService.getProfileData()
                 DispatchQueue.main.async {
                     switch profileData.role {
                     case .teacher: titleLabel.text = "Здравствуйте, \(profileData.userFirstName)!"
