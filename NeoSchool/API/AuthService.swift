@@ -5,7 +5,6 @@ class AuthService {
 
     var userId: Int?
 
-//    func refreshAccessToken(completion: @escaping (Bool) -> Void) async throws {
     func refreshAccessToken() async throws -> Bool {
         guard let refreshTokenData = KeychainHelper.load(key: .refreshToken),
               let refreshToken = String(data: refreshTokenData, encoding: .utf8) else {
