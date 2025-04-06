@@ -2,7 +2,6 @@ import SnapKit
 import UIKit
 
 class ChangePasswordViewController: DetailViewController, Confirmable, UITextFieldDelegate {
-    private let authAPI: AuthService
 
     private let titleLabel: BigSemiBoldUILabel = {
         let label = BigSemiBoldUILabel()
@@ -45,16 +44,6 @@ class ChangePasswordViewController: DetailViewController, Confirmable, UITextFie
         button.addTarget(self, action: #selector(onPressConfirm), for: .touchUpInside)
         return button
     }()
-
-    init(authAPI: AuthService) {
-        self.authAPI = authAPI
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    @available(*, unavailable)
-    required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -161,15 +150,17 @@ class ChangePasswordViewController: DetailViewController, Confirmable, UITextFie
             Task {
                 do {
                     guard let currentPassword = currentPasswordInputView.inputTextField.text,
-                          let password = newPasswordInputView.inputTextField.text else { return }
+                          let password = newPasswordInputView.inputTextField.text,
+                          let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate else {
+                        print("sceneDelegate failed")
+                        return
+                    }
 
-                    try await authAPI.changePassword(from: currentPassword, to: password) { done in
+                    try await sceneDelegate.authService.changePassword(from: currentPassword, to: password) { done in
                         if done { // If the user sends correct current password
                             self.showConfirmView(confirmedAction: { [weak self] in
-                                if let sceneDelegate = self?.view.window?.windowScene?.delegate as? SceneDelegate {
-                                    sceneDelegate.checkAuthentication()
-                                    self?.navigationController?.popToRootViewController(animated: true)
-                                }
+                                sceneDelegate.checkAuthentication()
+                                self?.navigationController?.popToRootViewController(animated: true)
                             })
                             // If the user sends incorrect current password
                         } else { self.currentPasswordInputView.showAlertView() }

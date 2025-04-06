@@ -2,7 +2,6 @@ import SnapKit
 import UIKit
 
 final class ProfileViewController: SchoolNavViewController {
-    private let authAPI = AuthService()
     private let scrollview = UIScrollView()
 
     private var infoView: ProfileInfoView?
@@ -40,7 +39,8 @@ final class ProfileViewController: SchoolNavViewController {
     private func getProfileData() {
         Task {
             do {
-                let profileInfo: ProfileInfo = try await authAPI.getProfileData()
+                guard let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate else { return }
+                let profileInfo: ProfileInfo = try await sceneDelegate.authService.getProfileData()
                 DispatchQueue.main.async {
                     self.infoView = ProfileInfoView(profileInfo: profileInfo)
                     self.setupUI()
