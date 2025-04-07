@@ -1,7 +1,12 @@
 import SnapKit
 import UIKit
 
-class PasswordCreationViewController: KeyboardMovableViewController, Confirmable, UITextFieldDelegate {
+class PasswordCreationViewController: KeyboardMovableViewController, UITextFieldDelegate {
+
+    private let authService: AuthServiceProtocol
+
+    var onChangeSuccess: (() -> Void)?
+    var onChangeFailure: ((Error) -> Void)?
 
     private lazy var newPasswordInputView: AlertPasswordInputView = {
         let input = AlertPasswordInputView(
@@ -10,6 +15,7 @@ class PasswordCreationViewController: KeyboardMovableViewController, Confirmable
             isHintHidden: false
         )
         input.inputTextField.delegate = self
+        input.addTarget = textFieldEditingChanged
         return input
     }()
 
@@ -20,6 +26,7 @@ class PasswordCreationViewController: KeyboardMovableViewController, Confirmable
             isHintHidden: true
         )
         input.inputTextField.delegate = self
+        input.addTarget = textFieldEditingChanged
         return input
     }()
 
@@ -30,6 +37,15 @@ class PasswordCreationViewController: KeyboardMovableViewController, Confirmable
         button.addTarget(self, action: #selector(onPressConfirm), for: .touchUpInside)
         return button
     }()
+
+    init(authService: AuthServiceProtocol) {
+        self.authService = authService
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @MainActor required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,23 +76,9 @@ class PasswordCreationViewController: KeyboardMovableViewController, Confirmable
         }
     }
 
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        // Hide the TextField's red border every time the user change it
-        confirmNewPasswordInputView.hideAlertView()
-
-        let currentText = textField.text ?? ""
-        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: string)
-        let originalText = textField.text
-
-        // Change the TextField BEFORE the function returns
-        textField.text = updatedText
-        // Update the button's properties
-        updateTipLabelUI()
-        updateButtonUI()
-        // Return to the TextField its original state, because it WILL change after the executing of this function anyway
-        textField.text = originalText
-
-        return true
+    private func textFieldEditingChanged(_ sender: UITextField) {
+        confirmNewPasswordInputView.setErrorVisible(false)
+        updateUIValidation()
     }
 
     private func isNewPasswordValid() -> Bool {
@@ -84,28 +86,16 @@ class PasswordCreationViewController: KeyboardMovableViewController, Confirmable
         return Validator.isPasswordValid(for: text)
     }
 
-    private func updateTipLabelUI() {
-        if isNewPasswordValid() {
-            newPasswordInputView.hideAlertView()
-        } else {
-            newPasswordInputView.showAlertView()
-        }
+    private func updateUIValidation() {
+        let isValid = isNewPasswordValid()
+        newPasswordInputView.setErrorVisible(!isValid)
+        let text1 = newPasswordInputView.inputTextField.text ?? ""
+        let text2 = confirmNewPasswordInputView.inputTextField.text ?? ""
+
+        confirmButton.isEnabled = isValid && !text1.isEmpty && !text2.isEmpty && text1.count == text2.count
     }
 
-    private func areAllInputsValid() -> Bool {
-        guard
-            let text1 = newPasswordInputView.inputTextField.text, !text1.isEmpty,
-            let text2 = confirmNewPasswordInputView.inputTextField.text, !text2.isEmpty
-        else { return false }
-
-        return text1.count == text2.count
-    }
-
-    private func updateButtonUI() {
-        self.confirmButton.isEnabled = isNewPasswordValid() ? areAllInputsValid() : false
-    }
-
-    private func arePasswordsValid() -> Bool {
+    private func arePasswordsEqual() -> Bool {
         guard
             let password = newPasswordInputView.inputTextField.text, !password.isEmpty,
             let confirmPassword = confirmNewPasswordInputView.inputTextField.text, !confirmPassword.isEmpty,
@@ -116,22 +106,19 @@ class PasswordCreationViewController: KeyboardMovableViewController, Confirmable
     }
 
     @objc private func onPressConfirm() {
-        if arePasswordsValid() {
+        if arePasswordsEqual() {
             Task {
                 do {
-                    guard let password = newPasswordInputView.inputTextField.text,
-                          let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate else { return }
-                    try await sceneDelegate.authService.updatePassword(with: password) {
-                        self.showConfirmView(confirmedAction: { [weak self] in
-                            sceneDelegate.checkAuthentication()
-                            self?.navigationController?.popToRootViewController(animated: true)
-                        })
-                    }
-                } catch { print(error) }
+                    guard let password = newPasswordInputView.inputTextField.text else { return }
+                    try await authService.updatePassword(with: password)
+                    self.onChangeSuccess?()
+                } catch {
+                    self.onChangeFailure?(error)
+                }
             }
         } else {
             newPasswordInputView.showBorderAlertView()
-            confirmNewPasswordInputView.showAlertView()
+            confirmNewPasswordInputView.setErrorVisible(true)
         }
     }
 }
