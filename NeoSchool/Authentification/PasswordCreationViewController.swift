@@ -106,10 +106,9 @@ class PasswordCreationViewController: KeyboardMovableViewController, UITextField
     }
 
     @objc private func onPressConfirm() {
-        if arePasswordsEqual() {
+        if let password = newPasswordInputView.inputTextField.text, arePasswordsEqual() {
             Task {
                 do {
-                    guard let password = newPasswordInputView.inputTextField.text else { return }
                     try await authService.updatePassword(with: password)
                     self.onChangeSuccess?()
                 } catch {
