@@ -38,11 +38,11 @@ class AuthService: AuthServiceProtocol {
                                                                          isTeacher: isTeacher)
             if KeychainHelper.save(key: .refreshToken, data: refreshToken),
                KeychainHelper.save(key: .accessToken, data: accessToken) {
-                DispatchQueue.main.async { completion(true) }
+                await MainActor.run { completion(true) }
             }
         } catch {
             print(error)
-            DispatchQueue.main.async { completion(false) }
+            await MainActor.run { completion(false) }
         }
     }
 
