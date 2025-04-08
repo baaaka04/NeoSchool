@@ -18,20 +18,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func checkAuthentication() { // Keep it public for login/logout/changePassword
 
+        let welcomeVC = WelcomeViewController(authService: authService)
+        welcomeVC.checkAuthentication = self.checkAuthentication
         guard let userRoleString = UserDefaults.standard.string(forKey: "userRole"),
               let userRole = UserRole(rawValue: userRoleString) else {
-            transitionToRootViewController(WelcomeViewController())
+            transitionToRootViewController(welcomeVC)
             return
         }
 
         Task {
             do {
                 let isAuthenticated = try await authService.refreshAccessToken()
-                let rootVC = isAuthenticated ? MainTabBarViewController(userRole: userRole, authService: authService) : WelcomeViewController()
+                let rootVC = isAuthenticated ? MainTabBarViewController(userRole: userRole, authService: authService) : welcomeVC
                 transitionToRootViewController(rootVC)
             } catch {
                 print("Auth error: \(error)")
-                transitionToRootViewController(WelcomeViewController())
+                transitionToRootViewController(welcomeVC)
             }
         }
     }

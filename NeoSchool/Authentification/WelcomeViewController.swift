@@ -2,6 +2,10 @@ import SnapKit
 import UIKit
 
 class WelcomeViewController: UIViewController {
+    private let authService: AuthServiceProtocol
+
+    var checkAuthentication: (() -> Void)?
+
     private let welcomeLabel: BigSemiBoldUILabel = {
         let label = BigSemiBoldUILabel()
         label.text = "Добро пожаловать!"
@@ -10,20 +14,29 @@ class WelcomeViewController: UIViewController {
 
     private let globeImage = UIImageView(image: UIImage(named: Asset.globe) )
 
-    lazy var studentButton: NeobisUIButton = {
+    private lazy var studentButton: NeobisUIButton = {
         let button = NeobisUIButton(type: .purple)
         button.setTitle("Я ученик", for: .normal)
         button.addTarget(self, action: #selector(onTapStudentButton), for: .touchUpInside)
         return button
     }()
 
-    lazy var teacherButton: NeobisUIButton = {
+    private lazy var teacherButton: NeobisUIButton = {
         let button = NeobisUIButton(type: .white)
         button.setTitle("Я учитель", for: .normal)
         button.addTarget(self, action: #selector(onTapTeacherButton), for: .touchUpInside)
         return button
     }()
 
+    init(authService: AuthServiceProtocol) {
+        self.authService = authService
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -63,16 +76,16 @@ class WelcomeViewController: UIViewController {
     }
 
     @objc private func onTapStudentButton() {
-        guard let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate else { return }
         UserDefaults.standard.set("student", forKey: "userRole")
-        let loginVC = LoginViewController(authService: sceneDelegate.authService, isTeacher: false)
+        let loginVC = LoginViewController(authService: authService, isTeacher: false)
+        loginVC.checkAuthentication = self.checkAuthentication
         self.navigationController?.pushViewController(loginVC, animated: true)
     }
 
     @objc private func onTapTeacherButton() {
-        guard let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate else { return }
         UserDefaults.standard.set("teacher", forKey: "userRole")
-        let loginVC = LoginViewController(authService: sceneDelegate.authService,isTeacher: true)
+        let loginVC = LoginViewController(authService: authService, isTeacher: true)
+        loginVC.checkAuthentication = self.checkAuthentication
         self.navigationController?.pushViewController(loginVC, animated: true)
     }
 }
