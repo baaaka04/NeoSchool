@@ -107,7 +107,7 @@ class MainTabBarViewController: UITabBarController {
         vc.tabBarItem.image = image
         vc.tabBarItem.selectedImage = selectedImage
 
-        return NeobisUINavigationController(rootViewController: vc)
+        return NeobisUINavigationController(authService: authService, rootViewController: vc)
     }
 
     @objc private func onTapProfileOptions () {
