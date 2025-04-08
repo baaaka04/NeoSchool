@@ -63,14 +63,16 @@ class WelcomeViewController: UIViewController {
     }
 
     @objc private func onTapStudentButton() {
+        guard let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate else { return }
         UserDefaults.standard.set("student", forKey: "userRole")
-        let loginVC = LoginViewController(isTeacher: false)
+        let loginVC = LoginViewController(authService: sceneDelegate.authService, isTeacher: false)
         self.navigationController?.pushViewController(loginVC, animated: true)
     }
 
     @objc private func onTapTeacherButton() {
+        guard let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate else { return }
         UserDefaults.standard.set("teacher", forKey: "userRole")
-        let loginVC = LoginViewController(isTeacher: true)
+        let loginVC = LoginViewController(authService: sceneDelegate.authService,isTeacher: true)
         self.navigationController?.pushViewController(loginVC, animated: true)
     }
 }
