@@ -2,9 +2,11 @@ import UIKit
 
 class MainTabBarViewController: UITabBarController {
     private let userRole: UserRole
+    private let authService: AuthServiceProtocol
 
-    init(userRole: UserRole) {
+    init(userRole: UserRole, authService: AuthServiceProtocol) {
         self.userRole = userRole
+        self.authService = authService
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -53,6 +55,7 @@ class MainTabBarViewController: UITabBarController {
             image: UIImage(named: Asset.profileIcon),
             selectedImage: UIImage(named: Asset.profileIconSelected),
             vc: ProfileViewController(
+                authService: self.authService,
                 navbarTitle: "Профиль",
                 navbarColor: .neobisGreen
             )

@@ -27,7 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         Task {
             do {
                 let isAuthenticated = try await authService.refreshAccessToken()
-                let rootVC = isAuthenticated ? MainTabBarViewController(userRole: userRole) : WelcomeViewController()
+                let rootVC = isAuthenticated ? MainTabBarViewController(userRole: userRole, authService: authService) : WelcomeViewController()
                 transitionToRootViewController(rootVC)
             } catch {
                 print("Auth error: \(error)")

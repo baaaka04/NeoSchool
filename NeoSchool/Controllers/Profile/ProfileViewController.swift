@@ -2,9 +2,19 @@ import SnapKit
 import UIKit
 
 final class ProfileViewController: SchoolNavViewController {
+    private let authService: AuthServiceProtocol
+    private var infoView: ProfileInfoView?
     private let scrollview = UIScrollView()
 
-    private var infoView: ProfileInfoView?
+    init(authService: AuthServiceProtocol, navbarTitle: String, navbarColor: UIColor?) {
+        self.authService = authService
+        super.init(navbarTitle: navbarTitle, navbarColor: navbarColor)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,9 +49,8 @@ final class ProfileViewController: SchoolNavViewController {
     private func getProfileData() {
         Task {
             do {
-                guard let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate else { return }
-                let profileInfo: ProfileInfo = try await sceneDelegate.authService.getProfileData()
-                DispatchQueue.main.async {
+                let profileInfo: ProfileInfo = try await authService.getProfileData()
+                await MainActor.run {
                     self.infoView = ProfileInfoView(profileInfo: profileInfo)
                     self.setupUI()
                 }
