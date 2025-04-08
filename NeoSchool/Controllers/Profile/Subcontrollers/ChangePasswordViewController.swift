@@ -89,10 +89,10 @@ class ChangePasswordViewController: DetailViewController, Confirmable, UITextFie
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         // Hide alert if current password textFiled is changing
         if let text = textField.text, text == currentPasswordInputView.inputTextField.text {
-            currentPasswordInputView.hideAlertView()
+            currentPasswordInputView.setErrorVisible(false)
         }
         // Hide the TextField's red border every time the user change it
-        confirmNewPasswordInputView.hideAlertView()
+        confirmNewPasswordInputView.setErrorVisible(false)
 
         let currentText = textField.text ?? ""
         let updatedText = (currentText as NSString).replacingCharacters(in: range, with: string)
@@ -115,7 +115,7 @@ class ChangePasswordViewController: DetailViewController, Confirmable, UITextFie
     }
 
     private func updateTipLabelUI() {
-        isNewPasswordValid() ? newPasswordInputView.hideAlertView() : newPasswordInputView.showAlertView()
+        isNewPasswordValid() ? newPasswordInputView.setErrorVisible(false) : newPasswordInputView.setErrorVisible(true)
     }
 
     private func areAllInputsValid() -> Bool {
@@ -163,13 +163,13 @@ class ChangePasswordViewController: DetailViewController, Confirmable, UITextFie
                                 self?.navigationController?.popToRootViewController(animated: true)
                             })
                             // If the user sends incorrect current password
-                        } else { self.currentPasswordInputView.showAlertView() }
+                        } else { self.currentPasswordInputView.setErrorVisible(true) }
                     }
                 } catch { print(error) }
             }
         } else {
             newPasswordInputView.showBorderAlertView()
-            confirmNewPasswordInputView.showAlertView()
+            confirmNewPasswordInputView.setErrorVisible(true)
         }
     }
 }

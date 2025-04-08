@@ -20,6 +20,7 @@ class AlertPasswordInputView: UIView {
         super.init(frame: .zero)
 
         inputTextField.placeholder = placeholder
+        inputTextField.addTarget(self, action: #selector(addTargetEditingChanged), for: .editingChanged)
         hintLabel.text = hintText
         hintLabel.isHidden = isHintHidden
 
@@ -50,16 +51,22 @@ class AlertPasswordInputView: UIView {
         inputTextField.layer.borderColor = UIColor.neobisRed.cgColor
     }
 
-    func showAlertView() {
-        inputTextField.layer.borderWidth = 1
-        inputTextField.layer.borderColor = UIColor.neobisRed.cgColor
-        hintLabel.textColor = UIColor.neobisRed
-        hintLabel.isHidden = false
+    @objc func addTargetEditingChanged(_ sender: UITextField) {
+        addTarget?(sender)
     }
 
-    func hideAlertView() {
-        inputTextField.layer.borderColor = UIColor.neobisPurple.cgColor
-        hintLabel.textColor = UIColor.neobisLightGray
-        hintLabel.isHidden = isHintHidden
+    var addTarget: ((_ sender: UITextField) -> Void)?
+
+    func setErrorVisible(_ visible: Bool) {
+        if visible {
+            inputTextField.layer.borderWidth = 1
+            inputTextField.layer.borderColor = UIColor.neobisRed.cgColor
+            hintLabel.textColor = UIColor.neobisRed
+            hintLabel.isHidden = false
+        } else {
+            inputTextField.layer.borderColor = UIColor.neobisPurple.cgColor
+            hintLabel.textColor = UIColor.neobisLightGray
+            hintLabel.isHidden = isHintHidden
+        }
     }
 }

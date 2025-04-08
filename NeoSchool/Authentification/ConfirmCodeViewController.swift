@@ -1,7 +1,7 @@
 import SnapKit
 import UIKit
 
-class ConfirmCodeViewController: KeyboardMovableViewController, UITextFieldDelegate {
+class ConfirmCodeViewController: KeyboardMovableViewController, Notifiable, Confirmable, UITextFieldDelegate {
     private let email: String
     private let otcVC = OneTimeCodeViewController()
 
@@ -121,11 +121,18 @@ class ConfirmCodeViewController: KeyboardMovableViewController, UITextFieldDeleg
                 guard let code = Int(otcVC.getCode()),
                       let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate else { return }
                 if try await sceneDelegate.authService.checkResetPasswordCode(withCode: code) {
-                    DispatchQueue.main.async {
-                        self.navigationController?.pushViewController(
-                            PasswordCreationViewController(),
-                            animated: true
-                        )
+                    await MainActor.run {
+                        let passwordCreateVC = PasswordCreationViewController(authService: sceneDelegate.authService)
+                        passwordCreateVC.onChangeSuccess = { [weak self] in
+                            self?.showConfirmView(confirmedAction: {
+                                self?.navigationController?.popToRootViewController(animated: true)
+                            })
+                        }
+                        passwordCreateVC.onChangeFailure = { [weak self] error in
+                            print(error)
+                            self?.showNotification(message: "Не удалось изменить пароль", isSucceed: false)
+                        }
+                        self.navigationController?.pushViewController(passwordCreateVC,animated: true)
                     }
                 } else {
                     updateToAlertUI()

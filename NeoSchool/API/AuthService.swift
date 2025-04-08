@@ -1,6 +1,18 @@
 import Foundation
 
-class AuthService {
+protocol AuthServiceProtocol {
+    var userId: Int? { get set }
+
+    func refreshAccessToken() async throws -> Bool
+    func login(username: String, password: String, isTeacher: Bool, completion: @escaping (_ done: Bool) -> Void) async throws -> Void
+    func sendResetPasswordCode(for email: String) async throws -> Void
+    func checkResetPasswordCode(withCode code: Int) async throws -> Bool
+    func updatePassword(with password: String) async throws -> Void
+    func changePassword(from currentPassword: String, to newPassword: String, completion: @escaping (_ done: Bool) -> Void) async throws
+    func getProfileData() async throws -> ProfileInfo
+}
+
+class AuthService: AuthServiceProtocol {
     private let networkAPI = NetworkAPI()
 
     var userId: Int?
@@ -43,9 +55,8 @@ class AuthService {
         return try await networkAPI.checkResetPasswordCode(userId: userId, code: code)
     }
 
-    func updatePassword(with password: String, completion: @escaping () -> Void) async throws {
+    func updatePassword(with password: String) async throws {
         try await networkAPI.updatePassword(with: password)
-        completion()
     }
 
     func changePassword(from currentPassword: String, to newPassword: String, completion: @escaping (_ done: Bool) -> Void) async throws {
