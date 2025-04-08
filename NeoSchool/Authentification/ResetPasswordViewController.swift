@@ -93,18 +93,20 @@ class ResetPasswordViewController: KeyboardMovableViewController, UITextFieldDel
     @objc private func didTapProceed() {
         guard let email = emailField.text,
               let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate else { return }
-        Task { [weak self] in
+        Task {
             do {
                 try await sceneDelegate.authService.sendResetPasswordCode(for: email)
-                self?.navigationController?.pushViewController(
-                    ConfirmCodeViewController(email: email),
-                    animated: true
-                )
+                await MainActor.run {
+                    self.navigationController?.pushViewController(
+                        ConfirmCodeViewController(authService: sceneDelegate.authService, email: email),
+                        animated: true
+                    )
+                }
             } catch {
-                DispatchQueue.main.async {
-                    self?.wrongEmailLabel.isHidden = false
-                    self?.emailField.layer.borderWidth = 1
-                    self?.emailField.layer.borderColor = UIColor.neobisRed.cgColor
+                await MainActor.run {
+                    self.wrongEmailLabel.isHidden = false
+                    self.emailField.layer.borderWidth = 1
+                    self.emailField.layer.borderColor = UIColor.neobisRed.cgColor
                 }
             }
         }
