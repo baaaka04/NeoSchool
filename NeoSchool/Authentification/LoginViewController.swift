@@ -126,7 +126,14 @@ class LoginViewController: KeyboardMovableViewController, Notifiable, UITextFiel
     }
 
     @objc private func didTapForgetPassword() {
-        let resetPasswordVC = ResetPasswordViewController()
+        guard let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate else { return }
+        let resetPasswordVC = ResetPasswordViewController(authService: sceneDelegate.authService)
+        resetPasswordVC.onChangeEmailSuccess = { [weak self] email in
+            self?.navigationController?.pushViewController(
+                ConfirmCodeViewController(authService: sceneDelegate.authService, email: email),
+                animated: true
+            )
+        }
         self.navigationController?.pushViewController(resetPasswordVC, animated: true)
     }
 }
