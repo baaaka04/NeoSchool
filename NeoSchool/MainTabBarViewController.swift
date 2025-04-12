@@ -4,6 +4,8 @@ class MainTabBarViewController: UITabBarController {
     private let userRole: UserRole
     private let authService: AuthServiceProtocol
 
+    var checkAuthentication: (() -> Void)?
+
     init(userRole: UserRole, authService: AuthServiceProtocol) {
         self.userRole = userRole
         self.authService = authService
@@ -111,7 +113,10 @@ class MainTabBarViewController: UITabBarController {
     }
 
     @objc private func onTapProfileOptions () {
-        let submitVC = ProfileModalViewController()
+        let submitVC = ProfileModalViewController(authService: authService)
+        submitVC.checkAuthentication = { [weak self] in
+            self?.checkAuthentication?()
+        }
         let navVC = UINavigationController(rootViewController: submitVC)
         navVC.modalPresentationStyle = .overFullScreen
         self.present(navVC, animated: false)

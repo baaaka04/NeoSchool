@@ -221,7 +221,15 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
             throw MyError.cannotEncodeData
         }
         let (_, resp) = try await URLSession.shared.data(for: request)
-        guard let httpresponse = resp as? HTTPURLResponse, httpresponse.statusCode == 200 else {
+        guard let httpResponse = resp as? HTTPURLResponse else {
+            throw MyError.badNetwork
+        }
+        switch httpResponse.statusCode {
+        case 200:
+            return
+        case 406:
+            throw MyError.wrongPassword
+        default:
             throw MyError.badNetwork
         }
     }

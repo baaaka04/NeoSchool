@@ -8,7 +8,8 @@ protocol AuthServiceProtocol {
     func sendResetPasswordCode(for email: String) async throws -> Void
     func checkResetPasswordCode(withCode code: Int) async throws -> Bool
     func updatePassword(with password: String) async throws -> Void
-    func changePassword(from currentPassword: String, to newPassword: String, completion: @escaping (_ done: Bool) -> Void) async throws
+//    func changePassword(from currentPassword: String, to newPassword: String, completion: @escaping (_ done: Bool) -> Void) async throws
+    func changePassword(from currentPassword: String, to newPassword: String) async throws
     func getProfileData() async throws -> ProfileInfo
 }
 
@@ -59,13 +60,8 @@ class AuthService: AuthServiceProtocol {
         try await networkAPI.updatePassword(with: password)
     }
 
-    func changePassword(from currentPassword: String, to newPassword: String, completion: @escaping (_ done: Bool) -> Void) async throws {
-        do {
-            try await networkAPI.changePassword(from: currentPassword, to: newPassword)
-            DispatchQueue.main.async { completion(true) }
-        } catch {
-            DispatchQueue.main.async { completion(false) }
-        }
+    func changePassword(from currentPassword: String, to newPassword: String) async throws {
+        try await networkAPI.changePassword(from: currentPassword, to: newPassword)
     }
 
     func getProfileData() async throws -> ProfileInfo {
