@@ -32,11 +32,11 @@ class WelcomeViewController: UIViewController {
         self.authService = authService
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -78,14 +78,14 @@ class WelcomeViewController: UIViewController {
     @objc private func onTapStudentButton() {
         UserDefaults.standard.set("student", forKey: "userRole")
         let loginVC = LoginViewController(authService: authService, isTeacher: false)
-        loginVC.checkAuthentication = self.checkAuthentication
+        loginVC.checkAuthentication = { [weak self] in self?.checkAuthentication?() }
         self.navigationController?.pushViewController(loginVC, animated: true)
     }
 
     @objc private func onTapTeacherButton() {
         UserDefaults.standard.set("teacher", forKey: "userRole")
         let loginVC = LoginViewController(authService: authService, isTeacher: true)
-        loginVC.checkAuthentication = self.checkAuthentication
+        loginVC.checkAuthentication = { [weak self] in self?.checkAuthentication?() }
         self.navigationController?.pushViewController(loginVC, animated: true)
     }
 }
