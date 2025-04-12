@@ -8,7 +8,6 @@ protocol AuthServiceProtocol {
     func sendResetPasswordCode(for email: String) async throws -> Void
     func checkResetPasswordCode(withCode code: Int) async throws -> Bool
     func updatePassword(with password: String) async throws -> Void
-//    func changePassword(from currentPassword: String, to newPassword: String, completion: @escaping (_ done: Bool) -> Void) async throws
     func changePassword(from currentPassword: String, to newPassword: String) async throws
     func getProfileData() async throws -> ProfileInfo
 }
