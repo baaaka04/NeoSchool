@@ -102,18 +102,21 @@ class LoginViewController: KeyboardMovableViewController, Notifiable, UITextFiel
         guard let username = usernameField.text, let password = passwordField.text else { return }
         Task {
             do {
-                try await authService.login(username: username, password: password, isTeacher: self.isTeacher) { [weak self] done in
-                    if done {
-                        self?.checkAuthentication?()
-                    } else {
+                try await authService.login(username: username, password: password, isTeacher: self.isTeacher)
+                await MainActor.run { [weak self] in self?.checkAuthentication?() }
+            } catch {
+                await MainActor.run { [weak self] in
+                    if let error = error as? MyError, error == .wrongPassword {
                         self?.showNotification(message: "Неверный логин или пароль", isSucceed: false)
                         self?.usernameField.layer.borderWidth = 1
                         self?.usernameField.layer.borderColor = UIColor.neobisRed.cgColor
                         self?.passwordField.layer.borderWidth = 1
                         self?.passwordField.layer.borderColor = UIColor.neobisRed.cgColor
+                    } else {
+                        self?.showNotification(message: "Непредвиденная ошибка", isSucceed: false)
                     }
                 }
-            } catch { print(error) }
+            }
         }
     }
 

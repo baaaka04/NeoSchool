@@ -4,7 +4,7 @@ protocol AuthServiceProtocol {
     var userId: Int? { get set }
 
     func refreshAccessToken() async throws -> Bool
-    func login(username: String, password: String, isTeacher: Bool, completion: @escaping (_ done: Bool) -> Void) async throws -> Void
+    func login(username: String, password: String, isTeacher: Bool) async throws -> Void
     func sendResetPasswordCode(for email: String) async throws -> Void
     func checkResetPasswordCode(withCode code: Int) async throws -> Bool
     func updatePassword(with password: String) async throws -> Void
@@ -31,18 +31,12 @@ class AuthService: AuthServiceProtocol {
         }
     }
 
-    func login(username: String, password: String, isTeacher: Bool, completion: @escaping (_ done: Bool) -> Void) async throws {
-        do {
-            let (refreshToken, accessToken) = try await networkAPI.login(username: username,
-                                                                         password: password,
-                                                                         isTeacher: isTeacher)
-            if KeychainHelper.save(key: .refreshToken, data: refreshToken),
-               KeychainHelper.save(key: .accessToken, data: accessToken) {
-                await MainActor.run { completion(true) }
-            }
-        } catch {
-            print(error)
-            await MainActor.run { completion(false) }
+    func login(username: String, password: String, isTeacher: Bool) async throws {
+        let (refreshToken, accessToken) = try await networkAPI
+            .login(username: username, password: password, isTeacher: isTeacher)
+        guard KeychainHelper.save(key: .refreshToken, data: refreshToken),
+              KeychainHelper.save(key: .accessToken, data: accessToken) else {
+            throw MyError.noRefreshToken
         }
     }
 

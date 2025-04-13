@@ -116,17 +116,23 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
             throw MyError.cannotEncodeData
         }
         let (data, resp) = try await URLSession.shared.data(for: request)
-        guard let httpresponse = resp as? HTTPURLResponse, httpresponse.statusCode == 200 else {
+        guard let httpResponse = resp as? HTTPURLResponse else {
             throw MyError.badNetwork
         }
-
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let decodedData: [String: String] = try decoder.decode([String: String].self, from: data)
-        guard let refreshToken = decodedData["refresh"] else { throw URLError(.cannotDecodeContentData) }
-        guard let accessToken = decodedData["access"] else { throw URLError(.cannotDecodeContentData) }
-        return (Data(refreshToken.utf8), Data(accessToken.utf8))
+        switch httpResponse.statusCode {
+        case 200...299:
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            let decodedData: [String: String] = try decoder.decode([String: String].self, from: data)
+            guard let refreshToken = decodedData["refresh"] else { throw URLError(.cannotDecodeContentData) }
+            guard let accessToken = decodedData["access"] else { throw URLError(.cannotDecodeContentData) }
+            return (Data(refreshToken.utf8), Data(accessToken.utf8))
+        case 400...499:
+            throw MyError.wrongPassword
+        default:
+            throw MyError.badNetwork
+        }
     }
 
     // POST-REQUEST
@@ -227,7 +233,7 @@ class NetworkAPI: NotificationsNetworkAPIProtocol {
         switch httpResponse.statusCode {
         case 200:
             return
-        case 406:
+        case 400...499:
             throw MyError.wrongPassword
         default:
             throw MyError.badNetwork
