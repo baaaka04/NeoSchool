@@ -1,8 +1,20 @@
 import SnapKit
 import UIKit
 
-class ProfileModalViewController: UIViewController, Confirmable {
+class ProfileModalViewController: UIViewController, Confirmable, Notifiable {
     private let submitView = ProfileSubmitView()
+    private let authService: AuthServiceProtocol
+
+    var checkAuthentication: (() -> Void)?
+
+    init(authService: AuthServiceProtocol) {
+        self.authService = authService
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -14,7 +26,19 @@ class ProfileModalViewController: UIViewController, Confirmable {
 
         view.addSubview(submitView)
         submitView.changePassword = { [weak self] in
-            let changePasswordVC = ChangePasswordViewController()
+            guard let strongSelf = self else { return }
+            let changePasswordVC = ChangePasswordViewController(authService: strongSelf.authService)
+            changePasswordVC.onChangeSuccess = {
+                self?.showConfirmView(confirmedAction: { [weak self] in
+                    self?.checkAuthentication?()
+                    self?.navigationController?.popToRootViewController(animated: true)
+                })
+            }
+            changePasswordVC.onChangeFailure = { err in
+                print(err)
+                self?.showNotification(message: "Ошибка при смене пароля", isSucceed: false)
+                self?.navigationController?.popToRootViewController(animated: true)
+            }
             self?.navigationController?.pushViewController(changePasswordVC, animated: true)
         }
         submitView.logout = { [weak self] in
@@ -24,10 +48,8 @@ class ProfileModalViewController: UIViewController, Confirmable {
                                   declineButtonText: "Отмена") {
                 KeychainHelper.delete(key: .accessToken)
                 KeychainHelper.delete(key: .refreshToken)
-                if let sceneDelegate = self?.view.window?.windowScene?.delegate as? SceneDelegate {
-                    sceneDelegate.checkAuthentication()
-                    self?.navigationController?.popToRootViewController(animated: true)
-                }
+
+                self?.checkAuthentication?()
             }
         }
         submitView.snp.makeConstraints { make in
@@ -56,7 +78,8 @@ class ProfileModalViewController: UIViewController, Confirmable {
                 make.width.centerX.equalToSuperview()
             }
             self.view.layoutIfNeeded()
-        } completion: { _ in self.dismiss(animated: false, completion: nil)
+        } completion: { _ in
+            self.dismiss(animated: false, completion: nil)
         }
     }
 }

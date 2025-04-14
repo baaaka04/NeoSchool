@@ -2,7 +2,10 @@ import SnapKit
 import UIKit
 
 class LoginViewController: KeyboardMovableViewController, Notifiable, UITextFieldDelegate {
+    private let authService: AuthServiceProtocol
     private let isTeacher: Bool
+
+    var checkAuthentication: (() -> Void)?
 
     private let usernameField = LoginTextField(fieldType: .username)
     private let passwordField = LoginTextField(fieldType: .password)
@@ -26,7 +29,8 @@ class LoginViewController: KeyboardMovableViewController, Notifiable, UITextFiel
         return button
     }()
 
-    init(isTeacher: Bool) {
+    init(authService: AuthServiceProtocol, isTeacher: Bool) {
+        self.authService = authService
         self.isTeacher = isTeacher
         super.init(nibName: nil, bundle: nil)
     }
@@ -41,7 +45,9 @@ class LoginViewController: KeyboardMovableViewController, Notifiable, UITextFiel
         setupUI()
 
         usernameField.delegate = self
+        usernameField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         passwordField.delegate = self
+        passwordField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
     }
 
     private func setupUI() {
@@ -88,45 +94,40 @@ class LoginViewController: KeyboardMovableViewController, Notifiable, UITextFiel
         }
     }
 
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        // Hide both of the TextFields red border every time the user change it
-
-        let currentText = textField.text ?? ""
-        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: string)
-        let originalText = textField.text
-
-        // Change the TextField BEFORE the function returns
-        textField.text = updatedText
-        // Update the button's properties
+    @objc private func textFieldDidChange(_ textField: UITextField) {
         updateButtonUI()
-        // Return to the TextField its original state, because it WILL change after the executing of this function anyway
-        textField.text = originalText
-
-        return true
     }
 
     @objc private func didTapLogin() {
+        guard let username = usernameField.text, let password = passwordField.text else { return }
         Task {
             do {
-                guard let username = usernameField.text, let password = passwordField.text,
-                      let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate else { return }
-                try await sceneDelegate.authService.login(username: username, password: password, isTeacher: self.isTeacher) { [weak self] done in
-                    if done {
-                        sceneDelegate.checkAuthentication()
-                    } else {
+                try await authService.login(username: username, password: password, isTeacher: self.isTeacher)
+                await MainActor.run { [weak self] in self?.checkAuthentication?() }
+            } catch {
+                await MainActor.run { [weak self] in
+                    if let error = error as? MyError, error == .wrongPassword {
                         self?.showNotification(message: "Неверный логин или пароль", isSucceed: false)
                         self?.usernameField.layer.borderWidth = 1
                         self?.usernameField.layer.borderColor = UIColor.neobisRed.cgColor
                         self?.passwordField.layer.borderWidth = 1
                         self?.passwordField.layer.borderColor = UIColor.neobisRed.cgColor
+                    } else {
+                        self?.showNotification(message: "Непредвиденная ошибка", isSucceed: false)
                     }
                 }
-            } catch { print(error) }
+            }
         }
     }
 
     @objc private func didTapForgetPassword() {
-        let resetPasswordVC = ResetPasswordViewController()
+        let resetPasswordVC = ResetPasswordViewController(authService: authService)
+        resetPasswordVC.onChangeEmailSuccess = { [weak self, authService] email in
+            self?.navigationController?.pushViewController(
+                ConfirmCodeViewController(authService: authService, email: email),
+                animated: true
+            )
+        }
         self.navigationController?.pushViewController(resetPasswordVC, animated: true)
     }
 }

@@ -2,6 +2,10 @@ import SnapKit
 import UIKit
 
 class ResetPasswordViewController: KeyboardMovableViewController, UITextFieldDelegate {
+    private let authService: AuthServiceProtocol
+
+    var onChangeEmailSuccess: ((_ email: String) -> Void)?
+
     private let subtitleLabel: UILabel = {
         let label = UILabel()
         label.text = "Введите электронную почту, которую вы указывали в профиле"
@@ -33,9 +37,20 @@ class ResetPasswordViewController: KeyboardMovableViewController, UITextFieldDel
         return button
     }()
 
+    init(authService: AuthServiceProtocol) {
+        self.authService = authService
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         emailField.delegate = self
+        emailField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         titleText = "Восстановление пароля"
 
         setupUI()
@@ -72,39 +87,25 @@ class ResetPasswordViewController: KeyboardMovableViewController, UITextFieldDel
         }
     }
 
-    func textField(_: UITextField, shouldChangeCharactersIn _: NSRange, replacementString string: String) -> Bool {
-        self.wrongEmailLabel.isHidden = true
-        self.emailField.layer.borderColor = UIColor.neobisPurple.cgColor
-        let prevEmail = emailField.text ?? ""
-        var fullEmail = ""
-        if string.isEmpty {
-            fullEmail = String(prevEmail.dropLast())
-        } else {
-            fullEmail = prevEmail + string
-        }
-        if Validator.isValidEmail(for: fullEmail) {
-            proceedButton.isEnabled = true
-        } else {
-            proceedButton.isEnabled = false
-        }
-        return true
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        wrongEmailLabel.isHidden = true
+        textField.layer.borderColor = UIColor.neobisPurple.cgColor
+
+        let text = textField.text ?? ""
+        proceedButton.isEnabled = Validator.isValidEmail(for: text)
     }
 
     @objc private func didTapProceed() {
-        guard let email = emailField.text,
-              let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate else { return }
-        Task { [weak self] in
+        guard let email = emailField.text else { return }
+        Task {
             do {
-                try await sceneDelegate.authService.sendResetPasswordCode(for: email)
-                self?.navigationController?.pushViewController(
-                    ConfirmCodeViewController(email: email),
-                    animated: true
-                )
+                try await authService.sendResetPasswordCode(for: email)
+                onChangeEmailSuccess?(email)
             } catch {
-                DispatchQueue.main.async {
-                    self?.wrongEmailLabel.isHidden = false
-                    self?.emailField.layer.borderWidth = 1
-                    self?.emailField.layer.borderColor = UIColor.neobisRed.cgColor
+                await MainActor.run {
+                    self.wrongEmailLabel.isHidden = false
+                    self.emailField.layer.borderWidth = 1
+                    self.emailField.layer.borderColor = UIColor.neobisRed.cgColor
                 }
             }
         }

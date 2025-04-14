@@ -2,7 +2,7 @@ import Foundation
 
 enum MyError: Error {
     case badNetwork, failDecoding, nothingToCancel, cannotEncodeData, noRefreshToken,
-         noAccessToken, failSavingToken, noUserRole, invalidDateFormat, noDataReceived, failMapping
+         noAccessToken, failSavingToken, noUserRole, invalidDateFormat, noDataReceived, failMapping, wrongPassword
 
     var description: String {
         switch self {
@@ -28,6 +28,8 @@ enum MyError: Error {
             "No data received"
         case .failMapping:
             "Something went wrong while mapping"
+        case .wrongPassword:
+            "Wrong password"
         }
     }
 }

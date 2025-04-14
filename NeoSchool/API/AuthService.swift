@@ -4,11 +4,11 @@ protocol AuthServiceProtocol {
     var userId: Int? { get set }
 
     func refreshAccessToken() async throws -> Bool
-    func login(username: String, password: String, isTeacher: Bool, completion: @escaping (_ done: Bool) -> Void) async throws -> Void
+    func login(username: String, password: String, isTeacher: Bool) async throws -> Void
     func sendResetPasswordCode(for email: String) async throws -> Void
     func checkResetPasswordCode(withCode code: Int) async throws -> Bool
     func updatePassword(with password: String) async throws -> Void
-    func changePassword(from currentPassword: String, to newPassword: String, completion: @escaping (_ done: Bool) -> Void) async throws
+    func changePassword(from currentPassword: String, to newPassword: String) async throws
     func getProfileData() async throws -> ProfileInfo
 }
 
@@ -31,18 +31,12 @@ class AuthService: AuthServiceProtocol {
         }
     }
 
-    func login(username: String, password: String, isTeacher: Bool, completion: @escaping (_ done: Bool) -> Void) async throws {
-        do {
-            let (refreshToken, accessToken) = try await networkAPI.login(username: username,
-                                                                         password: password,
-                                                                         isTeacher: isTeacher)
-            if KeychainHelper.save(key: .refreshToken, data: refreshToken),
-               KeychainHelper.save(key: .accessToken, data: accessToken) {
-                DispatchQueue.main.async { completion(true) }
-            }
-        } catch {
-            print(error)
-            DispatchQueue.main.async { completion(false) }
+    func login(username: String, password: String, isTeacher: Bool) async throws {
+        let (refreshToken, accessToken) = try await networkAPI
+            .login(username: username, password: password, isTeacher: isTeacher)
+        guard KeychainHelper.save(key: .refreshToken, data: refreshToken),
+              KeychainHelper.save(key: .accessToken, data: accessToken) else {
+            throw MyError.noRefreshToken
         }
     }
 
@@ -59,13 +53,8 @@ class AuthService: AuthServiceProtocol {
         try await networkAPI.updatePassword(with: password)
     }
 
-    func changePassword(from currentPassword: String, to newPassword: String, completion: @escaping (_ done: Bool) -> Void) async throws {
-        do {
-            try await networkAPI.changePassword(from: currentPassword, to: newPassword)
-            DispatchQueue.main.async { completion(true) }
-        } catch {
-            DispatchQueue.main.async { completion(false) }
-        }
+    func changePassword(from currentPassword: String, to newPassword: String) async throws {
+        try await networkAPI.changePassword(from: currentPassword, to: newPassword)
     }
 
     func getProfileData() async throws -> ProfileInfo {

@@ -2,9 +2,13 @@ import UIKit
 
 class MainTabBarViewController: UITabBarController {
     private let userRole: UserRole
+    private let authService: AuthServiceProtocol
 
-    init(userRole: UserRole) {
+    var checkAuthentication: (() -> Void)?
+
+    init(userRole: UserRole, authService: AuthServiceProtocol) {
         self.userRole = userRole
+        self.authService = authService
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -53,6 +57,7 @@ class MainTabBarViewController: UITabBarController {
             image: UIImage(named: Asset.profileIcon),
             selectedImage: UIImage(named: Asset.profileIconSelected),
             vc: ProfileViewController(
+                authService: self.authService,
                 navbarTitle: "Профиль",
                 navbarColor: .neobisGreen
             )
@@ -104,11 +109,14 @@ class MainTabBarViewController: UITabBarController {
         vc.tabBarItem.image = image
         vc.tabBarItem.selectedImage = selectedImage
 
-        return NeobisUINavigationController(rootViewController: vc)
+        return NeobisUINavigationController(authService: authService, rootViewController: vc)
     }
 
     @objc private func onTapProfileOptions () {
-        let submitVC = ProfileModalViewController()
+        let submitVC = ProfileModalViewController(authService: authService)
+        submitVC.checkAuthentication = { [weak self] in
+            self?.checkAuthentication?()
+        }
         let navVC = UINavigationController(rootViewController: submitVC)
         navVC.modalPresentationStyle = .overFullScreen
         self.present(navVC, animated: false)

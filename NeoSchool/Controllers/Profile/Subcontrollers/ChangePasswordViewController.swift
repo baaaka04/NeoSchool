@@ -1,7 +1,11 @@
 import SnapKit
 import UIKit
 
-class ChangePasswordViewController: DetailViewController, Confirmable, UITextFieldDelegate {
+class ChangePasswordViewController: DetailViewController, UITextFieldDelegate {
+    private let authService: AuthServiceProtocol
+
+    var onChangeSuccess: (() -> Void)?
+    var onChangeFailure: ((_ err: Error) -> Void)?
 
     private let titleLabel: BigSemiBoldUILabel = {
         let label = BigSemiBoldUILabel()
@@ -13,29 +17,23 @@ class ChangePasswordViewController: DetailViewController, Confirmable, UITextFie
         return label
     }()
 
-    private lazy var currentPasswordInputView: AlertPasswordInputView = {
-        let input = AlertPasswordInputView(placeholder: "Текущий пароль",
-                                           hintText: "Текущий пароль введен неверно",
-                                           isHintHidden: true)
-        input.inputTextField.delegate = self
-        return input
-    }()
+    private lazy var currentPasswordInputView = makePasswordInputView(
+        placeholder: "Текущий пароль",
+        hintText: "Текущий пароль введен неверно",
+        isHintHidden: true
+    )
 
-    private lazy var newPasswordInputView: AlertPasswordInputView = {
-        let input = AlertPasswordInputView(placeholder: "Новый пароль",
-                                           hintText: "Минимум 8 символов, включая цифры и спецсимволы (!, \", #, $ и т.д.)",
-                                           isHintHidden: false)
-        input.inputTextField.delegate = self
-        return input
-    }()
+    private lazy var newPasswordInputView = makePasswordInputView(
+        placeholder: "Новый пароль",
+        hintText: "Минимум 8 символов, включая цифры и спецсимволы (!, \", #, $ и т.д.)",
+        isHintHidden: false
+    )
 
-    private lazy var confirmNewPasswordInputView: AlertPasswordInputView = {
-        let input = AlertPasswordInputView(placeholder: "Новый пароль еще раз",
-                                           hintText: "Пароли не совпадают",
-                                           isHintHidden: true)
-        input.inputTextField.delegate = self
-        return input
-    }()
+    private lazy var confirmNewPasswordInputView = makePasswordInputView(
+        placeholder: "Новый пароль еще раз",
+        hintText: "Пароли не совпадают",
+        isHintHidden: true
+    )
 
     private lazy var confirmButton: NeobisUIButton = {
         let button = NeobisUIButton(type: .purple)
@@ -44,6 +42,16 @@ class ChangePasswordViewController: DetailViewController, Confirmable, UITextFie
         button.addTarget(self, action: #selector(onPressConfirm), for: .touchUpInside)
         return button
     }()
+
+    init(authService: AuthServiceProtocol) {
+        self.authService = authService
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,90 +94,65 @@ class ChangePasswordViewController: DetailViewController, Confirmable, UITextFie
         }
     }
 
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        // Hide alert if current password textFiled is changing
-        if let text = textField.text, text == currentPasswordInputView.inputTextField.text {
+    private func textFieldEditingChanged(_ sender: UITextField) {
+        if sender === currentPasswordInputView.inputTextField {
             currentPasswordInputView.setErrorVisible(false)
         }
-        // Hide the TextField's red border every time the user change it
+
         confirmNewPasswordInputView.setErrorVisible(false)
 
-        let currentText = textField.text ?? ""
-        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: string)
-        let originalText = textField.text
+        let newPassword = newPasswordInputView.inputTextField.text ?? ""
+        let confirmPassword = confirmNewPasswordInputView.inputTextField.text ?? ""
+        let currentPassword = currentPasswordInputView.inputTextField.text ?? ""
 
-        // Change the TextField BEFORE the function returns
-        textField.text = updatedText
-        // Update the button's properties
-        updateTipLabelUI()
-        updateButtonUI()
-        // Return to the TextField its original state, because it WILL change after the executing of this function anyway
-        textField.text = originalText
+        // Update Tip/Error visibility for new password
+        newPasswordInputView.setErrorVisible(!newPassword.isEmpty && !Validator.isPasswordValid(for: newPassword))
 
-        return true
+        // Update confirm button state
+        let isValid = !currentPassword.isEmpty &&
+        Validator.isPasswordValid(for: newPassword) &&
+        !confirmPassword.isEmpty &&
+        newPassword.count == confirmPassword.count
+
+        confirmButton.isEnabled = isValid
     }
 
-    private func isNewPasswordValid() -> Bool {
-        guard let text = newPasswordInputView.inputTextField.text, !text.isEmpty else { return true }
-        return Validator.isPasswordValid(for: text)
-    }
-
-    private func updateTipLabelUI() {
-        isNewPasswordValid() ? newPasswordInputView.setErrorVisible(false) : newPasswordInputView.setErrorVisible(true)
-    }
-
-    private func areAllInputsValid() -> Bool {
-        guard
-            let text0 = currentPasswordInputView.inputTextField.text, !text0.isEmpty,
-            let text1 = newPasswordInputView.inputTextField.text, !text1.isEmpty,
-            let text2 = confirmNewPasswordInputView.inputTextField.text, !text2.isEmpty
-        else { return false }
-
-        return text1.count == text2.count
-    }
-
-    private func updateButtonUI() {
-        self.confirmButton.isEnabled = isNewPasswordValid() ? areAllInputsValid() : false
-    }
-
-    private func arePasswordsValid() -> Bool {
-        guard
-            let currentPassword = currentPasswordInputView.inputTextField.text, !currentPassword.isEmpty,
-            let newPassword = newPasswordInputView.inputTextField.text, !newPassword.isEmpty,
-            let confirmPassword = confirmNewPasswordInputView.inputTextField.text, !confirmPassword.isEmpty,
-            newPassword == confirmPassword
-        else {
-            return false
-        }
-
-        return true
+    private func makePasswordInputView(placeholder: String, hintText: String, isHintHidden: Bool) -> AlertPasswordInputView {
+        let input = AlertPasswordInputView(
+            placeholder: placeholder,
+            hintText: hintText,
+            isHintHidden: isHintHidden
+        )
+        input.inputTextField.delegate = self
+        input.addTarget = textFieldEditingChanged
+        return input
     }
 
     @objc private func onPressConfirm() {
-        if arePasswordsValid() {
-            Task {
-                do {
-                    guard let currentPassword = currentPasswordInputView.inputTextField.text,
-                          let password = newPasswordInputView.inputTextField.text,
-                          let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate else {
-                        print("sceneDelegate failed")
-                        return
-                    }
+        let currentPassword = currentPasswordInputView.inputTextField.text ?? ""
+        let newPassword = newPasswordInputView.inputTextField.text ?? ""
+        let confirmPassword = confirmNewPasswordInputView.inputTextField.text ?? ""
 
-                    try await sceneDelegate.authService.changePassword(from: currentPassword, to: password) { done in
-                        if done { // If the user sends correct current password
-                            self.showConfirmView(confirmedAction: { [weak self] in
-                                sceneDelegate.checkAuthentication()
-                                self?.navigationController?.popToRootViewController(animated: true)
-                            })
-                            // If the user sends incorrect current password
-                        } else { self.currentPasswordInputView.setErrorVisible(true) }
-                    }
-                } catch { print(error) }
-            }
-        } else {
+        guard !currentPassword.isEmpty,
+              Validator.isPasswordValid(for: newPassword),
+              newPassword == confirmPassword else {
             newPasswordInputView.showBorderAlertView()
             confirmNewPasswordInputView.setErrorVisible(true)
+            return
+        }
+
+        Task {
+            do {
+                try await authService.changePassword(from: currentPassword, to: newPassword)
+                onChangeSuccess?()
+            } catch let error {
+                switch error as? MyError {
+                case .wrongPassword:
+                    currentPasswordInputView.setErrorVisible(true)
+                default:
+                    onChangeFailure?(error)
+                }
+            }
         }
     }
 }

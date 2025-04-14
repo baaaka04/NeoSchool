@@ -2,8 +2,9 @@ import SnapKit
 import UIKit
 
 class ConfirmCodeViewController: KeyboardMovableViewController, Notifiable, Confirmable, UITextFieldDelegate {
+    private let authService: AuthServiceProtocol
     private let email: String
-    private let otcVC = OneTimeCodeViewController()
+    private let otcVC: OneTimeCodeViewController
 
     lazy var subtitleLabel: UILabel = {
         let label = UILabel()
@@ -51,8 +52,10 @@ class ConfirmCodeViewController: KeyboardMovableViewController, Notifiable, Conf
         return button
     }()
 
-    init(email: String) {
+    init(authService: AuthServiceProtocol, email: String, otcVC: OneTimeCodeViewController = OneTimeCodeViewController()) {
+        self.authService = authService
         self.email = email
+        self.otcVC = otcVC
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -116,13 +119,12 @@ class ConfirmCodeViewController: KeyboardMovableViewController, Notifiable, Conf
     }
 
     @objc private func didTapProceed() {
+        guard let code = Int(otcVC.getCode()) else { return }
         Task {
             do {
-                guard let code = Int(otcVC.getCode()),
-                      let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate else { return }
-                if try await sceneDelegate.authService.checkResetPasswordCode(withCode: code) {
+                if try await authService.checkResetPasswordCode(withCode: code) {
                     await MainActor.run {
-                        let passwordCreateVC = PasswordCreationViewController(authService: sceneDelegate.authService)
+                        let passwordCreateVC = PasswordCreationViewController(authService: authService)
                         passwordCreateVC.onChangeSuccess = { [weak self] in
                             self?.showConfirmView(confirmedAction: {
                                 self?.navigationController?.popToRootViewController(animated: true)
@@ -144,8 +146,7 @@ class ConfirmCodeViewController: KeyboardMovableViewController, Notifiable, Conf
     @objc private func didTapSendAgain() {
         Task {
             do {
-                guard let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate else { return }
-                try await sceneDelegate.authService.sendResetPasswordCode(for: self.email)
+                try await authService.sendResetPasswordCode(for: self.email)
             } catch { print(error) }
         }
         var time = 45

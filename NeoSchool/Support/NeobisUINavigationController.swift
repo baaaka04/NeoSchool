@@ -2,7 +2,10 @@ import SnapKit
 import UIKit
 
 class NeobisUINavigationController: UINavigationController {
-    override init(rootViewController: UIViewController) {
+    private let authService: AuthServiceProtocol
+
+    init(authService: AuthServiceProtocol, rootViewController: UIViewController) {
+        self.authService = authService
         super.init(rootViewController: rootViewController)
 
         let notificationButton = UIBarButtonItem(image: UIImage(named: Asset.bell),
@@ -17,9 +20,8 @@ class NeobisUINavigationController: UINavigationController {
 
         Task {
             do {
-                guard let sceneDelegate = self.view.window?.windowScene?.delegate as? SceneDelegate else { return }
-                let profileData = try await sceneDelegate.authService.getProfileData()
-                DispatchQueue.main.async {
+                let profileData = try await authService.getProfileData()
+                await MainActor.run {
                     switch profileData.role {
                     case .teacher: titleLabel.text = "Здравствуйте, \(profileData.userFirstName)!"
                     case .student: titleLabel.text = "Привет, \(profileData.userFirstName)!"
