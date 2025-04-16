@@ -3,9 +3,11 @@ import UIKit
 
 class NeobisUINavigationController: UINavigationController {
     private let authService: AuthServiceProtocol
+    private let performanceAPI: PerformanceAPIProtocol
 
-    init(authService: AuthServiceProtocol, rootViewController: UIViewController) {
+    init(rootViewController: UIViewController, authService: AuthServiceProtocol, performanceAPI: PerformanceAPIProtocol) {
         self.authService = authService
+        self.performanceAPI = performanceAPI
         super.init(rootViewController: rootViewController)
 
         let notificationButton = UIBarButtonItem(image: UIImage(named: Asset.bell),
@@ -48,7 +50,7 @@ class NeobisUINavigationController: UINavigationController {
 
     @objc private func onPressNotifications () {
         let viewModel = NotificationsViewModel()
-        let notificationsVC = NotificationsOverviewViewController(viewModel: viewModel)
+        let notificationsVC = NotificationsOverviewViewController(viewModel: viewModel, performanceAPI: performanceAPI)
         notificationsVC.title = "Уведомления"
         self.tabBarController?.tabBar.isHidden = true
         self.pushViewController(notificationsVC, animated: true)

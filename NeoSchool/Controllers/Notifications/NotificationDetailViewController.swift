@@ -4,6 +4,8 @@ import UIKit
 class NotificationDetailViewController: DetailViewController {
     private weak var viewModel: NotificationsViewModel?
     private let notification: NeobisNotificationToPresent
+    private let performanceAPI: PerformanceAPIProtocol
+    private let scheduleAPI: DayScheduleAPI
 
     private lazy var textLabel: GrayUILabel = {
         let label = GrayUILabel()
@@ -40,9 +42,11 @@ class NotificationDetailViewController: DetailViewController {
         return button
     }()
 
-    init(viewModel: NotificationsViewModel?, notification: NeobisNotificationToPresent) {
+    init(viewModel: NotificationsViewModel?, notification: NeobisNotificationToPresent, performanceAPI: PerformanceAPIProtocol, scheduleAPI: DayScheduleAPI = DayScheduleAPI()) {
         self.viewModel = viewModel
         self.notification = notification
+        self.performanceAPI = performanceAPI
+        self.scheduleAPI = scheduleAPI
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -113,9 +117,6 @@ class NotificationDetailViewController: DetailViewController {
             } catch {print(error) }
         }
     }
-
-    private let scheduleAPI = DayScheduleAPI()
-    private let performanceAPI = PerformanceAPI()
 
     private func openStudentSubmission() {
         guard let submissionId = notification.submissionId, let lessonId = notification.lessonId else { return }

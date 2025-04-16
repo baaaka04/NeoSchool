@@ -3,7 +3,7 @@ import UIKit
 
 class WorkdayScheduleViewController: UIViewController {
     private let userRole: UserRole
-    private let schoolWeekAPI = SchoolWeekAPI()
+    private let schoolWeekAPI: SchoolWeekAPIProtocol
     private var schoolWeek: [SchoolDay]?
 
     lazy var weekCollectionView: UICollectionView = {
@@ -22,8 +22,9 @@ class WorkdayScheduleViewController: UIViewController {
     // Объявляем о возможности слушать события действия в данном классе
     weak var delegate: ItemsBarDelegate?
 
-    init(userRole: UserRole) {
+    init(userRole: UserRole, schoolWeekAPI: SchoolWeekAPIProtocol = SchoolWeekAPI()) {
         self.userRole = userRole
+        self.schoolWeekAPI = schoolWeekAPI
         super.init(nibName: nil, bundle: nil)
     }
 

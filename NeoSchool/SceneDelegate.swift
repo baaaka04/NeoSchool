@@ -3,7 +3,8 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
-    let authService = AuthService()
+    private let authService = AuthService()
+    private let performanceAPI = PerformanceAPI()
 
     func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
         guard let windowScene = scene as? UIWindowScene else { return }
@@ -30,7 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         Task {
             do {
                 let isAuthenticated = try await authService.refreshAccessToken()
-                let mainTabBarVC = MainTabBarViewController(userRole: userRole, authService: authService)
+                let mainTabBarVC = MainTabBarViewController(userRole: userRole, authService: authService, performanceAPI: performanceAPI)
                 mainTabBarVC.checkAuthentication = { [weak self] in
                     self?.checkAuthentication()
                 }

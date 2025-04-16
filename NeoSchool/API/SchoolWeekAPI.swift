@@ -1,6 +1,10 @@
 import Foundation
 
-class SchoolWeekAPI {
+protocol SchoolWeekAPIProtocol {
+    func getSchoolWeek(userRole: UserRole) async throws -> [SchoolDay]
+}
+
+class SchoolWeekAPI: SchoolWeekAPIProtocol {
     let networkAPI = NetworkAPI()
 
     func getSchoolWeek(userRole: UserRole) async throws -> [SchoolDay] {

@@ -3,12 +3,14 @@ import UIKit
 class MainTabBarViewController: UITabBarController {
     private let userRole: UserRole
     private let authService: AuthServiceProtocol
+    private let performanceAPI: PerformanceAPIProtocol
 
     var checkAuthentication: (() -> Void)?
 
-    init(userRole: UserRole, authService: AuthServiceProtocol) {
+    init(userRole: UserRole, authService: AuthServiceProtocol, performanceAPI: PerformanceAPIProtocol) {
         self.userRole = userRole
         self.authService = authService
+        self.performanceAPI = performanceAPI
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -39,7 +41,7 @@ class MainTabBarViewController: UITabBarController {
             vc: TeacherPerformanceViewController(
                 navbarTitle: navControllerName,
                 navbarColor: .neobisBlue,
-                performanceAPI: PerformanceAPI()
+                performanceAPI: performanceAPI
             )
         )
         let vc2student = self.createVC(
@@ -49,7 +51,7 @@ class MainTabBarViewController: UITabBarController {
             vc: StudentPerformanceViewController(
                 navbarTitle: navControllerName,
                 navbarColor: .neobisBlue,
-                performanceAPI: PerformanceAPI()
+                performanceAPI: performanceAPI
             )
         )
         let vc3 = self.createVC(
@@ -109,7 +111,7 @@ class MainTabBarViewController: UITabBarController {
         vc.tabBarItem.image = image
         vc.tabBarItem.selectedImage = selectedImage
 
-        return NeobisUINavigationController(authService: authService, rootViewController: vc)
+        return NeobisUINavigationController( rootViewController: vc, authService: authService, performanceAPI: performanceAPI)
     }
 
     @objc private func onTapProfileOptions () {

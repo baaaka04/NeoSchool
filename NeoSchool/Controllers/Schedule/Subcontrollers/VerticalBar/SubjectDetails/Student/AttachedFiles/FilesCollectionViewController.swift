@@ -2,7 +2,7 @@ import SnapKit
 import UIKit
 
 class FilesCollectionViewController: UIViewController {
-    private let imagesAPI: ImagesAPI?
+    private let imagesAPI: ImagesAPIProtocol?
 
     private var attachedFiles: [AttachedFile] = []
     private var urls: [String]?
@@ -22,9 +22,9 @@ class FilesCollectionViewController: UIViewController {
     }()
 
     // MARK: initialization to display images from backend
-    init(urls: [String]? = nil) {
+    init(urls: [String]? = nil, imagesAPI: ImagesAPIProtocol = ImagesAPI()) {
         self.urls = urls
-        self.imagesAPI = ImagesAPI()
+        self.imagesAPI = imagesAPI
 
         super.init(nibName: nil, bundle: nil)
     }

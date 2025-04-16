@@ -3,6 +3,7 @@ import UIKit
 
 class NotificationsOverviewViewController: DetailViewController {
     private let viewModel: NotificationsViewModel
+    private let performanceAPI: PerformanceAPIProtocol
 
     // MARK: Pagination
     private var isLoading = false
@@ -26,8 +27,9 @@ class NotificationsOverviewViewController: DetailViewController {
 
     private let notepadView = NotepadView(title: "Уведомлений еще нет", subtitle: "Здесь будут показаны уведомления")
 
-    init(viewModel: NotificationsViewModel) {
+    init(viewModel: NotificationsViewModel, performanceAPI: PerformanceAPIProtocol) {
         self.viewModel = viewModel
+        self.performanceAPI = performanceAPI
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -111,7 +113,7 @@ extension NotificationsOverviewViewController: UICollectionViewDelegate, UIColle
 
     func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let notification = viewModel.notifications[indexPath.item]
-        let notificationVC = NotificationDetailViewController(viewModel: self.viewModel, notification: notification)
+        let notificationVC = NotificationDetailViewController(viewModel: self.viewModel, notification: notification, performanceAPI: performanceAPI)
         self.navigationController?.pushViewController(notificationVC, animated: true)
     }
 
